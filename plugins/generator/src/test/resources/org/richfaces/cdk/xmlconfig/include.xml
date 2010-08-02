@@ -1,0 +1,46 @@
+<cdk:properties xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:cdk="http://richfaces.org/cdk/extensions">
+	<property>
+		<description><![CDATA[test property]]></description>
+		<display-name>test event property</display-name>
+		<icon>ontest.png</icon>
+		<property-name>ontest</property-name>
+		<property-class>boolean</property-class>
+		<default-value>1</default-value>
+		<suggested-value>1</suggested-value>
+		<property-extension>
+			<cdk:literal>true</cdk:literal>
+			<cdk:generate>true</cdk:generate>
+			<cdk:hidden>true</cdk:hidden>
+			<cdk:required>true</cdk:required>
+			<cdk:pass-through>true</cdk:pass-through>
+			<cdk:event-name>test</cdk:event-name>
+			<cdk:event-name default="true">action</cdk:event-name>
+		</property-extension>
+	</property>
+	<property>
+		<description><![CDATA[test2 property]]></description>
+		<display-name>test2 event property</display-name>
+		<icon>ontest2.png</icon>
+		<property-name>ontest2</property-name>
+		<property-class>int</property-class>
+		<default-value>3</default-value>
+		<suggested-value>15</suggested-value>
+		<property-extension>
+			<cdk:literal>true</cdk:literal>
+			<cdk:generate>true</cdk:generate>
+			<cdk:hidden>true</cdk:hidden>
+			<cdk:required>true</cdk:required>
+            <cdk:read-only>true</cdk:read-only>
+			<cdk:pass-through>true</cdk:pass-through>
+			<cdk:event-name>ontest2</cdk:event-name>
+			<cdk:event-name default="true">action</cdk:event-name>
+			<cdk:signature>
+				<cdk:param>boolean</cdk:param>
+				<cdk:param>java.lang.String</cdk:param>
+			</cdk:signature>
+			<cdk:alias>foo</cdk:alias>
+			<cdk:alias>bar</cdk:alias>
+		</property-extension>
+	</property>
+</cdk:properties>    

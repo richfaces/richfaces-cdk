@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<cdk:root xmlns="http://richfaces.org/cdk/xhtml-el" xmlns:cdk="http://richfaces.org/cdk/core"
+	xmlns:c="http://richfaces.org/cdk/jstl/core" xmlns:cc="http://richfaces.org/cdk/jsf/composite"
+	xmlns:javaee="http://java.sun.com/xml/ns/javaee">
+
+	<cc:interface>
+		<cdk:class>org.richfaces.cdk.renderkit.html.RendersChildrenRenderer</cdk:class>
+		<cdk:component-family>org.richfaces.cdk.RendersChildrenComponent</cdk:component-family>
+		<cdk:renderer-type>org.richfaces.cdk.RendersChildrenRenderer</cdk:renderer-type>
+		<cdk:renders-children>true</cdk:renders-children>
+	</cc:interface>
+
+	<cc:implementation>
+	</cc:implementation>
+</cdk:root>

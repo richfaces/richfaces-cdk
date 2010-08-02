@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<f:root xmlns:f="http://ajax4jsf.org/cdk/template"
+	xmlns:c=" http://java.sun.com/jsf/core"
+	xmlns:ui=" http://ajax4jsf.org/cdk/ui"
+	xmlns:u=" http://ajax4jsf.org/cdk/u"
+	xmlns:x=" http://ajax4jsf.org/cdk/x"
+	xmlns:h="http://jsf.exadel.com/header"
+	xmlns:vcp="http://ajax4jsf.org/cdk/vcp" class="${rendererClassName}"
+	baseclass="org.richfaces.renderkit.AbstractPageRenderer"
+	component="org.richfaces.component.UIPage">
+
+	<c:set var="namespace" value="#{this:prolog(context,component)}" />
+	<html x:xmlns="#{namespace}" x:lang="#{context.viewRoot.locale}">
+		<head>
+			<title>#{component.attributes['pageTitle']}</title>
+			<f:call name="themeStyle" />
+			<f:call name="themeScript" />
+			<style type="text/css">
+				<jsp:scriptlet><![CDATA[
+				Integer width = (Integer) component.getAttributes().get("width");
+	
+				if (null != width && width.intValue() > 0) {
+					StringBuilder format = new StringBuilder(".rich-page{margin:auto;text-align:left;");
+					format.append("width:").append(width).append("px;");
+					writer.write(format.toString());
+				} else {
+					writer.write(".rich-page{width: 100%;}\n");
+				}]]></jsp:scriptlet>
+			</style>
+			
+			<u:insertFacet name="pageHeader" />
+	</head>
+	<body x:passThruWithExclusions="value,name,type,id" class="rich-page">
+	
+		<div class="rich-page-header">
+			<u:insertFacet name="header" />
+		</div>
+		
+		<div class="rich-page-sidebar">
+			<u:insertFacet name="sidebar" />
+		</div>
+		
+		<div>
+			<vcp:body>
+				<f:call name="renderChildren" />
+			</vcp:body>
+		</div>
+		
+		<div class="rich-page-footer">
+			<u:insertFacet name="footer" />
+		</div>
+
+	</body>
+	</html>
+</f:root>

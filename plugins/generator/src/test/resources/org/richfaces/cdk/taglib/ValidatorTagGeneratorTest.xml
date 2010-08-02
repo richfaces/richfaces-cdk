@@ -1,0 +1,16 @@
+    <tag>
+        <tag-name>javax.faces.component.UIOutput</tag-name>
+        <validator>
+            <validator-id>foo.bar</validator-id>
+            <handler-class>javax.faces.component.UIOutput</handler-class>
+        </validator>
+
+        <attribute>
+            <name>testValue</name>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <name>testFlag</name>
+            <type>boolean</type>
+        </attribute>
+    </tag>

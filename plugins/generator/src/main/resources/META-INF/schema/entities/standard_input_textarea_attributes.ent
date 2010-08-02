@@ -1,0 +1,132 @@
+<properties>
+    
+    
+    
+    
+    
+    <property>
+        <name>id</name><classname>java.lang.String</classname><description>Every component may have an unique id. Automatically created if omitted</description>
+    </property>
+    <property>
+        <name>rendered</name><classname>java.lang.String</classname><description>If "false", this component will not be rendered</description>
+    </property>
+    <property>
+        <name>binding</name><classname>java.lang.String</classname><description>The attribute takes a value-binding expression for a component property of
+a backing bean</description>
+    </property>
+    
+    <property>
+        <name>value</name><classname>java.lang.String</classname><description>Initial value to set when rendered for the first time</description>
+    </property>
+    <property>
+        <name>converter</name><classname>java.lang.String</classname><description>Id of Converter to be used or reference to a Converter</description>
+    </property>
+    
+    <property>
+        <name>immediate</name><classname>java.lang.String</classname><description> Flag indicating that this component's value must be converted and validated immediately (that is, during Apply Request Values phase), rather than waiting until Process Validations phase</description>
+    </property>
+    <property>
+        <name>required</name><classname>java.lang.String</classname><description>If "true", this component will be checked for non-empty input</description>
+    </property>
+    <property>
+        <name>validator</name><classname>java.lang.String</classname><description>MethodBinding pointing at a method that will be called during Process Validations phase of the request processing lifecycle, to validate the current value of this component</description>
+    </property>
+    <property>
+        <name>valueChangeListener</name><classname>java.lang.String</classname><description>Listener for value changes</description>
+    </property>
+    
+    
+    <property>
+        <name>accesskey</name><classname>java.lang.String</classname><description>This attribute assigns an access key to an element. An access key is a single character from the document character set. Note. Authors should consider the input method of the expected reader when specifying an accesskey</description>
+    </property>
+    <property>
+        <name>cols</name><classname>java.lang.String</classname><description>Number of columns</description>
+    </property>
+    <property>
+        <name>datafld</name><classname>java.lang.String</classname><description>Retrieves which field of a given data source, as specified by the dataSrc property, to bind to the specified object</description>
+    </property>
+    <property>
+        <name>datasrc</name><classname>java.lang.String</classname><description>Retrieves the source of the data for data binding</description>
+    </property>
+    <property>
+        <name>dataformatas</name><classname>java.lang.String</classname><description>Indicates whether the bound data is plain text or HTML</description>
+    </property>
+    <property>
+        <name>disabled</name><classname>java.lang.String</classname><description>Disabled state of an element or button</description>
+    </property>
+    <property>
+        <name>onblur</name><classname>java.lang.String</classname><description> JavaScript code. The onblur event occurs when an element loses focus either by the pointing device or by tabbing navigation. It may be used with the same elements as onfocus</description>
+    </property>
+    <property>
+        <name>onchange</name><classname>java.lang.String</classname><description>Element's value changes</description>
+    </property>
+    <property>
+        <name>onfocus</name><classname>java.lang.String</classname><description>JavaScript code </description>
+    </property>
+    <property>
+        <name>onselect</name><classname>java.lang.String</classname><description>Text is selected in an input field</description>
+    </property>
+    <property>
+        <name>readonly</name><classname>java.lang.String</classname>Flag indicating that this component will prohibit
+        changes by you.  The element may receive focus
+        unless it has also been disabled.
+        <property>
+            <name>rows</name><classname>java.lang.String</classname><description>Number of rows</description>
+        </property>
+        <property>
+            <name>tabindex</name><classname>java.lang.String</classname><description>This attribute specifies the position of the current element in the tabbing order for the current document. This value must be a number between 0 and 32767. User agents should ignore leading zeros</description>
+        </property>
+        
+        
+        <property>
+            <name>dir</name><classname>java.lang.String</classname><description>Alternate textual description of the element rendered by this component</description>
+        </property>
+        <property>
+            <name>lang</name><classname>java.lang.String</classname><description> Code describing the language used in the generated markup for this component</description>
+        </property>
+        <property>
+            <name>style</name><classname>java.lang.String</classname><description>CSS style(s) is/are to be applied when this component is rendered</description>
+        </property>
+        <property>
+            <name>title</name><classname>java.lang.String</classname><description> Advisory title information about markup elements generated for this component</description>
+        </property>
+        <property>
+            <name>styleClass</name><classname>java.lang.String</classname><description>Corresponds to the HTML class attribute</description>
+        </property>
+        
+        
+        <property>
+            <name>onclick</name><classname>java.lang.String</classname><description>Defines a JavaScript onclick event handler</description>
+        </property>
+        <property>
+            <name>ondblclick</name><classname>java.lang.String</classname><description>Defines a JavaScript ondblclick  event handler</description>
+        </property>
+        <property>
+            <name>onmousedown</name><classname>java.lang.String</classname><description>Defines a JavaScript onmousedown event handler</description>
+        </property>
+        <property>
+            <name>onmouseup</name><classname>java.lang.String</classname><description>Defines a JavaScript onmouseup event handler</description>
+        </property>
+        <property>
+            <name>onmouseover</name><classname>java.lang.String</classname><description>Defines a JavaScript onmouseover event handler</description>
+        </property>
+        <property>
+            <name>onmousemove</name><classname>java.lang.String</classname><description>Defines a JavaScript onmousemove event handler</description>
+        </property>
+        <property>
+            <name>onmouseout</name><classname>java.lang.String</classname><description>Defines a JavaScript onmouseout event handler</description>
+        </property>
+        <property>
+            <name>onkeypress</name><classname>java.lang.String</classname><description>Defines a JavaScript onkeypress event handler</description>
+        </property>
+        <property>
+            <name>onkeydown</name><classname>java.lang.String</classname><description>Defines a JavaScript onkeydown event handler</description>
+        </property>
+        <property>
+            <name>onkeyup</name><classname>java.lang.String</classname><description>Defines a JavaScript onkeyup event handler</description>
+        </property>
+        
+        
+        
+        
+    </properties>

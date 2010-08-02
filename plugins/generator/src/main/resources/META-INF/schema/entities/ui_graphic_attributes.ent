@@ -1,0 +1,11 @@
+<properties>
+    &ui_component_attributes;
+    <property>
+        <name>value</name>
+        <alias>url</alias>
+        <classname>java.lang.Object</classname>
+        <description>URL of the image (see JSF.4.1.5)</description>
+    </property>
+    
+    
+</properties>

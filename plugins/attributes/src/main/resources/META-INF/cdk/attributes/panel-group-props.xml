@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		JBoss, Home of Professional Open Source Copyright ${year}, Red Hat,
+		Inc. and individual contributors by the @authors tag. See the
+		copyright.txt in the distribution for a full listing of individual
+		contributors. This is free software; you can redistribute it and/or
+		modify it under the terms of the GNU Lesser General Public License as
+		published by the Free Software Foundation; either version 2.1 of the
+		License, or (at your option) any later version. This software is
+		distributed in the hope that it will be useful, but WITHOUT ANY
+		WARRANTY; without even the implied warranty of MERCHANTABILITY or
+		FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+		License for more details. You should have received a copy of the GNU
+		Lesser General Public License along with this software; if not, write
+		to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+		Boston, MA 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+	-->
+<cdk:properties xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:cdk="http://richfaces.org/cdk/extensions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee">
+	<property>
+		<description>
+			CSS style(s) to be applied when this component is rendered.
+        </description>
+		<display-name>CSS Styles</display-name>
+		<icon />
+		<property-name>style</property-name>
+		<property-class>java.lang.String</property-class>
+		<property-extension>
+			<cdk:pass-through>true</cdk:pass-through>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			Space-separated list of CSS style class(es) to be applied when
+			this element is rendered. This value must be passed through
+			as the "class" property on generated markup.
+        </description>
+		<display-name>CSS Style Classes</display-name>
+		<icon />
+		<property-name>styleClass</property-name>
+		<property-class>java.lang.String</property-class>
+		<property-extension>
+			<cdk:pass-through>false</cdk:pass-through>
+		</property-extension>
+	</property>
+	<property>
+		<description>
+			The type of layout markup to use when rendering this group.
+			If the value is "block" the renderer must produce an HTML
+			"div" element. Otherwise HTML "span" element must
+			be produced.
+        </description>
+		<display-name>Layout</display-name>
+		<icon />
+		<property-name>layout</property-name>
+		<property-class>java.lang.String</property-class>
+	</property>
+</cdk:properties>

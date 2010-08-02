@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:cdk="http://richfaces.org/cdk/extensions"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+	version="2.0">
+
+	<component>
+		<description>Panel component</description>
+		<display-name>Panel</display-name>
+		<icon>
+			<small-icon>panel.gif</small-icon>
+			<large-icon>panel-large.gif</large-icon>
+		</icon>
+		<component-type>javax.faces.Panel</component-type>
+		<component-class>javax.faces.component.UIPanel</component-class>
+		<facet>
+			<description>Header facet</description>
+			<facet-name>header</facet-name>
+			<facet-extension>
+				<cdk:generate>true</cdk:generate>
+			</facet-extension>
+		</facet>
+
+		<property>
+			<description><![CDATA[
+          The component identifier for this component.  This value must be
+          unique within the closest parent component that is a naming
+          container.
+        ]]></description>
+			<display-name>Component Identifier</display-name>
+			<icon />
+			<property-name>id</property-name>
+			<property-class>java.lang.String</property-class>
+		</property>
+		<property>
+			<description><![CDATA[
+          The parent component for this component.  On the root component
+          in the component tree (which must be of type UIViewRoot), this
+          property is null.
+        ]]></description>
+			<display-name>Parent Component</display-name>
+			<icon />
+			<property-name>parent</property-name>
+			<property-class>javax.faces.component.UIComponent</property-class>
+			<property-extension>
+				<tag-attribute>false</tag-attribute>
+				<read-only>true</read-only>
+			</property-extension>
+		</property>
+		<property>
+			<description><![CDATA[
+          Flag indicating whether or not this component should be rendered
+          (during Render Response Phase), or processed on any subsequent
+          form submit.  The default value for this property is true.
+        ]]></description>
+			<display-name>Rendered Flag</display-name>
+			<icon />
+			<property-name>rendered</property-name>
+			<property-class>boolean</property-class>
+			<property-extension>
+				<value-expression-enabled>true</value-expression-enabled>
+			</property-extension>
+		</property>
+		<component-extension>
+			<cdk:component-family>javax.faces.Panel</cdk:component-family>
+			<cdk:base-class>javax.faces.component.UIComponentBase</cdk:base-class>
+			<cdk:generate>true</cdk:generate>
+            <cdk:renderer>
+                <cdk:renderer-type>org.richfaces.cdk.TestPanelRenderer</cdk:renderer-type>
+            </cdk:renderer>
+		</component-extension>
+	</component>
+</faces-config>

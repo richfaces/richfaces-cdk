@@ -1,0 +1,113 @@
+<properties>
+    
+    
+    
+    
+    <property>
+        <name>id</name><classname>java.lang.String</classname><description>Every component may have an unique id. Automatically created if omitted</description>
+    </property>
+    <property>
+        <name>rendered</name><classname>java.lang.String</classname><description>If "false", this component will not be rendered</description>
+    </property>
+    <property>
+        <name>binding</name><classname>java.lang.String</classname><description>The attribute takes a value-binding expression for a component property of
+a backing bean</description>
+    </property>
+    
+    <property>
+        <name>for</name><classname>java.lang.String</classname><description>The client identifier of the component for which this component represents associated message(s)</description>
+    </property>
+    <property>
+        <name>showSummary</name><classname>java.lang.String</classname><description>Indicates whether the summary of the associated message(s) should be displayed.
+            Default is: true
+        </description>
+    </property>
+    <property>
+        <name>showDetail</name><classname>java.lang.String</classname><description>Indicates whether the detail of the associated message(s) should be displayed.
+            Default is: false
+        </description>
+    </property>
+    
+    
+    
+    <property>
+        <name>dir</name><classname>java.lang.String</classname><description>Alternate textual description of the element rendered by this component</description>
+    </property>
+    <property>
+        <name>lang</name><classname>java.lang.String</classname><description> Code describing the language used in the generated markup for this component</description>
+    </property>
+    <property>
+        <name>style</name><classname>java.lang.String</classname><description>CSS style(s) to be applied when this component is rendered</description>
+    </property>
+    <property>
+        <name>title</name><classname>java.lang.String</classname><description> Advisory title information about markup elements generated for this component</description>
+    </property>
+    <property>
+        <name>styleClass</name><classname>java.lang.String</classname><description>Corresponds to the HTML class attribute</description>
+    </property>
+    
+    
+    <property>
+        <name>onclick</name><classname>java.lang.String</classname><description>Defines a JavaScript onclick event handler</description>
+    </property>
+    <property>
+        <name>ondblclick</name><classname>java.lang.String</classname><description>Defines a JavaScript ondblclick  event handler</description>
+    </property>
+    <property>
+        <name>onmousedown</name><classname>java.lang.String</classname><description>Defines a JavaScript onmousedown event handler</description>
+    </property>
+    <property>
+        <name>onmouseup</name><classname>java.lang.String</classname><description>Defines a JavaScript onmouseup event handler</description>
+    </property>
+    <property>
+        <name>onmouseover</name><classname>java.lang.String</classname><description>Defines a JavaScript onmouseover event handler</description>
+    </property>
+    <property>
+        <name>onmousemove</name><classname>java.lang.String</classname><description>Defines a JavaScript onmousemove event handler</description>
+    </property>
+    <property>
+        <name>onmouseout</name><classname>java.lang.String</classname><description>Defines a JavaScript onmouseout event handler</description>
+    </property>
+    <property>
+        <name>onkeypress</name><classname>java.lang.String</classname><description>Defines a JavaScript onkeypress event handler</description>
+    </property>
+    <property>
+        <name>onkeydown</name><classname>java.lang.String</classname><description>Defines a JavaScript onkeydown event handler</description>
+    </property>
+    <property>
+        <name>onkeyup</name><classname>java.lang.String</classname><description>Defines a JavaScript onkeyup event handler</description>
+    </property>
+    
+    
+    <property>
+        <name>infoClass</name><classname>java.lang.String</classname><description>CSS class to be used for messages with severity "INFO"</description>
+    </property>
+    <property>
+        <name>infoStyle</name><classname>java.lang.String</classname><description>CSS style(s) is/are to be used for messages with severity "INFO"</description>
+    </property>
+    <property>
+        <name>warnClass</name><classname>java.lang.String</classname><description>CSS class is to be used for messages with severity "WARN"</description>
+    </property>
+    <property>
+        <name>warnStyle</name><classname>java.lang.String</classname><description>CSS style is to be used for messages with severity "WARN"</description>
+    </property>
+    <property>
+        <name>errorClass</name><classname>java.lang.String</classname><description>CSS class is to be used for messages with severity "ERROR"</description>
+    </property>
+    <property>
+        <name>errorStyle</name><classname>java.lang.String</classname><description>CSS style is to be used for messages with severity "ERROR"</description>
+    </property>
+    <property>
+        <name>fatalClass</name><classname>java.lang.String</classname><description>CSS class is to be used for messages with severity "FATAL"</description>
+    </property>
+    <property>
+        <name>fatalStyle</name><classname>java.lang.String</classname><description>CSS style(s) is/are to be used for messages with severity "FATAL"</description>
+    </property>
+    <property>
+        <name>tooltip</name><classname>java.lang.String</classname><description>
+            If "true", the message summary will be rendered as a tooltip (i.e. HTML title attribute)
+        </description>
+    </property>
+    
+    
+</properties>

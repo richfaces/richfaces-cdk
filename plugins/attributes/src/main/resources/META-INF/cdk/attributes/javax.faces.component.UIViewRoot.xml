@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		JBoss, Home of Professional Open Source Copyright ${year}, Red Hat,
+		Inc. and individual contributors by the @authors tag. See the
+		copyright.txt in the distribution for a full listing of individual
+		contributors. This is free software; you can redistribute it and/or
+		modify it under the terms of the GNU Lesser General Public License as
+		published by the Free Software Foundation; either version 2.1 of the
+		License, or (at your option) any later version. This software is
+		distributed in the hope that it will be useful, but WITHOUT ANY
+		WARRANTY; without even the implied warranty of MERCHANTABILITY or
+		FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+		License for more details. You should have received a copy of the GNU
+		Lesser General Public License along with this software; if not, write
+		to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+		Boston, MA 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+	-->
+<cdk:properties xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:cdk="http://richfaces.org/cdk/extensions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee">
+	<xi:include
+		xpointer="xmlns(cdk=http://richfaces.org/cdk/extensions)xpointer(/cdk:properties/*)"
+		href="urn:attributes:javax.faces.component.UIComponent.xml" />
+
+	<property>
+		<description>
+			Locale to be used in localizing the rendered output of this view.
+        </description>
+		<display-name>Locale</display-name>
+		<icon />
+		<property-name>locale</property-name>
+		<property-class>java.util.Locale</property-class>
+		<property-extension>
+			<cdk:hidden>true</cdk:hidden>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			Identifier of the RenderKit being used to display this view.
+        </description>
+		<display-name>Render Kit Id</display-name>
+		<icon />
+		<property-name>renderKitId</property-name>
+		<property-class>java.lang.String</property-class>
+		<property-extension>
+			<cdk:hidden>true</cdk:hidden>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			Identifier of the view represented by this component tree.
+        </description>
+		<display-name>View Id</display-name>
+		<icon />
+		<property-name>viewId</property-name>
+		<property-class>java.lang.String</property-class>
+		<property-extension>
+			<cdk:hidden>true</cdk:hidden>
+		</property-extension>
+	</property>
+</cdk:properties>

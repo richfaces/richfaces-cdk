@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<faces-config version="2.0" metadata-complete="false" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:cdk="http://richfaces.org/cdk/extensions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <converter>
+        <converter-id>my_converter</converter-id>
+        <converter-class>java.lang.Object</converter-class>
+        <converter-extension>
+                    <cdk:generate>false</cdk:generate>
+        </converter-extension>
+    </converter>
+    <faces-config-extension/>
+</faces-config>

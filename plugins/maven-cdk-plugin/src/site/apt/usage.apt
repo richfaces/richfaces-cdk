@@ -1,0 +1,84 @@
+                        ----------------------------------------------
+                          Java Server Faces component generator Maven plugin
+                        ----------------------------------------------
+                        ----------------------------------------------
+                        ----------------------------------------------
+
+ This plugin are generate source and configuration fales for jsf components library
+ 
+ For use this plugin in maven project, append build instruction to pom.xml :
+ 
++-----------------------------------------------------------------------------------------------------------+
+	<build>
+		<plugins>
+		    ......
+			<plugin>
+				<groupId>org.ajax4jsf.cdk</groupId>
+				<artifactId>maven-cdk-plugin</artifactId>
+				<configuration>
+				  ..........see below........
+				</configuration>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			.......
+		</plugins>
+	</build>
+
++-----------------------------------------------------------------------------------------------------------+
+ 
+ Full configuration for generated library ( per component configuration placed in special .xml files  )
+ 
++-----------------------------------------------------------------------------------------------------------+
+				<configuration>
+				  <!-- Generation parameters ( source, config, destination folders, name patterns etc ) -->
+				  ...........
+				  <library>
+				     <prefix>foo.bar</prefix>
+				     <description>This is My JSF components library</description>
+				     <taglib>
+						<uri>http://bar.foo/booz</uri>
+						<shortName>booz</shortName>
+						<taglib>booz.tld</taglib>
+						<displayName>My taglib</displayName>
+						<jspVersion>2.0<jspVersion>						
+				     </taglib>
+				     <renderkits>
+				       <renderkit>
+				           <name>HTML_FOO</name>
+				           <markup>html</markup>
+				           <classname>foo.bar.renderkit.FooKit</classname>
+				           <package>foo.bar.renderkit.html_foo</package>
+				       </renderkit>
+				     </renderkits>
+				   </library>
+				</configuration>
++-----------------------------------------------------------------------------------------------------------+
+ 
+ Definition of parameters in library configuration :
+ 
+  [prefix] is a common package name and JSF id's prefix for standart layout in component generator, default is POM groupId
+  
+  [description] is a text for include in all generated config files and component library documentation, default is POM description.
+  
+  [taglib/uri] is a namespace for generated JSP/Facelets libraries, default is POM url.
+  
+  [taglib/shortName] is a common prefix for JSP/Facelets libraries, default is POM artifactId
+  
+  [renderkits] describe all JSF render kit's used in project. default is one HTML_BASIC.
+  
+  [renderkit/name] is a JSF render kit id, same as in faces-config.xml.
+  
+  [renderkit/markup] is a output format of renderers included in this kit ( html,wml,xul... ). Default value is "html"
+  
+  [renderkit/classname] is a class name of renderKit. default is not set ( empty ).
+  
+  [renderkit/package] is a default package  for all renderers classes included in this renderkit. default is a "\<prefix\>.renderkit.\<name\>"
+  
+  

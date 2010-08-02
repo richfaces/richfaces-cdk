@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		JBoss, Home of Professional Open Source Copyright ${year}, Red Hat,
+		Inc. and individual contributors by the @authors tag. See the
+		copyright.txt in the distribution for a full listing of individual
+		contributors. This is free software; you can redistribute it and/or
+		modify it under the terms of the GNU Lesser General Public License as
+		published by the Free Software Foundation; either version 2.1 of the
+		License, or (at your option) any later version. This software is
+		distributed in the hope that it will be useful, but WITHOUT ANY
+		WARRANTY; without even the implied warranty of MERCHANTABILITY or
+		FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+		License for more details. You should have received a copy of the GNU
+		Lesser General Public License along with this software; if not, write
+		to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+		Boston, MA 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+	-->
+<cdk:properties xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:cdk="http://richfaces.org/cdk/extensions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee">
+	<property>
+		<description>
+			List of content types that a server processing this form
+			will handle correctly
+        </description>
+		<display-name>Content Type</display-name>
+		<icon />
+		<property-name>accept</property-name>
+		<property-class>java.lang.String</property-class>
+		<property-extension>
+			<cdk:pass-through>true</cdk:pass-through>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			List of character encodings for input data
+			that are accepted by the server processing
+			this form.
+        </description>
+		<display-name>Character Set</display-name>
+		<icon />
+		<property-name>acceptcharset</property-name>
+		<property-class>java.lang.String</property-class>
+	</property>
+
+	<property>
+		<description>
+			Content type used to submit the form to the server. If not
+			specified, the default value is
+			"application/x-www-form-urlencoded".
+        </description>
+		<display-name>Encoding Type</display-name>
+		<icon />
+		<property-name>enctype</property-name>
+		<property-class>java.lang.String</property-class>
+		<default-value>"application/x-www-form-urlencoded"</default-value>
+		<property-extension>
+			<cdk:pass-through>true</cdk:pass-through>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			Javascript code executed when this form is reset.
+        </description>
+		<display-name>Form Reset Script</display-name>
+		<icon />
+		<property-name>onreset</property-name>
+		<property-class>java.lang.String</property-class>
+		<property-extension>
+			<cdk:pass-through>true</cdk:pass-through>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			Javascript code executed when this form is submitted.
+        </description>
+		<display-name>Form Submit Script</display-name>
+		<icon />
+		<property-name>onsubmit</property-name>
+		<property-class>java.lang.String</property-class>
+		<property-extension>
+			<cdk:pass-through>true</cdk:pass-through>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			Name of a frame where the response
+			retrieved after this form submit is to
+			be displayed.
+        </description>
+		<display-name>Target Frame</display-name>
+		<icon />
+		<property-name>target</property-name>
+		<property-class>java.lang.String</property-class>
+		<property-extension>
+			<cdk:pass-through>true</cdk:pass-through>
+		</property-extension>
+	</property>
+</cdk:properties>

@@ -1,0 +1,59 @@
+#macro( quietnull $a)
+#if($a)$a#end
+#end
+
+## generate getters and setters for Tag Properties
+#macro(tagPropertyMethods12 $source)
+	// Fields
+	#foreach( $prop in $source.properties )
+	 #if( !$prop.existintag && !$prop.hidden)
+	  #if($prop.classname == "javax.el.MethodExpression" || $prop.classname == "javax.faces.el.MethodBinding")
+		#set($type = "MethodExpression")
+	  #else
+		#if ($prop.el)
+			#set($type = "ValueExpression")
+	  	#else
+			#set($type = "String")
+	  	#end
+	  #end
+	  
+		/*
+		 * $prop.name
+		 * ${prop.xmlEncodedDescription}
+		 */
+		private $type _${prop.name};
+		/**
+		 * ${prop.xmlEncodedDescription}
+		 * Setter for $prop.name
+		 * @param $prop.name - new value
+		 */
+		 public void ${prop.setterName}( $type  __${prop.name} ){
+			this._${prop.name} = __${prop.name};
+	     }
+	  
+	 #if( $prop.alias)
+		/**
+		 * ${prop.xmlEncodedDescription}
+		 * Setter for alias of $prop.name as $prop.alias
+		 * @param $prop.name - new value
+		 */
+		 public void set${prop.upperFirstChar($prop.alias)}( $type  __${prop.alias} ){
+			this.${prop.setterName}(__${prop.alias});
+	     }
+	 #end
+	 #end	 
+	#end
+
+#end
+
+## release Tag Properties
+#macro(tagPropertyRelease $source) 
+	#foreach( $prop in $source.properties )
+	 #if( !$prop.existintag && !$prop.hidden)
+		    this._${prop.name} = null;
+	 #end
+	#end	 
+#end
+
+
+

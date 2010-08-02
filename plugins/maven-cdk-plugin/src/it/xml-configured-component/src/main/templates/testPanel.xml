@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdk:root xmlns="http://www.w3.org/1999/xhtml" xmlns:cdk="http://richfaces.org/cdk/core"
+	xmlns:c="http://richfaces.org/cdk/jstl/core" xmlns:cc="http://richfaces.org/cdk/jsf/composite">
+	<cc:interface>
+		<cdk:class>org.richfaces.cdk.renderkit.html.TestPanelRenderer</cdk:class>
+		<cdk:superclass>org.richfaces.cdk.renderkit.AbstractTestPanelRenderer</cdk:superclass>
+		<cdk:component-family>org.richfaces.cdk.TestPanel</cdk:component-family>
+		<!-- cdk:component-type>org.richfaces.cdk.HtmlTestPanel</cdk:component-type -->
+		<cdk:renderer-type>org.richfaces.cdk.TestPanelRenderer</cdk:renderer-type>
+		<cdk:renderkit-id>HTML_BASIC</cdk:renderkit-id>
+		<cdk:renders-children>true</cdk:renders-children>
+		<cc:attribute name="onclick" />
+		<cc:attribute name="mode" default="ajax" />
+		<cc:attribute name="action" method-signature="void action()" />
+		<cc:attribute name="changeListener"
+			method-signature="void changeListener(ValueChangeEvent)" targets="changes changes1" />
+		<cc:attribute name="disabled" type="boolean" />
+		<cc:attribute name="delay" type="java.lang.Integer" />
+		<cc:attribute name="id" required="true" />
+		<cc:attribute name="experts" shortDescription="For use by experts"
+			displayName="Expert attribute" expert="true" />
+		<cc:attribute name="preferred" shortDescription="It's a preferred attribute"
+			displayName="Preferred attribute" preferred="true" />
+		<cdk:resource-dependencies>
+			<cdk:resource-dependency name="jquery.js" />
+			<cdk:resource-dependency name="richfaces.css"
+				library="org.richfaces" />
+			<cdk:resource-dependency name="richfaces.js"
+				library="org.richfaces" target="body" />
+		</cdk:resource-dependencies>
+
+	</cc:interface>
+	<cc:implementation>
+                <div>
+                <c:if test="#{component.facets['header'] != null}">
+                   <div class="tpHeader">
+                   <cdk:call expression='component.getFacet("header").encodeAll(facesContext)'/>
+                   </div>
+                </c:if>
+                <c:forEach items="#{component.children}" var="iterationVar">
+                    <cdk:call expression='((javax.faces.component.UIComponent)iterationVar).encodeAll(facesContext)'/>
+                </c:forEach>
+                </div> 
+	</cc:implementation>
+</cdk:root>

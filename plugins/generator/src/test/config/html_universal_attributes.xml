@@ -1,0 +1,26 @@
+<!-- HTML 4.0 universal propertys -->
+<property>
+    <name>dir</name>
+      <classname>java.lang.String</classname>
+    <description>HTML: The direction of text display, either 'ltr' (left-to-right) or 'rtl' (right-to-left).</description>
+</property>
+<property>
+    <name>lang</name>
+      <classname>java.lang.String</classname>
+    <description>HTML: The base language of this document.</description>
+</property>
+<property>
+    <name>style</name>
+    <classname>java.lang.String</classname>
+    <description>HTML: CSS styling instructions.</description>
+</property>
+<property>
+    <name>title</name>
+      <classname>java.lang.String</classname>
+    <description>HTML: An advisory title for this element.  Often used by the user agent as a tooltip.</description>
+</property>
+<property>
+    <name>styleClass</name>
+      <classname>java.lang.String</classname>
+    <description>The CSS class for this element.  Corresponds to the HTML 'class' property.</description>
+</property>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		JBoss, Home of Professional Open Source Copyright ${year}, Red Hat,
+		Inc. and individual contributors by the @authors tag. See the
+		copyright.txt in the distribution for a full listing of individual
+		contributors. This is free software; you can redistribute it and/or
+		modify it under the terms of the GNU Lesser General Public License as
+		published by the Free Software Foundation; either version 2.1 of the
+		License, or (at your option) any later version. This software is
+		distributed in the hope that it will be useful, but WITHOUT ANY
+		WARRANTY; without even the implied warranty of MERCHANTABILITY or
+		FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+		License for more details. You should have received a copy of the GNU
+		Lesser General Public License along with this software; if not, write
+		to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+		Boston, MA 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+	-->
+<cdk:properties xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:cdk="http://richfaces.org/cdk/extensions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee">
+	<property>
+		<description>&lt;p class="changed_modified_2_0"&gt; Optional
+			attribute that is a literal string that is the fully qualified
+			class name of a concrete class that implements
+			&lt;code&gt;java.util.Collection&lt;/code&gt;, or an EL expression
+			that
+			evaluates to either 1. such a String, or 2. the
+			&lt;code&gt;Class&lt;/code&gt; object itself. &lt;/p&gt; </description>
+		<display-name>Collection Type</display-name>
+		<icon />
+		<property-name>collectionType</property-name>
+		<property-class>java.lang.String</property-class>
+		<property-extension>
+			<cdk:required>false</cdk:required>
+		</property-extension>
+	</property>
+	<property>
+		<description>&lt;p class="changed_modified_2_0"&gt;
+			Flag indicating that, if this component is activated by the user,
+			The "no selection option", if any, must be hidden.&lt;/p&gt; </description>
+		<display-name>Hide "No Selection" Option</display-name>
+		<icon />
+		<property-name>hideNoSelectionOption</property-name>
+		<property-class>boolean</property-class>
+		<property-extension>
+			<cdk:literal>false</cdk:literal>
+			<jsp-ignore>true</jsp-ignore>
+		</property-extension>
+	</property>
+
+</cdk:properties>

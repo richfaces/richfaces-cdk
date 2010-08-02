@@ -1,0 +1,23 @@
+<properties>
+    &html_style_attributes;
+    <property>
+        <name>dir</name>
+        <classname>java.lang.String</classname>
+        <description>
+			Direction indication for text that does not inherit
+			directionality. Valid values are "LTR" (left-to-right)
+			and "RTL" (right-to-left)
+		</description>
+    </property>
+    <property>
+        <name>lang</name>
+        <classname>java.lang.String</classname>
+        <description> Code describing the language used in the generated markup for this component</description>
+    </property>
+    <property>
+        <name>title</name>
+        <classname>java.lang.String</classname>
+        <description> Advisory title information about markup elements generated for this component</description>
+    </property>
+    
+</properties>

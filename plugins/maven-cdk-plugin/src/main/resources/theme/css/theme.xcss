@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<f:template xmlns:f='http:/jsf.exadel.com/template'
+   xmlns:u='http:/jsf.exadel.com/template/util'
+   xmlns="http://www.w3.org/1999/xhtml">
+
+	<u:selector name=".rich-page">
+	</u:selector>
+
+	<u:selector name=".rich-page-header">
+	</u:selector>
+
+	<u:selector name=".rich-page-footer">
+	</u:selector>
+
+	<u:selector name=".rich-page-sidebar">
+	</u:selector>
+
+	<u:selector name=".rich-page-body">
+	</u:selector>
+
+	<f:verbatim>
+		<![CDATA[
+		.rich-page-sidebar {
+			float: left; 
+			margin-bottom: 15px; 
+			margin-right: 15px;
+		}	
+		]]>
+	</f:verbatim>
+</f:template>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
+  version="1.2">	
+${content}
+
+#foreach( $kit in ${renderkits})
+  <render-kit>
+		#if(${kit.name})
+		<render-kit-id>${kit.name}</render-kit-id>
+		#if(${kit.classname})
+		<render-kit-class>${kit.classname}</render-kit-class>
+		#end
+		#end
+		${kit.facesConfig}
+  </render-kit>
+#end
+
+
+</faces-config>

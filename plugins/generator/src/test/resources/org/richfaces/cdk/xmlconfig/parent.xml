@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdk:properties xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:cdk="http://richfaces.org/cdk/extensions">
+		<xi:include
+		href="urn:resource:org/richfaces/cdk/xmlconfig/include.xml"
+		xpointer="xmlns(cdk=http://richfaces.org/cdk/extensions)xpointer(/cdk:properties/*)"/>
+	
+</cdk:properties>

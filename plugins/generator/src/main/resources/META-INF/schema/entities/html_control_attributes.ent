@@ -1,0 +1,28 @@
+<properties>
+    <property>
+        <name>accesskey</name>
+        <classname>java.lang.String</classname>
+        <description>This attribute assigns an access key to an element. An access key is a single character from the document character set. Note: Authors should consider the input method of the expected reader when specifying an accesskey</description>
+    </property>
+    <property>
+        <name>alt</name>
+        <classname>java.lang.String</classname>
+        <description>For a user agents that cannot display images, forms, or applets, this attribute specifies alternate text. The language of the alternate text is specified by the lang attribute</description>
+    </property>
+    <property>
+        <name>disabled</name>
+        <classname>boolean</classname>
+        <description>When set for a form control, this boolean attribute disables the control for your input</description>
+    </property>
+    
+    <property>
+        <name>size</name>
+        <classname>int</classname>
+        <description>This attribute tells the user agent the initial width of the control. The width is given in pixels except when type attribute has the value "text" or "password". In that case, its value refers to the (integer) number of characters</description>
+    </property>
+    <property>
+        <name>tabindex</name>
+        <classname>java.lang.String</classname>
+        <description>This attribute specifies the position of the current element in the tabbing order for the current document. This value must be a number between 0 and 32767. User agents should ignore leading zeros</description>
+    </property>
+</properties>

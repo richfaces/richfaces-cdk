@@ -1,0 +1,63 @@
+<properties>
+    <property>
+        <name>id</name><classname>java.lang.String</classname><description>Every component may have a unique id automatically created if omitted</description>
+    </property>
+    <property>
+        <name>rendered</name>
+        <classname>boolean</classname>
+        <description>
+            If "false", this component is not rendered
+        </description>
+    </property>
+    <property existintag="true" exist="true" el="true" elonly="true">
+        <name>binding</name>
+        <classname>java.lang.String</classname>
+        <description>The attribute takes a value-binding expression for a component property of a backing bean</description>
+    </property>
+    <property>
+        <name>value</name>
+        <classname>java.lang.Object</classname>
+        <description>
+            The initial value to set when rendered for the first time
+        </description>
+    </property>
+    <property  attachedstate="true">
+        <name>converter</name>
+        <classname>javax.faces.convert.Converter</classname>
+        <description>
+            Id of Converter to be used or reference to a Converter
+        </description>
+    </property>
+    <property>
+        <name>immediate</name>
+        <classname>boolean</classname>
+        <description>
+            A flag indicating that this component value must be converted
+            and validated immediately (that is, during Apply Request Values
+            phase), rather than waiting until a Process Validations phase
+        </description>
+    </property>
+    <property>
+        <name>required</name>
+        <classname>boolean</classname>
+        <description>
+            If "true", this component is checked for non-empty input
+        </description>
+    </property>
+    <property  attachedstate="true">
+        <name>validator</name>
+        <classname>javax.faces.el.MethodBinding</classname>
+        <methodargs>javax.faces.context.FacesContext, javax.faces.component.UIComponent, java.lang.Object</methodargs>
+        <description>
+            MethodBinding pointing at a method that is called during
+            Process Validations phase of the request processing lifecycle,
+            to validate the current value of this component
+        </description>
+    </property>
+    <property  attachedstate="true">
+        <name>valueChangeListener</name>
+        <classname>javax.faces.el.MethodBinding</classname>
+        <methodargs>javax.faces.event.ValueChangeEvent</methodargs>
+        <description>Listener for value changes</description>
+    </property>
+ </properties>

@@ -1,0 +1,26 @@
+<properties>
+    <property>
+        <name>align</name>
+        <classname>java.lang.String</classname>
+        <description>
+            Deprecated. This attribute specifies the position of an IMG, OBJECT, or APPLET with respect to its context.           
+           The possible values are "bottom", "middle", "top", "left" and "right". The default value is "middle".
+        </description>
+    </property>
+    <property>
+        <name>border</name>
+        <classname>java.lang.String</classname>
+        <description>Deprecated. This attribute specifies the width of an IMG or OBJECT border, in pixels. The default value for this attribute depends on the user agent</description>
+    </property>
+    <property>
+        <name>hspace</name>
+        <classname>java.lang.String</classname>
+        <description>Deprecated. This attribute specifies the amount of white space to be inserted to the left and right of an IMG, APPLET, or OBJECT. The default value is not specified, but is generally a small, non-zero length</description>
+    </property>
+    <property>
+        <name>vspace</name>
+        <classname>java.lang.String</classname>
+        <description>Deprecated. This attribute specifies the amount of white space to be inserted above and below an IMG, APPLET, or OBJECT. The default value is not specified, but is generally a small, non-zero length</description>
+    </property>    
+    
+</properties>

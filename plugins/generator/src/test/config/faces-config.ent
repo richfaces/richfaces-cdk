@@ -1,0 +1,10 @@
+	<factory>
+		<render-kit-factory>com.exadel.vcp.framework.renderer.ChameleonRenderKitFactory</render-kit-factory>
+	</factory>
+	<application>
+		<variable-resolver>org.richfaces.skin.SkinVariableResolver</variable-resolver>
+		<property-resolver>org.richfaces.skin.SkinPropertyResolver</property-resolver>
+	</application>
+  <lifecycle>
+  	<phase-listener>com.exadel.vcp.framework.renderer.BeforeRenderListener</phase-listener>
+  </lifecycle>

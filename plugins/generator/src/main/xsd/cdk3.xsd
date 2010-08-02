@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="alias">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="classname">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="component">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name" />
+        <xs:element ref="family" minOccurs="0" />
+        <xs:element ref="classname" minOccurs="0" />
+        <xs:element ref="superclass" minOccurs="0" />
+        <xs:element ref="test" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="description" minOccurs="0" />
+        <xs:element ref="displayname" minOccurs="0" />
+        <xs:element ref="icon" minOccurs="0" />
+        <xs:element ref="facet" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="renderer" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="tag" minOccurs="0" />
+        <xs:element ref="taghandler" minOccurs="0" />
+        <xs:choice>
+          <xs:element ref="include" />
+          <xs:element ref="properties" />
+          <xs:element ref="property" />
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="generate" use="optional" default="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="true" />
+            <xs:enumeration value="false" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="componentclass">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="components">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="component" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="renderer" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="listener" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="validator" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="converter" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="function" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="converter">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="id" />
+        <xs:element ref="classname" minOccurs="0" />
+        <xs:element ref="superclass" minOccurs="0" />
+        <xs:element ref="test" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="description" minOccurs="0" />
+        <xs:element ref="displayname" minOccurs="0" />
+        <xs:element ref="icon" minOccurs="0" />
+        <xs:element ref="tag" minOccurs="0" />
+        <xs:element ref="taghandler" minOccurs="0" />
+        <xs:choice>
+          <xs:element ref="include" />
+          <xs:element ref="properties" />
+          <xs:element ref="property" />
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="generate" use="optional" default="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="true" />
+            <xs:enumeration value="false" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="defaultvalue">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="description">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:any namespace="http://www.w3.org/namespace/" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="displayname">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:any namespace="http://www.w3.org/namespace/" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="eventclass">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="facet">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name" />
+        <xs:element ref="displayname" minOccurs="0" />
+        <xs:element ref="description" minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="family">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="function">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name" />
+        <xs:element ref="description" minOccurs="0" />
+        <xs:element ref="method" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="icon">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="id">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="include">
+    <xs:complexType>
+      <xs:attribute name="href" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="listener">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name" />
+        <xs:element ref="listenerclass" />
+        <xs:element ref="componentclass" />
+        <xs:element ref="eventclass" />
+        <xs:element ref="methodname" minOccurs="0" />
+        <xs:element ref="tag" minOccurs="0" />
+        <xs:element ref="taghandler" minOccurs="0" />
+        <xs:element ref="property" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="listenerclass">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="method">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="methodargs">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="methodname">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="name">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="properties">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element ref="include" />
+          <xs:element ref="properties" />
+          <xs:element ref="property" />
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="property">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name" />
+        <xs:element ref="classname" minOccurs="0" />
+        <xs:element ref="description" minOccurs="0" />
+        <xs:element ref="defaultvalue" minOccurs="0" />
+        <xs:element ref="methodargs" minOccurs="0" />
+        <xs:element ref="returntype" minOccurs="0" />
+        <xs:element ref="alias" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute name="el" use="optional" default="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="true" />
+            <xs:enumeration value="false" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="transient" use="optional" default="false">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="true" />
+            <xs:enumeration value="false" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="disabled" use="optional" default="false">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="true" />
+            <xs:enumeration value="false" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="hidden" use="optional" default="false">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="true" />
+            <xs:enumeration value="false" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="required" use="optional" default="false">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="true" />
+            <xs:enumeration value="false" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="attachedstate" use="optional" default="false">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="true" />
+            <xs:enumeration value="false" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="exist" use="optional" default="false">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="true" />
+            <xs:enumeration value="false" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="elonly" use="optional" default="false">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="true" />
+            <xs:enumeration value="false" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="existintag" use="optional" default="false">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="true" />
+            <xs:enumeration value="false" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="raw" use="optional" default="false">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="true" />
+            <xs:enumeration value="false" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="renderer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name" />
+        <xs:element ref="family" minOccurs="0" />
+        <xs:choice>
+          <xs:element ref="classname" />
+          <xs:element ref="template" />
+        </xs:choice>
+        <xs:element ref="superclass" minOccurs="0" />
+        <xs:element ref="description" minOccurs="0" />
+        <xs:element ref="displayname" minOccurs="0" />
+        <xs:element ref="icon" minOccurs="0" />
+        <xs:element ref="facet" minOccurs="0" />
+        <xs:element ref="renderkit" minOccurs="0" />
+      </xs:sequence>
+      <xs:attribute name="generate" use="optional" default="false">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="true" />
+            <xs:enumeration value="false" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="override" use="optional" default="false">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="true" />
+            <xs:enumeration value="false" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="renderkit">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="returntype">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="superclass">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="superclassname">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="tag">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name" />
+        <xs:element ref="classname" />
+        <xs:element ref="superclass" minOccurs="0" />
+        <xs:element ref="test" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="taglib" minOccurs="0" />
+        <xs:element ref="description" minOccurs="0" />
+        <xs:element ref="displayname" minOccurs="0" />
+        <xs:element ref="icon" minOccurs="0" />
+      </xs:sequence>
+      <xs:attribute name="generate" use="optional" default="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="true" />
+            <xs:enumeration value="false" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="bodyContent" use="optional" default="JSP">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="JSP" />
+            <xs:enumeration value="empty" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="taghandler">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name" minOccurs="0" />
+        <xs:element ref="classname" />
+        <xs:element ref="superclass" minOccurs="0" />
+        <xs:element ref="description" minOccurs="0" />
+        <xs:element ref="displayname" minOccurs="0" />
+        <xs:element ref="icon" minOccurs="0" />
+      </xs:sequence>
+      <xs:attribute name="generate" use="optional" default="false">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="true" />
+            <xs:enumeration value="false" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="taglib">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="template">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="test">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="classname" minOccurs="0" />
+        <xs:element ref="superclassname" minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="validator">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="id" />
+        <xs:element ref="classname" minOccurs="0" />
+        <xs:element ref="superclass" minOccurs="0" />
+        <xs:element ref="test" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="description" minOccurs="0" />
+        <xs:element ref="displayname" minOccurs="0" />
+        <xs:element ref="icon" minOccurs="0" />
+        <xs:element ref="tag" minOccurs="0" />
+        <xs:element ref="taghandler" minOccurs="0" />
+        <xs:choice>
+          <xs:element ref="include" />
+          <xs:element ref="properties" />
+          <xs:element ref="property" />
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="generate" use="optional" default="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="true" />
+            <xs:enumeration value="false" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

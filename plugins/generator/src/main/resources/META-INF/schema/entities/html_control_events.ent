@@ -1,0 +1,20 @@
+<properties>
+    <!-- HTML 4.0 - events specific for controls -->
+    <property>
+        <name>onblur</name>
+        <classname>java.lang.String</classname>
+        <description>The client side script method to be called when the element loses the focus</description>
+    </property>
+    <property>
+        <name>onfocus</name>
+        <classname>java.lang.String</classname>
+        <description>The client side script method to be called when the element gets the focus</description>
+    </property>
+    <property>
+        <name>onchange</name>
+        <classname>java.lang.String</classname>
+        <description>The client side script method to be called when the element value is changed</description>
+    </property>
+    
+    
+</properties>

@@ -1,0 +1,181 @@
+<properties>
+    
+    
+    
+    
+    <property>
+        <name>id</name><classname>java.lang.String</classname><description>Every component may have an unique id. Automatically created if omitted</description>
+    </property>
+    <property>
+        <name>rendered</name><classname>java.lang.String</classname><description>If "false", this component will not be rendered</description>
+    </property>
+    <property>
+        <name>binding</name><classname>java.lang.String</classname><description>The attribute takes a value-binding expression for a component property of
+a backing bean</description>
+    </property>
+    
+    
+    
+    <property>
+        <name>dir</name><classname>java.lang.String</classname><description>Alternate textual description of the element rendered by this component</description>
+    </property>
+    <property>
+        <name>lang</name><classname>java.lang.String</classname><description> Code describing the language used in the generated markup for this component</description>
+    </property>
+    <property>
+        <name>style</name><classname>java.lang.String</classname><description>CSS style(s)is/are to be applied when this component is rendered</description>
+    </property>
+    <property>
+        <name>title</name><classname>java.lang.String</classname><description> Advisory title information about markup elements generated for this component</description>
+    </property>
+    <property>
+        <name>styleClass</name><classname>java.lang.String</classname><description>Corresponds to the HTML class attribute</description>
+    </property>
+    
+    
+    <property>
+        <name>onclick</name><classname>java.lang.String</classname><description>Defines a JavaScript onclick event handler</description>
+    </property>
+    <property>
+        <name>ondblclick</name><classname>java.lang.String</classname><description>Defines a JavaScript ondblclick  event handler</description>
+    </property>
+    <property>
+        <name>onmousedown</name><classname>java.lang.String</classname><description>Defines a JavaScript onmousedown event handler</description>
+    </property>
+    <property>
+        <name>onmouseup</name><classname>java.lang.String</classname><description>Defines a JavaScript onmouseup event handler</description>
+    </property>
+    <property>
+        <name>onmouseover</name><classname>java.lang.String</classname><description>Defines a JavaScript onmouseover event handler</description>
+    </property>
+    <property>
+        <name>onmousemove</name><classname>java.lang.String</classname><description>Defines a JavaScript onmousemove event handler</description>
+    </property>
+    <property>
+        <name>onmouseout</name><classname>java.lang.String</classname><description>Defines a JavaScript onmouseout event handler</description>
+    </property>
+    <property>
+        <name>onkeypress</name><classname>java.lang.String</classname><description>Defines a JavaScript onkeypress event handler</description>
+    </property>
+    <property>
+        <name>onkeydown</name><classname>java.lang.String</classname><description>Defines a JavaScript onkeydown event handler</description>
+    </property>
+    <property>
+        <name>onkeyup</name><classname>java.lang.String</classname><description>Defines a JavaScript onkeyup event handler</description>
+    </property>
+    
+    
+    
+    <property>
+        <name>align</name><classname>java.lang.String</classname><description>left|center|right [CI]
+            Deprecated. This attribute specifies the position of the table with respect to the document. Permitted values:
+            
+            * left: The table is to the left of the document.
+            * center: The table is to the center of the document.
+            * right: The table is to the right of the document
+            
+        </description>
+    </property>
+    <property>
+        <name>border</name><classname>java.lang.String</classname><description>This attributes specifies the width (in pixels only) of the frame around a table </description>
+    </property>
+    <property>
+        <name>bgcolor</name><classname>java.lang.String</classname><description>Deprecated. This attribute sets the background color for the document body or table cells.
+            
+            This attribute sets the background color of the canvas for the document body (the BODY element) or for tables (the TABLE, TR, TH, and TD elements). Additional attributes for specifying text color can be used with the BODY element.
+            
+            This attribute has been deprecated in favor of style sheets for specifying background color information
+        </description>
+    </property>
+    <property>
+        <name>cellpadding</name><classname>java.lang.String</classname><description>    This
+         attribute specifies the amount of space between the border of the cell and its contents.
+          If the value of this attribute is a pixel length, all four margins should be this
+           distance from the contents. If the value of the attribute is percentage length, the
+            top and bottom margins should be equally separated from the content based on percentage of the available vertical space, and the left and right margins should be
+             equally separated from the content based on percentage of the available horizontal space
+            
+        </description>
+    </property>
+    <property>
+        <name>cellspacing</name><classname>java.lang.String</classname><description>This attribute specifies how much space the user agent should leave between the left side of the table and the left-hand side of the leftmost column, the top of the table and the top side of the topmost row, and so on for the right and bottom of the table. The attribute also specifies the amount of space to leave between cells</description>
+    </property>
+    <property>
+        <name>datafld</name><classname>java.lang.String</classname><description>Retrieves which field of a given data source, as specified by the dataSrc property, to bind to the specified object</description>
+    </property>
+    <property>
+        <name>datasrc</name><classname>java.lang.String</classname><description>Retrieves the source of the data for data binding</description>
+    </property>
+    <property>
+        <name>dataformatas</name><classname>java.lang.String</classname><description>Indicates whether the bound data is plain text or HTML</description>
+    </property>
+    <property>
+        <name>frame</name><classname>java.lang.String</classname><description>void|above|below|hsides|lhs|rhs|vsides|box|border [CI]
+            This attribute specifies which sides of the frame surrounding a table will be visible. Possible values:
+            
+            * void: No sides. This is the default value.
+            * above: The top side only.
+            * below: The bottom side only.
+            * hsides: The top and bottom sides only.
+            * vsides: The right and left sides only.
+            * lhs: The left-hand side only.
+            * rhs: The right-hand side only.
+            * box: All four sides.
+            * border: All four sides
+            
+        </description>
+    </property>
+    <property>
+        <name>rules</name><classname>java.lang.String</classname><description>This attribute specifies which rules will appear between cells within a table. The rendering of rules is user agent dependent. Possible values:
+            
+            * none: No rules. This is the default value.
+            * groups: Rules will appear between row groups (see THEAD, TFOOT, and TBODY) and column groups (see COLGROUP and COL) only.
+            * rows: Rules will appear between rows only.
+            * cols: Rules will appear between columns only.
+            * all: Rules will appear between all rows and columns
+        </description>
+    </property>
+    <property>
+        <name>summary</name><classname>java.lang.String</classname><description>This attribute provides a summary of the table's purpose and structure for user agents rendering to non-visual media such as speech and Braille</description>
+    </property>
+    <property>
+        <name>width</name><classname>java.lang.String</classname><description>This attribute specifies the desired width of the entire table and is intended for visual user agents. When the value is percentage value, the value is relative to the user agent's available horizontal space. In the absence of any width specification, table width is determined by the user agent</description>
+    </property>
+    
+    
+    <property>
+        <name>value</name><classname>java.lang.String</classname><description>Supported types see JSF Spec 4.1.3</description>
+    </property>
+    <property>
+        <name>var</name><classname>java.lang.String</classname><description>
+            The request-scope attribute under which the data object for the
+            current row will be exposed when iterating
+        </description>
+    </property>
+    <property>
+        <name>rows</name><classname>java.lang.String</classname><description>
+            The number of rows to be displayed, or zero for all remaining
+            rows in the table.
+        </description>
+    </property>
+    <property>
+        <name>first</name><classname>java.lang.String</classname><description>
+            The zero-relative row number of the first row to be displayed
+        </description>
+    </property>
+    
+    <property>
+        <name>columnClasses</name><classname>java.lang.String</classname><description>Comma-separated list of CSS classes for columns</description>
+    </property>
+    <property>
+        <name>footerClass</name><classname>java.lang.String</classname><description>CSS class for the table footer</description>
+    </property>
+    <property>
+        <name>headerClass</name><classname>java.lang.String</classname><description>CSS class for the table header</description>
+    </property>
+    <property>
+        <name>rowClasses</name><classname>java.lang.String</classname><description>A comma-delimited list of CSS style classes that is applied to popup table rows</description>
+    </property>
+    
+    
+</properties>

@@ -1,0 +1,8 @@
+<properties>
+    &html_control_attributes;
+    <property>
+        <name>type</name>
+        <classname>java.lang.String</classname>
+        <description>This attribute specifies a type of control to create. The possible values are "submit", "reset", "image" and "button". The default value for this attribute is "submit"</description>
+    </property>    
+</properties>

@@ -1,0 +1,42 @@
+import java.io.*;
+import java.util.*;
+import java.util.regex.*;
+
+try
+{
+    File generatedPackage = new File( basedir, "target/generated-sources/main/java" );
+    System.out.println( "Checking for existence of generated package directory: " + generatedPackage );
+    if ( !generatedPackage.isDirectory() )
+    {
+        System.out.println( "FAILED" );
+        return false;
+    }
+
+    File classesDirectory = new File( basedir, "target/classes" );
+
+    String[] classes = { "org/richfaces/cdk/test/UITestComponent" };
+    for ( String generatedClass : classes )
+    {
+        File generatedClassFile = new File( generatedPackage, generatedClass + ".java" );
+        System.out.println( "Checking for existence of generated Class: " + generatedClassFile );
+        if ( !generatedClassFile.isFile() )
+        {
+            System.out.println( "FAILED" );
+            return false;
+        }
+        File compiledClassFile = new File( classesDirectory, generatedClass + ".class" );
+        System.out.println( "Checking for existence of compiled Class: " + compiledClassFile );
+        if ( !compiledClassFile.isFile() )
+        {
+            System.out.println( "FAILED" );
+            return false;
+        }
+    }
+}
+catch( Throwable t )
+{
+    t.printStackTrace();
+    return false;
+}
+
+return true;

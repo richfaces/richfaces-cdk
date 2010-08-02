@@ -1,0 +1,39 @@
+<properties>
+    <property>
+        <name>alt</name>
+        <classname>java.lang.String</classname>
+        <description>For user agents that cannot display images, forms, or applets, this attribute specifies alternate text. The language of the alternate text is specified by the lang attribute</description>
+    </property>
+    <property>
+        <name>height</name>
+        <classname>java.lang.String</classname>
+        <description>    Image and object height override.
+            
+            When specified, the width and height attributes tell user agents to override the natural image or object size in favor of these values
+        </description>
+    </property>
+    <property>
+        <name>ismap</name>
+        <classname>boolean</classname>
+        <description>Flag indicating that this image is to be used as a server side image map. Such an image must be enclosed within a hyperlink ("a")</description>
+    </property>
+    <property>
+        <name>longdesc</name>
+        <classname>java.lang.String</classname>
+        <description>URI to a long description of the image represented by this element</description>
+    </property>
+    
+    
+    <property>
+        <name>usemap</name>
+        <classname>java.lang.String</classname>
+        <description> The name of a client side image map (an HTML "map" element) for which this element provides the image</description>
+    </property>
+    <property>
+        <name>width</name>
+        <classname>java.lang.String</classname>
+        <description>Image and object width override. When specified, the width and height attributes tell user agents to override the natural image or object size in favor of these values</description>
+    </property>
+    
+    
+</properties>

@@ -1,0 +1,255 @@
+<!-- Defenition of component configuration for generator 
+	PUBLIC-ID "-//AJAX4JSF//CDK Generator config/EN"
+	SYSTEM-ID http://labs.jboss.com/jbossrichfaces/component-config.dtd -->
+<!-- Root element for components and renderers  -->	
+<!ELEMENT components (component*,renderer*,listener*,validator*,converter*,function*) >
+<!-- Component description with common properties, tags and renderers descriptions  -->	
+<!ELEMENT component (name,family?,classname?,superclass?,test*,description?,displayname?,icon?,facet*,renderer*,tag?,taghandler?,(include|properties|property)*)>
+<!-- Validator description with properties and tags -->
+<!ELEMENT validator (id,classname?,superclass?,test*,description?,displayname?,icon?,tag?,taghandler?,(include|properties|property)*)>
+<!-- Validator description with properties and tags -->
+<!ELEMENT converter (id,classname?,superclass?,test*,description?,displayname?,icon?,tag?,taghandler?,(include|properties|property)*)>
+
+<!ELEMENT function (name,description?,method)>
+
+<!-- components with generate=false not produce component class, 
+     use for describe superclasses for other components -->
+<!ATTLIST component
+	generate (true|false) "true" 
+	>
+	
+<!-- validators with generate=false do not generate a class -->
+<!ATTLIST validator
+	generate (true|false) "true" 
+	>
+	
+<!-- converters with generate=false do not generate a class -->
+<!ATTLIST converter
+	generate (true|false) "true" 
+	>
+
+<!-- Common component parameters -->
+<!-- Name of component/renderer/property -->
+<!ELEMENT name (#PCDATA)>
+<!-- Id of the validator/converter -->
+<!ELEMENT id (#PCDATA)>
+<!-- Component family -->
+<!ELEMENT family (#PCDATA)>
+<!-- Element Description for config files -->
+<!ELEMENT description ANY>
+<!-- Element Dispaly name , for config files -->
+<!ELEMENT displayname ANY>
+<!-- Element icon image , for config files -->
+<!ELEMENT icon (#PCDATA)>
+<!-- component allowed facet  name , for config files -->
+<!ELEMENT facet (name,displayname?,description?)>
+<!-- Full name of Java class -->
+<!ELEMENT classname (#PCDATA)>
+<!-- Full name of Java super class -->
+<!ELEMENT superclass (#PCDATA)>
+<!-- Define renderer for this component -->
+<!ELEMENT renderer (name,family?,(classname|template),superclass?,description?,displayname?,icon?,facet?,renderkit?)>
+<!-- Define render kit Id for renderer -->
+<!ELEMENT renderkit (#PCDATA)>
+<!-- Template file name -->
+<!ELEMENT template (#PCDATA)>
+<!-- Fully-qualified method name and signature -->
+<!ELEMENT method (#PCDATA)>
+
+<!ATTLIST renderer
+	generate (true|false) "false" 
+	override (true|false) "false" 
+	>
+
+<!-- Define JSP tag for this component -->
+<!ELEMENT tag (name,classname,superclass?,test*,taglib?,description?,displayname?,icon?)>
+<!ATTLIST tag
+	generate (true|false) "true" 
+	bodyContent (JSP|empty) "JSP" 
+	>
+
+<!ELEMENT test (classname?,superclassname?)>
+<!--!ELEMENT classname (#PCDATA)-->
+<!ELEMENT superclassname (#PCDATA)>
+
+<!-- Define JSP tag for this component -->
+<!ELEMENT taghandler (name?,classname,superclass?,description?,displayname?,icon?)>
+<!ATTLIST taghandler
+	generate (true|false) "false" 
+	>
+
+<!ELEMENT listener (name,listenerclass,componentclass,eventclass,methodname?,tag?,taghandler?,property*)>
+
+<!ELEMENT listenerclass (#PCDATA)>
+<!ELEMENT eventclass (#PCDATA)>
+<!ELEMENT componentclass (#PCDATA)>
+<!ELEMENT methodname (#PCDATA)>
+
+<!-- Short name of taglib for this tag - for generate set of taglibs in single task -->
+<!ELEMENT taglib (#PCDATA)>
+
+<!-- proprties group for included entity -->
+<!ELEMENT properties ((include|properties|property)*)>
+
+<!-- Define single property for this component -->
+<!ELEMENT property (name,classname?,description?,defaultvalue?,methodargs?,returntype?,alias*)>
+
+<!-- default value for property -->
+<!ELEMENT defaultvalue (#PCDATA)>
+
+<!-- comma-separated list of method call parameters classes for Method-binded property -->
+<!ELEMENT methodargs (#PCDATA)>
+
+<!-- return type for method call parameters classes for Method-binded property -->
+<!ELEMENT returntype (#PCDATA)>
+
+<!-- alias for property in JSP tag -->
+<!ELEMENT alias (#PCDATA)>
+
+<!ATTLIST property 
+	el (true|false) "true"
+	elonly (true|false) "false"
+	hidden (true|false) "false"
+	exist (true|false) "false"
+	raw (true|false) "false"
+	existintag (true|false) "false"
+	attachedstate (true|false) "false"
+	transient (true|false) "false"
+	required (true|false) "false"
+	disabled (true|false) "false"	
+	>
+<!-- include pre-defined properties set -->
+<!ELEMENT include EMPTY >
+<!ATTLIST include 
+      href CDATA #REQUIRED
+>
+
+<!-- pre-defined entities for common components properties -->
+<!ENTITY html_attributes   PUBLIC "html_universal_attributes" "entities/html_universal_attributes.ent">	
+<!-- pre-defined entities for common component events -->
+<!ENTITY html_events   PUBLIC "html_events" "entities/html_events.ent">	
+<!-- pre-defined entities for common controls' events -->
+<!ENTITY html_control_events   PUBLIC "html_control_events" "entities/html_control_events.ent">	
+<!-- -->
+<!ENTITY ajax_region_attributes PUBLIC "ajax_region_attributes" "entities/ajax_region_attributes.ent">
+<!-- -->
+<!ENTITY ajax_component_attributes PUBLIC "ajax_component_attributes" "entities/ajax_component_attributes.ent">
+<!-- -->
+<!ENTITY ajax_output_attributes PUBLIC "ajax_output_attributes" "entities/ajax_output_attributes.ent">
+<!-- -->
+<!ENTITY ajax_dnd_attributes PUBLIC "ajax_dnd_attributes" "entities/ajax_dnd_attributes.ent">
+<!-- -->
+<!ENTITY dropzone_attributes PUBLIC "dropzone_attributes" "entities/dropzone_attributes.ent">
+<!-- -->
+<!ENTITY draggable_attributes PUBLIC "draggable_attributes" "entities/draggable_attributes.ent">
+
+<!-- imported from myfaces -->
+
+<!-- -->
+<!ENTITY validator_min_max_attributes PUBLIC "validator_min_max_attributes" "entities/validator_min_max_attributes.ent">
+<!-- -->
+<!ENTITY ui_component_attributes PUBLIC "ui_component_attributes" "entities/ui_component_attributes.ent">
+<!-- -->
+<!ENTITY ui_parameter_attributes PUBLIC "ui_parameter_attributes" "entities/ui_parameter_attributes.ent">
+<!-- -->
+<!ENTITY ui_for_attribute PUBLIC "ui_for_attribute" "entities/ui_for_attribute.ent">
+<!-- -->
+<!ENTITY ui_select_item_attributes PUBLIC "ui_select_item_attributes" "entities/ui_select_item_attributes.ent">
+<!-- -->
+<!ENTITY ui_select_items_attributes PUBLIC "ui_select_items_attributes" "entities/ui_select_items_attributes.ent">
+<!-- -->
+<!ENTITY html_anchor_attributes PUBLIC "html_anchor_attributes" "entities/html_anchor_attributes.ent">
+<!-- -->
+<!ENTITY html_button_attributes PUBLIC "html_button_attributes" "entities/html_button_attributes.ent">
+<!-- -->
+<!ENTITY html_event_handler_attributes PUBLIC "html_event_handler_attributes" "entities/html_events.ent">
+<!-- -->
+<!ENTITY html_form_attributes PUBLIC "html_form_attributes" "entities/html_form_attributes.ent">
+<!-- -->
+<!ENTITY spec_img_attributes PUBLIC "spec_img_attributes" "entities/spec_img_attributes.ent"> 
+<!-- -->
+<!ENTITY html_img_attributes PUBLIC "html_img_attributes" "entities/html_img_attributes.ent">
+<!-- -->
+<!ENTITY html_input_attributes PUBLIC "html_input_attributes" "entities/html_input_attributes.ent">
+<!-- -->
+<!ENTITY html_input_checkbox_attributes PUBLIC "html_input_checkbox_attributes" "entities/html_input_checkbox_attributes.ent">
+<!-- -->
+<!ENTITY html_input_radio_attributes PUBLIC "html_input_radio_attributes" "entities/html_input_radio_attributes.ent">
+<!-- -->
+<!ENTITY html_label_attributes PUBLIC "html_label_attributes" "entities/html_label_attributes.ent">
+<!-- -->
+<!ENTITY html_select_attributes PUBLIC "html_select_attributes" "entities/html_select_attributes.ent">
+<!-- -->
+<!ENTITY html_table_attributes PUBLIC "html_table_attributes" "entities/html_table_attributes.ent">
+<!-- -->
+<!ENTITY html_textarea_attributes PUBLIC "html_textarea_attributes" "entities/html_textarea_attributes.ent">
+<!-- -->
+<!ENTITY html_universal_attributes PUBLIC "html_universal_attributes" "entities/html_universal_attributes.ent">
+<!-- -->
+<!ENTITY html_style_attributes PUBLIC "html_style_attributes" "entities/html_style_attributes.ent">
+<!-- -->
+<!ENTITY html_control_attributes PUBLIC "html_control_attributes" "entities/html_control_attributes.ent">
+<!-- -->
+<!ENTITY html_control_events PUBLIC "html_control_events" "entities/html_control_events.ent">
+<!-- -->
+<!ENTITY html_events PUBLIC "html_events" "entities/html_events.ent">
+<!-- -->
+<!ENTITY html_input_events PUBLIC "html_input_events" "entities/html_input_events.ent">
+<!-- -->
+<!ENTITY ui_column_attributes PUBLIC "ui_column_attributes" "entities/ui_column_attributes.ent">
+<!-- -->
+<!ENTITY ui_command_attributes PUBLIC "ui_command_attributes" "entities/ui_command_attributes.ent">
+<!-- -->
+<!ENTITY ui_component_attributes PUBLIC "ui_component_attributes" "entities/ui_component_attributes.ent">
+<!-- -->
+<!ENTITY ui_data_attributes PUBLIC "ui_data_attributes" "entities/ui_data_attributes.ent">
+<!-- -->
+<!ENTITY ui_form_attributes PUBLIC "ui_form_attributes" "entities/ui_form_attributes.ent">
+<!-- -->
+<!ENTITY ui_graphic_attributes PUBLIC "ui_graphic_attributes" "entities/ui_graphic_attributes.ent">
+<!-- -->
+<!ENTITY ui_input_attributes PUBLIC "ui_input_attributes" "entities/ui_input_attributes.ent">
+<!-- -->
+<!ENTITY ui_message_attributes PUBLIC "ui_message_attributes" "entities/ui_message_attributes.ent">
+<!-- -->
+<!ENTITY ui_messages_attributes PUBLIC "ui_messages_attributes" "entities/ui_messages_attributes.ent">
+<!-- -->
+<!ENTITY ui_output_attributes PUBLIC "ui_output_attributes" "entities/ui_output_attributes.ent">
+<!-- -->
+<!ENTITY ui_panel_attributes PUBLIC "ui_panel_attributes" "entities/ui_panel_attributes.ent">
+<!-- -->
+<!ENTITY ui_parameter_attributes PUBLIC "ui_parameter_attributes" "entities/ui_parameter_attributes.ent">
+<!-- -->
+<!ENTITY ui_select_boolean_attributes PUBLIC "ui_select_boolean_attributes" "entities/ui_select_boolean_attributes.ent">
+<!-- -->
+<!ENTITY ui_select_many_attributes PUBLIC "ui_select_many_attributes" "entities/ui_select_many_attributes.ent">
+<!-- -->
+<!ENTITY ui_select_one_attributes PUBLIC "ui_select_one_attributes" "entities/ui_select_one_attributes.ent">
+<!-- -->
+<!ENTITY spec_img_attributes PUBLIC "spec_img_attributes" "entities/spec_img_attributes.ent">
+<!-- -->
+<!ENTITY spec_table_attributes PUBLIC "spec_table_attributes" "entities/spec_table_attributes.ent">
+<!-- -->
+<!ENTITY content_component_attributes PUBLIC "content_component_attributes" "entities/content_component_attributes.ent">
+<!-- -->
+<!ENTITY header_component_attributes PUBLIC "header_component_attributes" "entities/header_component_attributes.ent">
+<!--
+<!ENTITY standard_command_button_attributes PUBLIC "standard_command_button_attributes" "entities/standard_command_button_attributes.ent">
+<!ENTITY standard_command_link_attributes PUBLIC "standard_command_link_attributes" "entities/standard_command_link_attributes.ent">
+<!ENTITY standard_data_table_attributes PUBLIC "standard_data_table_attributes" "entities/standard_data_table_attributes.ent">
+<!ENTITY standard_input_text_attributes PUBLIC "standard_input_text_attributes" "entities/standard_input_text_attributes.ent">
+<!ENTITY standard_input_textarea_attributes PUBLIC "standard_input_textarea_attributes" "entities/standard_input_textarea_attributes.ent">
+<!ENTITY standard_message_attributes PUBLIC "standard_message_attributes" "entities/standard_message_attributes.ent">
+<!ENTITY standard_messages_attributes PUBLIC "standard_messages_attributes" "entities/standard_messages_attributes.ent">
+<!ENTITY standard_output_label_attributes PUBLIC "standard_output_label_attributes" "entities/standard_output_label_attributes.ent">
+<!ENTITY standard_output_text_attributes PUBLIC "standard_output_text_attributes" "entities/standard_output_text_attributes.ent">
+<!ENTITY standard_panel_group_attributes PUBLIC "standard_panel_group_attributes" "entities/standard_panel_group_attributes.ent">
+<!ENTITY standard_panel_grid_attributes PUBLIC "standard_panel_grid_attributes" "entities/standard_panel_grid_attributes.ent">
+<!ENTITY standard_select_boolean_checkbox_attributes PUBLIC "standard_select_boolean_checkbox_attributes" "entities/standard_select_boolean_checkbox_attributes.ent">
+<!ENTITY standard_select_many_checkbox_attributes PUBLIC "standard_select_many_checkbox_attributes" "entities/standard_select_many_checkbox_attributes.ent">
+<!ENTITY standard_select_many_listbox_attributes PUBLIC "standard_select_many_listbox_attributes" "entities/standard_select_many_listbox_attributes.ent">
+<!ENTITY standard_select_many_menu_attributes PUBLIC "standard_select_many_menu_attributes" "entities/standard_select_many_menu_attributes.ent">
+<!ENTITY standard_select_one_listbox_attributes PUBLIC "standard_select_one_listbox_attributes" "entities/standard_select_one_listbox_attributes.ent">
+<!ENTITY standard_select_one_menu_attributes PUBLIC "standard_select_one_menu_attributes" "entities/standard_select_one_menu_attributes.ent">
+<!ENTITY standard_select_one_radio_attributes PUBLIC "standard_select_one_radio_attributes" "entities/standard_select_one_radio_attributes.ent">
+-->

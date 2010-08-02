@@ -1,0 +1,25 @@
+<properties>
+    <property hidden="true">
+        <name>tagName</name>
+        <classname>java.lang.String</classname>
+        <description><![CDATA[A name of an html element encoded for this component.]]></description>
+        <defaultvalue><![CDATA["div"]]></defaultvalue> 
+    </property>
+    <property>
+        <name>sid</name>
+        <classname>java.lang.String</classname>
+        <description><![CDATA[EXACT value for an encoded html 'id' attribute, instead of JSF client id generation.]]></description>
+        <!-- 			<defaultvalue><![CDATA[]]></defaultvalue>  -->
+    </property>
+    <property hidden="true">
+        <name>effectDepth</name>
+        <classname>java.lang.String</classname>
+        <description>depth from 0 ( max ) to 1 ( none ) of visual effect  ( zoom, opacity etc )</description>
+    </property>
+    <property hidden="true">
+        <name>effectDuration</name>
+        <classname>java.lang.String</classname>
+        <description>time in seconds for duration of visual effect  ( zoom, opacity etc )</description>
+    </property>
+    
+</properties>

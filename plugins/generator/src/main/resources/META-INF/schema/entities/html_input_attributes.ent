@@ -1,0 +1,22 @@
+<properties>
+    &html_control_attributes;
+    
+    
+    <property>
+        <name>align</name>
+        <classname>java.lang.String</classname>
+        <description>
+            Deprecated. This attribute specifies the horizontal alignment of its element with respect to the surrounding context. The  possible values are "left", "center", "right" and "justify".  
+            The default depends on the base text direction. For left to right text, the default is align="left", while for right to left text, the default is align="right".
+        </description>
+    </property>
+    <property>
+        <name>maxlength</name>
+        <classname>int</classname>
+        <description>Specifies the maximum number of digits that could be entered into the input field. 
+		The maximum number is unlimited by default. 
+		If entered value exceeds the value specified in "maxValue" attribute than the slider takes a maximum value position. 
+		</description>
+    </property>
+    
+</properties>

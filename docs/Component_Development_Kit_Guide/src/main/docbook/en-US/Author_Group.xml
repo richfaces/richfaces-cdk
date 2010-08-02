@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE authorgroup PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Component_Development_Kit_Guide.ent">
+%BOOK_ENTITIES;
+]>
+<authorgroup>
+	<author>
+		<firstname>Sean</firstname>
+		<surname>Rogers</surname>
+		<contrib>Documentation lead for 4.0</contrib>
+		<affiliation>
+			<shortaffil>Red Hat</shortaffil>
+			<jobtitle>Content Author</jobtitle>
+			<orgdiv>Engineering Content Services</orgdiv>
+		</affiliation>
+		<email>serogers@redhat.com</email>
+	</author>
+	<collab>
+		<collabname>Svetlana Mukhina</collabname>
+		<affiliation>
+			<orgname>Exadel</orgname>
+			<orgdiv>Documentation</orgdiv>
+		</affiliation>
+	</collab>
+	<collab>
+		<collabname>Anastasiya Bogachuk</collabname>
+		<affiliation>
+			<orgname>Exadel</orgname>
+			<orgdiv>Documentation</orgdiv>
+		</affiliation>
+	</collab>
+	<collab>
+		<collabname>Gleb Galkin</collabname>
+		<affiliation>
+			<orgname>Exadel</orgname>
+			<orgdiv>Documentation</orgdiv>
+		</affiliation>
+	</collab>
+	<collab>
+		<collabname>Mikhail Sorokin</collabname>
+		<affiliation>
+			<orgname>Exadel</orgname>
+			<orgdiv>Documentation</orgdiv>
+		</affiliation>
+	</collab>
+	<collab>
+		<collabname>Alexander Tsebro</collabname>
+		<affiliation>
+			<orgname>Exadel</orgname>
+			<orgdiv>Documentation</orgdiv>
+		</affiliation>
+	</collab>
+	<collab>
+		<collabname>Olga Chikvina</collabname>
+		<affiliation>
+			<orgname>Exadel</orgname>
+			<orgdiv>Documentation</orgdiv>
+		</affiliation>
+	</collab>
+</authorgroup>
+

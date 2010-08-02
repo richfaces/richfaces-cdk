@@ -1,0 +1,1 @@
+${responseWriterVariable}.endElement("${elementName}"); 

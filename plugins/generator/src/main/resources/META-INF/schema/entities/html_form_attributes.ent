@@ -1,0 +1,40 @@
+<properties>
+    <property>
+        <name>accept</name>
+        <classname>java.lang.String</classname>
+        <description>This attribute specifies a comma-separated list of content types that a server processing this form will handle correctly. User agents may use this information to filter out non-conforming files when prompting you to select files to be sent to the server (cf. the INPUT element when type="file")</description>
+    </property>
+    <property>
+        <name>acceptCharset</name>
+        <classname>java.lang.String</classname>
+        <description>This attribute specifies the list of character encodings for input data that is accepted by the server processing this form. The value is a space- and/or comma-delimited list of charset values. The client must interpret this list as an exclusive-or list, i.e., the server is able to accept any single character encoding per entity received.
+            
+            The default value for this attribute is the reserved string "UNKNOWN". User agents may interpret this value as the character encoding that was used to transmit the document containing this FORM element
+        </description>
+    </property>
+    <property>
+        <name>enctype</name>
+        <classname>java.lang.String</classname>
+        <description>This attribute specifies the content type used to submit the form to the server (when the value of method is "post"). The default value for this attribute is "application/x-www-form-urlencoded". The value "multipart/form-data" should be used in combination with the INPUT element, type="file"</description>
+    </property>
+    <property>
+        <name>onreset</name>
+        <classname>java.lang.String</classname>
+        <description>HTML: script expression; a form is reseted. It only applies to the FORM element</description>
+    </property>
+    <property>
+        <name>onsubmit</name>
+        <classname>java.lang.String</classname>
+        <description>HTML: script expression; a form is submitted. It only applies to the FORM element</description>
+    </property>
+    <property>
+        <name>target</name>
+        <classname>java.lang.String</classname>
+        <description>This attribute specifies the name of a frame where a document is to be opened.
+            
+            By assigning a name to a frame via the name attribute, authors can refer to it as the "target" of links defined by other elements 
+        </description>
+    </property>
+    
+    
+</properties>

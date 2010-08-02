@@ -1,0 +1,13 @@
+<properties>
+    <!-- Attribute  'for' used for point to other component -->
+    <property>
+        <name>for</name>
+        <classname>java.lang.String</classname>
+        <description><![CDATA[
+		id (or full path of id's) of target components, for which this element must provide support.
+		If a target component inside of the same <code>NamingContainer</code> (UIForm, UIData in base implementations), can be simple value of the "id" attribute.
+		For other cases must include id's of <code>NamingContainer</code> components, separated by ':'. For search from the root of components, must be started with ':'.
+		]]>
+        </description>
+    </property>
+</properties>

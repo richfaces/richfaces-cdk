@@ -1,0 +1,14 @@
+<properties>
+    <property>
+        <name>contentStyle</name>
+        <classname>java.lang.String</classname>
+        <description>The component content style</description>
+        <defaultvalue><![CDATA[""]]></defaultvalue>
+    </property>
+    <property>
+        <name>contentClass</name>
+        <classname>java.lang.String</classname>
+        <description>The component content style class</description>
+    </property>
+    
+</properties>

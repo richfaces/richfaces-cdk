@@ -1,0 +1,25 @@
+<properties>
+    <!-- Attributes  applicable to all JSF components -->
+    <property existintag="true" exist="true" el="false">
+        <name>id</name>
+        <classname>java.lang.String</classname>
+        <description>
+            Every component may have a unique id that is automatically created if omitted
+        </description>
+    </property>
+    <property>
+        <name>rendered</name>
+        <classname>boolean</classname>
+        <description>
+            If "false", this component is not rendered
+        </description>
+    </property>
+    <property existintag="true" exist="true" el="true" elonly="true">
+        <name>binding</name>
+        <classname>javax.faces.component.UIComponent</classname>
+        <description>The attribute takes a value-binding expression for a component property of
+a backing bean</description>
+    </property>
+    
+    
+</properties>

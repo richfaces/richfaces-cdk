@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<cdk:root xmlns="http://richfaces.org/cdk/xhtml-el" xmlns:cdk="http://richfaces.org/cdk/core"
+	xmlns:c="http://richfaces.org/cdk/jstl/core" xmlns:cc="http://richfaces.org/cdk/jsf/composite"
+	xmlns:javaee="http://java.sun.com/xml/ns/javaee">
+
+	<cc:interface>
+		<cdk:class>org.richfaces.cdk.renderkit.html.CommandLinkRenderer</cdk:class>
+		<cdk:component-family>org.richfaces.cdk.Link</cdk:component-family>
+		<cdk:renderer-type>org.richfaces.cdk.LinkRenderer</cdk:renderer-type>
+	</cc:interface>
+
+	<cc:implementation>
+		<a id="#{clientId}" href="#{component.attributes['href']}" cdk:passThroughWithExclusions="target rel rev">
+			<cdk:object name="imageSource" value="#{component.attributes['imageSource']}" />
+			<c:if test="#{not empty imageSource}">
+				<img src="#{imageSource}" alt="" class="rich-link #{component.attributes['linkImageStyleClass']} #{component.attributes['imageStyleClass']}" />
+			</c:if>		
+			value: #{component.attributes['value']}; differentValue: #{component.attributes['differentValue']}; anotherValue: #{component.attributes['anotherValue']}; 
+		</a>
+	</cc:implementation>
+</cdk:root>

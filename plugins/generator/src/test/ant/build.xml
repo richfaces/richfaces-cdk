@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!-- ====================================================================== 
+     17.01.2006 20:06:20                                                        
+
+     Test    
+     Test of component builder
+                   
+     shura                                                                
+     ====================================================================== -->
+<project name="Test" default="default">
+    <description>
+            Test of component builder
+    </description>
+
+	<property name="project.dir" value="${basedir}/../.."/>
+
+	<property name="project.build.dir" value="${project.dir}/bin"/>
+	
+	<property name="commonLibs" value="${project.dir}/../commonLibs"/>
+
+
+	<path id="taskClassPath">
+		<pathelement location="${project.build.dir}"/>
+		<fileset dir="${project.dir}/lib">
+			<include name="*.jar"/>
+	    </fileset>
+		
+<fileset dir="${commonLibs}" id="commonLibs">
+    <include name="*.jar"/>
+</fileset>
+
+	</path>
+	
+
+    <!-- ================================= 
+          target: default              
+         ================================= -->
+    <target name="default" depends="depends" description="--> Test of component builder">
+    	<taskdef  classpathref="taskClassPath" classname="com.exadel.vcp.builder.ant.JSFGeneratorTask" name="jsfgenerator">
+    	</taskdef>
+        <jsfgenerator configfile="../conf/test.xml" destdir="../generated"   description="Build classes and configs" >
+       		    <configs dir="../conf">
+        			<file name="test2.xml" />
+        		</configs>	
+          	    <classpath >
+          	    	<pathelement path="${project.dir}/lib/jsf-api.jar"/>
+          	    	<pathelement location="${project.build.dir}"/>
+          	    	<pathelement location="${project.dir}/../chameleon-framework/bin"/>
+          	    	<fileset dir="${commonLibs}" id="commonLibs">
+          	    	    <include name="*.jar"/>
+          	    	</fileset>
+        		</classpath>
+        	<components/>
+        	<tags />
+        	<facesconfig include="../conf/faces-config.ent"  facesConfig="../generated/META-INF/faces-config.xml">
+        		 <renderkit renderKitId="HTML_BASIC" />
+        		 <renderkit renderKitId="CHAMELEON" package="test.chameleon.render"/>
+        	</facesconfig>
+        	<taglib shortName="test" uri="http://exadel.com/test" taglib="../generated/META-INF/test.tld">
+        		<include name="test.*"/>
+        	</taglib>
+        	<taglib shortName="other" uri="http://exadel.com/other" taglib="../generated/META-INF/other.tld">
+        		<exclude name="test.*"/>
+        	</taglib>
+        	<renderers />
+        	<renderers package="test.chameleon.render" />
+    	</jsfgenerator>
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - 
+          target: depends                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="depends">
+    </target>
+
+</project>
+

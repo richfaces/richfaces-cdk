@@ -1,0 +1,116 @@
+<properties>
+    <!--
+    <property >
+       <name>ajaxType</name>
+       <classname>java.lang.String</classname>
+       <description>If value equals "link" ( default ), builded JavaScript
+            code for "event" will submit as Action component. For
+            "input" value, and if parent component instance of UIInput will submit also value
+            for input field. For "validator" value force request processing to render after process validators phase.
+            For this, all conversions and validations method will performed, but new values not set to backed beans. 
+            </description>
+    </property>
+    -->
+    
+    <property >
+        <name>ajaxSingle</name>
+        <classname>boolean</classname>
+        <description>boolean attribute which provides possibility to limit JSF tree processing(decoding, conversion/validation, value applying) 
+to the component which send the request only</description>
+    </property>
+    
+    <property >
+        <name>bypassUpdates</name>
+        <classname>boolean</classname>
+        <description>If "true", after process validations phase it skips updates of model beans on a force render response. It can be used for validating components input</description>
+    </property>
+    
+    <property >
+        <name>limitToList</name>
+        <classname>boolean</classname>
+        <description>If "true", then of all AJAX-rendered on the page components only those will be updated, 
+		which ID's are passed to the "reRender" attribute of the describable component. 
+		"false"-the default value-means that all components with ajaxRendered="true" will be updated.
+		</description>
+    </property>
+    
+    <property >
+        <name>reRender</name>
+        <classname>java.lang.Object</classname>
+        <description>Id['s] (in format of call  UIComponent.findComponent()) of components, rendered in case of AjaxRequest  caused by this component. Can be single id, comma-separated list of Id's, or EL Expression  with array or Collection</description>
+    </property>
+    
+    <property >
+        <name>process</name>
+        <classname>java.lang.Object</classname>
+        <description>Id['s] (in format of call  UIComponent.findComponent()) of components, processed at the phases 2-5 in case of AjaxRequest  caused by this component. Can be single id, comma-separated list of Id's, or EL Expression  with array or Collection</description>
+    </property>
+
+    <property >
+        <name>status</name>
+        <classname>java.lang.String</classname>
+        <description>ID (in format of call UIComponent.findComponent()) of Request status component</description>
+    </property>
+    
+    <property >
+        <name>eventsQueue</name>
+        <classname>java.lang.String</classname>
+        <description>Name of requests queue to avoid send next request before complete other from same event. Can be used to reduce number of requests of frequently events (key press, mouse move etc.)</description>
+    </property>
+    
+    <property >
+        <name>requestDelay</name>
+        <classname>int</classname>
+        <description>
+Attribute defines the time (in ms.) that the request will be wait in the queue before it is ready to send.
+When the delay time is over, the request will be sent to the server or removed if the newest 'similar' request is in a queue already
+		</description>
+    </property>
+    
+    <property >
+        <name>oncomplete</name>
+        <classname>java.lang.String</classname>
+        <description>The client side script method to be called after the request is completed</description>
+    </property>
+    <property>
+        <name>onbeforedomupdate</name>
+        <classname>java.lang.String</classname>
+        <description>The client side script method to be called before DOM is updated</description>
+    </property>
+    <property >
+        <name>focus</name>
+        <classname>java.lang.String</classname>
+        <description>id of element to set focus after request completed on client side</description>
+    </property>
+    <property >
+       <name>data</name>
+       <classname>java.lang.Object</classname>
+       <description>Serialized (on default with JSON) data passed on the client by a developer on AJAX request. It's accessible via "data.foo" syntax</description>
+    </property>
+	<property>
+			<name>ignoreDupResponses</name>
+			<classname>boolean</classname>
+			<description>
+Attribute allows to ignore an Ajax Response produced by a request if the newest 'similar' request is
+in a queue already. ignoreDupResponses="true" does not cancel the request while it is processed on the server,
+but just allows to avoid unnecessary updates on the client side if the response isn't actual now
+				</description>
+	</property>
+	<property>
+			<name>timeout</name>
+			<classname>int</classname>
+			<description>Response waiting time on a particular request. If a response is not received during this time, the request is aborted</description>
+	</property>
+	<property>
+			<name>similarityGroupingId</name>
+			<classname>java.lang.String</classname>
+			<description>If there are any component requests with identical IDs then these requests will be grouped.</description>
+	</property>
+    <!--
+    <property >
+       <name></name>
+       <classname></classname>
+       <description></description>
+    </property>
+-->    
+</properties>

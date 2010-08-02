@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Component_Development_Kit_Guide.ent">
+%BOOK_ENTITIES;
+]>
+
+<chapter id="chap-Component_Development_Kit_Guide-Creating_a_new_component">
+	<title>Creating a new component</title>
+	<para>
+		This is a test paragraph
+	</para>
+	<section id="sect-Component_Development_Kit_Guide-Creating_a_new_component-Creating_a_project">
+		<title>Creating a project</title>
+		<para>
+			Test of a section
+		</para>
+	</section>
+	
+	<section id="sect-Component_Development_Kit_Guide-Creating_a_new_component-Building_a_component_skeleton">
+		<title>Building a component skeleton</title>
+		<para>
+			Test of a section
+		</para>
+	</section>
+	
+	<section id="sect-Component_Development_Kit_Guide-Creating_a_new_component-Creating_the_UI">
+		<title>Creating the UI</title>
+		<para>
+			Test of a section
+		</para>
+	</section>
+	
+	<section id="sect-Component_Development_Kit_Guide-Creating_a_new_component-Registering_resources">
+		<title>Registering resources</title>
+		<para>
+			Test of a section
+		</para>
+	</section>
+	
+	<section id="sect-Component_Development_Kit_Guide-Creating_a_new_component-Extending_the_UIInput_Class">
+		<title>Extending the UIInput Class</title>
+		<para>
+			Test of a section
+		</para>
+	</section>
+	
+	<section id="sect-Component_Development_Kit_Guide-Creating_a_new_component-Configuring_the_component">
+		<title>Configuring the component</title>
+		<para>
+			Test of a section
+		</para>
+	</section>
+	
+	<section id="sect-Component_Development_Kit_Guide-Creating_a_new_component-Tags_and_descriptors">
+		<title>Tags and descriptors</title>
+		<para>
+			Test of a section
+		</para>
+	</section>
+
+</chapter>
+

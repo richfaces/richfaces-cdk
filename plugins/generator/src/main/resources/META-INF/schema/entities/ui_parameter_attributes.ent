@@ -1,0 +1,24 @@
+<properties>
+    &ui_component_attributes;
+    <!-- Disable - not applicable for param -->
+    <property exist="true" existintag="true" hidden="true">
+        <name>rendered</name>
+        <classname>boolean</classname>
+        <description>
+            If "false", this component isn't rendered
+        </description>
+    </property>
+    
+    <property>
+        <name>name</name>
+        <classname>java.lang.String</classname>
+        <description>A name of this parameter</description>
+    </property>
+    <property>
+        <name>value</name>
+        <classname>java.lang.Object</classname>
+        <description>An initial value or a value binding</description>
+    </property>
+    
+    
+</properties>

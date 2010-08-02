@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://richfaces.org/cdk"
+	elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:cdk="http://richfaces.org/cdk/core" attributeFormDefault="unqualified">
+	<xsd:annotation>
+		<xsd:documentation>$Id$</xsd:documentation>
+	</xsd:annotation>
+
+    <xsd:element name="components" type="cdk:componentsType"></xsd:element>
+
+    <xsd:complexType name="componentsType">
+    	<xsd:choice minOccurs="0" maxOccurs="unbounded">
+    		<xsd:element name="component" type="cdk:componentType"></xsd:element>
+    		<xsd:element name="renderer" type="xsd:string"></xsd:element>
+    		<xsd:element name="listener" type="xsd:string"></xsd:element>
+    		<xsd:element name="behavior" type="xsd:string"></xsd:element>
+    		<xsd:element name="validator" type="xsd:string"></xsd:element>
+    		<xsd:element name="converter" type="xsd:string"></xsd:element>
+    		<xsd:element name="function" type="xsd:string"></xsd:element>
+    	</xsd:choice>
+    	<xsd:attribute name="id" type="xsd:ID"></xsd:attribute>
+    	<xsd:attribute name="version"
+    		type="cdk:components-versionType">
+    	</xsd:attribute>
+    </xsd:complexType>
+    
+    <xsd:simpleType name="components-versionType">
+    	<xsd:restriction base="xsd:token">
+    		<xsd:enumeration value="4.0"></xsd:enumeration>
+    	</xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="cdk-object-type">
+    	<xsd:attribute name="id" type="xsd:ID"></xsd:attribute>
+    	<xsd:attribute name="generate" type="xsd:boolean"></xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name="componentType">
+    	<xsd:complexContent>
+    		<xsd:extension base="cdk:cdk-object-type"></xsd:extension>
+    	</xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:simpleType name="javaType">
+    	<xsd:restriction base="xsd:token">
+    		<xsd:pattern
+    			value="[a-zA-Z_$][a-zA-Z0-9_$]*([.][a-zA-Z_$][a-zA-Z0-9_$]*)*">
+    		</xsd:pattern>
+    	</xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="classnameType">
+    	<xsd:simpleContent>
+            <xsd:restriction base="cdk:javaType"></xsd:restriction>
+    	</xsd:simpleContent>
+    </xsd:complexType>
+</xsd:schema>

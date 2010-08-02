@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<faces-config version="2.0" metadata-complete="false" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:cdk="http://richfaces.org/cdk/extensions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <behavior>
+        <behavior-id>my_behavior</behavior-id>
+        <behavior-class>java.lang.Object</behavior-class>
+        <attribute>
+            <attribute-name>attr2</attribute-name>
+            <attribute-class>java.lang.String</attribute-class>
+            <attribute-extension>
+                <cdk:generate>false</cdk:generate>
+                <cdk:hidden>false</cdk:hidden>
+                <cdk:literal>false</cdk:literal>
+                <cdk:pass-through>false</cdk:pass-through>
+                <cdk:read-only>false</cdk:read-only>
+                <cdk:required>false</cdk:required>
+            </attribute-extension>
+        </attribute>
+        <property>
+            <property-name>attr1</property-name>
+            <property-class>java.lang.String</property-class>
+            <property-extension>
+                <cdk:generate>false</cdk:generate>
+                <cdk:hidden>false</cdk:hidden>
+                <cdk:literal>false</cdk:literal>
+                <cdk:pass-through>false</cdk:pass-through>
+                <cdk:read-only>false</cdk:read-only>
+                <cdk:required>false</cdk:required>
+            </property-extension>
+        </property>
+        <behavior-extension>
+            <cdk:generate>false</cdk:generate>
+        </behavior-extension>
+    </behavior>
+    <faces-config-extension/>
+</faces-config>

@@ -1,0 +1,41 @@
+<properties>
+    &ui_component_attributes;
+    <property>
+        <name>for</name>
+        <classname>java.lang.String</classname>
+        <description>
+            A client identifier of the component for which this component
+            represents associated message(s)
+        </description>
+    </property>
+    <property>
+        <name>showSummary</name>
+        <classname>boolean</classname>
+        <description>
+            Indicates whether the summary of associated message(s)
+            should be displayed. Default is: true
+        </description>
+        <defaultvalue>true</defaultvalue>
+    </property>
+    <property>
+        <name>showDetail</name>
+        <classname>boolean</classname>
+        <description>
+            Indicates whether the detail of the associated message(s) should
+            be displayed. Default is: false
+        </description>
+        <defaultvalue>false</defaultvalue>
+    </property>
+    <property>
+        <name>globalOnly</name>
+        <classname>boolean</classname>
+        <description>
+            Indicates whether only global messages (that is, messages with
+            no associated client identifier) should be rendered. Default is:
+            false
+        </description>
+        <defaultvalue>false</defaultvalue>
+    </property>
+    
+    
+</properties>

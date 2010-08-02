@@ -1,0 +1,14 @@
+<properties>
+    <property>
+        <name>minimum</name>
+        <classname>int</classname>
+        <description>A minimum possible value within an optional range</description>
+    </property>
+    <property>
+        <name>maximum</name>
+        <classname>int</classname>
+        <description> A maximum within an optional range</description>
+    </property>
+    
+    
+</properties>

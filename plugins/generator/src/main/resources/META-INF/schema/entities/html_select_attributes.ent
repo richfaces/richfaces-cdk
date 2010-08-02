@@ -1,0 +1,38 @@
+<properties>
+    
+    
+    <property>
+        <name>datafld</name><classname>java.lang.String</classname><description>Retrieves which field of a given data source, as specified by the dataSrc property, to bind to the specified object</description>
+    </property>
+    <property>
+        <name>datasrc</name><classname>java.lang.String</classname><description>Retrieves the source of the data for data binding</description>
+    </property>
+    <property>
+        <name>dataformatas</name><classname>java.lang.String</classname><description>Indicates whether the bound data is plain text or HTML</description>
+    </property>
+    <property>
+        <name>disabled</name><classname>java.lang.String</classname><description>Disabled state of an element or button</description>
+    </property>
+    
+    
+    <property>
+        <name>onblur</name><classname>java.lang.String</classname><description>HTML: script expression; an element loses focus either by the pointing device or by tabbing navigation. It may be used with the same elements as onfocus</description>
+    </property>
+    <property>
+        <name>onchange</name><classname>java.lang.String</classname><description>HTML: script expression; element's value is changed</description>
+    </property>
+    <property>
+        <name>onfocus</name><classname>java.lang.String</classname><description>HTML: script expression; the element got the focus</description>
+    </property>
+    
+    <property>
+        <name>tabindex</name><classname>java.lang.String</classname><description>This attribute specifies the position of the current element in the tabbing order for the current document. This value must be a number between 0 and 32767. User agents should ignore leading zeros</description>
+    </property>
+    <property>
+        <name>readonly</name><classname>java.lang.String</classname><description>Flag indicating that this component will prohibit
+            changes by you.  The element may receive focus
+            unless it has also been disabled
+        </description>
+    </property>
+    
+</properties>

@@ -1,0 +1,44 @@
+<properties>
+    &ui_component_attributes;
+    <!-- Disable - not applicable for param -->
+    <property exist="true" existintag="true" hidden="true">
+        <name>rendered</name>
+        <classname>boolean</classname>
+        <description>
+            If "false", this component isn't rendered
+        </description>
+    </property>
+    
+    <property>
+        <name>itemDisabled</name>
+        <classname>boolean</classname>
+        <description>
+            If "true", this component isn't saved during state saving
+        </description>
+    </property>
+    <property>
+        <name>itemDescription</name>
+        <classname>java.lang.String</classname>
+        <description>A description used by tools only</description>
+    </property>
+    <property>
+        <name>itemLabel</name>
+        <classname>java.lang.String</classname>
+        <description>A text shown by the item</description>
+    </property>
+    <property>
+        <name>itemValue</name>
+        <classname>java.lang.Object</classname>
+        <description>Item value, which is passed to the server as a request parameter</description>
+    </property>
+    <property>
+        <name>value</name>
+        <classname>java.lang.Object</classname>
+        <description>
+            A value reference pointing at a javax.faces.model.SelectItem
+            instance
+        </description>
+    </property>
+    
+    
+</properties>

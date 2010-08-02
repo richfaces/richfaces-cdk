@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<cdk:root xmlns="http://richfaces.org/cdk/xhtml-el" xmlns:cdk="http://richfaces.org/cdk/core"
+	xmlns:c="http://richfaces.org/cdk/jstl/core" xmlns:cc="http://richfaces.org/cdk/jsf/composite"
+	xmlns:javaee="http://java.sun.com/xml/ns/javaee">
+
+	<cc:interface>
+		<cdk:class>org.richfaces.cdk.renderkit.html.InputRenderer</cdk:class>
+		<cdk:component-family>org.richfaces.cdk.Input</cdk:component-family>
+		<cdk:renderer-type>org.richfaces.cdk.InputRenderer</cdk:renderer-type>
+	</cc:interface>
+
+	<cc:implementation>
+		<span id="#{clientId}">
+			<cdk:body />
+			
+			<cdk:object name="componentIsDisabled" value="#{component.attributes['disabled'] == true}" />
+			<c:choose>
+				<c:when test="#{not componentIsDisabled}">
+					<input type="text" />				
+					
+					<cdk:object name="image" value="#{component.attributes['image']}" />
+					<cdk:object name="disabledImage" value="#{component.attributes['disabledImage']}" />
+					<c:choose>
+						<c:when test="#{disabledImage != null}">
+							<img src="#{disabledImage}" alt="" />
+						</c:when>
+						<c:when test="#{image != null}">
+							<img src="#{image}" alt="" onclick="alert('clicked')" />
+						</c:when>
+						<c:otherwise>
+							No image defined
+						</c:otherwise>
+					</c:choose>
+				</c:when>
+				<c:otherwise>
+					<input type="text" disabled="#{true}" />				
+				</c:otherwise>
+			</c:choose>
+		</span>
+	</cc:implementation>
+</cdk:root>

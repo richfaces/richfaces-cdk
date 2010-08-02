@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		JBoss, Home of Professional Open Source Copyright ${year}, Red Hat,
+		Inc. and individual contributors by the @authors tag. See the
+		copyright.txt in the distribution for a full listing of individual
+		contributors. This is free software; you can redistribute it and/or
+		modify it under the terms of the GNU Lesser General Public License as
+		published by the Free Software Foundation; either version 2.1 of the
+		License, or (at your option) any later version. This software is
+		distributed in the hope that it will be useful, but WITHOUT ANY
+		WARRANTY; without even the implied warranty of MERCHANTABILITY or
+		FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+		License for more details. You should have received a copy of the GNU
+		Lesser General Public License along with this software; if not, write
+		to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+		Boston, MA 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+	-->
+<cdk:properties xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:cdk="http://richfaces.org/cdk/extensions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee">
+	<property>
+		<description>
+			Width (in pixels) of the border to be drawn
+			around the table containing the options list.
+        </description>
+		<display-name>Table Border</display-name>
+		<icon />
+		<property-name>border</property-name>
+		<property-class>int</property-class>
+		<property-extension>
+			<cdk:pass-through>true</cdk:pass-through>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			CSS style class to apply to the rendered label
+			on disabled options.
+        </description>
+		<display-name>Disabled Label Class</display-name>
+		<icon />
+		<property-name>disabledClass</property-name>
+		<property-class>java.lang.String</property-class>
+	</property>
+
+	<property>
+		<description>
+			CSS style class to apply to the rendered label
+			on enabled options.
+        </description>
+		<display-name>Enabled Label Class</display-name>
+		<icon />
+		<property-name>enabledClass</property-name>
+		<property-class>java.lang.String</property-class>
+	</property>
+
+	<property>
+		<description>
+			CSS style class to apply to the rendered label
+			on selected options.
+        </description>
+		<display-name>Selected Label Class</display-name>
+		<icon />
+		<property-name>selectedClass</property-name>
+		<property-class>java.lang.String</property-class>
+	</property>
+
+	<property>
+		<description>
+			CSS style class to apply to the rendered label
+			on unselected options.
+        </description>
+		<display-name>Unselected Label Class</display-name>
+		<icon />
+		<property-name>unselectedClass</property-name>
+		<property-class>java.lang.String</property-class>
+	</property>
+
+	<property>
+		<description>
+			Orientation of the options list to be created.
+			Valid values are "pageDirection" (list is laid
+			out vertically), or "lineDirection" (list is
+			laid out horizontally). If not specified, the
+			default value is "lineDirection".
+        </description>
+		<display-name>Layout</display-name>
+		<icon />
+		<property-name>layout</property-name>
+		<property-class>java.lang.String</property-class>
+	</property>
+</cdk:properties>

@@ -1,0 +1,16 @@
+<properties>
+    
+    
+    <property>
+        <name>accesskey</name><classname>java.lang.String</classname><description>This attribute assigns an access key to an element. An access key is a single character from the document character set. Note. Authors should consider the input method of the expected reader when specifying an accesskey</description>
+    </property>
+    
+    <property>
+        <name>onblur</name><classname>java.lang.String</classname><description>HTML: script expression; an element loses focus either by the pointing device or by tabbing navigation. It may be used with the same elements as onfocus</description>
+    </property>
+    <property>
+        <name>onfocus</name><classname>java.lang.String</classname><description>HTML: script expression; the element got the focus</description>
+    </property>
+    
+    
+</properties>

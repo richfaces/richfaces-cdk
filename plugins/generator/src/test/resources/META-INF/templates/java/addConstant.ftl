@@ -1,0 +1,1 @@
+<@util.constant "List<String>" "foo">private static final String foo;</@util.constant>

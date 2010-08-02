@@ -1,0 +1,22 @@
+<properties>
+    <property>
+        <name>ajaxRendered</name>
+        <classname>boolean</classname>
+        <defaultvalue>true</defaultvalue>
+        <description>
+            Define, must be (or not) content of this component will be included in AJAX response created by parent AJAX Container, even if not forced by reRender list of ajax action.
+            Ignored if component marked to output by some Ajax action component. The default value is "true".
+        </description>
+    </property>
+    <property>
+        <name>keepTransient</name>
+        <classname>boolean</classname>
+        <description><![CDATA[
+				Flag for mark all child components to non-transient. If "true", all children components will be set to non-transient state and keep in saved components tree.
+				For output in self-renderer region all content (By default, all content in <f:verbatim> tags and non-jsf elements in facelets, marked as transient - since, self-rendered ajax regions don't plain output for ajax processing).
+				The default value is "false".
+			]]></description>
+        <defaultvalue>false</defaultvalue>
+    </property>
+    
+</properties>

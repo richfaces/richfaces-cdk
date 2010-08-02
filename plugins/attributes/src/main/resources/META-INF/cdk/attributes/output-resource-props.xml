@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		JBoss, Home of Professional Open Source Copyright ${year}, Red Hat,
+		Inc. and individual contributors by the @authors tag. See the
+		copyright.txt in the distribution for a full listing of individual
+		contributors. This is free software; you can redistribute it and/or
+		modify it under the terms of the GNU Lesser General Public License as
+		published by the Free Software Foundation; either version 2.1 of the
+		License, or (at your option) any later version. This software is
+		distributed in the hope that it will be useful, but WITHOUT ANY
+		WARRANTY; without even the implied warranty of MERCHANTABILITY or
+		FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+		License for more details. You should have received a copy of the GNU
+		Lesser General Public License along with this software; if not, write
+		to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+		Boston, MA 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+	-->
+<cdk:properties xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:cdk="http://richfaces.org/cdk/extensions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee">
+	<attribute>
+		<description>
+			&lt;div class="changed_added_2_0"&gt;&lt;p&gt;The
+			&lt;em&gt;resourceName&lt;/em&gt; for this
+			resource.&lt;/p&gt;&lt;/div&gt; </description>
+		<display-name>Resource Name</display-name>
+		<icon />
+		<attribute-name>name</attribute-name>
+		<attribute-class>java.lang.String</attribute-class>
+		<attribute-extension>
+			<cdk:required>false</cdk:required>
+			<cdk:hidden>false</cdk:hidden>
+		</attribute-extension>
+
+	</attribute>
+	<attribute>
+		<description>
+			&lt;div class="changed_added_2_0"&gt;&lt;p&gt;The
+			&lt;em&gt;libraryName&lt;/em&gt; for this
+			resource.&lt;/p&gt;&lt;/div&gt; </description>
+		<display-name>Library Name</display-name>
+		<icon />
+		<attribute-name>library</attribute-name>
+		<attribute-class>java.lang.String</attribute-class>
+		<attribute-extension>
+			<cdk:required>false</cdk:required>
+			<cdk:hidden>false</cdk:hidden>
+		</attribute-extension>
+
+	</attribute>
+</cdk:properties>

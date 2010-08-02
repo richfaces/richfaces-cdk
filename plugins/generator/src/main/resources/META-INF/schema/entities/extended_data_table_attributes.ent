@@ -1,0 +1,131 @@
+<properties>
+    
+    <property>
+        <name>preserveDataModel</name><classname>java.lang.String</classname><description>
+            Indicates whether a state of the whole DataModel should be saved and
+            restored.
+            Default: false
+        </description>
+    </property>
+    <property>
+        <name>forceIdIndexFormula</name><classname>java.lang.String</classname><description>
+            A formula that overrides the defaut row index in the construction of table
+            body components.
+            Example : #{myRowVar.key}
+            Warning, the EL should evaluate to a unique value for each row!
+        </description>
+    </property>
+    <property>
+        <name>sortColumn</name><classname>java.lang.String</classname><description>
+            Value reference to a model property that gives the current sort column name
+        </description>
+    </property>
+    <property>
+        <name>sortAscending</name><classname>java.lang.String</classname><description>
+            Value reference to a model property that gives the current sort direction
+        </description>
+    </property>
+    <property>
+        <name>preserveSort</name><classname>java.lang.String</classname><description>
+            Indicates whether the state of the sortColumn and sortAscending attribute
+            should be saved and restored and written back to a model during an
+            update model phase.
+            Default: true
+        </description>
+    </property>
+    <property>
+        <name>renderedIfEmpty</name><classname>java.lang.String</classname><description>
+            Indicates whether this table should be rendered if the underlying DataModel is
+            empty.
+            You could as well use rendered="#{not empty bean.list}", but this one causes
+            the getList method of your model bean beeing called up to five times per
+            request, which is not optimal when the list is backed by a DB table.
+            Using renderedIfEmpty="false" solves this problem, because the MyFaces
+            extended HtmlDataTable automatically caches the DataModel and calles the
+            model getter only once per request.
+            Default: true
+        </description>
+    </property>
+    <property>
+        <name>rowIndexVar</name><classname>java.lang.String</classname><description>
+            A parameter name, under which the current rowIndex is set in request scope
+            similar to the var parameter
+        </description>
+    </property>
+    <property>
+        <name>rowCountVar</name><classname>java.lang.String</classname><description>
+            A parameter name, under which the rowCount is set in request scope
+            similar to the var parameter
+        </description>
+    </property>
+    <property>
+        <name>previousRowDataVar</name><classname>java.lang.String</classname><description>
+            A parameter name, under which the previous RowData Object is set in request scope
+            similar to the rowIndexVar and rowCountVar parameters.
+            Mind that the value of this request scope attribute is null in the first row
+            or when isRowAvailable returns false for the previous row
+        </description>
+    </property>
+    <property>
+        <name>rowOnClick</name><classname>java.lang.String</classname><description>
+            Defines a JavaScript onclick event handler for each table row
+        </description>
+    </property>
+    <property>
+        <name>rowOnDblClick</name><classname>java.lang.String</classname><description>
+            Defines a JavaScript ondblclick event handler for each table row
+        </description>
+    </property>
+    <property>
+        <name>rowOnMouseDown</name><classname>java.lang.String</classname><description>
+            Defines a JavaScript onmpusedown event handler for each table row
+        </description>
+    </property>
+    <property>
+        <name>rowOnMouseUp</name><classname>java.lang.String</classname><description>
+            Defines a JavaScript onmouseup event handler for each table row
+        </description>
+    </property>
+    <property>
+        <name>rowOnMouseOver</name><classname>java.lang.String</classname><description>
+            Defines a JavaScript onmouseover event handler for each table row
+        </description>
+    </property>
+    <property>
+        <name>rowOnMouseMove</name><classname>java.lang.String</classname><description>
+            Defines a JavaScript onmousemove event handler for each table row
+        </description>
+    </property>
+    <property>
+        <name>rowOnMouseOut</name><classname>java.lang.String</classname><description>
+            Defines a JavaScript onmouseout event handler for each table row
+        </description>
+    </property>
+    <property>
+        <name>rowOnKeyPress</name><classname>java.lang.String</classname><description>
+            Defines a JavaScript onkeypress event handler for each table row
+        </description>
+    </property>
+    <property>
+        <name>rowOnKeyDown</name><classname>java.lang.String</classname><description>
+            Defines a JavaScript onkeydown event handler for each table row
+        </description>
+    </property>
+    <property>
+        <name>rowOnKeyUp</name><classname>java.lang.String</classname><description>
+            Defines a JavaScript onkeyup event handler for each table row
+        </description>
+    </property>
+    <property>
+        <name>rowId</name><classname>java.lang.String</classname><description>
+            The id to use for &lt;tr&gt; elements that are generated by a table
+        </description>
+    </property>
+    <property>
+        <name>rowStyleClass</name><classname>java.lang.String</classname><description>Corresponds to the HTML class attribute for the row tr tag</description>
+    </property>
+    <property>
+        <name>rowStyle</name><classname>java.lang.String</classname><description>Corresponds to the HTML style attribute for the row tr tag</description>
+    </property>
+    
+</properties>

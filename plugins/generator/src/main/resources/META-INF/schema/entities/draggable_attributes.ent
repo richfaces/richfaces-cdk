@@ -1,0 +1,48 @@
+<properties>
+    <property >
+        <name>dragValue</name>
+        <classname>java.lang.Object</classname>
+        <description><![CDATA[Data to be sent to a drop zone after a drop event]]></description>
+    </property>
+    <property>
+        <name>dragType</name>
+        <classname>java.lang.String</classname>
+        <description><![CDATA[A drag zone type that is used for zone definition, which elements can be accepted by a drop zone]]></description>
+    </property>
+    <property>
+        <name>dragIndicator</name>
+        <classname>java.lang.String</classname>
+        <description><![CDATA[Id of a component that is used as drag pointer during the drag operation]]></description>
+    </property>
+    <property >
+        <name>ondragstart</name>
+        <classname>java.lang.String</classname>
+        <description>A JavaScript event handler called before drag operation</description>
+    </property>
+    <property>
+        <name>ondragend</name>
+        <classname>java.lang.String</classname>
+        <description>A JavaScript event handler called after a drag operation</description>
+    </property>
+    <property>
+        <name>ondropover</name>
+        <classname>java.lang.String</classname>
+        <description>A JavaScript event handler called after a drop operation</description>
+    </property>
+    <property>
+        <name>ondropout</name>
+        <classname>java.lang.String</classname>
+        <description>A JavaScript event handler called after a out operation</description>
+    </property>
+
+
+ 		<property elonly="true" attachedstate="true">
+			<name>dragListener</name>
+			<classname>javax.faces.el.MethodBinding</classname>
+			<description>
+				A listener that processes a drag event 
+			</description>
+			<methodargs>org.ajax4jsf.event.DragEvent</methodargs>
+		</property>
+    
+</properties>

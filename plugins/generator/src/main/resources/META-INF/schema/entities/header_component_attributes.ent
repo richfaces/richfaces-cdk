@@ -1,0 +1,14 @@
+<properties>
+    <property>
+        <name>headerStyle</name>
+        <classname>java.lang.String</classname>
+        <description>The component header style</description>
+        <defaultvalue><![CDATA[""]]></defaultvalue>
+    </property>
+    <property>
+        <name>headerClass</name>
+        <classname>java.lang.String</classname>
+        <description>The component header style class</description>
+    </property>
+    
+</properties>

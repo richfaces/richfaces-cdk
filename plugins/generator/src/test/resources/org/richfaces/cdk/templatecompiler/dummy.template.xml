@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<cdk:root xmlns="http://richfaces.org/cdk/xhtml-el" xmlns:cdk="http://richfaces.org/cdk/core"
+	xmlns:c="http://richfaces.org/cdk/jstl/core" xmlns:cc="http://richfaces.org/cdk/jsf/composite"
+	xmlns:javaee="http://java.sun.com/xml/ns/javaee">
+
+	<cc:interface>
+		<cdk:class>org.richfaces.renderkit.html.DummyRendererImpl</cdk:class>
+		<cdk:component-family>org.richfaces.Dummy</cdk:component-family>
+		<cdk:renderkit-id>org.richfaces.CUSTOM_RENDERKIT</cdk:renderkit-id>
+		<cdk:renders-children>true</cdk:renders-children>
+		
+		<cc:attribute name="onclick">
+			<cc:clientBehavior event="click" />		
+			<cc:clientBehavior event="action" default="true" />
+		</cc:attribute>
+		
+		<cc:attribute name="onchange">
+			<cc:clientBehavior event="change" />
+		</cc:attribute>
+		
+		<cc:attribute name="action" method-signature="java.lang.String action( )" />
+		<cc:attribute name="actionListener" method-signature=" void actionListener( javax.faces.event.ActionEvent ) " />
+		<cc:attribute name="coolMethod" method-signature=" float coolMethod	( 
+			int,	    
+			java.lang.String	 ,	  javax.faces.validator.Validator 	  
+		) " />
+		
+		<cc:attribute name="integerAttribute" type="java.lang.Integer" default="-1" />
+		<cc:attribute name="requiredAttribute" shortDescription="That's a required attribute" 
+			displayName="Required Attribute" required="true" />
+			
+		<cdk:import-attributes src="urn:resource:org/richfaces/cdk/templatecompiler/dummy-attributes.xml" />
+		<cdk:import-attributes src="urn:attributes:dummy-template-props.xml" />
+	</cc:interface>
+
+	<cc:implementation />
+
+</cdk:root>

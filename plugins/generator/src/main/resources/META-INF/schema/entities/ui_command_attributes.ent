@@ -1,0 +1,59 @@
+<properties>
+    <!-- common attributes for action component -->
+    
+    &ui_component_attributes;
+    
+    <property  attachedstate="true">
+        <name>action</name>
+        <classname>javax.faces.el.MethodBinding</classname>
+        <description>
+            MethodBinding pointing at the application action to be invoked,
+            if this UIComponent is activated by you, during the Apply
+            Request Values or Invoke Application phase of the request
+            processing lifecycle, depending on the value of the immediate
+            property
+        </description>
+        <returntype>java.lang.Object</returntype>
+        <methodargs> </methodargs>
+    </property>
+    <property  attachedstate="true" hidden="true">
+        <name>actionExpression</name>
+        <classname>javax.el.MethodExpression</classname>
+        <description>
+            MethodExpression pointing at the application action to be invoked,
+            if this UIComponent is activated by you, during the Apply
+            Request Values or Invoke Application phase of the request
+            processing lifecycle, depending on the value of the immediate
+            property
+        </description>
+        <returntype>java.lang.Object</returntype>
+        <methodargs> </methodargs>
+    </property>
+    <property elonly="true"  attachedstate="true">
+        <name>actionListener</name>
+        <classname>javax.faces.el.MethodBinding</classname>
+        <description>
+            MethodBinding pointing at method accepting  an ActionEvent with return type void
+        </description>
+        <methodargs>javax.faces.event.ActionEvent</methodargs>
+    </property>
+    <property>
+        <name>immediate</name>
+        <classname>boolean</classname>
+        <description>
+            True means, that the default ActionListener should be executed
+            immediately (i.e. during Apply Request Values phase of the
+            request processing lifecycle), rather than waiting until the
+            Invoke Application phase
+        </description>
+    </property>
+    <property>
+        <name>value</name>
+        <classname>java.lang.Object</classname>
+        <description>
+            The current value for this component
+        </description>
+    </property>
+    
+    
+</properties>

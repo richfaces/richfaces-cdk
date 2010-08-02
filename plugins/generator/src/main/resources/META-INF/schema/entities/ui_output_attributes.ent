@@ -1,0 +1,19 @@
+<properties>
+    &ui_component_attributes;
+    <property>
+        <name>value</name>
+        <classname>java.lang.Object</classname>
+        <description>
+            The current value of this component
+        </description>
+    </property>
+    <property  attachedstate="true">
+        <name>converter</name>
+        <classname>javax.faces.convert.Converter</classname>
+        <description>
+            Id of Converter to be used or reference to a Converter
+        </description>
+    </property>
+    
+    
+</properties>

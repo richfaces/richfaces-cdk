@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdk:root xmlns="http://www.w3.org/1999/xhtml" xmlns:cdk="http://richfaces.org/cdk/core"
+	xmlns:c="http://richfaces.org/cdk/jstl/core" xmlns:cc="http://richfaces.org/cdk/jsf/composite"
+	xmlns:x="http://richfaces.org/cdk/ext">
+	<cc:interface>
+		<cdk:class>org.richfaces.cdk.test.renderkit.rf4_xhtml.TestRenderer
+		</cdk:class>
+		<cdk:superclass>javax.faces.render.Renderer</cdk:superclass>
+		<cdk:component-family>org.richfaces.cdk.test.Test
+		</cdk:component-family>
+		<cdk:component-type>org.richfaces.cdk.test.TestComponent
+		</cdk:component-type>
+		<cdk:renderer-type>org.richfaces.TestRenderer</cdk:renderer-type>
+		<cdk:renderkit-id>RF4_XHTML</cdk:renderkit-id>
+		<cdk:renders-children>false</cdk:renders-children>
+		<cc:attribute name="onclick" >
+		    <cc:clientBehavior event="click"/>
+            <cc:clientBehavior event="action" default="true"/>
+		</cc:attribute>
+        <cc:attribute name="onlistclick" >
+            <cc:clientBehavior event="listclick"/>
+        </cc:attribute>
+		<cc:attribute name="mode" default="ajax" />
+		<cc:attribute name="action" method-signature="void action()" />
+		<cc:attribute name="changeListener"
+			method-signature="void changeListener(ValueChangeEvent)" targets="changes changes1" />
+		<cc:attribute name="disabled" type="boolean" />
+		<cc:attribute name="delay" type="java.lang.Integer" />
+		<cc:attribute name="id" required="true" />
+		<cc:attribute name="experts" shortDescription="For use by experts"
+			displayName="Expert attribute" expert="true" />
+		<cc:attribute name="preferred" shortDescription="It's a preferred attribute"
+			displayName="Preferred attribute" preferred="true" />
+		<cdk:resource-dependency name="jquery.js" />
+		<cdk:resource-dependency name="richfaces.css"
+			library="org.richfaces" />
+		<cdk:resource-dependency name="richfaces.js"
+			library="org.richfaces" target="body" />
+
+	</cc:interface>
+	<cc:implementation>
+		<div id="#{clientId}" cdk:passThroughWithExclusions="id dir lang">
+		<c:if test="#{component.attributes['ifTest'] != null}">if content</c:if>
+		<c:choose>
+			<c:when test="#{component.attributes['anotherTest'] != null}">when content</c:when>
+			<c:when test="#{component.attributes['coolTest'] != null}">
+				<c:if test="#{component.attributes['nestedIfTest'] != null}">nested if content</c:if>
+			</c:when>
+			<c:otherwise>otherwise content</c:otherwise>
+		</c:choose>
+		<img src="#{component.attributes['imgAge']}" alt="#{component.attributes['imgAlt']}" x:ismap="disabled">
+		</img>
+		<ul x:style="listStyle" x:class="listClass" cdk:passThrough="id title:listTitle onclick:onlistclick ondblclick:onlistdblclick">
+		<c:forEach items="#{component.children}" var="iterationVar">
+			<li>forEach content <cdk:call>iterationVar.encodeAll(facesContext)</cdk:call></li>
+                </c:forEach>
+        </ul>
+		</div>
+	</cc:implementation>
+</cdk:root>

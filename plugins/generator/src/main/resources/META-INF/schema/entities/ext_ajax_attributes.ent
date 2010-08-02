@@ -1,0 +1,14 @@
+<properties>
+    
+    <property>
+        <name>onSuccess</name><classname>java.lang.String</classname><description>A JavaScript method to call on successful ajax update</description>
+    </property>
+    <property>
+        <name>onFailure</name><classname>java.lang.String</classname><description>A JavaScript method to call on failed ajax update</description>
+    </property>
+    <property>
+        <name>onStart</name><classname>java.lang.String</classname><description>A JavaScript method to call on start of ajax update</description>
+    </property>
+    
+    
+</properties>

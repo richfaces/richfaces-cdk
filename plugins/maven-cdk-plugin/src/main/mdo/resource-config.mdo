@@ -1,0 +1,88 @@
+<models>
+	<id>resource-config</id>
+	<name>ResourceConfig</name>
+	<description><![CDATA[Model for resource config.]]></description>
+	<defaults>
+		<default>
+			<key>package</key>
+			<value>org.richfaces.cdk.model.legacy</value>
+		</default>
+	</defaults>
+	<classes>
+		<class rootElement="true" xml.tagName="resource-config">
+			<name>ResourceConfig</name>
+			<fields>
+				<field xml.listStyle="flat">
+					<name>resources</name>
+					<association xml.listStyle="flat" xml.associationTagName="">
+						<type>Resource</type>
+						<multiplicity>*</multiplicity>
+					</association>
+				</field>
+			</fields>
+			<codeSegments>
+				<codeSegment>
+				<code><![CDATA[//
+			    public boolean containsResource(Resource res) {
+			    	return resources != null && resources.contains(res);
+			    }
+							
+				//]]></code></codeSegment>
+			</codeSegments>
+		</class>
+		<class xml.tagName="renderer">
+			<name>Renderer</name>
+			<fields>
+				<field xml.attribute="true" xml.tagName="class">
+					<name>className</name>
+					<type>String</type>
+				</field>
+			</fields>
+		</class>
+		<class xml.tagName="resource">
+			<name>Resource</name>
+			<fields>
+				<field>
+					<name>name</name>
+					<type>String</type>
+				</field>
+				<field xml.attribute="true" xml.tagName="class">
+					<name>className</name>
+					<type>String</type>
+				</field>
+				<field>
+					<name>path</name>
+					<type>String</type>
+				</field>
+				<field>
+					<name>renderer</name>
+					<association>
+						<type>Renderer</type>
+						<multiplicity>1</multiplicity>
+					</association>
+				</field>
+			</fields>
+			<codeSegments>
+				<codeSegment>
+				<code><![CDATA[//
+				public Resource() {
+				}
+				public Resource(String path) {
+					super();
+					this.path = path;
+					this.name = path;
+				}
+			    @Override
+			    public boolean equals(Object obj) {
+			    	if (obj instanceof Resource) {
+						Resource anotherResource = (Resource) obj;
+						return anotherResource.name.equals(name);
+					}
+			    	return super.equals(obj);
+			    }
+							
+				//]]></code></codeSegment>
+			</codeSegments>
+		</class>
+	</classes>
+</models>

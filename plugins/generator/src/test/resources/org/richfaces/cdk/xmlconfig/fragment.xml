@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdk:properties xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:cdk="http://richfaces.org/cdk/extensions">
+	<!--
+		<xi:include
+		href="urn:resource:org/richfaces/cdk/xmlconfig/include.xml"
+		xpointer="xmlns(jsf=http://java.sun.com/xml/ns/javaee)xpointer(//jsf:property)"/>
+	-->
+	<!--
+		xpointer="xmlns(jsf=http://java.sun.com/xml/ns/javaee)xmlns(cdk=http://richfaces.org/cdk/extensions)xpointer(/cdk:properties/*)"
+	-->
+	<property>
+		<description><![CDATA[
+          test property.
+        ]]></description>
+		<display-name>test</display-name>
+		<property-name>test</property-name>
+		<property-class>java.lang.String</property-class>
+		<property-extension>
+			<cdk:el-expression>true</cdk:el-expression>
+		</property-extension>
+	</property>
+    <property>
+        <description><![CDATA[
+          test2 property.
+        ]]></description>
+        <display-name>test2</display-name>
+        <property-name>test2</property-name>
+        <property-class>int</property-class>
+        <property-extension>
+            <cdk:el-expression>false</cdk:el-expression>
+        </property-extension>
+    </property>
+    <property>
+        <description><![CDATA[
+          test3 property.
+        ]]></description>
+        <display-name>test3</display-name>
+        <property-name>test3</property-name>
+        <property-class>double</property-class>
+        <property-extension>
+            <cdk:el-expression>false</cdk:el-expression>
+        </property-extension>
+    </property>
+</cdk:properties>

@@ -1,0 +1,1 @@
+${responseWriterVariable}.startElement("${elementName}", ${componentVariable}); 

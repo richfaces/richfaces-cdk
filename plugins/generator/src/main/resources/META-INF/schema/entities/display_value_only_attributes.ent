@@ -1,0 +1,22 @@
+<properties>
+    
+    
+    <property>
+        <name>displayValueOnly</name><classname>java.lang.String</classname><description>
+            If "true", renders only the value of the component, but no input widget.
+            Default is false
+        </description>
+    </property>
+    <property>
+        <name>displayValueOnlyStyle</name><classname>java.lang.String</classname><description>
+            Style used when displayValueOnly is true
+        </description>
+    </property>
+    <property>
+        <name>displayValueOnlyStyleClass</name><classname>java.lang.String</classname><description>
+            Style class used when displayValueOnly is true
+        </description>
+    </property>
+     
+    
+</properties>

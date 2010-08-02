@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="JSF Components generator">
+  <bannerLeft>
+    <name>JSF Components generator</name>
+    <src>images/exadel_logo.jpg</src>
+    <href>http://ajax4jsf.org/</href>
+  </bannerLeft>
+  <bannerRight>
+    <src>http://maven.apache.org/images/maven-small.gif</src>
+  </bannerRight>
+  <publishDate position="navigation-bottom" format="MM-dd-yy"/>
+  <version position="left" />
+  <body>
+    <links>
+      <item name="JSF" href="https://javaserverfaces.dev.java.net/" />
+      <item name="Maven 2" href="http://maven.apache.org/maven2/"/>
+    </links>
+
+    <menu name="JSF CDK">
+      <item name="Documentation" href="doc.html"/>
+    </menu>
+    <menu ref="parent"/>
+    <menu ref="reports" />
+
+  </body>
+</project>

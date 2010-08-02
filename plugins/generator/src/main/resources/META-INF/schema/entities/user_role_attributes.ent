@@ -1,0 +1,22 @@
+<properties>
+    <property>
+        <name>enabledOnUserRole</name>
+        <classname>boolean</classname>
+        <description>
+            If you is in the given role, this component is rendered
+            normally. If not, no hyperlink is rendered but all nested tags
+            (=body) are rendered
+        </description>
+    </property>
+    <property>
+        <name>visibleOnUserRole</name>
+        <classname>boolean</classname>
+        <description>
+            If you is in given role, this component will be rendered
+            normally. If not, nothing is rendered and the body of this tag
+            is skipped
+        </description>
+    </property>
+    
+    
+</properties>

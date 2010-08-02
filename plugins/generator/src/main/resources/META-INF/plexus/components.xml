@@ -1,0 +1,18 @@
+<component-set>
+	<components>
+		<component>
+			<role>org.richfaces.templatecompiler.elements.ElementsFactory</role>
+      		<role-hint>a4j</role-hint>
+			<implementation>
+				org.richfaces.templatecompiler.elements.A4JRendererElementsFactory
+			</implementation>
+		</component>
+		<component>
+			<role>org.richfaces.templatecompiler.elements.ElementsFactory</role>
+      		<role-hint>jstl</role-hint>
+			<implementation>
+				org.richfaces.templatecompiler.elements.JSTLElementsFactory
+			</implementation>
+		</component>
+	</components>
+</component-set>

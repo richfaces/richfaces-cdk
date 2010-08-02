@@ -1,0 +1,48 @@
+<properties>
+    <property >
+        <name>dropValue</name>
+        <classname>java.lang.Object</classname>
+        <description><![CDATA[Data to be processed after a drop event]]></description>
+    </property>
+    <property>
+        <name>typeMapping</name>
+        <classname>java.lang.Object</classname>
+        <description><![CDATA[The attribute associates a type of dragable zone (dragType) with &lt;rich:dndParam&gt; defined for &lt;rich:dropSupport&gt; for passing parameter value to &lt;rich:dragIndicator&gt;. It uses JSON format: (drag_type: parameter_name).]]></description>
+        <!-- 			<defaultvalue><![CDATA[]]></defaultvalue>  -->
+    </property>
+    <property>
+        <name>acceptedTypes</name>
+        <classname>java.lang.Object</classname>
+        <description><![CDATA[A list of drag zones types, which elements are accepted by a drop zone]]></description>
+        <!-- 			<defaultvalue><![CDATA[]]></defaultvalue>  -->
+    </property>
+    <property >
+        <name>ondragenter</name>
+        <classname>java.lang.String</classname>
+        <description>A JavaScript event handler called on enter draggable object to zone</description>
+    </property>
+    <property>
+        <name>ondragexit</name>
+        <classname>java.lang.String</classname>
+        <description>A JavaScript event handler called after a drag object leaves zone</description>
+    </property>
+    <property>
+        <name>ondrop</name>
+        <classname>java.lang.String</classname>
+        <description>A JavaScript event handler called after a drag object is dropped to zone</description>
+    </property>    
+    <property>
+        <name>ondropend</name>
+        <classname>java.lang.String</classname>
+        <description>A JavaScript handler for event fired on a drop even the drop for a given type is not available</description>
+    </property>    
+		<property>
+			<name>dropListener</name>
+			<classname>javax.faces.el.MethodBinding</classname>
+			<description><![CDATA[
+				A listener that processes a drop event
+				]]>
+			</description>
+			<methodargs>org.ajax4jsf.event.DropEvent</methodargs>
+		</property>
+</properties>

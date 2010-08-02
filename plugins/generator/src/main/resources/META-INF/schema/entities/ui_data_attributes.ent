@@ -1,0 +1,37 @@
+<properties>
+    <property>
+        <name>first</name>
+        <classname>int</classname>
+        <description>
+            A zero-relative row number of the first row to display
+        </description>
+    </property>
+    <property>
+        <name>rows</name>
+        <classname>int</classname>
+        <description>
+            A number of rows to display, or zero for all remaining
+            rows in the table
+        </description>
+    </property>
+    <property el="false">
+        <name>var</name>
+        <classname>java.lang.String</classname>
+        <description>
+            A request-scope attribute via which the data object for the
+            current row will be used when iterating
+        </description>
+    </property>
+    <property disabled="true">
+        <name>rowIndex</name>
+        <description>An index of row</description>
+    </property>
+    <property disabled="true">
+        <name>header</name>
+        <description>A header of a table</description>
+    </property>
+    <property disabled="true">
+        <name>footer</name>
+        <description>A footer of a table</description>
+    </property>
+</properties>

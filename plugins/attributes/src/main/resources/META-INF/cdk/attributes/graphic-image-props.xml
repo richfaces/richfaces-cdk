@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		JBoss, Home of Professional Open Source Copyright ${year}, Red Hat,
+		Inc. and individual contributors by the @authors tag. See the
+		copyright.txt in the distribution for a full listing of individual
+		contributors. This is free software; you can redistribute it and/or
+		modify it under the terms of the GNU Lesser General Public License as
+		published by the Free Software Foundation; either version 2.1 of the
+		License, or (at your option) any later version. This software is
+		distributed in the hope that it will be useful, but WITHOUT ANY
+		WARRANTY; without even the implied warranty of MERCHANTABILITY or
+		FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+		License for more details. You should have received a copy of the GNU
+		Lesser General Public License along with this software; if not, write
+		to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+		Boston, MA 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+	-->
+<cdk:properties xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:cdk="http://richfaces.org/cdk/extensions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee">
+	<property>
+		<description>
+			Alternate textual description of the
+			element rendered by this component.
+        </description>
+		<display-name>Alternate Text</display-name>
+		<icon />
+		<property-name>alt</property-name>
+		<property-class>java.lang.String</property-class>
+		<property-extension>
+			<cdk:pass-through>true</cdk:pass-through>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			Override for the height of this image.
+        </description>
+		<display-name>Image Height</display-name>
+		<icon />
+		<property-name>height</property-name>
+		<property-class>java.lang.String</property-class>
+		<property-extension>
+			<cdk:pass-through>true</cdk:pass-through>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			Flag indicating that this image is to be used as a server side
+			image map. Such an image must be enclosed within a hyperlink
+			("a"). A value of false causes no attribute to be rendered,
+			while a value of true causes the attribute to be rendered as
+			ismap="ismap".
+        </description>
+		<display-name>Image Map Flag</display-name>
+		<icon />
+		<property-name>ismap</property-name>
+		<property-class>boolean</property-class>
+		<property-extension>
+			<cdk:pass-through>false</cdk:pass-through>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			URI to a long description of the image
+			represented by this element.
+        </description>
+		<display-name>Long Description</display-name>
+		<icon />
+		<property-name>longdesc</property-name>
+		<property-class>java.lang.String</property-class>
+		<property-extension>
+			<cdk:pass-through>true</cdk:pass-through>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			The name of a client side image map (an HTML "map"
+			element) for which this element provides the image.
+        </description>
+		<display-name>Use Image Map</display-name>
+		<icon />
+		<property-name>usemap</property-name>
+		<property-class>java.lang.String</property-class>
+		<property-extension>
+			<cdk:pass-through>true</cdk:pass-through>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			Override for the width of this image.
+        </description>
+		<display-name>Image Width</display-name>
+		<icon />
+		<property-name>width</property-name>
+		<property-class>java.lang.String</property-class>
+		<property-extension>
+			<cdk:pass-through>true</cdk:pass-through>
+		</property-extension>
+	</property>
+</cdk:properties>

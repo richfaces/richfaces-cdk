@@ -1,0 +1,25 @@
+<properties>
+    
+    <property>
+        <name>javascriptLocation</name><classname>java.lang.String</classname><description>
+            An alternate location to find javascript resources.  If no values are specified, javaScript will
+            be loaded from the resources directory using AddResource and ExtensionsFilter
+        </description>
+    </property>
+    
+    <property>
+        <name>imageLocation</name><classname>java.lang.String</classname><description>
+            An alternate location to find image resources.  If no values are specified, images will
+            be loaded from the resources directory using AddResource and ExtensionsFilter
+        </description>
+    </property>
+    
+    <property>
+        <name>styleLocation</name><classname>java.lang.String</classname><description>
+            An alternate location to find stylesheet resources.  If no values are specified, stylesheets will
+            be loaded from the resources directory using AddResource and ExtensionsFilter
+        </description>
+    </property>
+    
+    
+</properties>

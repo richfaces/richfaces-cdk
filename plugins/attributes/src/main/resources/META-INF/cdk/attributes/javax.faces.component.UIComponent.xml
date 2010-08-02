@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		JBoss, Home of Professional Open Source Copyright ${year}, Red Hat,
+		Inc. and individual contributors by the @authors tag. See the
+		copyright.txt in the distribution for a full listing of individual
+		contributors. This is free software; you can redistribute it and/or
+		modify it under the terms of the GNU Lesser General Public License as
+		published by the Free Software Foundation; either version 2.1 of the
+		License, or (at your option) any later version. This software is
+		distributed in the hope that it will be useful, but WITHOUT ANY
+		WARRANTY; without even the implied warranty of MERCHANTABILITY or
+		FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+		License for more details. You should have received a copy of the GNU
+		Lesser General Public License along with this software; if not, write
+		to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+		Boston, MA 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+	-->
+<cdk:properties xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:cdk="http://richfaces.org/cdk/extensions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee">
+	<property>
+		<description>
+			A mutable Map of the attributes associated with
+			this component, keyed by attribute name.
+        </description>
+		<display-name>Attributes Map</display-name>
+		<icon />
+		<property-name>attributes</property-name>
+		<property-class>java.util.Map</property-class>
+		<property-extension>
+			<cdk:hidden>true</cdk:hidden>
+			<cdk:read-only>true</cdk:read-only>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			The number of child components associated with
+			this component.
+        </description>
+		<display-name>Child Component Count</display-name>
+		<icon />
+		<property-name>childCount</property-name>
+		<property-class>int</property-class>
+		<property-extension>
+			<cdk:hidden>true</cdk:hidden>
+			<cdk:read-only>true</cdk:read-only>
+            <cdk:literal>true</cdk:literal>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			A mutable List of the child components associated with
+			this component.
+        </description>
+		<display-name>Child Component List</display-name>
+		<icon />
+		<property-name>children</property-name>
+		<property-class>java.util.List</property-class>
+		<property-extension>
+			<cdk:hidden>true</cdk:hidden>
+			<cdk:read-only>true</cdk:read-only>
+            <cdk:literal>true</cdk:literal>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			A mutable Map of the facets associated with
+			this component, keyed by facet name.
+        </description>
+		<display-name>Facets Map</display-name>
+		<icon />
+		<property-name>facets</property-name>
+		<property-class>java.util.Map</property-class>
+		<property-extension>
+			<cdk:hidden>true</cdk:hidden>
+			<cdk:read-only>true</cdk:read-only>
+            <cdk:literal>true</cdk:literal>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			The component family to which this component belongs. This property
+			is used to select an appropriate Renderer.
+        </description>
+		<display-name>Component Family</display-name>
+		<icon />
+		<property-name>family</property-name>
+		<property-class>java.lang.String</property-class>
+		<property-extension>
+			<cdk:hidden>true</cdk:hidden>
+			<cdk:read-only>true</cdk:read-only>
+            <cdk:literal>true</cdk:literal>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			The component identifier for this component. This value must be
+			unique within the closest parent component that is a naming
+			container.
+        </description>
+		<display-name>Component Identifier</display-name>
+		<icon />
+		<property-name>id</property-name>
+		<property-class>java.lang.String</property-class>
+        <cdk:literal>true</cdk:literal>
+	</property>
+
+	<property>
+		<description>
+			The parent component for this component. On the root component
+			in the component tree (which must be of type UIViewRoot), this
+			property is null.
+        </description>
+		<display-name>Parent Component</display-name>
+		<icon />
+		<property-name>parent</property-name>
+		<property-class>javax.faces.component.UIComponent</property-class>
+		<property-extension>
+			<cdk:hidden>true</cdk:hidden>
+			<cdk:read-only>true</cdk:read-only>
+            <cdk:literal>true</cdk:literal>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			Flag indicating whether or not this component should be rendered
+			(during Render Response Phase), or processed on any subsequent
+			form submit. The default value for this property is true.
+        </description>
+		<display-name>Rendered Flag</display-name>
+		<icon />
+		<property-name>rendered</property-name>
+		<property-class>boolean</property-class>
+		<property-extension>
+			<cdk:literal>false</cdk:literal>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			Identifier used (in conjunction with the "family" property) to
+			select an appropriate Renderer to encode and decode this component.
+        </description>
+		<display-name>Renderer Type</display-name>
+		<icon />
+		<property-name>rendererType</property-name>
+		<property-class>java.lang.String</property-class>
+		<property-extension>
+			<cdk:hidden>true</cdk:hidden>
+            <cdk:literal>true</cdk:literal>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			Flag indicating whether or not this component takes responsibility
+			for rendering its own children. This decision is normally delegated
+			to the associated Renderer, if there is one.
+        </description>
+		<display-name>Renders Children</display-name>
+		<icon />
+		<property-name>rendersChildren</property-name>
+		<property-class>boolean</property-class>
+		<property-extension>
+			<cdk:hidden>true</cdk:hidden>
+			<cdk:read-only>true</cdk:read-only>
+            <cdk:literal>true</cdk:literal>
+		</property-extension>
+	</property>
+    <property>
+        <description>The value binding expression used to wire up this
+            component to a component property of a JavaBean class</description>
+        <display-name />
+        <icon />
+        <property-name>binding</property-name>
+        <property-class>javax.faces.component.UIComponent</property-class>
+    </property>
+</cdk:properties>

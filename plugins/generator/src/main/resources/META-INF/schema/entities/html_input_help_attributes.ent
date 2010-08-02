@@ -1,0 +1,9 @@
+<properties>
+    
+    
+    <property>
+        <name>helpText</name><classname>java.lang.String</classname><description>Makes tiptext appear over an item when the mouse is hovered over it</description>
+    </property>
+    <property>
+        <name>selectText</name><classname>java.lang.String</classname><description>Selects text in the field</description>
+    </properties>

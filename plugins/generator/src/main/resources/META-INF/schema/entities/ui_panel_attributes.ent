@@ -1,0 +1,13 @@
+<properties>
+    
+    
+    
+    &ui_component_attributes;
+    
+    <property>
+        <name>layout</name>
+        <classname>java.lang.String</classname>
+        <description>It defines a visual layout of a panel, it can be "block" or "inline"</description>
+    </property>
+    
+</properties>

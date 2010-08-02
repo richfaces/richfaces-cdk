@@ -1,0 +1,67 @@
+<properties>
+    <property>
+        <name>align</name>
+        <classname>java.lang.String</classname>
+        <description> Deprecated. This attribute specifies the position of the table with respect to the document. 
+            The possible values are "left", "center" and "right". The default value is "left".
+        </description>
+    </property>
+    <property>
+        <name>border</name>
+        <classname>java.lang.String</classname>
+        <description>This attributes specifies the width (in pixels only) of the frame around a table</description>
+    </property>
+    <property>
+        <name>bgcolor</name>
+        <classname>java.lang.String</classname>
+        <description>Deprecated. This attribute sets the background color for the document body or table cells.
+            
+            This attribute sets the background color of the canvas for the document body (the BODY element) or for tables (the TABLE, TR, TH, and TD elements). Additional attributes for specifying text color can be used with the BODY element.
+            
+            This attribute has been deprecated in favor of style sheets for specifying background color information
+        </description>
+    </property>
+    <property>
+        <name>cellpadding</name>
+        <classname>java.lang.String</classname>
+        <description>This attribute specifies the amount of space between the border of the cell and its contents. If the value of this attribute is a pixel length, all four margins should be this distance from the contents. If the value of the attribute is percentage length, the top and bottom margins should be equally separated from the content based on percentage of the available vertical space, and the left and right margins should be equally separated from the content based on percentage of the available horizontal space
+            
+        </description>
+    </property>
+    <property>
+        <name>cellspacing</name>
+        <classname>java.lang.String</classname>
+        <description>This attribute specifies how much space the user agent should leave between the left side of the table and the left-hand side of the leftmost column, the top of the table and the top side of the topmost row, and so on for the right and bottom of the table. The attribute also specifies the amount of space to leave between cells</description>
+    </property>
+    <property>
+        <name>frame</name>
+        <classname>java.lang.String</classname>
+        <description>This attribute specifies which sides of the frame surrounding a table will be visible. Possible values:  "void", "above", "below", "hsides", "lhs", "rhs", "vsides", "box" and "border".
+        The default value is "void".                    
+        </description>
+    </property>
+    <property>
+        <name>rules</name>
+        <classname>java.lang.String</classname>
+        <description>This attribute specifies which rules will appear between cells within a table. The rendering of rules is user agent dependent. Possible values:
+            
+            * none: No rules. This is the default value.
+            * groups: Rules will appear between row groups (see THEAD, TFOOT, and TBODY) and column groups (see COLGROUP and COL) only.
+            * rows: Rules will appear between rows only.
+            * cols: Rules will appear between columns only.
+            * all: Rules will appear between all rows and columns
+        </description>
+    </property>
+    <property>
+        <name>summary</name>
+        <classname>java.lang.String</classname>
+        <description>This attribute provides a summary of the table's purpose and structure for user agents rendering to non-visual media such as speech and Braille</description>
+    </property>
+    <property>
+        <name>width</name>
+        <classname>java.lang.String</classname>
+        <description>This attribute specifies the desired width of the entire table and is intended for visual user agents. When the value is percentage value, the value is relative to the user agent's available horizontal space. In the absence of any width specification, table width is determined by the user agent</description>
+    </property>
+    
+    
+</properties>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<archetype-descriptor name="richfaces-ui-multimodule-archetype">
+  <modules>
+    <module id="${parent.artifactId}-api" dir="${parent.artifactId}-api" name="${parent.artifactId}-api" />
+    <module id="${parent.artifactId}-ui" dir="${parent.artifactId}-ui" name="${parent.artifactId}-ui" />
+  </modules>
+</archetype-descriptor>

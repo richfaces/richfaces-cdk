@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components 
+	PUBLIC "-//AJAX4JSF//CDK Generator config/EN" 
+	"http://labs.jboss.com/jbossrichfaces/component-config.dtd
+<!ENTITY universal_html_attributes   SYSTEM "html_universal_attributes.xml">	
+]>
+
+<components>
+  <component>
+    <name>test.Test</name>
+    <description>Test of component generator</description>
+    <displayname>Generated Command</displayname>
+    <icon>icon</icon>
+    <facet>
+       <name>testfacet</name>
+       <displayname> Test of component facet </displayname>
+    </facet>
+    <superclass>javax.faces.component.UICommand</superclass>
+    <classname>test.UITest</classname>
+    <renderer generate="true" override="true" >
+      <name>test.TestRenderer</name>
+      <classname>test.TestRenderer</classname>
+      <!-- 
+      <superclass>javax.faces.renderer.Renderer</superclass>
+       -->
+      <description>test renderer description</description>
+      <displayname>renderer displayname</displayname>
+      <icon>icon</icon>
+    </renderer>
+    <tag>
+      <name>test</name>
+      <classname>test.tags.TestTag</classname>
+      <superclass>com.exadel.vcp.framework.taglib.HtmlComponentTagBase</superclass>
+      <description>test tag description</description>
+      <displayname>tag displayname</displayname>
+      <icon>icon</icon>
+    	
+    </tag>
+    &html_attributes;
+    <property>
+      <name>mainProperty</name>
+      <classname>java.lang.String</classname>
+      <description>main description</description>
+    </property>
+    <property>
+      <name>superValue</name>
+      <classname>long</classname>
+      <description>main description</description>
+    </property>
+    <property>
+      <name>abstractProperty</name>
+      <classname>java.lang.Integer</classname>
+      <description>abstract  description</description>
+    </property>
+    <property>
+      <name>abstractProperty</name>
+       <classname>javax.faces.el.MethodBinding</classname>
+      <description>Method binded property description</description>
+      <methodargs>javax.faces.component.UIComponent.class</methodargs>
+    </property>
+  </component>
+</components>

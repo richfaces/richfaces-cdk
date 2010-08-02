@@ -1,0 +1,64 @@
+<properties>
+    &ui_output_attributes;
+    
+    <property>
+        <name>immediate</name>
+        <classname>boolean</classname>
+        <description>
+            A flag indicating that this component value must be converted
+            and validated immediately (that is, during Apply Request Values
+            phase), rather than waiting until a Process Validations phase
+        </description>
+    </property>
+    <property>
+        <name>required</name>
+        <classname>boolean</classname>
+        <description>
+            If "true", this component is checked for non-empty input
+        </description>
+    </property>
+    <property  attachedstate="true">
+        <name>validator</name>
+        <classname>javax.faces.el.MethodBinding</classname>
+        <methodargs>javax.faces.context.FacesContext, javax.faces.component.UIComponent, java.lang.Object</methodargs>
+        <description>
+            MethodBinding pointing at a method that is called during
+            Process Validations phase of the request processing lifecycle,
+            to validate the current value of this component
+        </description>
+    </property>
+    <property  attachedstate="true">
+        <name>valueChangeListener</name>
+        <classname>javax.faces.el.MethodBinding</classname>
+        <methodargs>javax.faces.event.ValueChangeEvent</methodargs>
+        <description>Listener for value changes</description>
+    </property>
+	<property>
+		<name>requiredMessage</name>
+		<classname>java.lang.String</classname>
+		<description>
+			A ValueExpression enabled attribute that, if present,
+			will be used as the text of the validation message for
+			the &quot;required&quot; facility, if the &quot;required&quot; facility is
+			used
+		</description>
+	</property>
+	<property>
+		<name>validatorMessage</name>
+		<classname>java.lang.String</classname>
+		<description>
+			A ValueExpression enabled attribute that, if present,
+			will be used as the text of the validator message,
+			replacing any message that comes from the validator
+		</description>
+	</property>
+	<property>
+		<name>converterMessage</name>
+		<classname>java.lang.String</classname>
+		<description>
+			A ValueExpression enabled attribute that, if present,
+			will be used as the text of the converter message,
+			replacing any message that comes from the converter
+		</description>
+	</property>
+</properties>

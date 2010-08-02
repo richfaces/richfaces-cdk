@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		JBoss, Home of Professional Open Source Copyright ${year}, Red Hat,
+		Inc. and individual contributors by the @authors tag. See the
+		copyright.txt in the distribution for a full listing of individual
+		contributors. This is free software; you can redistribute it and/or
+		modify it under the terms of the GNU Lesser General Public License as
+		published by the Free Software Foundation; either version 2.1 of the
+		License, or (at your option) any later version. This software is
+		distributed in the hope that it will be useful, but WITHOUT ANY
+		WARRANTY; without even the implied warranty of MERCHANTABILITY or
+		FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+		License for more details. You should have received a copy of the GNU
+		Lesser General Public License along with this software; if not, write
+		to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+		Boston, MA 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+	-->
+<cdk:properties xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:cdk="http://richfaces.org/cdk/extensions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee">
+	<property>
+		<description>
+			Flag indicating whether the "localValue" property
+			of this component has been set. This property is
+			reset automatically when the "value" propertyis set.
+        </description>
+		<display-name>Local Value Set</display-name>
+		<icon />
+		<property-name>localValueSet</property-name>
+		<property-class>boolean</property-class>
+		<property-extension>
+			<cdk:hidden>true</cdk:hidden>
+            <cdk:literal>true</cdk:literal>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			Flag indicating that the user is required to provide a submitted
+			value for this input component.
+        </description>
+		<display-name>Required Flag</display-name>
+		<icon />
+		<property-name>required</property-name>
+		<property-class>boolean</property-class>
+		<property-extension>
+			<cdk:literal>false</cdk:literal>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			A ValueExpression enabled attribute that, if present, will be
+			used as the text of the validation message for the "required"
+			facility, if the "required" facility is used.
+        </description>
+		<display-name>Required Message</display-name>
+		<icon />
+		<property-name>requiredMessage</property-name>
+		<property-class>java.lang.String</property-class>
+		<property-extension>
+			<cdk:literal>false</cdk:literal>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			A ValueExpression enabled attribute that, if present, will be
+			used as the text of the converter message, replacing any message
+			that comes from the converter.
+        </description>
+		<display-name>Converter Message</display-name>
+		<icon />
+		<property-name>converterMessage</property-name>
+		<property-class>java.lang.String</property-class>
+		<property-extension>
+			<cdk:literal>false</cdk:literal>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			A ValueExpression enabled attribute that, if present, will be
+			used as the text of the validator message, replacing any
+			message that comes from the validator.
+        </description>
+		<display-name>Validator Message</display-name>
+		<icon />
+		<property-name>validatorMessage</property-name>
+		<property-class>java.lang.String</property-class>
+		<property-extension>
+			<cdk:literal>false</cdk:literal>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			The value submitted for this input component by the user, prior to
+			any required conversion or validation.
+        </description>
+		<display-name>Submitted Value</display-name>
+		<icon />
+		<property-name>submittedValue</property-name>
+		<property-class>java.lang.Object</property-class>
+		<property-extension>
+			<cdk:hidden>true</cdk:hidden>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			MethodExpression representing a validator method that will be called
+			during Process Validations to perform correctness checks on the
+			value of this component. The expression must evaluate to a public
+			method that takes FacesContext, UIComponent, and Object parameters,
+			with a return type of void.
+        </description>
+		<display-name>Validator</display-name>
+		<icon />
+		<property-name>validator</property-name>
+		<property-class>javax.faces.el.MethodBinding</property-class>
+		<property-extension>
+			<cdk:signature>
+			   <cdk:param>javax.faces.context.FacesContext</cdk:param>
+			   <cdk:param>javax.faces.component.UIComponent</cdk:param>
+			   <cdk:param>java.lang.Object</cdk:param>
+			</cdk:signature>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			&lt;p&gt;
+
+			MethodExpression representing a value change listener method
+			that will be notified when a new value has been set for this
+			input component. The expression must evaluate to a public
+			method that takes a &lt;code&gt;ValueChangeEvent&lt;/code&gt; parameter,
+			with a return type of void, &lt;span class="changed_added_2_0"&gt;or
+			to a public method that takes no arguments with a return type
+			of void. In the latter case, the method has no way of easily
+			knowing what the new value is, but this can be useful in cases
+			where a notification is needed that "this value
+			changed".&lt;/span&gt;
+
+			&lt;/p&gt; </description>
+		<display-name>Value Change Listener</display-name>
+		<icon />
+		<property-name>valueChangeListener</property-name>
+		<property-class>javax.faces.el.MethodBinding</property-class>
+		<property-extension>
+			<cdk:signature>
+			   <cdk:param>javax.faces.event.ValueChangeEvent</cdk:param>
+			</cdk:signature>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			Flag indicating that this component's value must be
+			converted and validated immediately (that is, during
+			Apply Request Values phase), rather than waiting
+			until Process Validations phase.
+        </description>
+		<display-name>Immediate Action</display-name>
+		<icon />
+		<property-name>immediate</property-name>
+		<property-class>boolean</property-class>
+		<property-extension>
+			<cdk:literal>false</cdk:literal>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
+			Flag indicating whether or not any required conversion or validation
+			on this component value has been performed successfully.
+        </description>
+		<display-name>Valid Flag</display-name>
+		<icon />
+		<property-name>valid</property-name>
+		<property-class>valid</property-class>
+		<property-extension>
+			<cdk:hidden>true</cdk:hidden>
+            <cdk:literal>true</cdk:literal>
+		</property-extension>
+	</property>
+</cdk:properties>

@@ -1,0 +1,48 @@
+<properties>
+    
+    
+    <property>
+        <name>accesskey</name><classname>java.lang.String</classname><description>This attribute assigns an access key to an element. An access key is a single character from the document character set. Note. Authors should consider the input method of the expected reader when specifying an accesskey</description>
+    </property>
+    <property>
+        <name>cols</name><classname>java.lang.String</classname><description>Number of columns</description>
+    </property>
+    <property>
+        <name>datafld</name><classname>java.lang.String</classname><description>Retrieves which field of a given data source, as specified by the dataSrc property, to bind to the specified object</description>
+    </property>
+    <property>
+        <name>datasrc</name><classname>java.lang.String</classname><description>Retrieves the source of the data for data binding</description>
+    </property>
+    <property>
+        <name>dataformatas</name><classname>java.lang.String</classname><description>Indicates whether the bound data is plain text or HTML</description>
+    </property>
+    <property>
+        <name>disabled</name><classname>java.lang.String</classname><description>Disabled state of an element or button</description>
+    </property>
+    <property>
+        <name>onblur</name><classname>java.lang.String</classname><description>The client side script method to be called when the element loses the focus either when pointing a device or tabbing navigation. It may be used for the same elements as onfocus</description>
+    </property>
+    <property>
+        <name>onchange</name><classname>java.lang.String</classname><description>The client side script method to be called when the element value is changed</description>
+    </property>
+    <property>
+        <name>onfocus</name><classname>java.lang.String</classname><description>The client side script method to be called when the element gets the focus</description>
+    </property>
+    <property>
+        <name>onselect</name><classname>java.lang.String</classname><description>The client side script method to be called when some text is selected in the input field</description>
+    </property>
+    <property>
+        <name>readonly</name><classname>java.lang.String</classname><description>Flag indicating that this component will prohibit
+            changes by you.  The element may receive focus
+            unless it has also been disabled
+        </description>
+    </property>
+    <property>
+        <name>rows</name><classname>java.lang.String</classname><description>Number of rows</description>
+    </property>
+    <property>
+        <name>tabindex</name><classname>java.lang.String</classname><description>This attribute specifies the position of the current element in the tabbing order for the current document. This value must be a number between 0 and 32767. User agents should ignore leading zeros</description>
+    </property>
+    
+    
+</properties>

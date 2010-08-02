@@ -1,0 +1,12 @@
+<properties>    
+    <property>
+        <name>forceId</name><classname>java.lang.String</classname><description>If "true", this component will force the use of the specified id when rendering</description>
+    </property>
+    <property>
+        <name>forceIdIndex</name><classname>java.lang.String</classname><description>
+            If "false", this component isn't append a '[n]' suffix (where 'n' is the row index) to components 
+            that are contained within a "list."  This value is true by default and the value is ignored if 
+            the value of forceId is false (or not specified.)
+        </description>
+    </property>     
+</properties>

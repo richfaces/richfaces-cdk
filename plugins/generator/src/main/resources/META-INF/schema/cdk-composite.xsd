@@ -1,0 +1,318 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+	<!--
+		JBoss, Home of Professional Open Source Copyright ${year}, Red Hat,
+		Inc. and individual contributors by the @authors tag. See the
+		copyright.txt in the distribution for a full listing of individual
+		contributors. This is free software; you can redistribute it and/or
+		modify it under the terms of the GNU Lesser General Public License as
+		published by the Free Software Foundation; either version 2.1 of the
+		License, or (at your option) any later version. This software is
+		distributed in the hope that it will be useful, but WITHOUT ANY
+		WARRANTY; without even the implied warranty of MERCHANTABILITY or
+		FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+		License for more details. You should have received a copy of the GNU
+		Lesser General Public License along with this software; if not, write
+		to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+		Boston, MA 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+	-->
+
+<xs:schema targetNamespace="http://richfaces.org/cdk/jsf/composite"
+	xmlns:cc="http://richfaces.org/cdk/jsf/composite" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:cdk="http://richfaces.org/cdk/core"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<xs:import schemaLocation="cdk-template.xsd" namespace="http://richfaces.org/cdk/core" />
+
+	<xs:annotation>
+		<xs:documentation>
+			Subset of JSF 2.0 composite tags supported by RichFaces CDK.
+		</xs:documentation>
+	</xs:annotation>
+
+	<xs:attributeGroup name="beanDescriptorAttributes">
+		<xs:attribute name="displayName" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					<p>
+					The name to display in a tool palette containing
+					this component. The
+					value of this attribute will be set as the value
+					for this property
+					on the composite component bean descriptor.
+					</p>
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="preferred" type="xs:boolean" default="false">
+			<xs:annotation>
+				<xs:documentation>
+					<p>
+					Is this a "preferred" component. The value of this
+					attribute will be set as the value for this property on the
+					composite component bean descriptor.
+					</p>
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="expert" type="xs:boolean" default="false">
+			<xs:annotation>
+				<xs:documentation>
+					<p>
+					Is this component only for expert users? The value
+					of this attribute will be set as the value for this property on the
+					composite component bean descriptor.
+					</p>
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="shortDescription" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					<p>
+					A short description of the purpose of this
+					component. The value of
+					this attribute will be set as the value for
+					this property on the
+					composite component bean descriptor.
+					</p>
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+
+	<xs:complexType name="attributeExtensionType">
+		<xs:group ref="cc:compositeTagsGroup" />
+		<xs:attribute name="name" use="required" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					<p>
+					The name of the attribute as it must appear on the
+					composite component
+					tag in the using page. If the value of the name
+					attribute is equal
+					to (without the quotes) "action",
+					"actionListener", "validator", or
+					"valueChangeListener", the action
+					described in
+					ViewHandler.retargetMethodExpressions() must be taken
+					to handle the
+					attribute. In these cases, the method-sigature
+					attribute, if
+					present, must be ignored as its value is derived as
+					described in
+					retargetMethodExpressions().
+					</p>
+		</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="targets" type="xs:NMTOKENS">
+			<xs:annotation>
+				<xs:documentation>
+					<p>
+					If this element has a method-signature attribute, the value of the
+					targets attribute must be interpreted as a space (not tab)
+					separated list of client ids (relative to the top level
+					component)
+					of components within the
+					&lt;composite:implementation&gt; section. Space is used as the delimiter
+					for compatibility with the IDREFS and NMTOKENS data types from the
+					XML Schema. Each entry in the list must be interpreted as the id
+					of an inner component to which the MethodExpression from the
+					composite component tag in the using page must be applied. If
+					this
+					element has a method-signature attribute, but no targets
+					attribute, the value of the name attribute is used as the single
+					entry in the list. If the value of the name attribute is not one
+					of the special values listed in the description of the name
+					attribute, targets (or its derived value) need not correspond to
+					the id of an inner component.
+					</p>
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="default" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					<p>
+					If this attribute is not required, and a value is
+					not supplied by the
+					page author, use this as the default value.
+					</p>
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="required" type="xs:boolean"
+			default="false">
+			<xs:annotation>
+				<xs:documentation>
+					<p>
+					True if the page author must supply a value for
+					this attribute.
+					</p>
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="method-signature" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					Declares that this attribute must be a
+					MethodExpression whose method
+					signature is described by the value of
+					this attribute. The
+					signature must be described using fully
+					qualified class names
+					wherever a type is required. This attribute is
+					mutually exclusive
+					with the "type" attribute. If both attributes are
+					present, the
+					"method-signature" attribute is ignored.
+
+					PENDING: when
+					this file is generated from the web-facesuicomponent_2_0.xsd,
+					we
+					will not need to copy the content here manually.
+
+					Provides the
+					signature of the Java method. The syntax of the
+					method-signature
+					element is as follows (taken from
+					function-signature in
+					web-jsptaglibrary_2_1.xsd):
+
+					MethodSignature ::= ReturnType S
+					MethodName S? '(' S? Parameters? S? ')'
+
+					ReturnType ::= Type
+
+					MethodName ::= Identifier
+
+					Parameters ::= Parameter | ( Parameter S?
+					',' S? Parameters )
+
+					Parameter ::= Type
+
+					Where:
+
+					Type is a basic type or
+					a fully qualified Java class name (including
+					package name), as per
+					the 'Type' production in the Java Language
+					Specification, Second
+					Edition, Chapter 18.
+
+					Identifier is a Java identifier, as per the
+					'Identifier' production in the
+					Java Language Specification, Second
+					Edition, Chapter 18.
+
+					Example:
+
+					java.lang.String nickName(java.lang.String, int)
+		</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="type" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					<p>
+						Declares that this attribute must be a <code>ValueExpression</code> whose expected type 
+						is given by the value of this attribute. If not specified, and no 
+						"method-signature" attribute is present, <code>java.lang.Object</code> is
+						assumed. This attribute is mutually exclusive with the "type"
+						attribute. If both attributes are present, the "method-signature"
+						attribute is ignored.
+					</p>
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="cc:beanDescriptorAttributes" />
+	</xs:complexType>
+
+	<xs:complexType name="clientBehaviorExtensionType">
+		<xs:attribute name="event" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					<p>
+					Names of the logical event supported by the component
+					</p>
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+
+		<xs:attribute name="default" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>
+					<p>
+						Boolean attribute defining whether the specified logical event is the
+						default component event
+					</p>
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="compositeExtensionType">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:any processContents="lax" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:group name="compositeTagsGroup">
+		<xs:sequence>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="attribute" type="cc:attributeExtensionType" />
+				<xs:element name="extension" type="cc:compositeExtensionType" />
+				<xs:element name="clientBehavior" type="cc:clientBehaviorExtensionType" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:group>
+
+	<xs:group name="compositeTagsGroupWithAny">
+		<xs:sequence>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:group ref="cc:compositeTagsGroup" />
+				<xs:any processContents="lax" namespace="##other " />
+			</xs:choice>
+		</xs:sequence>		
+	</xs:group>
+	
+	<xs:complexType name="compositeInterfaceType">
+		<xs:group ref="cc:compositeTagsGroupWithAny" />
+		<xs:attribute type="xs:string" name="name">
+			<xs:annotation>
+				<xs:documentation>
+					<p>
+					The name of this composite component. Advisory only. The real name is
+					taken from the filename. The value of this attribute will be set as
+					the value for this property on the composite component bean descriptor.
+					</p>
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute type="xs:string" name="componentType">
+			<xs:annotation>
+				<xs:documentation>
+					<p>
+						The <code>component-type</code> of the <code>UIComponent</code> that will serve 
+						as the composite component root for this composite component.
+						The declared <code>component-family</code> for this component must be
+						<code>javax.faces.NamingContainer</code>.	
+					</p>
+			</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="cc:beanDescriptorAttributes" />
+	</xs:complexType>
+
+	<xs:complexType name="compositeImplementationType"
+		mixed="true">
+		<xs:choice>
+			<xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:element name="interface" type="cc:compositeInterfaceType" />
+	<xs:element name="implementation" type="cc:compositeImplementationType" />
+
+</xs:schema>

@@ -1,0 +1,32 @@
+<properties>
+    <property  elonly="true" el="true" attachedstate="true" >
+        <name>ajaxListener</name>
+        <defaultvalue>null</defaultvalue>
+        <classname>javax.el.MethodExpression</classname>
+        <methodargs>org.ajax4jsf.event.AjaxEvent</methodargs>
+        <description> MethodExpression representing an action listener method that will be notified when this component is activated by the ajax Request and handle it. The expression must evaluate to a public method that takes an AjaxEvent parameter, with a return type of void</description>
+    </property>
+    <property hidden="true">
+        <name>submitted</name>
+        <classname>boolean</classname>        
+    </property>    
+
+    <property hidden="true">
+        <name>submittedControlId</name>
+        <classname>java.lang.String</classname>        
+    </property>    
+
+    <property >
+        <name>selfRendered</name>
+        <classname>boolean</classname>
+        <description>if "true", self-render subtree at InvokeApplication ( or Decode, if immediate property set to true )  phase </description>
+    </property>
+    
+    <property >
+        <name>immediate</name>
+        <classname>boolean</classname>
+        <description>Flag indicating that, if this component is activated by ajaxrequest, notifications should be delivered to interested listeners and actions immediately (that is, during Apply Request Values phase) rather than waiting until Invoke Application phase</description>
+    </property>
+    
+    
+</properties>
