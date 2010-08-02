@@ -106,8 +106,8 @@
    </profiles>
 
     <scm>
-        <connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/root/cdk/trunk/docs/guide</connection>
-        <developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/root/cdk/trunk/docs/guide</developerConnection>
+        <connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/trunk/cdk/docs/guide</connection>
+        <developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/trunk/cdk/docs/guide</developerConnection>
         <url>http://fisheye.jboss.org/browse/richfaces/</url>
     </scm>
 

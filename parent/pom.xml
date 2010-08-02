@@ -23,9 +23,9 @@
         <richfaces.checkstyle.version>1</richfaces.checkstyle.version>
 	</properties>
 	<scm>
-		<connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/root/cdk/trunk/parent</connection>
-		<developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/root/cdk/trunk/parent</developerConnection>
-		<url>http://fisheye.jboss.org/browse/Richfaces/cdk/trunk/parent</url>
+		<connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/trunk/cdk/parent</connection>
+		<developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/trunk/cdk/parent</developerConnection>
+		<url>http://fisheye.jboss.org/browse/Richfaces/cdk/parent</url>
 	</scm>
 	<repositories>
 		<repository>

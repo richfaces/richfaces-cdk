@@ -28,8 +28,8 @@
 	</modules>
 	<!-- SCM and distribution management -->
 	<scm>
-		<connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/root/cdk/trunk</connection>
-		<developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/root/cdk/trunk</developerConnection>
+		<connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/trunk/cdk</connection>
+		<developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/trunk/cdk</developerConnection>
 		<url>http://fisheye.jboss.org/browse/Richfaces/cdk</url>
 	</scm>
 

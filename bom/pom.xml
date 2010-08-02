@@ -20,9 +20,9 @@
 		<org.richfaces.commons.version>4.0.0-SNAPSHOT</org.richfaces.commons.version>
 	</properties>
 	<scm>
-		<connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/root/cdk/trunk/bom</connection>
-		<developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/root/cdk/trunk/bom</developerConnection>
-		<url>http://fisheye.jboss.org/browse/Richfaces/cdk/trunk/bom</url>
+		<connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/trunk/cdk/bom</connection>
+		<developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/trunk/cdk/bom</developerConnection>
+		<url>http://fisheye.jboss.org/browse/Richfaces/cdk/bom</url>
 	</scm>
 	<build>
 		<!-- Define CDK plugin that is used by JSF component projects -->

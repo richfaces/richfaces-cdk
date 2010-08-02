@@ -14,9 +14,9 @@
 	<packaging>pom</packaging>
   <name>maven CDK plugins</name>
     <scm>
-        <connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/root/cdk/trunk/plugins</connection>
-        <developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/root/cdk/trunk/plugins</developerConnection>
-        <url>http://fisheye.jboss.org/browse/Richfaces/cdk/trunk/plugins</url>
+        <connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/trunk/cdk/plugins</connection>
+        <developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/trunk/cdk/plugins</developerConnection>
+        <url>http://fisheye.jboss.org/browse/Richfaces/cdk/plugins</url>
     </scm>
   <build>
     <plugins>

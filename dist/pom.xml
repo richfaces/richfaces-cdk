@@ -15,8 +15,8 @@
 
 	<!-- SCM and distribution management -->
 	<scm>
-		<connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/root/cdk/trunk/dist</connection>
-		<developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/root/cdk/trunk/dist</developerConnection>
+		<connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/trunk/cdk/dist</connection>
+		<developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/trunk/cdk/dist</developerConnection>
 		<url>http://fisheye.jboss.org/browse/Richfaces/cdk</url>
 	</scm>
 	<build>
