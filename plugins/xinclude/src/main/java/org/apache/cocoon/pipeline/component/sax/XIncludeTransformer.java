@@ -18,6 +18,12 @@
 */
 package org.apache.cocoon.pipeline.component.sax;
 
+import java.io.IOException;
+import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.apache.cocoon.pipeline.component.xpointer.XPointer;
 import org.apache.cocoon.pipeline.component.xpointer.XPointerContext;
 import org.apache.cocoon.pipeline.component.xpointer.parser.ParseException;
@@ -32,12 +38,6 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.ext.EntityResolver2;
 import org.xml.sax.ext.LexicalHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
-
-import java.io.IOException;
-import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public final class XIncludeTransformer implements SAXConsumer {
     private static final String DEFAULT_CHARSET = "UTF-8";
@@ -399,8 +399,11 @@ public final class XIncludeTransformer implements SAXConsumer {
 
     public void endPrefixMapping(String prefix) throws SAXException {
         if (isEvaluatingContent()) {
-            getContentHandler().endPrefixMapping(prefix);
-            namespaces.remove(prefix);
+            String uri = namespaces.remove(prefix);
+            
+            if (!XINCLUDE_NAMESPACE_URI.equals(uri)) {
+                getContentHandler().endPrefixMapping(prefix);
+            }
         }
     }
 
