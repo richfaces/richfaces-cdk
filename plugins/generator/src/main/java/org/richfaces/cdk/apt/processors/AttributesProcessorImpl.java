@@ -88,7 +88,11 @@ public class AttributesProcessorImpl implements AttributesProcessor {
             utils.setModelProperty(attribute, attributeAnnotarion,  "passThrough");
             utils.setModelProperty(attribute, attributeAnnotarion,  "required");
             utils.setModelProperty(attribute, attributeAnnotarion,  "readOnly");
-            utils.setModelProperty(attribute, attributeAnnotarion,  "generate");
+            if (!utils.isDefaultValue(attributeAnnotarion, "generate")) {
+                attribute.setGenerate(utils.getAnnotationValue(attributeAnnotarion, "generate", boolean.class));
+            } else {
+                attribute.setGenerate(!beanProperty.isExists());
+            }
 
             descriptionProcessor.processDescription(attribute, beanProperty.getAnnotation(Attribute.class).description(), beanProperty
                 .getDocComment());

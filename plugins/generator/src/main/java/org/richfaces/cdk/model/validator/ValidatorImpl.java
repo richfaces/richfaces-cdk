@@ -58,6 +58,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 /**
  * <p class="changed_added_4_0">
@@ -93,12 +94,12 @@ public class ValidatorImpl implements ModelValidator {
 
     private final NamingConventions namingConventions;
 
-    private final SourceUtils sourceUtils;
+    private final Provider<SourceUtils> sourceUtilsProvider;
 
     @Inject
-    public ValidatorImpl(NamingConventions namingConventions, SourceUtils sourceUtils) {
+    public ValidatorImpl(NamingConventions namingConventions, Provider<SourceUtils> sourceUtilsProvider) {
         this.namingConventions = namingConventions;
-        this.sourceUtils = sourceUtils;
+        this.sourceUtilsProvider = sourceUtilsProvider;
     }
 
     /*
@@ -121,6 +122,7 @@ public class ValidatorImpl implements ModelValidator {
             if (null == listenerInterface) {
                 // TODO - infer listener interface name.
             }
+            SourceUtils sourceUtils = sourceUtilsProvider.get();
             event.setGenerateListener(null == sourceUtils.asTypeElement(listenerInterface));
             String methodName = event.getListenerMethod();
             if (null == methodName) {
