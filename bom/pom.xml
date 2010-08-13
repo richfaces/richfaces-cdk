@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.richfaces</groupId>
 		<artifactId>richfaces-parent</artifactId>
-		<version>9</version>
+		<version>10-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -38,15 +38,13 @@
 	</build>
 	<dependencyManagement>
 		<dependencies>
-			<!-- Import richfaces-common-bom -->
-			<dependency>
-				<groupId>org.richfaces.commons</groupId>
-				<artifactId>richfaces-commons-bom</artifactId>
-				<version>${org.richfaces.commons.version}</version>
-				<scope>import</scope>
-				<type>pom</type>
-			</dependency>
-
+		    <!-- TODO Temp update to have jsf-api defined here.  Alex will a
+		         address with him build commit -->
+		    <dependency>
+                <groupId>com.sun.faces</groupId>
+                <artifactId>jsf-api</artifactId>
+                <version>2.0.2</version>
+            </dependency>
 			<!-- TODO remove duplicates from these dependences already defined in 
 				project BOM -->
 			<dependency>
