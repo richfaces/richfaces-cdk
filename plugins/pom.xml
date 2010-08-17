@@ -34,6 +34,7 @@
     <module>xinclude</module>
 	<module>generator</module>
 	<module>maven-cdk-plugin</module>
+	<module>maven-resources-plugin</module>
   </modules>
 
 </project>
