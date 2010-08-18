@@ -59,7 +59,7 @@ public class ApplicationImpl extends Application {
     private ExpressionFactory expressionFactory = createExpressionFactory();
 
     private ExpressionFactory createExpressionFactory() {
-        return ExpressionFactoryImpl.newInstance();
+        return new ExpressionFactoryImpl();
     }
 
     /*
