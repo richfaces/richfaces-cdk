@@ -57,7 +57,7 @@ public class JavaScriptResourceProcessor extends CharResourceProcessor {
         }
         
         if (reporter.hasWarnings()) {
-            log.warn(reporter.getWarningsLog());
+            log.debug(reporter.getWarningsLog());
         }
     }
     

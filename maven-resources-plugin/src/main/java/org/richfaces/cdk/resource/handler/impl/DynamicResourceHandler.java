@@ -21,19 +21,13 @@
  */
 package org.richfaces.cdk.resource.handler.impl;
 
-import java.io.IOException;
-
 import javax.faces.application.Resource;
 import javax.faces.application.ResourceHandler;
-import javax.faces.component.StateHolder;
 import javax.faces.context.FacesContext;
 
 import org.richfaces.resource.ResourceFactory;
 import org.richfaces.resource.ResourceFactoryImpl;
-import org.richfaces.resource.StateHolderResource;
-
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
+import org.richfaces.util.Util;
 
 /**
  * @author Nick Belaevski
@@ -50,35 +44,27 @@ public class DynamicResourceHandler extends AbstractResourceHandler  {
         this.resourceFactory = new ResourceFactoryImpl(staticResourceHandler);
     }
     
+    private void setupResourceState(Resource source, Resource target) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        Object state = Util.saveResourceState(facesContext, source);
+        if (state != null) {
+            Util.restoreResourceState(facesContext, target, state);
+        }
+    }
+    
     @Override
     public Resource createResource(String resourceName, String libraryName, String contentType) {
-        Resource result = resourceFactory.createResource(resourceName, libraryName, null);
+        Resource result = resourceFactory.createResource(resourceName, libraryName, contentType);
         
         if (result != null) {
-            if (result instanceof StateHolderResource) {
-                StateHolderResource stateHolderResource = (StateHolderResource) result;
-                ByteArrayDataOutput dataOutput = ByteStreams.newDataOutput();
-                try {
-                    stateHolderResource.writeState(FacesContext.getCurrentInstance(), dataOutput);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                byte[] bs = dataOutput.toByteArray();
-                //TODO use collected data
-            } else if (result instanceof StateHolder) {
-                StateHolder stateHolder = (StateHolder) result;
-                if (!stateHolder.isTransient()) {
-                    Object savedData = stateHolder.saveState(FacesContext.getCurrentInstance());
-                    //TODO use collected data
-                }
-            }
-
+            Resource newResource = resourceFactory.createResource(resourceName, libraryName, contentType);
+            setupResourceState(newResource, result);
             result = new DynamicResourceWrapper(result);
         } else {
-            result = staticResourceHandler.createResource(resourceName, libraryName);
+            result = staticResourceHandler.createResource(resourceName, libraryName, contentType);
         }
         
         return result;
     }
+
 }
