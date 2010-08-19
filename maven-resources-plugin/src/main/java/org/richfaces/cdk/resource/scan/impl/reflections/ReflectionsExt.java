@@ -30,6 +30,9 @@ import org.reflections.Reflections;
 import org.reflections.scanners.Scanner;
 import org.reflections.util.Utils;
 
+import com.google.common.base.Function;
+import com.google.common.base.Predicates;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.Multimap;
 
 /**
@@ -37,6 +40,22 @@ import com.google.common.collect.Multimap;
  * 
  */
 public class ReflectionsExt extends Reflections {
+
+    private static final Function<String, Class<?>> CLASS_FOR_NAME = new Function<String, Class<?>>() {
+        public java.lang.Class<?> apply(String from) {
+            try {
+                return Class.forName(from, true, Utils.getContextClassLoader());
+            } catch (ClassNotFoundException e) {
+                // TODO: handle exception
+                e.printStackTrace();
+            } catch (LinkageError e) {
+                // TODO: handle exception
+                e.printStackTrace();
+            }
+            
+            return null;
+        };
+    };
 
     public ReflectionsExt() {
         super();
@@ -56,7 +75,9 @@ public class ReflectionsExt extends Reflections {
         if (scannerMMap == null) {
             return Collections.emptySet();
         }
-        return Utils.forNames(scannerMMap.get(MarkerResourcesScanner.STORE_KEY));
+
+        return Collections2.filter(Collections2.transform(scannerMMap.get(MarkerResourcesScanner.STORE_KEY), CLASS_FOR_NAME), 
+            Predicates.notNull());
     }
 
 }

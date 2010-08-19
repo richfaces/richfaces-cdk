@@ -24,7 +24,6 @@ package org.richfaces.cdk.resource.writer.impl;
 
 import java.text.MessageFormat;
 
-import org.apache.maven.plugin.logging.Log;
 import org.mozilla.javascript.ErrorReporter;
 import org.mozilla.javascript.EvaluatorException;
 
@@ -38,11 +37,12 @@ final class MavenLogErrorReporter implements ErrorReporter {
     
     private String resourceName;
     
-    private Log log;
+    private StringBuilder errorMessages = new StringBuilder();
     
-    public MavenLogErrorReporter(Log log, String resourceName) {
+    private StringBuilder warningMessages = new StringBuilder();
+    
+    public MavenLogErrorReporter(String resourceName) {
         super();
-        this.log = log;
         this.resourceName = resourceName;
     }
 
@@ -55,7 +55,8 @@ final class MavenLogErrorReporter implements ErrorReporter {
     
     @Override
     public void warning(String message, String sourceName, int line, String lineSource, int lineOffset) {
-        log.warn(formatMessage(message, sourceName, line, lineSource, lineOffset));
+        warningMessages.append(formatMessage(message, sourceName, line, lineSource, lineOffset));
+        warningMessages.append('\n');
     }
 
     @Override
@@ -65,6 +66,23 @@ final class MavenLogErrorReporter implements ErrorReporter {
 
     @Override
     public void error(String message, String sourceName, int line, String lineSource, int lineOffset) {
-        log.error(formatMessage(message, sourceName, line, lineSource, lineOffset));
+        errorMessages.append(formatMessage(message, sourceName, line, lineSource, lineOffset));
+        errorMessages.append('\n');
+    }
+    
+    public boolean hasErrors() {
+        return errorMessages.length() > 0;
+    }
+    
+    public String getErrorsLog() {
+        return errorMessages.toString();
+    }
+    
+    public boolean hasWarnings() {
+        return warningMessages.length() > 0;
+    }
+    
+    public String getWarningsLog() {
+        return warningMessages.toString();
     }
 }

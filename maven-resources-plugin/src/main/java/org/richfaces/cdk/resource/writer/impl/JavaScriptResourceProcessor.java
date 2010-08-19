@@ -49,8 +49,16 @@ public class JavaScriptResourceProcessor extends CharResourceProcessor {
 
     @Override
     protected void doActualProcess(String resourceName, Reader in, Writer out) throws IOException {
-        MavenLogErrorReporter reporter = new MavenLogErrorReporter(log, resourceName);
+        MavenLogErrorReporter reporter = new MavenLogErrorReporter(resourceName);
         new JavaScriptCompressor(in, reporter).compress(out, 0, true, true, false, false);
+        
+        if (reporter.hasErrors()) {
+            log.error(reporter.getErrorsLog());
+        }
+        
+        if (reporter.hasWarnings()) {
+            log.warn(reporter.getWarningsLog());
+        }
     }
     
 }
