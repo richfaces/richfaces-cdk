@@ -39,15 +39,15 @@ import javax.xml.namespace.QName;
 @XmlRootElement(name = "root", namespace = Template.CDK_NAMESPACE)
 public class Template implements Serializable {
 
-    public static final String JSTL_CORE_NAMESPACE = "http://richfaces.org/cdk/jstl/core";
+    public static final String JSTL_CORE_NAMESPACE = "http://jboss.org/schema/richfaces/cdk/jstl/core";
 
-    public static final String CDK_NAMESPACE = "http://richfaces.org/cdk/core";
+    public static final String CDK_NAMESPACE = "http://jboss.org/schema/richfaces/cdk/core";
 
-    public static final String CDK_PASS_THROUGH_NAMESPACE = "http://richfaces.org/cdk/ext";
+    public static final String CDK_PASS_THROUGH_NAMESPACE = "http://jboss.org/schema/richfaces/cdk/ext";
 
-    public static final String COMPOSITE_NAMESPACE = "http://richfaces.org/cdk/jsf/composite";
+    public static final String COMPOSITE_NAMESPACE = "http://jboss.org/schema/richfaces/cdk/jsf/composite";
 
-    public static final String XHTML_EL_NAMESPACE = "http://richfaces.org/cdk/xhtml-el";
+    public static final String XHTML_EL_NAMESPACE = "http://jboss.org/schema/richfaces/cdk/xhtml-el";
 
     public static final String XHTML_NAMESPACE = "http://www.w3.org/1999/xhtml";
 

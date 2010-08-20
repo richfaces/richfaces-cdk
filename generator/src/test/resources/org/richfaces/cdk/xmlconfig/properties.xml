@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cdk:properties xmlns:xi="http://www.w3.org/2001/XInclude" 
 	xmlns="http://java.sun.com/xml/ns/javaee"
-	xmlns:cdk="http://richfaces.org/cdk/extensions">
+	xmlns:cdk="http://jboss.org/schema/richfaces/cdk/extensions">
     <property>
         <description><![CDATA[test2 property]]></description>
         <display-name>test2 event property</display-name>

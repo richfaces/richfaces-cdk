@@ -290,7 +290,7 @@ public class RendererTemplateParser implements ModelBuilder {
 
     protected Template parseTemplate(File file) throws CdkException {
         try {
-            Template template = jaxbBinding.unmarshal(file, "http://richfaces.org/cdk/cdk-template.xsd", Template.class);
+            Template template = jaxbBinding.unmarshal(file, "http://jboss.org/schema/richfaces/cdk/cdk-template.xsd", Template.class);
             template.setTemplatePath(file.getAbsolutePath());
             return template;
         } catch (FileNotFoundException e) {

@@ -42,7 +42,7 @@ import org.richfaces.cdk.xmlconfig.JaxbTestBase;
 public class TemplateParserTest extends JaxbTestBase {
 
     public static final String TEMPLATE_PROLOG =
-        "<cdk:root xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:cdk=\"http://richfaces.org/cdk/core\" xmlns:c=\"http://richfaces.org/cdk/jstl/core\" xmlns:cc=\"http://richfaces.org/cdk/jsf/composite\"><cc:interface>";
+        "<cdk:root xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:cdk=\"http://jboss.org/schema/richfaces/cdk/core\" xmlns:c=\"http://jboss.org/schema/richfaces/cdk/jstl/core\" xmlns:cc=\"http://jboss.org/schema/richfaces/cdk/jsf/composite\"><cc:interface>";
     private static final Object DEFAULT_ATTRIBUTE_TYPE = new ClassName(Object.class);
     private static final String TEMPLATE_EPILOG = "</cc:implementation></cdk:root>";
     private static final String TEMPLATE_MIDDLE = "</cc:interface><cc:implementation>";

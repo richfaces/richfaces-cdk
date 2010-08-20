@@ -25,10 +25,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 --> 
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://richfaces.org/cdk/core" xmlns="http://richfaces.org/cdk/core"
+	targetNamespace="http://jboss.org/schema/richfaces/cdk/core" xmlns="http://jboss.org/schema/richfaces/cdk/core"
 	elementFormDefault="qualified" attributeFormDefault="unqualified"
-	xmlns:xhtml="http://richfaces.org/cdk/xhtml-el" xmlns:javaee="http://java.sun.com/xml/ns/javaee"
-	xmlns:c="http://richfaces.org/cdk/jstl/core" xmlns:cc="http://richfaces.org/cdk/jsf/composite">
+	xmlns:xhtml="http://jboss.org/schema/richfaces/cdk/xhtml-el" xmlns:javaee="http://java.sun.com/xml/ns/javaee"
+	xmlns:c="http://jboss.org/schema/richfaces/cdk/jstl/core" xmlns:cc="http://jboss.org/schema/richfaces/cdk/jsf/composite">
 
 	<xs:annotation>
 		<xs:documentation>
@@ -37,8 +37,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 	</xs:annotation>
 
 	<xs:import schemaLocation="web-facesuicomponent_2_0.xsd" namespace="http://java.sun.com/xml/ns/javaee" />
-	<xs:import schemaLocation="cdk-composite.xsd" namespace="http://richfaces.org/cdk/jsf/composite" />
-	<xs:import schemaLocation="cdk-jstl-core.xsd" namespace="http://richfaces.org/cdk/jstl/core" />
+	<xs:import schemaLocation="cdk-composite.xsd" namespace="http://jboss.org/schema/richfaces/cdk/jsf/composite" />
+	<xs:import schemaLocation="cdk-jstl-core.xsd" namespace="http://jboss.org/schema/richfaces/cdk/jstl/core" />
 
 	<xs:simpleType name="elStrictExpression">
 		<xs:restriction base="xs:string">

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <faces-config xmlns="http://java.sun.com/xml/ns/javaee"
-	xmlns:cdk="http://richfaces.org/cdk/extensions" 
+	xmlns:cdk="http://jboss.org/schema/richfaces/cdk/extensions" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:xi="http://www.w3.org/2001/XInclude"
 	version="2.0"
@@ -16,7 +16,7 @@
 		   <description>Panel header content.</description>
 		</facet>
 		<xi:include
-			xpointer="xmlns(cdk=http://richfaces.org/cdk/extensions)xpointer(/cdk:properties/*)"
+			xpointer="xmlns(cdk=http://jboss.org/schema/richfaces/cdk/extensions)xpointer(/cdk:properties/*)"
 			href="urn:attributes:javax.faces.component.UIPanel.xml" />
 		<property>
 			<property-name>title</property-name>
@@ -51,7 +51,7 @@
 		<display-name>Html Test Panel</display-name>
         <component-class>org.richfaces.cdk.component.html.HtmlTestPanel</component-class>
 		<xi:include
-			xpointer="xmlns(cdk=http://richfaces.org/cdk/extensions)xpointer(/cdk:properties/*)"
+			xpointer="xmlns(cdk=http://jboss.org/schema/richfaces/cdk/extensions)xpointer(/cdk:properties/*)"
 			href="urn:attributes:events-props.xml" />
 		<property>
 			<property-name>onheaderclick</property-name>

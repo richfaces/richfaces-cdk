@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema targetNamespace="http://richfaces.org/cdk"
 	elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:cdk="http://richfaces.org/cdk/core" attributeFormDefault="unqualified">
+	xmlns:cdk="http://jboss.org/schema/richfaces/cdk/core" attributeFormDefault="unqualified">
 	<xsd:annotation>
 		<xsd:documentation>$Id$</xsd:documentation>
 	</xsd:annotation>

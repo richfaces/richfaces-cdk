@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<cdk:root xmlns="http://www.w3.org/1999/xhtml" xmlns:cdk="http://richfaces.org/cdk/core"
-	xmlns:c="http://richfaces.org/cdk/jstl/core" xmlns:cc="http://richfaces.org/cdk/jsf/composite">
+<cdk:root xmlns="http://www.w3.org/1999/xhtml" xmlns:cdk="http://jboss.org/schema/richfaces/cdk/core"
+	xmlns:c="http://jboss.org/schema/richfaces/cdk/jstl/core" xmlns:cc="http://jboss.org/schema/richfaces/cdk/jsf/composite">
 	<cc:interface>
 		<cdk:class>org.richfaces.cdk.renderkit.html.TestPanelRenderer</cdk:class>
 		<cdk:superclass>org.richfaces.cdk.renderkit.AbstractTestPanelRenderer</cdk:superclass>

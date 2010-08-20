@@ -17,12 +17,12 @@
 		Boston, MA 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 	-->
 
-<xs:schema targetNamespace="http://richfaces.org/cdk/jsf/composite"
-	xmlns:cc="http://richfaces.org/cdk/jsf/composite" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:cdk="http://richfaces.org/cdk/core"
+<xs:schema targetNamespace="http://jboss.org/schema/richfaces/cdk/jsf/composite"
+	xmlns:cc="http://jboss.org/schema/richfaces/cdk/jsf/composite" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:cdk="http://jboss.org/schema/richfaces/cdk/core"
 	elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-	<xs:import schemaLocation="cdk-template.xsd" namespace="http://richfaces.org/cdk/core" />
+	<xs:import schemaLocation="cdk-template.xsd" namespace="http://jboss.org/schema/richfaces/cdk/core" />
 
 	<xs:annotation>
 		<xs:documentation>

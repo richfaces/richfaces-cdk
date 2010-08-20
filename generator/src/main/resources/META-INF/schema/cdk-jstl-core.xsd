@@ -25,8 +25,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 --> 
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://richfaces.org/cdk/jstl/core" xmlns="http://richfaces.org/cdk/jstl/core"
-	xmlns:cdk="http://richfaces.org/cdk/core"
+	targetNamespace="http://jboss.org/schema/richfaces/cdk/jstl/core" xmlns="http://jboss.org/schema/richfaces/cdk/jstl/core"
+	xmlns:cdk="http://jboss.org/schema/richfaces/cdk/core"
 	elementFormDefault="qualified" attributeFormDefault="unqualified">
 
 	<xs:annotation>
@@ -35,7 +35,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 		</xs:documentation>
 	</xs:annotation>
 
-	<xs:import schemaLocation="cdk-template.xsd" namespace="http://richfaces.org/cdk/core" />
+	<xs:import schemaLocation="cdk-template.xsd" namespace="http://jboss.org/schema/richfaces/cdk/core" />
 
 	<xs:complexType name="arbitraryContent" mixed="true">
 		<xs:choice>

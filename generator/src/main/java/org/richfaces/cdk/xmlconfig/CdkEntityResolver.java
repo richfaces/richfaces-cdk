@@ -65,21 +65,24 @@ public class CdkEntityResolver implements EntityResolver2 {
     private static final String URN_SYSTEM = "urn:system:";
     private static final ImmutableMap<String, String> SYSTEM_ENTITIES =
         ImmutableMap.<String, String> builder().put("http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd",
-            URN_SYSTEM + "/web-facesconfig_2_0.xsd").put(
+             "/web-facesconfig_2_0.xsd").put(
             "http://java.sun.com/xml/ns/javaee/web-facesuicomponent_2_0.xsd",
-            URN_SYSTEM + "/web-facesuicomponent_2_0.xsd").put(
+             "/web-facesuicomponent_2_0.xsd").put(
             "http://java.sun.com/xml/ns/javaee/web-partialresponse_2_0.xsd",
-            URN_SYSTEM + "/web-partialresponse_2_0.xsd").put(
-            "http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd", URN_SYSTEM + "/web-facesconfig_1_2.xsd").put(
-            "http://java.sun.com/xml/ns/javaee/javaee_5.xsd", URN_SYSTEM + "/javaee_5.xsd").put(
+             "/web-partialresponse_2_0.xsd").put(
+            "http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd",  "/web-facesconfig_1_2.xsd").put(
+            "http://java.sun.com/xml/ns/javaee/javaee_5.xsd",  "/javaee_5.xsd").put(
             "http://java.sun.com/xml/ns/javaee/javaee_web_services_1_2.xsd",
-            URN_SYSTEM + "/javaee_web_services_1_2.xsd").put(
+             "/javaee_web_services_1_2.xsd").put(
             "http://java.sun.com/xml/ns/javaee/javaee_web_services_client_1_2.xsd",
-            URN_SYSTEM + "/javaee_web_services_client_1_2.xsd").put("http://www.w3.org/2001/03/XMLSchema.dtd",
-            URN_SYSTEM + "/XMLSchema.dtd").put("http://www.w3.org/2001/03/xml.xsd", URN_SYSTEM + "/xml.xsd").put(
-            "http://www.w3.org/2001/xml.xsd", URN_SYSTEM + "/xml.xsd").put("http://richfaces.org/cdk/cdk-template.xsd",
-            URN_SYSTEM + "/cdk-template.xsd")
-            .put("http://richfaces.org/cdk/xhtml-el.xsd", URN_SYSTEM + "/xhtml-el.xsd").build();
+             "/javaee_web_services_client_1_2.xsd").put("http://www.w3.org/2001/03/XMLSchema.dtd",
+             "/XMLSchema.dtd").put("http://www.w3.org/2001/03/xml.xsd",  "/xml.xsd").put(
+            "http://www.w3.org/2001/xml.xsd",  "/xml.xsd")
+            .put("http://jboss.org/schema/richfaces/cdk/cdk-template.xsd","/cdk-template.xsd")
+            .put("http://jboss.org/schema/richfaces/cdk/cdk-jstl-core.xsd","/cdk-jstl-core.xsd")
+            .put("http://jboss.org/schema/richfaces/cdk/cdk-schemas-aggregation.xsd","/cdk-schemas-aggregation.xsd")
+            .put("http://jboss.org/schema/richfaces/cdk/cdk-composite.xsd","/cdk-composite.xsd")
+            .put("http://jboss.org/schema/richfaces/cdk/xhtml-el.xsd",  "/xhtml-el.xsd").build();
 
     @Inject
     private CdkClassLoader loader;
@@ -154,7 +157,7 @@ public class CdkEntityResolver implements EntityResolver2 {
         String systemIdInternal;
 
         if (SYSTEM_ENTITIES.containsKey(systemId)) {
-            systemIdInternal = SYSTEM_ENTITIES.get(systemId);
+            systemIdInternal = URN_SYSTEM + SYSTEM_ENTITIES.get(systemId);
         } else {
             systemIdInternal = systemId;
         }

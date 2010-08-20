@@ -1,5 +1,5 @@
 <cdk:properties xmlns:xi="http://www.w3.org/2001/XInclude"
-	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:cdk="http://richfaces.org/cdk/extensions">
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:cdk="http://jboss.org/schema/richfaces/cdk/extensions">
 	<property>
 		<description><![CDATA[test property]]></description>
 		<display-name>test event property</display-name>

@@ -20,8 +20,8 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:abc"
 	xmlns:xml="http://www.w3.org/XML/1998/namespace">
 
-	<xs:import schemaLocation="cdk-template.xsd" namespace="http://richfaces.org/cdk/core" />
-	<xs:import schemaLocation="cdk-composite.xsd" namespace="http://richfaces.org/cdk/jsf/composite" />
-	<xs:import schemaLocation="cdk-jstl-core.xsd" namespace="http://richfaces.org/cdk/jstl/core" />
+	<xs:import schemaLocation="cdk-template.xsd" namespace="http://jboss.org/schema/richfaces/cdk/core" />
+	<xs:import schemaLocation="cdk-composite.xsd" namespace="http://jboss.org/schema/richfaces/cdk/jsf/composite" />
+	<xs:import schemaLocation="cdk-jstl-core.xsd" namespace="http://jboss.org/schema/richfaces/cdk/jstl/core" />
 	
 </xs:schema>

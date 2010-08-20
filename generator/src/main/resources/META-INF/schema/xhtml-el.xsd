@@ -15,12 +15,12 @@
 	FSF site: http://www.fsf.org. -->
 
 <xs:schema version="1.0" xml:lang="en"
-	xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://richfaces.org/cdk/xhtml-el"
-	xmlns="http://richfaces.org/cdk/xhtml-el" xmlns:xml="http://www.w3.org/XML/1998/namespace"
-	elementFormDefault="qualified" xmlns:cdk="http://richfaces.org/cdk/core"
-	xmlns:cdk-addinfo="http://richfaces.org/cdk/additional-attributes-info">
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://jboss.org/schema/richfaces/cdk/xhtml-el"
+	xmlns="http://jboss.org/schema/richfaces/cdk/xhtml-el" xmlns:xml="http://www.w3.org/XML/1998/namespace"
+	elementFormDefault="qualified" xmlns:cdk="http://jboss.org/schema/richfaces/cdk/core"
+	xmlns:cdk-addinfo="http://jboss.org/schema/richfaces/cdk/additional-attributes-info">
 
-	<xs:import schemaLocation="cdk-template.xsd" namespace="http://richfaces.org/cdk/core" />
+	<xs:import schemaLocation="cdk-template.xsd" namespace="http://jboss.org/schema/richfaces/cdk/core" />
 
 	<xs:annotation>
 		<xs:documentation>

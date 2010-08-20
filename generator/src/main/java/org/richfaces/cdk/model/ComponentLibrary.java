@@ -51,7 +51,7 @@ import com.google.inject.Singleton;
  */
 @Singleton
 public class ComponentLibrary implements Serializable, Extensible<ConfigExtension>, Trackable, Visitable {
-    public static final String CDK_EXTENSIONS_NAMESPACE = "http://richfaces.org/cdk/extensions";
+    public static final String CDK_EXTENSIONS_NAMESPACE = "http://jboss.org/schema/richfaces/cdk/extensions";
     public static final String FACES_CONFIG_NAMESPACE = "http://java.sun.com/xml/ns/javaee";
     public static final String FACES_CONFIG_SCHEMA_LOCATION =
         "http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd";
