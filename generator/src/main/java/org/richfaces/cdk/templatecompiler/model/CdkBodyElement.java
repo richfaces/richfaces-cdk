@@ -23,6 +23,7 @@
 
 package org.richfaces.cdk.templatecompiler.model;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.richfaces.cdk.CdkException;
@@ -34,6 +35,25 @@ import org.richfaces.cdk.CdkException;
  */
 @XmlRootElement(name = "body", namespace = Template.CDK_NAMESPACE)
 public class CdkBodyElement extends ModelFragment {
+    
+    private boolean enforce = false;
+
+    /**
+     * <p class="changed_added_4_0"></p>
+     * @return the enforce
+     */
+    @XmlAttribute
+    public boolean isEnforce() {
+        return this.enforce;
+    }
+
+    /**
+     * <p class="changed_added_4_0"></p>
+     * @param enforce the enforce to set
+     */
+    public void setEnforce(boolean enforce) {
+        this.enforce = enforce;
+    }
 
     @Override
     public void beforeVisit(TemplateVisitor visitor) throws CdkException {

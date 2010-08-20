@@ -244,8 +244,8 @@ public class RendererClassVisitor implements TemplateVisitor {
         currentStatement.setVariable(SUPER_VARIABLE, generatedClassSuperType);
     }
 
-    private void flushToEncodeMethod(String encodeMethodName) {
-        if (!this.currentStatement.isEmpty()) {
+    private void flushToEncodeMethod(String encodeMethodName, boolean enforce) {
+        if (enforce || !this.currentStatement.isEmpty()) {
             Argument facesContextArgument = new Argument(FACES_CONTEXT_VARIABLE, getType(FacesContext.class));
             Argument componentArgument = new Argument(COMPONENT_VARIABLE, getType(UIComponent.class));
 
@@ -329,7 +329,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     @Override
     public void startElement(CdkBodyElement cdkBodyElement) throws CdkException {
-        flushToEncodeMethod("encodeBegin");
+        flushToEncodeMethod("encodeBegin", false);
     }
 
     /*
@@ -341,7 +341,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     @Override
     public void endElement(CdkBodyElement cdkBodyElement) throws CdkException {
-        flushToEncodeMethod("encodeChildren");
+        flushToEncodeMethod("encodeChildren", cdkBodyElement.isEnforce());
     }
 
     /*
@@ -610,7 +610,7 @@ public class RendererClassVisitor implements TemplateVisitor {
      *
      */
     public void postProcess(CompositeImplementation impl) {
-        flushToEncodeMethod("encodeEnd");
+        flushToEncodeMethod("encodeEnd", false);
         createRendersChildrenMethod();
     }
 
