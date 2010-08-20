@@ -149,8 +149,8 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
         for (TagModel tagModel : model.getTags()) {
             if (isFaceletsTag(tagModel)) {
                 Element tag = createTag(tagModel.getName());
-                addDescription(tag, model);
                 Element converter = tag.addElement("converter");
+                addDescription(converter, model);
                 converter.addElement("converter-id", model.getId().toString());
                 addTagHandler(converter, tagModel);
                 appendAttributes(tag, model);
@@ -182,8 +182,8 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
         for (TagModel tagModel : model.getTags()) {
             if (isFaceletsTag(tagModel)) {
                 Element tag = createTag(tagModel.getName());
-                addDescription(tag, model);
                 Element validator = tag.addElement("validator");
+                addDescription(validator, model);
                 validator.addElement("validator-id", model.getId().toString());
                 addTagHandler(validator, tagModel);
                 appendAttributes(tag, model);
@@ -233,8 +233,8 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
         for (TagModel tagModel : model.getTags()) {
             if (isFaceletsTag(tagModel)) {
                 Element tag = createTag(tagModel.getName());
-                addDescription(tag, model);
                 Element behavior = tag.addElement("behavior");
+                addDescription(behavior, model);
                 behavior.addElement("behavior-id").addText(model.getId().toString());
                 addTagHandler(behavior, tagModel);
                 appendAttributes(tag, model);
