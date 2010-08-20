@@ -33,14 +33,11 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.processing.Processor;
-import javax.tools.Diagnostic;
-import javax.tools.DiagnosticListener;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
-import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaCompiler.CompilationTask;
 
 import org.richfaces.cdk.CdkClassLoader;
@@ -65,36 +62,11 @@ import com.google.inject.Inject;
  */
 public class TaskFactoryImpl implements CompilationTaskFactory {
 
-    private final class DiagnosticListenerImplementation implements DiagnosticListener<JavaFileObject> {
-
-        @Override
-        public void report(Diagnostic<? extends JavaFileObject> diagnostic) {
-            StringBuilder message = new StringBuilder(diagnostic.getMessage(locale));
-            JavaFileObject source = diagnostic.getSource();
-            if (null != source) {
-                message.append(", in the file:").append(source.getName()).append(" at line ").append(
-                    diagnostic.getLineNumber()).append(" in column ").append(diagnostic.getColumnNumber());
-            }
-            Kind kind = diagnostic.getKind();
-            if (Kind.ERROR.equals(kind)) {
-                log.error(message);
-            } else if (Kind.MANDATORY_WARNING.equals(kind) || Kind.WARNING.equals(kind)) {
-                log.warn(message);
-            } else if (Kind.NOTE.equals(kind)) {
-                log.info(message);
-            } else {
-                log.debug(message);
-            }
-        }
-    }
-
     private static List<String> compilerOptions = new ArrayList<String>(Arrays.asList("-proc:only", "-implicit:class"));
 
-    @Inject
-    private Logger log;
+    @Inject Logger log;
 
-    @Inject
-    private Locale locale;
+    @Inject Locale locale;
 
     @Inject
     private Charset charset;
@@ -117,8 +89,6 @@ public class TaskFactoryImpl implements CompilationTaskFactory {
 
     private StandardJavaFileManager fileManager;
 
-    private final DiagnosticListener<JavaFileObject> diagnosticListener = new DiagnosticListenerImplementation();
-
     /*
      * (non-Javadoc)
      * 
@@ -135,7 +105,7 @@ public class TaskFactoryImpl implements CompilationTaskFactory {
             }
 
             CompilationTask task =
-                getJavaCompiler().getTask(null, getFileManager(), diagnosticListener, compilerOptions, null,
+                getJavaCompiler().getTask(null, getFileManager(), new DiagnosticListenerImplementation(log, locale), compilerOptions, null,
                     sourceObjects);
             task.setLocale(locale);
             task.setProcessors(Collections.singleton(cdkProcessor));
@@ -165,7 +135,7 @@ public class TaskFactoryImpl implements CompilationTaskFactory {
 
     private StandardJavaFileManager getFileManager() {
         if (fileManager == null) {
-            fileManager = getJavaCompiler().getStandardFileManager(diagnosticListener, locale, charset);
+            fileManager = getJavaCompiler().getStandardFileManager(new DiagnosticListenerImplementation(log, locale), locale, charset);
             try {
                 fileManager.setLocation(StandardLocation.CLASS_PATH, classPathLoader.getFiles());
                 Iterable<File> outputFolders = outputFolder.getFolders();
