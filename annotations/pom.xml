@@ -13,9 +13,5 @@
   <description>That project contains annotations for JSF classes</description>
   <name>annotations</name>
   <dependencies>
-		<dependency>
-            <groupId>${jsf2.api.groupid}</groupId>
-            <artifactId>${jsf2.api.artifactid}</artifactId>
-        </dependency>
   </dependencies>
 </project>
