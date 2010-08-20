@@ -39,6 +39,7 @@ import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.Logger;
 import org.richfaces.cdk.ModelValidator;
 import org.richfaces.cdk.NamingConventions;
+import org.richfaces.cdk.annotations.TagType;
 import org.richfaces.cdk.apt.SourceUtils;
 import org.richfaces.cdk.model.BehaviorModel;
 import org.richfaces.cdk.model.ClassName;
@@ -402,6 +403,9 @@ public class ValidatorImpl implements ModelValidator {
         if (Strings.isEmpty(tag.getName())) {
             String defaultTagName = namingConventions.inferTagName(id);
             tag.setName(defaultTagName);
+        }
+        if(null == tag.getType()){
+            tag.setType(TagType.Facelets);
         }
         if (tag.isGenerate()) {
             if (null == tag.getBaseClass()) {
