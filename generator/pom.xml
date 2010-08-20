@@ -34,7 +34,7 @@
 						<configuration>
 							<properties>
 								<sourceSchema>src/main/resources/META-INF/schema/xhtml-el.xsd</sourceSchema>
-								<targetNamespace>http://richfaces.org/cdk/xhtml-el</targetNamespace>
+								<targetNamespace>http://jboss.org/schema/richfaces/cdk/xhtml-el</targetNamespace>
 								<outputFile>generated-resources/META-INF/cdk/attributes/xhtml-el.xml</outputFile>
 							</properties>
 							<classpath>
