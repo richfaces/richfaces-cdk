@@ -4,20 +4,20 @@
         <parent>
                 <groupId>org.richfaces.cdk</groupId>
                 <artifactId>parent</artifactId>
-                <version>4.0.0.20100826-M2</version>
+                <version>4.0.0-SNAPSHOT</version>
                 <relativePath>../parent</relativePath>
         </parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.richfaces.cdk</groupId>
 	<artifactId>dist</artifactId>
-	<version>4.0.0.20100826-M2</version>
+	<version>4.0.0-SNAPSHOT</version>
 	<name>JSF Components Development Kit (CDK) distribution assembly</name>
 
 	<!-- SCM and distribution management -->
 	<scm>
-		<connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/tags/4.0.0.20100826-M2/cdk/dist</connection>
-		<developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/tags/4.0.0.20100826-M2/cdk/dist</developerConnection>
-		<url>http://fisheye.jboss.org/browse/Richfaces/cdk/tags/4.0.0.20100826-M2/cdk/dist</url>
+		<connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/trunk/cdk/dist</connection>
+		<developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/trunk/cdk/dist</developerConnection>
+		<url>http://fisheye.jboss.org/browse/Richfaces/cdk</url>
 	</scm>
 	<build>
 	    <finalName>cdk</finalName>
