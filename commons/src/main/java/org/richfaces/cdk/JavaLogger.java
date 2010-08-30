@@ -24,75 +24,138 @@
 package org.richfaces.cdk;
 
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 
 /**
- * <p class="changed_added_4_0">That logger delegates all calls to the JDK {@link java.util.logging.Logger}</p>
- *
+ * <p class="changed_added_4_0">
+ * That logger delegates all calls to the JDK {@link java.util.logging.Logger}
+ * </p>
+ * 
  * @author asmirnov@exadel.com
  */
 public class JavaLogger implements Logger {
-    
+
     public static final String CDK_LOG = "org.richfaces.cdk";
 
+    private static final String CLASS_NAME = JavaLogger.class.getName();
+
     private int errorCount = 0;
-    
+
     private java.util.logging.Logger jdkLogger = java.util.logging.Logger.getLogger(CDK_LOG);
 
+    private void fillCallerData(String fqn, LogRecord record) {
+        StackTraceElement[] stackTrace = new Exception().getStackTrace();
+
+        int i = 0;
+
+        for (; i < stackTrace.length; i++) {
+            if (fqn.equals(stackTrace[i].getClassName())) {
+                break;
+            }
+        }
+
+        int idx = i + 1;
+
+        for (; idx < stackTrace.length; idx++) {
+            if (!fqn.equals(stackTrace[idx].getClassName())) {
+                break;
+            }
+        }
+
+        if (idx < stackTrace.length) {
+            record.setSourceMethodName(stackTrace[idx].getMethodName());
+            record.setSourceClassName(stackTrace[idx].getClassName());
+        }
+    }
+
+    private LogRecord createRecord(Level level, CharSequence message, Throwable thrown) {
+        // millis and thread are filled by the constructor
+        LogRecord record = new LogRecord(level, message != null ? message.toString() : null);
+
+        // TODO resource bundle?
+        record.setLoggerName(jdkLogger.getName());
+        record.setThrown(thrown);
+        fillCallerData(CLASS_NAME, record);
+
+        return record;
+    }
+
     /*
-     *  (non-Javadoc)
+     * (non-Javadoc)
+     * 
      * @see org.richfaces.cdk.Logger#debug(java.lang.CharSequence)
      */
     @Override
     public void debug(CharSequence content) {
-        jdkLogger.fine(String.valueOf(content));
+        if (jdkLogger.isLoggable(Level.FINE)) {
+            jdkLogger.log(createRecord(Level.FINE, content, null));
+        }
     }
 
     /*
-     *  (non-Javadoc)
+     * (non-Javadoc)
+     * 
      * @see org.richfaces.cdk.Logger#debug(java.lang.CharSequence, java.lang.Throwable)
      */
     @Override
     public void debug(CharSequence content, Throwable error) {
-        jdkLogger.log(Level.FINE, String.valueOf(content), error);
+        if (jdkLogger.isLoggable(Level.FINE)) {
+            jdkLogger.log(createRecord(Level.FINE, content, error));
+        }
     }
 
     /*
-     *  (non-Javadoc)
+     * (non-Javadoc)
+     * 
      * @see org.richfaces.cdk.Logger#debug(java.lang.Throwable)
      */
     @Override
     public void debug(Throwable error) {
-        jdkLogger.log(Level.FINE, "", error);
+        if (jdkLogger.isLoggable(Level.FINE)) {
+            jdkLogger.log(createRecord(Level.FINE, "", error));
+        }
     }
 
     /*
-     *  (non-Javadoc)
+     * (non-Javadoc)
+     * 
      * @see org.richfaces.cdk.Logger#error(java.lang.CharSequence)
      */
     @Override
     public void error(CharSequence content) {
         errorCount++;
-        jdkLogger.severe(String.valueOf(content));
+
+        if (jdkLogger.isLoggable(Level.SEVERE)) {
+            jdkLogger.log(createRecord(Level.SEVERE, content, null));
+        }
     }
 
     /*
-     *  (non-Javadoc)
+     * (non-Javadoc)
+     * 
      * @see org.richfaces.cdk.Logger#error(java.lang.CharSequence, java.lang.Throwable)
      */
     @Override
     public void error(CharSequence content, Throwable error) {
         errorCount++;
-        jdkLogger.log(Level.SEVERE, String.valueOf(content), error);
+
+        if (jdkLogger.isLoggable(Level.SEVERE)) {
+            jdkLogger.log(createRecord(Level.SEVERE, content, error));
+        }
     }
 
     /*
-     *  (non-Javadoc)
+     * (non-Javadoc)
+     * 
      * @see org.richfaces.cdk.Logger#error(java.lang.Throwable)
      */
     @Override
     public void error(Throwable error) {
         errorCount++;
-        jdkLogger.log(Level.SEVERE, "", error);
+
+        if (jdkLogger.isLoggable(Level.SEVERE)) {
+            jdkLogger.log(createRecord(Level.SEVERE, "", error));
+        }
     }
 
     @Override
@@ -101,34 +164,44 @@ public class JavaLogger implements Logger {
     }
 
     /*
-     *  (non-Javadoc)
+     * (non-Javadoc)
+     * 
      * @see org.richfaces.cdk.Logger#info(java.lang.CharSequence)
      */
     @Override
     public void info(CharSequence content) {
-        jdkLogger.info(String.valueOf(content));
+        if (jdkLogger.isLoggable(Level.INFO)) {
+            jdkLogger.log(createRecord(Level.INFO, content, null));
+        }
     }
 
     /*
-     *  (non-Javadoc)
+     * (non-Javadoc)
+     * 
      * @see org.richfaces.cdk.Logger#info(java.lang.CharSequence, java.lang.Throwable)
      */
     @Override
     public void info(CharSequence content, Throwable error) {
-        jdkLogger.log(Level.INFO, String.valueOf(content), error);
+        if (jdkLogger.isLoggable(Level.INFO)) {
+            jdkLogger.log(createRecord(Level.INFO, content, error));
+        }
     }
 
     /*
-     *  (non-Javadoc)
+     * (non-Javadoc)
+     * 
      * @see org.richfaces.cdk.Logger#info(java.lang.Throwable)
      */
     @Override
     public void info(Throwable error) {
-        jdkLogger.log(Level.INFO, "", error);
+        if (jdkLogger.isLoggable(Level.INFO)) {
+            jdkLogger.log(createRecord(Level.INFO, "", error));
+        }
     }
 
     /*
-     *  (non-Javadoc)
+     * (non-Javadoc)
+     * 
      * @see org.richfaces.cdk.Logger#isDebugEnabled()
      */
     @Override
@@ -137,7 +210,8 @@ public class JavaLogger implements Logger {
     }
 
     /*
-     *  (non-Javadoc)
+     * (non-Javadoc)
+     * 
      * @see org.richfaces.cdk.Logger#isErrorEnabled()
      */
     @Override
@@ -146,7 +220,8 @@ public class JavaLogger implements Logger {
     }
 
     /*
-     *  (non-Javadoc)
+     * (non-Javadoc)
+     * 
      * @see org.richfaces.cdk.Logger#isInfoEnabled()
      */
     @Override
@@ -155,7 +230,8 @@ public class JavaLogger implements Logger {
     }
 
     /*
-     *  (non-Javadoc)
+     * (non-Javadoc)
+     * 
      * @see org.richfaces.cdk.Logger#isWarnEnabled()
      */
     @Override
@@ -164,29 +240,38 @@ public class JavaLogger implements Logger {
     }
 
     /*
-     *  (non-Javadoc)
+     * (non-Javadoc)
+     * 
      * @see org.richfaces.cdk.Logger#warn(java.lang.CharSequence)
      */
     @Override
     public void warn(CharSequence content) {
-        jdkLogger.warning(String.valueOf(content));
+        if (jdkLogger.isLoggable(Level.WARNING)) {
+            jdkLogger.log(createRecord(Level.WARNING, content, null));
+        }
     }
 
     /*
-     *  (non-Javadoc)
+     * (non-Javadoc)
+     * 
      * @see org.richfaces.cdk.Logger#warn(java.lang.CharSequence, java.lang.Throwable)
      */
     @Override
     public void warn(CharSequence content, Throwable error) {
-        jdkLogger.log(Level.WARNING, String.valueOf(content), error);
+        if (jdkLogger.isLoggable(Level.WARNING)) {
+            jdkLogger.log(createRecord(Level.WARNING, content, error));
+        }
     }
 
     /*
-     *  (non-Javadoc)
+     * (non-Javadoc)
+     * 
      * @see org.richfaces.cdk.Logger#warn(java.lang.Throwable)
      */
     @Override
     public void warn(Throwable error) {
-        jdkLogger.log(Level.WARNING, "", error);
+        if (jdkLogger.isLoggable(Level.WARNING)) {
+            jdkLogger.log(createRecord(Level.WARNING, "", error));
+        }
     }
 }
