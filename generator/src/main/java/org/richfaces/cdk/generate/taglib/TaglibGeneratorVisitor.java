@@ -214,10 +214,10 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
         Element attr = tag.addElement("attribute");
         addDescription(attr, attribute);
         attr.addElement("name").addText(name);
-        attr.addElement("type").addText(attribute.getType().getName());
         if (attribute.isRequired()) {
             attr.addElement("required").addText("true");
         }
+        attr.addElement("type").addText(attribute.getType().getName());
         return attr;
     }
 
