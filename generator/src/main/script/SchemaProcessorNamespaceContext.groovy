@@ -37,7 +37,7 @@ class SchemaProcessorNamespaceContext implements NamespaceContext {
 	SchemaProcessorNamespaceContext() {
 		biMap = HashBiMap.create();
 		biMap.put("http://www.w3.org/2001/XMLSchema", "xs");
-		biMap.put("http://richfaces.org/cdk/additional-attributes-info", "cdk-schema-info");
+		biMap.put("http://jboss.org/schema/richfaces/cdk/additional-attributes-info", "cdk-schema-info");
 	}
 	
 	@Override
