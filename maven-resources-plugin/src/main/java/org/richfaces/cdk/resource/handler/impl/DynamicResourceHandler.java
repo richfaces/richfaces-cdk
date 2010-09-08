@@ -26,7 +26,8 @@ import javax.faces.application.ResourceHandler;
 import javax.faces.context.FacesContext;
 
 import org.richfaces.resource.ResourceFactory;
-import org.richfaces.resource.ResourceFactoryImpl;
+import org.richfaces.resource.ResourceKey;
+import org.richfaces.resource.ResourceRequestData;
 import org.richfaces.util.Util;
 
 /**
@@ -35,31 +36,63 @@ import org.richfaces.util.Util;
  */
 public class DynamicResourceHandler extends AbstractResourceHandler  {
 
+    private static final class ResourceRequestDataImpl implements ResourceRequestData {
+        
+        private ResourceKey resourceKey;
+        
+        private Object resourceData;
+
+        public ResourceRequestDataImpl(ResourceKey resourceKey, Object resourceData) {
+            super();
+            this.resourceKey = resourceKey;
+            this.resourceData = resourceData;
+        }
+        
+        @Override
+        public String getResourceName() {
+            return resourceKey.getResourceName();
+        }
+        
+        @Override
+        public String getLibraryName() {
+            return resourceKey.getLibraryName();
+        }
+        
+        @Override
+        public Object getData() {
+            return resourceData;
+        }
+
+        @Override
+        public String getResourceKey() {
+            return resourceKey.toString();
+        }
+        
+        @Override
+        public String getVersion() {
+            return null;
+        }
+    }
+    
     private ResourceFactory resourceFactory;
     
     private ResourceHandler staticResourceHandler;
     
-    public DynamicResourceHandler(ResourceHandler staticResourceHandler) {
+    public DynamicResourceHandler(ResourceHandler staticResourceHandler, ResourceFactory resourceFactory) {
         this.staticResourceHandler = staticResourceHandler;
-        this.resourceFactory = new ResourceFactoryImpl(staticResourceHandler);
-    }
-    
-    private void setupResourceState(Resource source, Resource target) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        Object state = Util.saveResourceState(facesContext, source);
-        if (state != null) {
-            Util.restoreResourceState(facesContext, target, state);
-        }
+        this.resourceFactory = resourceFactory;
     }
     
     @Override
     public Resource createResource(String resourceName, String libraryName, String contentType) {
+        ResourceKey resourceKey = new ResourceKey(resourceName, libraryName);
         Resource result = resourceFactory.createResource(resourceName, libraryName, contentType);
         
         if (result != null) {
-            Resource newResource = resourceFactory.createResource(resourceName, libraryName, contentType);
-            setupResourceState(newResource, result);
-            result = new DynamicResourceWrapper(result);
+            FacesContext context = FacesContext.getCurrentInstance();
+            Object state = Util.saveResourceState(context, result);
+            Resource newResource = resourceFactory.createResource(context, new ResourceRequestDataImpl(resourceKey, state));
+            result = new DynamicResourceWrapper(newResource);
         } else {
             result = staticResourceHandler.createResource(resourceName, libraryName, contentType);
         }

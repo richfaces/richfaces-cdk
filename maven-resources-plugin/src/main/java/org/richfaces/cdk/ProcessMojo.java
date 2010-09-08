@@ -70,6 +70,9 @@ import org.richfaces.cdk.util.MorePredicates;
 import org.richfaces.cdk.vfs.VFS;
 import org.richfaces.cdk.vfs.VFSRoot;
 import org.richfaces.cdk.vfs.VirtualFile;
+import org.richfaces.resource.ResourceFactory;
+import org.richfaces.resource.ResourceFactoryImpl;
+import org.richfaces.resource.ResourceKey;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -192,8 +195,8 @@ public class ProcessMojo extends AbstractMojo {
         return result.toURI().toURL();
     }
 
-    private void scanDynamicResources(Collection<VFSRoot> cpFiles) throws Exception {
-        ResourcesScanner scanner = new DynamicResourcesScanner(cpFiles);
+    private void scanDynamicResources(Collection<VFSRoot> cpFiles, ResourceFactory resourceFactory) throws Exception {
+        ResourcesScanner scanner = new DynamicResourcesScanner(cpFiles, resourceFactory);
         scanner.scan();
         foundResources.addAll(scanner.getResources());
     }
@@ -267,9 +270,11 @@ public class ProcessMojo extends AbstractMojo {
             cpResources = getClasspathVfs(projectCP);
 
             Collection<VirtualFile> resourceRoots = ResourceUtil.getResourceRoots(cpResources, webResources);
-
-            scanDynamicResources(cpResources);
             scanStaticResources(resourceRoots);
+            StaticResourceHandler staticResourceHandler = new StaticResourceHandler(resourceRoots);
+            ResourceFactory resourceFactory = new ResourceFactoryImpl(staticResourceHandler);
+            
+            scanDynamicResources(cpResources, resourceFactory);
 
             File resourceOutputDir = new File(outputDir);
             if (!resourceOutputDir.exists()) {
@@ -278,7 +283,7 @@ public class ProcessMojo extends AbstractMojo {
 
             File resourceMappingDir = new File(project.getBuild().getOutputDirectory());
 
-            ResourceHandler resourceHandler = new DynamicResourceHandler(new StaticResourceHandler(resourceRoots));
+            ResourceHandler resourceHandler = new DynamicResourceHandler(staticResourceHandler, resourceFactory);
 
             // TODO set webroot
             faces = new FacesImpl(null, new FileNameMapperImpl(Maps.fromProperties(fileNameMappings)), resourceHandler);

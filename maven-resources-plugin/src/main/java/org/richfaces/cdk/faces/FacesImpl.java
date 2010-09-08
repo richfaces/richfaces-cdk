@@ -26,13 +26,14 @@ import java.util.Collections;
 import javax.faces.application.ResourceHandler;
 import javax.faces.context.FacesContext;
 
-import org.ajax4jsf.context.InitParametersStorage;
 import org.richfaces.application.DependencyInjectionServiceImpl;
 import org.richfaces.application.DependencyInjector;
 import org.richfaces.application.Module;
 import org.richfaces.application.ServiceTracker;
 import org.richfaces.application.ServicesFactory;
 import org.richfaces.application.ServicesFactoryImpl;
+import org.richfaces.application.configuration.ConfigurationService;
+import org.richfaces.application.configuration.ConfigurationServiceImpl;
 import org.richfaces.cdk.Faces;
 import org.richfaces.cdk.FileNameMapper;
 import org.richfaces.cdk.skin.SkinFactoryImpl;
@@ -62,15 +63,15 @@ public class FacesImpl implements Faces {
         Module module = new Module() {
             
             public void configure(ServicesFactory factory) {
+                serviceFactory.setInstance(ConfigurationService.class, new ConfigurationServiceImpl());
                 serviceFactory.setInstance(SkinFactory.class, new SkinFactoryImpl());
-                serviceFactory.setInstance(InitParametersStorage.class, new InitParametersStorage());
                 serviceFactory.setInstance(FileNameMapper.class, fileNameMapper);
                 serviceFactory.setInstance(DependencyInjector.class, new DependencyInjectionServiceImpl());
                 serviceFactory.setInstance(ResourceHandler.class, resourceHandler);
             }
         };
-        serviceFactory.init(Collections.singleton(module));
         ServiceTracker.setFactory(serviceFactory);
+        serviceFactory.init(Collections.singleton(module));
     }
 
     public void stop() {

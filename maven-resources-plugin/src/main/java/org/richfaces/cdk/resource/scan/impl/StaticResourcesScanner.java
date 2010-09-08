@@ -23,10 +23,10 @@ package org.richfaces.cdk.resource.scan.impl;
 
 import java.util.Collection;
 
-import org.richfaces.cdk.ResourceKey;
 import org.richfaces.cdk.resource.scan.ResourcesScanner;
 import org.richfaces.cdk.resource.util.ResourceUtil;
 import org.richfaces.cdk.vfs.VirtualFile;
+import org.richfaces.resource.ResourceKey;
 
 import com.google.common.collect.Sets;
 

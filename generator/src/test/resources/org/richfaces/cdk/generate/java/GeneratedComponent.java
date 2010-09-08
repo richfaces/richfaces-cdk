@@ -34,7 +34,7 @@ import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.el.MethodExpression;
 import javax.el.ValueExpression;
 import javax.faces.component.StateHelper;
-import org.richfaces.PartialStateHolderHelper;
+import org.richfaces.component.PartialStateHolderHelper;
 import javax.faces.component.UIOutput;
 import java.util.ArrayList;
 import javax.el.MethodExpression;

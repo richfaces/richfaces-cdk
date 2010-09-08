@@ -8,7 +8,7 @@ import javax.faces.component.StateHelper;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import org.richfaces.PartialStateHolderHelper;
+import org.richfaces.component.PartialStateHolderHelper;
 <#include "_attributes_import.ftl">
 
 /**

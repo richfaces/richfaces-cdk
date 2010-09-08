@@ -25,6 +25,8 @@ import java.util.concurrent.CompletionService;
 
 import javax.faces.application.Resource;
 
+import org.richfaces.resource.ResourceKey;
+
 import com.google.common.base.Predicate;
 
 /**

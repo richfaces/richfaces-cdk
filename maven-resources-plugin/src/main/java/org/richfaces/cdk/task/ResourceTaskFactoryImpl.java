@@ -31,11 +31,11 @@ import javax.faces.context.FacesContext;
 
 import org.apache.maven.plugin.logging.Log;
 import org.richfaces.cdk.Faces;
-import org.richfaces.cdk.ResourceKey;
 import org.richfaces.cdk.ResourceTaskFactory;
 import org.richfaces.cdk.ResourceWriter;
 import org.richfaces.cdk.faces.CurrentResourceContext;
 import org.richfaces.resource.ResourceFactory;
+import org.richfaces.resource.ResourceKey;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;

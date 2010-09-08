@@ -22,7 +22,6 @@
 package org.richfaces.cdk.resource.handler.impl;
 
 import static org.richfaces.cdk.strings.Constants.DASH_JOINER;
-import static org.richfaces.cdk.strings.Constants.DOT_JOINER;
 import static org.richfaces.cdk.strings.Constants.SLASH_JOINER;
 
 import java.io.IOException;
@@ -92,38 +91,6 @@ public class DynamicResourceWrapper extends Resource {
         throw new UnsupportedOperationException();
     }
 
-    private String getMangledLibraryName() {
-        String resourceName = getResourceName();
-        if (Strings.isNullOrEmpty(getLibraryName()) && !resourceName.endsWith(ECSS_EXTENSION)) {
-            int idx = resourceName.lastIndexOf('.');
-            if (idx < 0) {
-                return null;
-            } else {
-                return resourceName.substring(0, idx);
-            }
-        }
-
-        return getLibraryName();
-    }
-
-    private String getMangledResourceName() {
-        String resourceName = getResourceName();
-        if (resourceName.endsWith(ECSS_EXTENSION)) {
-            return resourceName.substring(0, resourceName.length() - ECSS_EXTENSION.length());
-        }
-        
-        if (Strings.isNullOrEmpty(getLibraryName())) {
-            int idx = resourceName.lastIndexOf('.');
-            if (idx < 0) {
-                return resourceName;
-            } else {
-                return resourceName.substring(idx + 1);
-            }
-        } else {
-            return resourceName;
-        }
-    }
-    
     private FileNameMapper getFileNameMapper() {
         return ServiceTracker.getService(FileNameMapper.class);
     }
@@ -138,12 +105,30 @@ public class DynamicResourceWrapper extends Resource {
     
     @Override
     public String getRequestPath() {
-        String mangledLibraryName = getMangledLibraryName();
-        String mangledResourceName = getMangledResourceName();
         String resourceExtension = getResourceExtension();
+
+        String resourceName = getResourceName();
+        if (resourceName.endsWith(ECSS_EXTENSION)) {
+            resourceName = resourceName.substring(0, resourceName.length() - ECSS_EXTENSION.length());
+        } else {
+            if (resourceExtension != null && resourceName.endsWith(resourceExtension)) {
+                resourceName = resourceName.substring(0, resourceName.length() - resourceExtension.length());
+            }
+        }
         
-        String resourceName = DOT_JOINER.join(DASH_JOINER.join(mangledResourceName, getVersion()), resourceExtension);
-        String resourcePath = SLASH_JOINER.join(mangledLibraryName, resourceName);
+        String libraryName = getLibraryName();
+        
+        if (Strings.isNullOrEmpty(libraryName)) {
+            int idx = resourceName.lastIndexOf('.');
+            
+            if (idx >= 0) {
+                libraryName = resourceName.substring(0, idx);
+                resourceName = resourceName.substring(idx + 1);
+            }
+        }
+        
+        String versionedName = DASH_JOINER.join(resourceName, getVersion()) + Strings.nullToEmpty(resourceExtension);
+        String resourcePath = SLASH_JOINER.join(libraryName, versionedName);
 
         return ResourceFactory.SKINNED_RESOURCE_PREFIX + getFileNameMapper().createName(resourcePath);
     }
@@ -167,7 +152,7 @@ public class DynamicResourceWrapper extends Resource {
         if (contentType.startsWith("text/") || contentType.startsWith("image/")) {
             String[] split = contentType.split("/");
             if (split.length == 2) {
-                return split[1];
+                return '.' + split[1];
             }
         }
         

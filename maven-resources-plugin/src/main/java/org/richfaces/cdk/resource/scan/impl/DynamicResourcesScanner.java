@@ -22,22 +22,24 @@
 package org.richfaces.cdk.resource.scan.impl;
 
 import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.Collection;
-import java.util.Set;
 
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.scanners.TypeAnnotationsScanner;
 import org.reflections.util.ConfigurationBuilder;
-import org.richfaces.cdk.ResourceKey;
 import org.richfaces.cdk.resource.scan.ResourcesScanner;
 import org.richfaces.cdk.resource.scan.impl.reflections.MarkerResourcesScanner;
 import org.richfaces.cdk.resource.scan.impl.reflections.ReflectionsExt;
 import org.richfaces.cdk.vfs.VFSRoot;
 import org.richfaces.cdk.vfs.VFSType;
 import org.richfaces.resource.DynamicResource;
+import org.richfaces.resource.ResourceFactory;
+import org.richfaces.resource.ResourceKey;
 
 import com.google.common.base.Function;
+import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Sets;
 /**
@@ -55,14 +57,29 @@ public class DynamicResourcesScanner implements ResourcesScanner {
             return key;
         }
     };
-    
+
+    private static final Predicate<Class<?>> UNINSTANTIATABLE_CLASSES_PREDICATE = new Predicate<Class<?>>() {
+        @Override
+        public boolean apply(Class<?> input) {
+
+            if (input.isInterface() || Modifier.isAbstract(input.getModifiers())) {
+                return false;
+            }
+            
+            return true;
+        }
+    };
+
     private Collection<ResourceKey> resources = Sets.newHashSet();
 
     private Collection<VFSRoot> cpFiles;
+
+    private ResourceFactory resourceFactory;
     
-    public DynamicResourcesScanner(Collection<VFSRoot> cpFiles) {
+    public DynamicResourcesScanner(Collection<VFSRoot> cpFiles, ResourceFactory resourceFactory) {
         super();
         this.cpFiles = cpFiles;
+        this.resourceFactory = resourceFactory;
     }
 
     public void scan() throws IOException {
@@ -83,7 +100,7 @@ public class DynamicResourcesScanner implements ResourcesScanner {
             new MarkerResourcesScanner()).useParallelExecutor();
 
         ReflectionsExt refl = new ReflectionsExt(configurationBuilder);
-        Set<Class<?>> allClasses = Sets.newHashSet();
+        Collection<Class<?>> allClasses = Sets.newHashSet();
         
         // TODO - reflections library doesn't handle @Inherited correctly
         for (Class<?> annotatedClass : refl.getTypesAnnotatedWith(DynamicResource.class)) {
@@ -92,7 +109,10 @@ public class DynamicResourcesScanner implements ResourcesScanner {
         }
         allClasses.addAll(refl.getMarkedClasses());
 
+        allClasses = Collections2.filter(allClasses, UNINSTANTIATABLE_CLASSES_PREDICATE);
+        
         resources.addAll(Collections2.transform(allClasses, RESOURCE_LOCATOR_FUNCTION));
+        resources.addAll(resourceFactory.getMappedDynamicResourceKeys());
     }
 
     public Collection<ResourceKey> getResources() {

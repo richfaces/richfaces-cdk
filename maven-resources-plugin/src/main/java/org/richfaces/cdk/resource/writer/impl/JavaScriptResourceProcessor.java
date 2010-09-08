@@ -52,11 +52,11 @@ public class JavaScriptResourceProcessor extends CharResourceProcessor {
         MavenLogErrorReporter reporter = new MavenLogErrorReporter(resourceName);
         new JavaScriptCompressor(in, reporter).compress(out, 0, true, true, false, false);
         
-        if (reporter.hasErrors()) {
+        if (reporter.hasErrors() && log.isErrorEnabled()) {
             log.error(reporter.getErrorsLog());
         }
         
-        if (reporter.hasWarnings()) {
+        if (reporter.hasWarnings() && log.isDebugEnabled()) {
             log.debug(reporter.getWarningsLog());
         }
     }

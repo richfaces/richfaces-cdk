@@ -23,7 +23,7 @@ package org.richfaces.cdk.resource.scan;
 
 import java.util.Collection;
 
-import org.richfaces.cdk.ResourceKey;
+import org.richfaces.resource.ResourceKey;
 
 
 
