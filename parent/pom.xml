@@ -350,10 +350,7 @@
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>2.5</version>
 				<configuration>
-					<configLocation>richfaces-checkstyle/richfaces-checkstyle.xml
-					</configLocation>
-					<suppressionsLocation>checkstyle-suppressions.xml
-					</suppressionsLocation>
+					<configLocation>richfaces-checkstyle/richfaces-checkstyle.xml</configLocation>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -19,10 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-
-
 package org.richfaces.cdk.templatecompiler.el.node;
-
 
 import org.jboss.el.parser.Node;
 import org.richfaces.cdk.templatecompiler.el.ELNodeConstants;
@@ -33,7 +30,6 @@ import org.richfaces.cdk.templatecompiler.el.ParsingException;
  * This class extend AbstractTreeNode and wrap AstNot node.
  *
  * @author amarkhel
- *
  */
 public class AstNotTreeNode extends AbstractTreeNode {
     public AstNotTreeNode(Node node) {
@@ -44,11 +40,11 @@ public class AstNotTreeNode extends AbstractTreeNode {
     public void visit(StringBuilder sb, ELVisitor visitor) throws ParsingException {
         sb.append(ELNodeConstants.LEFT_BRACKET);
         sb.append(ELNodeConstants.EXCLAMATION_MARK);
-    	String childOutput = coerceToBoolean(getChildOutput(0, visitor), visitor);
+        String childOutput = coerceToBoolean(getChildOutput(0, visitor), visitor);
         sb.append(childOutput);
         sb.append(ELNodeConstants.RIGHT_BRACKET);
-        
+
         //variable type has been already set by getChildOuput()
     }
-    
+
 }
