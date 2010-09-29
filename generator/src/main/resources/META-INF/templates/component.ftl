@@ -18,7 +18,6 @@ import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.el.MethodExpression;
 import javax.el.ValueExpression;
 import javax.faces.component.StateHelper;
-import org.richfaces.component.PartialStateHolderHelper;
 import ${baseClass};
 <#include "_attributes_import.ftl">
 

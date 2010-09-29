@@ -19,7 +19,6 @@ public class JavaClassModelWrapper extends BeansWrapper implements ObjectWrapper
     @Override
     public TemplateModel wrap(Object obj) throws TemplateModelException {
 
-        // TODO wrap specified model classes.
         TemplateModel templateModel;
 
         if (obj instanceof JavaStatement) {
