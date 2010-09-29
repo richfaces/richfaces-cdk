@@ -373,9 +373,7 @@ public class ValidatorImpl implements ModelValidator {
                     for (PropertyBase parentAttribute : parentComponent.getAttributes()) {
                         PropertyBase attribute = component.getOrCreateAttribute(parentAttribute.getName());
                         attribute.merge(parentAttribute);
-                        // TODO Check generate status. Attribute should not be generated if the parent component
-                        // represents
-                        // concrete class.
+                        // already exists in parent component.
                         attribute.setGenerate(false);
                     }
                 } catch (NoSuchElementException e) {
