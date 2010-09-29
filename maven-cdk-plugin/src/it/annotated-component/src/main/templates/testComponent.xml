@@ -38,6 +38,8 @@
 	</cc:interface>
 	<cc:implementation>
 		<div id="#{clientId}" cdk:passThroughWithExclusions="id dir lang">
+		<input readonly="readonly"/>
+		<input readonly="true"/>
 		<c:if test="#{component.attributes['ifTest'] != null}">if content</c:if>
 		<c:choose>
 			<c:when test="#{component.attributes['anotherTest'] != null}">when content</c:when>
