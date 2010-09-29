@@ -63,6 +63,7 @@ import org.richfaces.cdk.test.model.TestModel;
             description=@Description(displayName="Test HTML5 abbreviation",largeIcon="large.gif",smallIcon="spall.png"),
             tag=@Tag(name="abbr",generate=true,handler="org.richfaces.cdk.test.facelets.AbbrTagHandler"),
             generate="org.richfaces.cdk.test.component.html.HtmlTestAbbr",
+            attributes={"core-props.xml","events-props.xml","i18n-props.xml"},
             interfaces=Html5Attributes.class,
             renderer=@JsfRenderer(type="org.richfaces.cdk.test.HtmlAbbrRenderer")),
         @RendererSpecificComponent(type = "org.richfaces.cdk.test.TestHtmlDfn",

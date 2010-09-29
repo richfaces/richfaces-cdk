@@ -48,7 +48,7 @@ public interface Html5Attributes {
     /**
      * @return
      */
-    @Attribute(events=@EventName("ondrag"))
+    @Attribute(events=@EventName("drag"))
     public abstract DraggableState getDraggable();
 
     /**
