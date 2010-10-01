@@ -19,10 +19,9 @@
 
 <xs:schema targetNamespace="http://jboss.org/schema/richfaces/cdk/jsf/composite"
 	xmlns:cc="http://jboss.org/schema/richfaces/cdk/jsf/composite" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:cdk="http://jboss.org/schema/richfaces/cdk/core"
+	xmlns:xml="http://www.w3.org/XML/1998/namespace" 
 	elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-	<xs:import schemaLocation="cdk-template.xsd" namespace="http://jboss.org/schema/richfaces/cdk/core" />
 
 	<xs:annotation>
 		<xs:documentation>
@@ -308,7 +307,7 @@
 	<xs:complexType name="compositeImplementationType"
 		mixed="true">
 		<xs:choice>
-			<xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+			<xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##other " />
 		</xs:choice>
 	</xs:complexType>
 

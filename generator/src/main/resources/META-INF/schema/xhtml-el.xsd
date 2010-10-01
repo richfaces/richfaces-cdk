@@ -18,9 +18,10 @@
 	xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://jboss.org/schema/richfaces/cdk/xhtml-el"
 	xmlns="http://jboss.org/schema/richfaces/cdk/xhtml-el" xmlns:xml="http://www.w3.org/XML/1998/namespace"
 	elementFormDefault="qualified" xmlns:cdk="http://jboss.org/schema/richfaces/cdk/core"
-	xmlns:cdk-addinfo="http://jboss.org/schema/richfaces/cdk/additional-attributes-info">
+	xmlns:cdk-addinfo="http://jboss.org/schema/richfaces/cdk/additional-attributes-info"
+    xmlns:c="http://jboss.org/schema/richfaces/cdk/jstl/core" 
+	xmlns:x="http://jboss.org/schema/richfaces/cdk/ext">
 
-	<xs:import schemaLocation="cdk-template.xsd" namespace="http://jboss.org/schema/richfaces/cdk/core" />
 
 	<xs:annotation>
 		<xs:documentation>
@@ -80,6 +81,10 @@
 		</xs:documentation>
 	</xs:annotation>
 
+    <xs:import schemaLocation="cdk-template.xsd" namespace="http://jboss.org/schema/richfaces/cdk/core" />
+    <xs:import schemaLocation="cdk-jstl-core.xsd" namespace="http://jboss.org/schema/richfaces/cdk/jstl/core" />
+    <xs:import schemaLocation="cdk-extensions.xsd" namespace="http://jboss.org/schema/richfaces/cdk/ext" />
+
 	<xs:annotation>
 		<xs:documentation>
 			================== Imported Names
@@ -93,7 +98,7 @@
 				media type, as per [RFC2045]
       </xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="cdk:elFreeformExpression" />
+		<xs:restriction base="c:elFreeformExpression" />
 	</xs:simpleType>
 
 	<xs:simpleType name="ContentTypes">
@@ -103,7 +108,7 @@
 				[RFC2045]
       </xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="cdk:elFreeformExpression" />
+		<xs:restriction base="c:elFreeformExpression" />
 	</xs:simpleType>
 
 	<xs:simpleType name="Charset">
@@ -112,7 +117,7 @@
 				a character encoding, as per [RFC2045]
 			</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="cdk:elFreeformExpression" />
+		<xs:restriction base="c:elFreeformExpression" />
 	</xs:simpleType>
 
 	<xs:simpleType name="Charsets">
@@ -122,7 +127,7 @@
 				per [RFC2045]
 			</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="cdk:elFreeformExpression" />
+		<xs:restriction base="c:elFreeformExpression" />
 	</xs:simpleType>
 
 	<xs:simpleType name="LanguageCode">
@@ -131,7 +136,7 @@
 				a language code, as per [RFC3066]
 			</xs:documentation>
 		</xs:annotation>
-		<xs:union memberTypes="xs:language cdk:elMixedExpression" />
+		<xs:union memberTypes="xs:language c:elMixedExpression" />
 	</xs:simpleType>
 
 	<xs:simpleType name="Character">
@@ -148,7 +153,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 			<xs:simpleType>
-				<xs:restriction base="cdk:elFreeformExpression" />
+				<xs:restriction base="c:elFreeformExpression" />
 			</xs:simpleType>
 		</xs:union>
 	</xs:simpleType>
@@ -165,7 +170,7 @@
 				one or more digits
       </xs:documentation>
 		</xs:annotation>
-		<xs:union memberTypes="simpleType.Number cdk:elMixedExpression" />
+		<xs:union memberTypes="simpleType.Number c:elMixedExpression" />
 	</xs:simpleType>
 
 	<xs:simpleType name="tabindexNumber">
@@ -188,7 +193,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 			<xs:simpleType>
-				<xs:restriction base="cdk:elMixedExpression" />
+				<xs:restriction base="c:elMixedExpression" />
 			</xs:simpleType>
 		</xs:union>
 	</xs:simpleType>
@@ -199,7 +204,7 @@
 				space-separated list of link types
 			</xs:documentation>
 		</xs:annotation>
-		<xs:union memberTypes="xs:NMTOKENS cdk:elMixedExpression" />
+		<xs:union memberTypes="xs:NMTOKENS c:elMixedExpression" />
 	</xs:simpleType>
 
 	<xs:simpleType name="MediaDesc">
@@ -215,7 +220,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 			<xs:simpleType>
-				<xs:restriction base="cdk:elFreeformExpression" />
+				<xs:restriction base="c:elFreeformExpression" />
 			</xs:simpleType>
 		</xs:union>
 	</xs:simpleType>
@@ -226,7 +231,7 @@
 				a Uniform Resource Identifier, see [RFC2396]
 			</xs:documentation>
 		</xs:annotation>
-		<xs:union memberTypes="xs:anyURI cdk:elMixedExpression" />
+		<xs:union memberTypes="xs:anyURI c:elMixedExpression" />
 	</xs:simpleType>
 
 	<xs:simpleType name="UriList">
@@ -236,7 +241,7 @@
 				Identifiers
 			</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="cdk:elFreeformExpression" />
+		<xs:restriction base="c:elFreeformExpression" />
 	</xs:simpleType>
 
 	<xs:simpleType name="Datetime">
@@ -245,7 +250,7 @@
 				date and time information. ISO date format
 			</xs:documentation>
 		</xs:annotation>
-		<xs:union memberTypes="xs:dateTime cdk:elMixedExpression" />
+		<xs:union memberTypes="xs:dateTime c:elMixedExpression" />
 	</xs:simpleType>
 
 	<xs:simpleType name="Script">
@@ -254,7 +259,7 @@
 				script expression
       </xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="cdk:elFreeformExpression" />
+		<xs:restriction base="c:elFreeformExpression" />
 	</xs:simpleType>
 
 	<xs:simpleType name="StyleSheet">
@@ -263,7 +268,7 @@
 				style sheet data
       </xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="cdk:elFreeformExpression" />
+		<xs:restriction base="c:elFreeformExpression" />
 	</xs:simpleType>
 
 	<xs:simpleType name="Text">
@@ -272,7 +277,7 @@
 				used for titles etc.
       </xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="cdk:elFreeformExpression" />
+		<xs:restriction base="c:elFreeformExpression" />
 	</xs:simpleType>
 
 	<xs:simpleType name="FrameTarget">
@@ -288,7 +293,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 			<xs:simpleType>
-				<xs:restriction base="cdk:elFreeformExpression" />
+				<xs:restriction base="c:elFreeformExpression" />
 			</xs:simpleType>
 		</xs:union>
 	</xs:simpleType>
@@ -306,7 +311,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 			<xs:simpleType>
-				<xs:restriction base="cdk:elFreeformExpression" />
+				<xs:restriction base="c:elFreeformExpression" />
 			</xs:simpleType>
 		</xs:union>
 	</xs:simpleType>
@@ -324,7 +329,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 			<xs:simpleType>
-				<xs:restriction base="cdk:elFreeformExpression" />
+				<xs:restriction base="c:elFreeformExpression" />
 			</xs:simpleType>
 		</xs:union>
 	</xs:simpleType>
@@ -335,7 +340,7 @@
 				integer representing length in pixels
 			</xs:documentation>
 		</xs:annotation>
-		<xs:union memberTypes="xs:nonNegativeInteger cdk:elMixedExpression" />
+		<xs:union memberTypes="xs:nonNegativeInteger c:elMixedExpression" />
 	</xs:simpleType>
 
 	<xs:annotation>
@@ -355,7 +360,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 			<xs:simpleType>
-				<xs:restriction base="cdk:elFreeformExpression" />
+				<xs:restriction base="c:elFreeformExpression" />
 			</xs:simpleType>
 		</xs:union>
 	</xs:simpleType>
@@ -373,7 +378,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 			<xs:simpleType>
-				<xs:restriction base="cdk:elFreeformExpression" />
+				<xs:restriction base="c:elFreeformExpression" />
 			</xs:simpleType>
 		</xs:union>
 	</xs:simpleType>
@@ -395,7 +400,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 			<xs:simpleType>
-				<xs:restriction base="cdk:elFreeformExpression" />
+				<xs:restriction base="c:elFreeformExpression" />
 			</xs:simpleType>
 		</xs:union>
 	</xs:simpleType>
@@ -428,26 +433,26 @@
 				</xs:restriction>
 			</xs:simpleType>
 			<xs:simpleType>
-				<xs:restriction base="cdk:elFreeformExpression" />
+				<xs:restriction base="c:elFreeformExpression" />
 			</xs:simpleType>
 		</xs:union>
 	</xs:simpleType>
 
 	<!-- TODO: add constraints -->
 	<xs:simpleType name="ID">
-		<xs:union memberTypes="xs:ID cdk:elMixedExpression" />
+		<xs:union memberTypes="xs:ID c:elMixedExpression" />
 	</xs:simpleType>
 	<xs:simpleType name="IDREF">
-		<xs:union memberTypes="xs:IDREF cdk:elMixedExpression" />
+		<xs:union memberTypes="xs:IDREF c:elMixedExpression" />
 	</xs:simpleType>
 	<xs:simpleType name="IDREFS">
-		<xs:union memberTypes="xs:IDREFS cdk:elMixedExpression" />
+		<xs:union memberTypes="xs:IDREFS c:elMixedExpression" />
 	</xs:simpleType>
 	<xs:simpleType name="NMTOKEN">
-		<xs:union memberTypes="xs:NMTOKEN cdk:elMixedExpression" />
+		<xs:union memberTypes="xs:NMTOKEN c:elMixedExpression" />
 	</xs:simpleType>
 	<xs:simpleType name="NMTOKENS">
-		<xs:union memberTypes="xs:NMTOKENS cdk:elMixedExpression" />
+		<xs:union memberTypes="xs:NMTOKENS c:elMixedExpression" />
 	</xs:simpleType>
 
 	<xs:annotation>
@@ -466,6 +471,7 @@
 				</xs:appinfo>
 			</xs:annotation>
 		</xs:attribute>
+        <xs:attribute ref="x:class"/>
 	</xs:attributeGroup>
 
 	<xs:attributeGroup name="coreattrs">
@@ -484,6 +490,7 @@
 		<xs:attribute name="id" type="ID" />
 		<xs:attribute name="style" type="StyleSheet" />
 		<xs:attribute name="title" type="Text" />
+        <xs:attributeGroup ref="x:coreattrs" />
 	</xs:attributeGroup>
 
 	<xs:simpleType name="simpleType.dir">
@@ -509,9 +516,10 @@
 		<xs:attribute ref="xml:lang" />
 		<xs:attribute name="dir">
 			<xs:simpleType>
-				<xs:union memberTypes="simpleType.dir cdk:elMixedExpression" />
+				<xs:union memberTypes="simpleType.dir c:elMixedExpression" />
 			</xs:simpleType>
 		</xs:attribute>
+        <xs:attributeGroup ref="x:i18n" />
 	</xs:attributeGroup>
 
 	<xs:attributeGroup name="events">
@@ -543,6 +551,7 @@
 		<xs:attribute name="onkeypress" type="Script" />
 		<xs:attribute name="onkeydown" type="Script" />
 		<xs:attribute name="onkeyup" type="Script" />
+        <xs:attributeGroup ref="x:events" />
 	</xs:attributeGroup>
 
 	<xs:attributeGroup name="focus">
@@ -561,6 +570,7 @@
 		<xs:attribute name="tabindex" type="tabindexNumber" />
 		<xs:attribute name="onfocus" type="Script" />
 		<xs:attribute name="onblur" type="Script" />
+        <xs:attributeGroup ref="x:focus" />
 	</xs:attributeGroup>
 
 	<xs:attributeGroup name="attrs">
@@ -588,11 +598,12 @@
 						</xs:restriction>
 					</xs:simpleType>
 					<xs:simpleType>
-						<xs:restriction base="cdk:elFreeformExpression" />
+						<xs:restriction base="c:elFreeformExpression" />
 					</xs:simpleType>
 				</xs:union>
 			</xs:simpleType>
 		</xs:attribute>
+		<xs:attribute ref="x:align"/>
 	</xs:attributeGroup>
 
 	<xs:annotation>
@@ -868,7 +879,19 @@
 		<xs:attribute default="rect" name="shape" type="Shape"></xs:attribute>
 		<xs:attribute name="coords" type="Coords"></xs:attribute>
 		<xs:attribute name="target" type="FrameTarget"></xs:attribute>
-		<xs:attributeGroup ref="cdk:core.attrs" />
+        
+        <xs:attribute ref="x:charset" ></xs:attribute>
+        <xs:attribute ref="x:type" ></xs:attribute>
+        <xs:attribute ref="x:name" ></xs:attribute>
+        <xs:attribute ref="x:href" ></xs:attribute>
+        <xs:attribute ref="x:hreflang" ></xs:attribute>
+        <xs:attribute ref="x:rel" ></xs:attribute>
+        <xs:attribute ref="x:rev" ></xs:attribute>
+        <xs:attribute ref="x:shape" ></xs:attribute>
+        <xs:attribute ref="x:coords" ></xs:attribute>
+        <xs:attribute ref="x:target" ></xs:attribute>
+        
+        <xs:attributeGroup ref="cdk:core.attrs" />
 	</xs:complexType>
 
 	<xs:group name="a.children">
@@ -1126,7 +1149,7 @@
 									</xs:restriction>
 								</xs:simpleType>
 								<xs:simpleType>
-									<xs:restriction base="cdk:elFreeformExpression" />
+									<xs:restriction base="c:elFreeformExpression" />
 								</xs:simpleType>
 							</xs:union>
 						</xs:simpleType>
@@ -1144,7 +1167,7 @@
 									</xs:restriction>
 								</xs:simpleType>
 								<xs:simpleType>
-									<xs:restriction base="cdk:elFreeformExpression" />
+									<xs:restriction base="c:elFreeformExpression" />
 								</xs:simpleType>
 							</xs:union>
 						</xs:simpleType>
@@ -1331,7 +1354,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 			<xs:simpleType>
-				<xs:restriction base="cdk:elFreeformExpression" />
+				<xs:restriction base="c:elFreeformExpression" />
 			</xs:simpleType>
 		</xs:union>
 	</xs:simpleType>
@@ -1346,11 +1369,12 @@
 						</xs:restriction>
 					</xs:simpleType>
 					<xs:simpleType>
-						<xs:restriction base="cdk:elFreeformExpression" />
+						<xs:restriction base="c:elFreeformExpression" />
 					</xs:simpleType>
 				</xs:union>
 			</xs:simpleType>
 		</xs:attribute>
+        <xs:attribute ref="x:compact" />
 	</xs:attributeGroup>
 
 	<xs:element name="ul" type="ul.content">
@@ -1380,7 +1404,7 @@
 				first list item in an ordered list.
 			</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="cdk:elFreeformExpression" />
+		<xs:restriction base="c:elFreeformExpression" />
 	</xs:simpleType>
 
 	<xs:element name="ol" type="ol.content">
@@ -1413,7 +1437,7 @@
 				LIStyle is constrained to: "(ULStyle|OLStyle)"
 			</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="cdk:elFreeformExpression" />
+		<xs:restriction base="c:elFreeformExpression" />
 	</xs:simpleType>
 
 	<xs:element name="li">
@@ -1640,14 +1664,14 @@
 					<xs:attributeGroup ref="events" />
 					<xs:attribute name="lang" type="LanguageCode" />
 					<xs:attribute ref="xml:lang" />
-					<xs:attribute name="dir" use="required">
+					<xs:attribute name="dir" use="optional">
 						<xs:annotation>
 							<xs:appinfo>
 								<cdk-addinfo:default-value>ltr</cdk-addinfo:default-value>
 							</xs:appinfo>
 						</xs:annotation>
 						<xs:simpleType>
-							<xs:union memberTypes="simpleType.dir cdk:elMixedExpression" />
+							<xs:union memberTypes="simpleType.dir c:elMixedExpression" />
 						</xs:simpleType>
 					</xs:attribute>
 				</xs:extension>
@@ -1824,6 +1848,7 @@
 				<xs:extension base="Inline">
 					<xs:attributeGroup ref="attrs" />
 					<xs:attribute name="cite" type="URI" />
+                    <xs:attribute ref="x:cite" />
 				</xs:extension>
 			</xs:complexContent>
 		</xs:complexType>
@@ -2001,6 +2026,10 @@
 					<xs:attribute name="size" />
 					<xs:attribute name="color" type="Color" />
 					<xs:attribute name="face" />
+					
+                    <xs:attribute ref="x:size" />
+                    <xs:attribute ref="x:color" />
+                    <xs:attribute ref="x:face" />
 				</xs:extension>
 			</xs:complexContent>
 		</xs:complexType>
@@ -2098,7 +2127,7 @@
 			<xs:complexContent>
 				<xs:extension base="form.content">
 					<xs:attributeGroup ref="attrs" />
-					<xs:attribute name="action" use="required" type="URI" />
+					<xs:attribute name="action" use="optional" type="URI" />
 					<xs:attribute name="method" default="get">
 						<xs:simpleType>
 							<xs:union>
@@ -2109,7 +2138,7 @@
 									</xs:restriction>
 								</xs:simpleType>
 								<xs:simpleType>
-									<xs:restriction base="cdk:elFreeformExpression" />
+									<xs:restriction base="c:elFreeformExpression" />
 								</xs:simpleType>
 							</xs:union>
 						</xs:simpleType>
@@ -2121,6 +2150,16 @@
 					<xs:attribute name="accept" type="ContentTypes" />
 					<xs:attribute name="accept-charset" type="Charsets" />
 					<xs:attribute name="target" type="FrameTarget" />
+					
+					<xs:attribute ref="x:action"   />
+                    <xs:attribute ref="x:method" ></xs:attribute>
+                    <xs:attribute ref="x:enctype"  />
+                    <xs:attribute ref="x:onsubmit"  />
+                    <xs:attribute ref="x:onreset"  />
+                    <xs:attribute ref="x:accept"  />
+                    <xs:attribute ref="x:accept-charset"  />
+                    <xs:attribute ref="x:target"  />
+					
 				</xs:extension>
 			</xs:complexContent>
 		</xs:complexType>
@@ -2141,6 +2180,12 @@
 					<xs:attribute name="accesskey" type="Character" />
 					<xs:attribute name="onfocus" type="Script" />
 					<xs:attribute name="onblur" type="Script" />
+
+                    <xs:attribute ref="x:for"  />
+                    <xs:attribute ref="x:accesskey"  />
+                    <xs:attribute ref="x:onfocus"  />
+                    <xs:attribute ref="x:onblur"  />
+
 				</xs:extension>
 			</xs:complexContent>
 		</xs:complexType>
@@ -2163,7 +2208,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 			<xs:simpleType>
-				<xs:restriction base="cdk:elFreeformExpression" />
+				<xs:restriction base="c:elFreeformExpression" />
 			</xs:simpleType>
 		</xs:union>
 	</xs:simpleType>
@@ -2178,11 +2223,12 @@
 						</xs:restriction>
 					</xs:simpleType>
 					<xs:simpleType>
-						<xs:restriction base="cdk:elFreeformExpression" />
+						<xs:restriction base="c:elFreeformExpression" />
 					</xs:simpleType>
 				</xs:union>
 			</xs:simpleType>
 		</xs:attribute>
+        <xs:attribute ref="x:checked" />
 	</xs:attributeGroup>
 
 	<xs:attributeGroup name="disabledGroup">
@@ -2195,11 +2241,12 @@
 						</xs:restriction>
 					</xs:simpleType>
 					<xs:simpleType>
-						<xs:restriction base="cdk:elFreeformExpression" />
+						<xs:restriction base="c:elFreeformExpression" />
 					</xs:simpleType>
 				</xs:union>
 			</xs:simpleType>
 		</xs:attribute>
+		<xs:attribute ref="x:disabled"></xs:attribute>
 	</xs:attributeGroup>
 
 	<xs:attributeGroup name="readonlyGroup">
@@ -2212,11 +2259,12 @@
 						</xs:restriction>
 					</xs:simpleType>
 					<xs:simpleType>
-						<xs:restriction base="cdk:elFreeformExpression" />
+						<xs:restriction base="c:elFreeformExpression" />
 					</xs:simpleType>
 				</xs:union>
 			</xs:simpleType>
 		</xs:attribute>
+        <xs:attribute ref="x:readonly"></xs:attribute>
 	</xs:attributeGroup>
 
 	<xs:element name="input" type="input.content">
@@ -2286,7 +2334,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 			<xs:simpleType>
-				<xs:restriction base="cdk:elFreeformExpression" />
+				<xs:restriction base="c:elFreeformExpression" />
 			</xs:simpleType>
 		</xs:union>
 	</xs:simpleType>
@@ -2334,11 +2382,16 @@
 									</xs:restriction>
 								</xs:simpleType>
 								<xs:simpleType>
-									<xs:restriction base="cdk:elFreeformExpression" />
+									<xs:restriction base="c:elFreeformExpression" />
 								</xs:simpleType>
 							</xs:union>
 						</xs:simpleType>
 					</xs:attribute>
+					
+					<xs:attribute ref="x:name" />
+                    <xs:attribute ref="x:value" />
+                    <xs:attribute ref="x:type"  />
+					
 				</xs:extension>
 			</xs:complexContent>
 		</xs:complexType>
@@ -2392,7 +2445,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 			<xs:simpleType>
-				<xs:restriction base="cdk:elFreeformExpression" />
+				<xs:restriction base="c:elFreeformExpression" />
 			</xs:simpleType>
 		</xs:union>
 	</xs:simpleType>
@@ -2419,7 +2472,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 			<xs:simpleType>
-				<xs:restriction base="cdk:elFreeformExpression" />
+				<xs:restriction base="c:elFreeformExpression" />
 			</xs:simpleType>
 		</xs:union>
 	</xs:simpleType>
@@ -2439,7 +2492,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 			<xs:simpleType>
-				<xs:restriction base="cdk:elFreeformExpression" />
+				<xs:restriction base="c:elFreeformExpression" />
 			</xs:simpleType>
 		</xs:union>
 	</xs:simpleType>
@@ -2466,13 +2519,18 @@
 						</xs:restriction>
 					</xs:simpleType>
 					<xs:simpleType>
-						<xs:restriction base="cdk:elFreeformExpression" />
+						<xs:restriction base="c:elFreeformExpression" />
 					</xs:simpleType>
 				</xs:union>
 			</xs:simpleType>
 		</xs:attribute>
 		<xs:attribute name="char" type="Character" />
 		<xs:attribute name="charoff" type="Length" />
+		
+        <xs:attribute ref="x:align"/>
+        <xs:attribute ref="x:char"/>
+        <xs:attribute ref="x:charoff"/>
+
 	</xs:attributeGroup>
 
 	<xs:attributeGroup name="cellvalign">
@@ -2493,11 +2551,12 @@
 						</xs:restriction>
 					</xs:simpleType>
 					<xs:simpleType>
-						<xs:restriction base="cdk:elFreeformExpression" />
+						<xs:restriction base="c:elFreeformExpression" />
 					</xs:simpleType>
 				</xs:union>
 			</xs:simpleType>
 		</xs:attribute>
+        <xs:attribute ref="x:valign"/>
 	</xs:attributeGroup>
 
 	<xs:element name="table" type="table.content">
@@ -2514,7 +2573,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 			<xs:simpleType>
-				<xs:restriction base="cdk:elFreeformExpression" />
+				<xs:restriction base="c:elFreeformExpression" />
 			</xs:simpleType>
 		</xs:union>
 	</xs:simpleType>
@@ -2607,7 +2666,7 @@
 				</xs:restriction>
 			</xs:simpleType>
 			<xs:simpleType>
-				<xs:restriction base="cdk:elMixedExpression" />
+				<xs:restriction base="c:elMixedExpression" />
 			</xs:simpleType>
 		</xs:union>
 	</xs:simpleType>
@@ -2629,11 +2688,12 @@
 						</xs:restriction>
 					</xs:simpleType>
 					<xs:simpleType>
-						<xs:restriction base="cdk:elMixedExpression" />
+						<xs:restriction base="c:elMixedExpression" />
 					</xs:simpleType>
 				</xs:union>
 			</xs:simpleType>
 		</xs:attribute>
+        <xs:attribute ref="x:nowrap" />
 	</xs:attributeGroup>
 
 	<xs:element name="th">
@@ -2711,12 +2771,24 @@
 		<xs:attribute name="object" type="xs:anySimpleType"></xs:attribute>
 		<xs:attribute name="alt" type="Text"></xs:attribute>
 		<xs:attribute name="name" type="NMTOKEN"></xs:attribute>
-		<xs:attribute use="required" name="width" type="Length"></xs:attribute>
-		<xs:attribute use="required" name="height" type="Length"></xs:attribute>
+		<xs:attribute use="optional" name="width" type="Length"></xs:attribute>
+		<xs:attribute use="optional" name="height" type="Length"></xs:attribute>
 		<xs:attribute name="align" type="ImgAlign"></xs:attribute>
 		<xs:attribute name="hspace" type="Pixels"></xs:attribute>
 		<xs:attribute name="vspace" type="Pixels"></xs:attribute>
 		<xs:attributeGroup ref="cdk:core.attrs" />
+
+        <xs:attribute ref="x:codebase" ></xs:attribute>
+        <xs:attribute ref="x:archive" ></xs:attribute>
+        <xs:attribute ref="x:code" ></xs:attribute>
+        <xs:attribute ref="x:object" ></xs:attribute>
+        <xs:attribute ref="x:alt" ></xs:attribute>
+        <xs:attribute ref="x:name" ></xs:attribute>
+        <xs:attribute ref="x:width" ></xs:attribute>
+        <xs:attribute ref="x:height" ></xs:attribute>
+        <xs:attribute ref="x:align" ></xs:attribute>
+        <xs:attribute ref="x:hspace" ></xs:attribute>
+        <xs:attribute ref="x:vspace" ></xs:attribute>
 	</xs:complexType>
 
 	<xs:group name="applet.children">
@@ -2753,28 +2825,47 @@
 						</xs:restriction>
 					</xs:simpleType>
 					<xs:simpleType>
-						<xs:restriction base="cdk:elMixedExpression"></xs:restriction>
+						<xs:restriction base="c:elMixedExpression"></xs:restriction>
 					</xs:simpleType>
 				</xs:union>
 			</xs:simpleType>
 		</xs:attribute>
-		<xs:attribute use="required" name="alt" type="Text"></xs:attribute>
+		
+		<xs:attribute use="optional" name="alt" type="Text"></xs:attribute>
 		<xs:attribute name="target" type="FrameTarget"></xs:attribute>
 		<xs:attributeGroup ref="cdk:core.attrs" />
+
+        <xs:attribute ref="x:alt" ></xs:attribute>
+        <xs:attribute ref="x:target" ></xs:attribute>
+        <xs:attribute ref="x:shape" ></xs:attribute>
+        <xs:attribute ref="x:coords" ></xs:attribute>
+        <xs:attribute ref="x:href" ></xs:attribute>
+        <xs:attribute ref="x:nohref"></xs:attribute>
+
 	</xs:complexType>
 	<xs:complexType name="base.content">
 		<xs:group ref="cdk:structural" minOccurs="0" maxOccurs="unbounded" />
 		<xs:attribute name="id" type="ID"></xs:attribute>
 		<xs:attribute name="href" type="URI"></xs:attribute>
 		<xs:attribute name="target" type="FrameTarget"></xs:attribute>
+
+        <xs:attribute ref="x:id" ></xs:attribute>
+        <xs:attribute ref="x:href" ></xs:attribute>
+        <xs:attribute ref="x:target" ></xs:attribute>
+
 		<xs:attributeGroup ref="cdk:core.attrs" />
 	</xs:complexType>
 	<xs:complexType name="basefont.content">
 		<xs:group ref="cdk:structural" minOccurs="0" maxOccurs="unbounded" />
 		<xs:attribute name="id" type="ID" />
-		<xs:attribute use="required" name="size" type="xs:anySimpleType" />
+		<xs:attribute use="optional" name="size" type="xs:anySimpleType" />
 		<xs:attribute name="color" type="Color" />
 		<xs:attribute name="face" type="xs:anySimpleType" />
+
+        <xs:attribute ref="x:id"  />
+        <xs:attribute ref="x:size"  />
+        <xs:attribute ref="x:color"  />
+        <xs:attribute ref="x:face"  />
 		<xs:attributeGroup ref="cdk:core.attrs" />
 	</xs:complexType>
 	<xs:complexType name="br.content">
@@ -2792,11 +2883,12 @@
 						</xs:restriction>
 					</xs:simpleType>
 					<xs:simpleType>
-						<xs:restriction base="cdk:elMixedExpression"></xs:restriction>
+						<xs:restriction base="c:elMixedExpression"></xs:restriction>
 					</xs:simpleType>
 				</xs:union>
 			</xs:simpleType>
 		</xs:attribute>
+        <xs:attribute ref="x:clear"  />
 		<xs:attributeGroup ref="cdk:core.attrs" />
 	</xs:complexType>
 	<xs:complexType name="col.content">
@@ -2806,6 +2898,10 @@
 		<xs:attribute name="width" type="MultiLength"></xs:attribute>
 		<xs:attributeGroup ref="cellhalign"></xs:attributeGroup>
 		<xs:attributeGroup ref="cellvalign"></xs:attributeGroup>
+		
+		<xs:attribute ref="x:span"  />
+		<xs:attribute ref="x:width"  />
+		
 		<xs:attributeGroup ref="cdk:core.attrs" />
 	</xs:complexType>
 	<xs:complexType name="colgroup.content">
@@ -2815,6 +2911,9 @@
 		<xs:attribute name="width" type="MultiLength" />
 		<xs:attributeGroup ref="cellhalign" />
 		<xs:attributeGroup ref="cellvalign" />
+
+        <xs:attribute ref="x:span"  />
+        <xs:attribute ref="x:width"  />
 		<xs:attributeGroup ref="cdk:core.attrs" />
 	</xs:complexType>
 	<xs:group name="colgroup.children">
@@ -2885,6 +2984,9 @@
 		<xs:attributeGroup ref="i18n"></xs:attributeGroup>
 		<xs:attribute name="id" type="ID"></xs:attribute>
 		<xs:attribute name="profile" type="URI"></xs:attribute>
+
+        <xs:attribute ref="x:id"  />
+        <xs:attribute ref="x:profile"  />
 		<xs:attributeGroup ref="cdk:core.attrs" />
 	</xs:complexType>
 
@@ -2923,7 +3025,7 @@
 						</xs:restriction>
 					</xs:simpleType>
 					<xs:simpleType>
-						<xs:restriction base="cdk:elMixedExpression"></xs:restriction>
+						<xs:restriction base="c:elMixedExpression"></xs:restriction>
 					</xs:simpleType>
 				</xs:union>
 			</xs:simpleType>
@@ -2937,19 +3039,24 @@
 						</xs:restriction>
 					</xs:simpleType>
 					<xs:simpleType>
-						<xs:restriction base="cdk:elMixedExpression"></xs:restriction>
+						<xs:restriction base="c:elMixedExpression"></xs:restriction>
 					</xs:simpleType>
 				</xs:union>
 			</xs:simpleType>
 		</xs:attribute>
 		<xs:attribute name="size" type="Pixels"></xs:attribute>
 		<xs:attribute name="width" type="Length"></xs:attribute>
+
+        <xs:attribute ref="x:size"  />
+        <xs:attribute ref="x:width"  />
 		<xs:attributeGroup ref="cdk:core.attrs" />
 	</xs:complexType>
 	<xs:complexType name="html.content">
 		<xs:group ref="html.children" />
 		<xs:attributeGroup ref="i18n"></xs:attributeGroup>
 		<xs:attribute name="id" type="ID"></xs:attribute>
+
+        <xs:attribute ref="x:id"  />
 		<xs:attributeGroup ref="cdk:core.attrs" />
 	</xs:complexType>
 	<xs:group name="html.children">
@@ -2962,8 +3069,8 @@
 	<xs:complexType name="img.content">
 		<xs:group ref="cdk:structural" minOccurs="0" maxOccurs="unbounded" />
 		<xs:attributeGroup ref="attrs"></xs:attributeGroup>
-		<xs:attribute use="required" name="src" type="URI"></xs:attribute>
-	    <xs:attribute use="required" name="alt" type="Text">
+		<xs:attribute use="optional" name="src" type="URI"></xs:attribute>
+	    <xs:attribute use="optional" name="alt" type="Text">
 		  <xs:annotation>
 			<xs:appinfo>
 				<cdk-addinfo:default-value></cdk-addinfo:default-value>
@@ -2986,7 +3093,7 @@
 						</xs:restriction>
 					</xs:simpleType>
 					<xs:simpleType>
-						<xs:restriction base="cdk:elMixedExpression"></xs:restriction>
+						<xs:restriction base="c:elMixedExpression"></xs:restriction>
 					</xs:simpleType>
 				</xs:union>
 			</xs:simpleType>
@@ -2995,6 +3102,18 @@
 		<xs:attribute name="border" type="Length"></xs:attribute>
 		<xs:attribute name="hspace" type="Pixels"></xs:attribute>
 		<xs:attribute name="vspace" type="Pixels"></xs:attribute>
+
+        <xs:attribute ref="x:src" ></xs:attribute>
+        <xs:attribute ref="x:alt" ></xs:attribute>
+        <xs:attribute ref="x:name" ></xs:attribute>
+        <xs:attribute ref="x:longdesc" ></xs:attribute>
+        <xs:attribute ref="x:height" ></xs:attribute>
+        <xs:attribute ref="x:width" ></xs:attribute>
+        <xs:attribute ref="x:usemap" ></xs:attribute>
+        <xs:attribute ref="x:align" ></xs:attribute>
+        <xs:attribute ref="x:border" ></xs:attribute>
+        <xs:attribute ref="x:hspace" ></xs:attribute>
+        <xs:attribute ref="x:vspace" ></xs:attribute>
 		<xs:attributeGroup ref="cdk:core.attrs" />
 	</xs:complexType>
 	<xs:complexType name="input.content">
@@ -3018,6 +3137,20 @@
 		<xs:attribute name="onchange" type="Script"></xs:attribute>
 		<xs:attribute name="accept" type="ContentTypes"></xs:attribute>
 		<xs:attribute name="align" type="ImgAlign"></xs:attribute>
+
+        <xs:attribute ref="x:type" ></xs:attribute>
+        <xs:attribute ref="x:name" ></xs:attribute>
+        <xs:attribute ref="x:value" ></xs:attribute>
+        <xs:attribute ref="x:size" ></xs:attribute>
+        <xs:attribute ref="x:maxlength" ></xs:attribute>
+        <xs:attribute ref="x:src" ></xs:attribute>
+        <xs:attribute ref="x:alt" ></xs:attribute>
+        <xs:attribute ref="x:usemap" ></xs:attribute>
+        <xs:attribute ref="x:onselect" ></xs:attribute>
+        <xs:attribute ref="x:onchange" ></xs:attribute>
+        <xs:attribute ref="x:accept" ></xs:attribute>
+        <xs:attribute ref="x:align" ></xs:attribute>
+
 		<xs:attributeGroup ref="cdk:core.attrs" />
 	</xs:complexType>
 	<xs:complexType name="isindex.content">
@@ -3038,6 +3171,15 @@
 		<xs:attribute name="rev" type="LinkTypes"></xs:attribute>
 		<xs:attribute name="media" type="MediaDesc"></xs:attribute>
 		<xs:attribute name="target" type="FrameTarget"></xs:attribute>
+
+        <xs:attribute ref="x:charset" ></xs:attribute>
+        <xs:attribute ref="x:href" ></xs:attribute>
+        <xs:attribute ref="x:hreflang" ></xs:attribute>
+        <xs:attribute ref="x:type" ></xs:attribute>
+        <xs:attribute ref="x:rel" ></xs:attribute>
+        <xs:attribute ref="x:rev" ></xs:attribute>
+        <xs:attribute ref="x:media" ></xs:attribute>
+        <xs:attribute ref="x:target" ></xs:attribute>
 		<xs:attributeGroup ref="cdk:core.attrs" />
 	</xs:complexType>
 	<xs:complexType name="map.content">
@@ -3045,10 +3187,15 @@
 		<xs:attributeGroup ref="i18n"></xs:attributeGroup>
 		<xs:attributeGroup ref="events"></xs:attributeGroup>
 		<xs:attributeGroup ref="classGroup" />
-		<xs:attribute use="required" name="id" type="ID" />
+		<xs:attribute use="optional" name="id" type="ID" />
 		<xs:attribute name="style" type="StyleSheet" />
 		<xs:attribute name="title" type="Text" />
 		<xs:attribute name="name" type="xs:anySimpleType" />
+
+        <xs:attribute ref="x:id"  />
+        <xs:attribute ref="x:style"  />
+        <xs:attribute ref="x:title"  />
+        <xs:attribute ref="x:name"  />
 		<xs:attributeGroup ref="cdk:core.attrs" />
 	</xs:complexType>
 
@@ -3091,9 +3238,16 @@
 		<xs:attribute name="id" type="ID"></xs:attribute>
 		<xs:attribute name="http-equiv" type="xs:anySimpleType"></xs:attribute>
 		<xs:attribute name="name" type="xs:anySimpleType"></xs:attribute>
-		<xs:attribute use="required" name="content" type="xs:anySimpleType">
+		<xs:attribute use="optional" name="content" type="xs:anySimpleType">
 		</xs:attribute>
 		<xs:attribute name="scheme" type="xs:anySimpleType"></xs:attribute>
+
+        <xs:attribute ref="x:id" ></xs:attribute>
+        <xs:attribute ref="x:http-equiv" ></xs:attribute>
+        <xs:attribute ref="x:name" ></xs:attribute>
+        <xs:attribute ref="x:content" >
+        </xs:attribute>
+        <xs:attribute ref="x:scheme" ></xs:attribute>
 		<xs:attributeGroup ref="cdk:core.attrs" />
 	</xs:complexType>
 	<xs:complexType name="object.content" mixed="true">
@@ -3108,7 +3262,7 @@
 						</xs:restriction>
 					</xs:simpleType>
 					<xs:simpleType>
-						<xs:restriction base="cdk:elMixedExpression"></xs:restriction>
+						<xs:restriction base="c:elMixedExpression"></xs:restriction>
 					</xs:simpleType>
 				</xs:union>
 			</xs:simpleType>
@@ -3172,7 +3326,7 @@
 		<xs:group ref="optgroup.children" />
 		<xs:attributeGroup ref="attrs"></xs:attributeGroup>
 		<xs:attributeGroup ref="disabledGroup" />
-		<xs:attribute use="required" name="label" type="Text"></xs:attribute>
+		<xs:attribute use="optional" name="label" type="Text"></xs:attribute>
 		<xs:attributeGroup ref="cdk:core.attrs" />
 	</xs:complexType>
 
@@ -3196,7 +3350,7 @@
 						</xs:restriction>
 					</xs:simpleType>
 					<xs:simpleType>
-						<xs:restriction base="cdk:elMixedExpression"></xs:restriction>
+						<xs:restriction base="c:elMixedExpression"></xs:restriction>
 					</xs:simpleType>
 				</xs:union>
 			</xs:simpleType>
@@ -3208,7 +3362,7 @@
 	<xs:complexType name="param.content">
 		<xs:group ref="cdk:structural" minOccurs="0" maxOccurs="unbounded" />
 		<xs:attribute name="id" type="ID"></xs:attribute>
-		<xs:attribute use="required" name="name" type="xs:anySimpleType">
+		<xs:attribute use="optional" name="name" type="xs:anySimpleType">
 		</xs:attribute>
 		<xs:attribute name="value" type="xs:anySimpleType"></xs:attribute>
 		<xs:attribute default="data" name="valuetype">
@@ -3222,7 +3376,7 @@
 						</xs:restriction>
 					</xs:simpleType>
 					<xs:simpleType>
-						<xs:restriction base="cdk:elMixedExpression"></xs:restriction>
+						<xs:restriction base="c:elMixedExpression"></xs:restriction>
 					</xs:simpleType>
 				</xs:union>
 			</xs:simpleType>
@@ -3234,7 +3388,7 @@
 		<xs:group ref="cdk:structural" minOccurs="0" maxOccurs="unbounded" />
 		<xs:attribute name="id" type="ID"></xs:attribute>
 		<xs:attribute name="charset" type="Charset"></xs:attribute>
-		<xs:attribute use="required" name="type" type="ContentType"></xs:attribute>
+		<xs:attribute use="optional" name="type" type="ContentType"></xs:attribute>
 		<xs:attribute name="language" type="xs:anySimpleType"></xs:attribute>
 		<xs:attribute name="src" type="URI"></xs:attribute>
 		<xs:attribute name="defer">
@@ -3246,7 +3400,7 @@
 						</xs:restriction>
 					</xs:simpleType>
 					<xs:simpleType>
-						<xs:restriction base="cdk:elMixedExpression"></xs:restriction>
+						<xs:restriction base="c:elMixedExpression"></xs:restriction>
 					</xs:simpleType>
 				</xs:union>
 			</xs:simpleType>
@@ -3269,7 +3423,7 @@
 						</xs:restriction>
 					</xs:simpleType>
 					<xs:simpleType>
-						<xs:restriction base="cdk:elMixedExpression" />
+						<xs:restriction base="c:elMixedExpression" />
 					</xs:simpleType>
 				</xs:union>
 			</xs:simpleType>
@@ -3295,7 +3449,7 @@
 		<xs:group ref="cdk:structural" minOccurs="0" maxOccurs="unbounded" />
 		<xs:attributeGroup ref="i18n"></xs:attributeGroup>
 		<xs:attribute name="id" type="ID"></xs:attribute>
-		<xs:attribute use="required" name="type" type="ContentType"></xs:attribute>
+		<xs:attribute use="optional" name="type" type="ContentType"></xs:attribute>
 		<xs:attribute name="media" type="MediaDesc"></xs:attribute>
 		<xs:attribute name="title" type="Text"></xs:attribute>
 		<xs:attribute fixed="preserve" ref="xml:space"></xs:attribute>
@@ -3357,11 +3511,17 @@
 		<xs:attributeGroup ref="focus"></xs:attributeGroup>
 		<xs:attributeGroup ref="disabledGroup" />
 		<xs:attribute name="name" type="xs:anySimpleType"></xs:attribute>
-		<xs:attribute use="required" name="rows" type="Number"></xs:attribute>
-		<xs:attribute use="required" name="cols" type="Number"></xs:attribute>
+		<xs:attribute use="optional" name="rows" type="Number"></xs:attribute>
+		<xs:attribute use="optional" name="cols" type="Number"></xs:attribute>
 		<xs:attributeGroup ref="readonlyGroup" />
 		<xs:attribute name="onselect" type="Script"></xs:attribute>
 		<xs:attribute name="onchange" type="Script"></xs:attribute>
+
+        <xs:attribute ref="x:name" ></xs:attribute>
+        <xs:attribute ref="x:rows" ></xs:attribute>
+        <xs:attribute ref="x:cols" ></xs:attribute>
+        <xs:attribute ref="x:onselect" ></xs:attribute>
+        <xs:attribute ref="x:onchange" ></xs:attribute>
 		<xs:attributeGroup ref="cdk:core.attrs" />
 	</xs:complexType>
 	<xs:complexType name="tfoot.content">
@@ -3398,6 +3558,7 @@
 		<xs:group ref="cdk:structural" minOccurs="0" maxOccurs="unbounded" />
 		<xs:attributeGroup ref="i18n"></xs:attributeGroup>
 		<xs:attribute name="id" type="ID"></xs:attribute>
+		<xs:attribute ref="x:id"></xs:attribute>
 		<xs:attributeGroup ref="cdk:core.attrs" />
 	</xs:complexType>
 
@@ -3407,6 +3568,8 @@
 		<xs:attributeGroup ref="cellhalign"></xs:attributeGroup>
 		<xs:attributeGroup ref="cellvalign"></xs:attributeGroup>
 		<xs:attribute name="bgcolor" type="Color"></xs:attribute>
+
+        <xs:attribute ref="x:bgcolor"></xs:attribute>
 		<xs:attributeGroup ref="cdk:core.attrs" />
 	</xs:complexType>
 
@@ -3425,6 +3588,8 @@
 		<xs:attributeGroup ref="attrs" />
 		<xs:attribute name="type" type="ULStyle" />
 		<xs:attributeGroup ref="compactGroup" />
+		
+        <xs:attribute ref="x:type"></xs:attribute>		
 		<xs:attributeGroup ref="cdk:core.attrs" />
 	</xs:complexType>
 

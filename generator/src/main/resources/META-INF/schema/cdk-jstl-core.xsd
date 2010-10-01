@@ -26,7 +26,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="http://jboss.org/schema/richfaces/cdk/jstl/core" xmlns="http://jboss.org/schema/richfaces/cdk/jstl/core"
-	xmlns:cdk="http://jboss.org/schema/richfaces/cdk/core"
 	elementFormDefault="qualified" attributeFormDefault="unqualified">
 
 	<xs:annotation>
@@ -35,7 +34,28 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 		</xs:documentation>
 	</xs:annotation>
 
-	<xs:import schemaLocation="cdk-template.xsd" namespace="http://jboss.org/schema/richfaces/cdk/core" />
+    <xs:simpleType name="elStrictExpression">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="#\{[^\}]+\}" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="literalExpression">
+        <xs:restriction base="xs:string">
+            <!-- TODO -->
+            <xs:pattern value=".*" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="elMixedExpression">
+        <xs:restriction base="xs:string">
+            <xs:pattern value=".*#\{[^\}]+\}.*" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="elFreeformExpression">
+        <xs:restriction base="xs:string" />
+    </xs:simpleType>
 
 	<xs:complexType name="arbitraryContent" mixed="true">
 		<xs:choice>
@@ -47,7 +67,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 		<xs:complexContent>
 			<xs:extension base="arbitraryContent">
 				<xs:attribute name="test" form="unqualified" use="required"
-					type="cdk:elStrictExpression">
+					type="elStrictExpression">
 					<xs:annotation>
 						<xs:documentation>
 							<p>The test condition that determines whether or not the body content should be processed.</p>
@@ -111,14 +131,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 		<xs:complexType>
 			<xs:complexContent>
 				<xs:extension base="arbitraryContent">
-					<xs:attribute name="items" type="cdk:elStrictExpression">
+					<xs:attribute name="items" type="elStrictExpression">
 						<xs:annotation>
 							<xs:documentation>
 								<p>Collection of items to iterate over.</p>
 							</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
-					<xs:attribute name="var" type="cdk:literalExpression">
+					<xs:attribute name="var" type="literalExpression">
 						<xs:annotation>
 							<xs:documentation>
 								<p>Name of the exported scoped variable for the current item of the iteration. 

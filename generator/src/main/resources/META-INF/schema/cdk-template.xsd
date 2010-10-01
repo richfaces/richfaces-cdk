@@ -28,7 +28,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 	targetNamespace="http://jboss.org/schema/richfaces/cdk/core" xmlns="http://jboss.org/schema/richfaces/cdk/core"
 	elementFormDefault="qualified" attributeFormDefault="unqualified"
 	xmlns:xhtml="http://jboss.org/schema/richfaces/cdk/xhtml-el" xmlns:javaee="http://java.sun.com/xml/ns/javaee"
-	xmlns:c="http://jboss.org/schema/richfaces/cdk/jstl/core" xmlns:cc="http://jboss.org/schema/richfaces/cdk/jsf/composite">
+	xmlns:c="http://jboss.org/schema/richfaces/cdk/jstl/core" 
+	xmlns:cc="http://jboss.org/schema/richfaces/cdk/jsf/composite"
+	xmlns:x="http://jboss.org/schema/richfaces/cdk/ext">
 
 	<xs:annotation>
 		<xs:documentation>
@@ -36,32 +38,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 		</xs:documentation>
 	</xs:annotation>
 
-	<xs:import schemaLocation="web-facesuicomponent_2_0.xsd" namespace="http://java.sun.com/xml/ns/javaee" />
+	<xs:import schemaLocation="http://java.sun.com/xml/ns/javaee/web-facesuicomponent_2_0.xsd" namespace="http://java.sun.com/xml/ns/javaee" />
 	<xs:import schemaLocation="cdk-composite.xsd" namespace="http://jboss.org/schema/richfaces/cdk/jsf/composite" />
 	<xs:import schemaLocation="cdk-jstl-core.xsd" namespace="http://jboss.org/schema/richfaces/cdk/jstl/core" />
+    <xs:import schemaLocation="cdk-extensions.xsd" namespace="http://jboss.org/schema/richfaces/cdk/ext" />
 
-	<xs:simpleType name="elStrictExpression">
-		<xs:restriction base="xs:string">
-			<xs:pattern value="#\{[^\}]+\}" />
-		</xs:restriction>
-	</xs:simpleType>
-
-	<xs:simpleType name="literalExpression">
-		<xs:restriction base="xs:string">
-			<!-- TODO -->
-			<xs:pattern value=".*" />
-		</xs:restriction>
-	</xs:simpleType>
-
-	<xs:simpleType name="elMixedExpression">
-		<xs:restriction base="xs:string">
-			<xs:pattern value=".*#\{[^\}]+\}.*" />
-		</xs:restriction>
-	</xs:simpleType>
-
-	<xs:simpleType name="elFreeformExpression">
-		<xs:restriction base="xs:string" />
-	</xs:simpleType>
 
 	<xs:simpleType name="resourceDependencyTargets">
 		<xs:restriction base="xs:string">
@@ -145,8 +126,45 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 		</xs:simpleType>		
 	</xs:attribute>
 
+    <xs:attribute name="passThrough">
+        <xs:annotation>
+            <xs:documentation>
+                <p>Enables pass-through rendering of attributes. Allows to define whitespace-separated list of attributes 
+                to include. If component attribute name is different from default, the exact name can be added after colon.</p>
+                <p> 
+                    Examples:
+                    
+                    <ul>
+                        <li><code><![CDATA[<div cdk:passThrough="title style"></code>]]></code></li>
+                        <li><code><![CDATA[<div cdk:passThrough="title:headTitle style">]]></code></li>
+                    </ul>
+                    
+                    <span class="usage">
+                        Attributes already defined on the tag are automatically excluded from pass-through 
+                        rendering.
+                    </span>                 
+                </p>
+                <p>If "disabled" attribute of the component is true (i.e. boolean true or "true"), then 
+                attributes that have associated behavior events are not encoded.</p>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction>
+                <xs:simpleType>
+                    <xs:list>
+                        <xs:simpleType>
+                            <xs:restriction base="xs:NMTOKEN" />
+                        </xs:simpleType>
+                    </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="0" />
+            </xs:restriction>
+        </xs:simpleType>        
+    </xs:attribute>
+
 	<xs:attributeGroup name="core.attrs">
 		<xs:attribute ref="passThroughWithExclusions" />
+        <xs:attribute ref="passThrough" />
 	</xs:attributeGroup>
 
 	<xs:element name="root">
@@ -259,10 +277,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 								</li>
 								<li>
 									all content declared inside <code><![CDATA[<cdk:body>]]></code> tag is compiled into
-									statements of <code>encodeChildren(...)</code> method. 
+									statements of <code>encodeChildren(...)</code> method. If content of body element is empty,
+									no encodeChildren(...) method will be generated unless 'enforce' attribute set to true. 
 								</li>
 								<li>
-									all content declared before <code><![CDATA[<cdk:body>]]></code> tag is compiled into
+									all content declared after <code><![CDATA[<cdk:body>]]></code> tag is compiled into
 									statements of <code>encodeEnd(...)</code> method
 								</li>
 							</ul>
@@ -343,6 +362,39 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 							]]></pre>
 
 							<br /><br />
+                            If you want to disable default encodeChildren method, use enforce attribute:
+                            <pre><![CDATA[
+                                ...
+                                <cc:implementation>
+                                    <div id="myId">
+                                        <cdk:body enforce="true"/>
+                                    </div>
+                                </cc:implementation>
+                                ...
+                            ]]></pre>
+                            produces the following code (unsignificant details are ommitted):
+                            <pre><![CDATA[
+                                ...
+                                
+                                encodeBegin(...) {
+                                    ...
+                                    writer.startElement("div", cc);
+                                    writer.writeAttribute("id", "myId", null);
+                                }
+                                
+                                encodeChildren(...) {
+                                   // empty method.
+                                }
+
+                                encodeEnd(...) {
+                                    ...
+                                    writer.endElement("div");
+                                }
+
+                                ...
+                            ]]></pre>
+
+                            <br /><br />
 							The following code snippet:
 							<pre><![CDATA[
 								...
@@ -373,11 +425,14 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 					<xs:choice>
 						<xs:any minOccurs="0" maxOccurs="unbounded" />
 					</xs:choice>
+                    <xs:attribute name="enforce" type="xs:boolean"/>
 				</xs:complexType>
 			</xs:element>
 			<xs:element ref="c:if" />
 			<xs:element ref="c:choose" />
 			<xs:element ref="call" />
+            <xs:element ref="switch" />
+            <xs:element ref="object" />
 		</xs:choice>
 	</xs:group>
 
@@ -425,7 +480,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 		<xs:complexType mixed="true">
 			<xs:simpleContent>
 				<xs:extension base="xs:string">
-					<xs:attribute name="name" form="unqualified" type="literalExpression" use="required">
+					<xs:attribute name="name" form="unqualified" type="c:literalExpression" use="required">
 						<xs:annotation>
 							<xs:documentation>
 								<p>Name of the variable, corresponding to Java identifier syntax.</p>
@@ -460,35 +515,18 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 						<xs:annotation>
 							<xs:documentation>
 								<p>Variable type name. CDK automatically resolves simple names for primitive types, 
-								JSF API classes and objects from java.lang.* or java.util.*.</p>
+								JSF API classes and objects from java.lang.* or java.util.*. 
+								For parametrised types you can use java generics syntax </p>
 								<p>Examples:
 									<ul>
 										<li><code><![CDATA[<cdk:object type="java.lang.String" ...>]]></code></li>
 										<li><code><![CDATA[<cdk:object type="float" ...>]]></code></li>
-										<li><code><![CDATA[<cdk:object type="List" ...>]]></code></li>
+										<li><code><![CDATA[<cdk:object type="List<String>" ...>]]></code></li>
 										<li><code><![CDATA[<cdk:object type="UIComponent" ...>]]></code></li>
 									</ul>
 								</p>
 								<p>If type is not defined explicitly, CDK will try to infer variable type 
 								from its value.</p>
-							</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-					<xs:attribute name="type-arguments" form="unqualified" type="xs:string">
-						<xs:annotation>
-							<xs:documentation>
-								<p>Comma-separated list of generic type arguments for usage with types like 
-								java.util.List or java.util.Map.</p>
-								<p>Examples:
-									<ul>
-										<li>
-											<code><![CDATA[<cdk:object name="map" type="Map" type-arguments="String, Object" />]]></code>
-										</li>
-										<li>
-											<code><![CDATA[<cdk:object name="list" type="List" type-arguments="UIComponent" />]]></code>
-										</li>
-									</ul>
-								</p>
 							</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
@@ -540,7 +578,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="key" use="required" form="unqualified" type="elStrictExpression" />
+            <xs:attribute name="key" use="required" form="unqualified" type="c:elStrictExpression" />
         </xs:complexType>
     </xs:element>
 </xs:schema>
