@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://jboss.org/schema/richfaces/cdk/ext" xmlns="http://jboss.org/schema/richfaces/cdk/ext"
+	elementFormDefault="qualified">
+
+	<xs:simpleType name="beanAttribute">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-zA-Z][a-zA-Z_]*" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:attributeGroup name="attrs">
+		<xs:attributeGroup ref="coreattrs" />
+		<xs:attributeGroup ref="i18n" />
+		<xs:attributeGroup ref="events" />
+	</xs:attributeGroup>
+	<xs:attributeGroup name="coreattrs">
+		<xs:annotation>
+			<xs:documentation>
+				core attributes common to most elements
+				id
+				document-wide unique id
+				class space separated list of classes
+				style
+				associated style info
+				title advisory title/amplification
+			</xs:documentation>
+		</xs:annotation>
+		<xs:attribute ref="id" />
+		<xs:attribute ref="style" />
+		<xs:attribute ref="title" />
+	</xs:attributeGroup>
+
+	<xs:attribute name="id" type="beanAttribute" />
+	<xs:attribute name="style" type="beanAttribute" />
+	<xs:attribute name="title" type="beanAttribute" />
+
+	<xs:attributeGroup name="i18n">
+		<xs:annotation>
+			<xs:documentation>
+				internationalization attributes
+				lang language code
+				(backwards compatible)
+				xml:lang language code (as per XML 1.0 spec)
+				dir direction for weak/neutral text
+      </xs:documentation>
+		</xs:annotation>
+		<xs:attribute ref="lang" />
+	</xs:attributeGroup>
+	<xs:attribute name="lang" type="beanAttribute" />
+
+	<xs:attributeGroup name="classGroup">
+		<xs:attribute ref="class" />
+	</xs:attributeGroup>
+	<xs:attribute name="class" type="beanAttribute" />
+
+	<xs:attributeGroup name="events">
+		<xs:annotation>
+			<xs:documentation>
+				attributes for common UI events
+				onclick a pointer
+				button was clicked
+				ondblclick a pointer button was double clicked
+				onmousedown a pointer button was pressed down
+				onmouseup a pointer
+				button was released
+				onmousemove a pointer was moved onto the element
+				onmouseout a pointer was moved away from the element
+				onkeypress a key
+				was pressed and released
+				onkeydown a key was pressed down
+				onkeyup a
+				key was released
+      </xs:documentation>
+		</xs:annotation>
+		<xs:attribute ref="onclick" />
+		<xs:attribute ref="ondblclick" />
+		<xs:attribute ref="onmousedown" />
+		<xs:attribute ref="onmouseup" />
+		<xs:attribute ref="onmouseover" />
+		<xs:attribute ref="onmousemove" />
+		<xs:attribute ref="onmouseout" />
+		<xs:attribute ref="onkeypress" />
+		<xs:attribute ref="onkeydown" />
+		<xs:attribute ref="onkeyup" />
+	</xs:attributeGroup>
+	<xs:attribute name="onclick" type="beanAttribute" />
+	<xs:attribute name="ondblclick" type="beanAttribute" />
+	<xs:attribute name="onmousedown" type="beanAttribute" />
+	<xs:attribute name="onmouseup" type="beanAttribute" />
+	<xs:attribute name="onmouseover" type="beanAttribute" />
+	<xs:attribute name="onmousemove" type="beanAttribute" />
+	<xs:attribute name="onmouseout" type="beanAttribute" />
+	<xs:attribute name="onkeypress" type="beanAttribute" />
+	<xs:attribute name="onkeydown" type="beanAttribute" />
+	<xs:attribute name="onkeyup" type="beanAttribute" />
+
+	<xs:attributeGroup name="focus">
+		<xs:annotation>
+			<xs:documentation>
+				attributes for elements that can get the focus
+				accesskey accessibility key character
+				tabindex position in tabbing
+				order
+				onfocus the element got the focus
+				onblur the element lost the
+				focus
+      </xs:documentation>
+		</xs:annotation>
+		<xs:attribute ref="accesskey" />
+		<xs:attribute ref="tabindex" />
+		<xs:attribute ref="onfocus" />
+		<xs:attribute ref="onblur" />
+	</xs:attributeGroup>
+	<xs:attribute name="accesskey" type="beanAttribute" />
+	<xs:attribute name="tabindex" type="beanAttribute" />
+	<xs:attribute name="onfocus" type="beanAttribute" />
+	<xs:attribute name="onblur" type="beanAttribute" />
+
+	<xs:attribute name="align" type="beanAttribute" />
+	<xs:attribute name="charset" type="beanAttribute"></xs:attribute>
+	<xs:attribute name="type" type="beanAttribute"></xs:attribute>
+	<xs:attribute name="name" type="beanAttribute"></xs:attribute>
+	<xs:attribute name="href" type="beanAttribute"></xs:attribute>
+	<xs:attribute name="hreflang" type="beanAttribute"></xs:attribute>
+	<xs:attribute name="rel" type="beanAttribute"></xs:attribute>
+	<xs:attribute name="rev" type="beanAttribute"></xs:attribute>
+	<xs:attribute name="shape" type="beanAttribute"></xs:attribute>
+	<xs:attribute name="coords" type="beanAttribute"></xs:attribute>
+	<xs:attribute name="target" type="beanAttribute"></xs:attribute>
+
+	<xs:attribute name="cite" type="beanAttribute" />
+
+	<xs:attribute name="size" type="beanAttribute" />
+	<xs:attribute name="color" type="beanAttribute" />
+	<xs:attribute name="face" type="beanAttribute" />
+
+	<xs:attribute name="action" type="beanAttribute" />
+	<xs:attribute name="method"></xs:attribute>
+	<xs:attribute name="enctype" type="beanAttribute" />
+	<xs:attribute name="onsubmit" type="beanAttribute" />
+	<xs:attribute name="onreset" type="beanAttribute" />
+	<xs:attribute name="accept" type="beanAttribute" />
+	<xs:attribute name="accept-charset" type="beanAttribute" />
+
+	<xs:attribute name="for" type="beanAttribute" />
+
+	<xs:attribute name="value" type="beanAttribute" />
+
+	<xs:attribute name="disabled" type="beanAttribute" />
+	<xs:attribute name="readonly" type="beanAttribute" />
+	<xs:attribute name="nowrap" type="beanAttribute" />
+	<xs:attribute name="compact" type="beanAttribute" />
+    <xs:attribute name="checked" type="beanAttribute" />
+    <xs:attribute name="valign" type="beanAttribute" />
+    <xs:attribute name="char" type="beanAttribute" />
+    <xs:attribute name="charoff" type="beanAttribute" />
+    <xs:attribute name="codebase" type="beanAttribute" />
+    <xs:attribute name="alt" type="beanAttribute" />
+    <xs:attribute name="clear" type="beanAttribute" />
+    <xs:attribute name="span" type="beanAttribute" />
+    <xs:attribute name="profile" type="beanAttribute" />
+    <xs:attribute name="width" type="beanAttribute" />
+    <xs:attribute name="src" type="beanAttribute" />
+    <xs:attribute name="maxlength" type="beanAttribute" />
+    <xs:attribute name="media" type="beanAttribute" />
+    <xs:attribute name="http-equiv" type="beanAttribute" />
+    <xs:attribute name="archive" type="beanAttribute" />
+    <xs:attribute name="nohref" type="beanAttribute" />
+    <xs:attribute name="longdesc" type="beanAttribute" />
+    <xs:attribute name="usemap" type="beanAttribute" />
+    <xs:attribute name="required" type="beanAttribute" />
+    <xs:attribute name="rows" type="beanAttribute" />
+    <xs:attribute name="cols" type="beanAttribute" />
+    <xs:attribute name="bgcolor" type="beanAttribute" />
+    <xs:attribute name="code" type="beanAttribute" />
+    <xs:attribute name="height" type="beanAttribute" />
+    <xs:attribute name="onselect" type="beanAttribute" />
+    <xs:attribute name="onchange" type="beanAttribute" />
+    <xs:attribute name="object" type="beanAttribute" />
+    <xs:attribute name="border" type="beanAttribute" />
+    <xs:attribute name="content" type="beanAttribute" />
+    <xs:attribute name="hspace" type="beanAttribute" />
+    <xs:attribute name="vspace" type="beanAttribute" />
+    <xs:attribute name="scheme" type="beanAttribute" />
+
+</xs:schema>
