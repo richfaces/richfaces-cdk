@@ -91,6 +91,10 @@ public class HelperMethodFactoryImpl implements HelperMethodFactory {
         arguments.add(new Argument("attributes",typesFactory.getType("Attributes")));
         renderAttributes.getExceptions().add(typesFactory.getType(IOException.class));
         buildHelperMethod(HelperMethod.CREATE_ATTRIBUTES, true, "create-attributes");
+        buildHelperMethod(HelperMethod.ADD_TO_SCRIPT_HASH, true, null);
+        buildHelperMethod(HelperMethod.ADD_TO_SCRIPT_HASH_ATTRIBUTES, true, null);
+        buildHelperMethod(HelperMethod.TO_SCRIPT_ARGS, true, null);
+        buildHelperMethod(HelperMethod.CONCAT, true, null);
     }
 
     private JavaMethod buildHelperMethod(HelperMethod helperMethod, boolean utilsMethod, String templateName,
@@ -99,7 +103,7 @@ public class HelperMethodFactoryImpl implements HelperMethodFactory {
         if (utilsMethod && !RendererUtilsMethod.BUILT_IN.equals(rendererUtilsClass)) {
             helperJavaMethod = new RendererUtilsMethod(helperMethod, rendererUtilsClass);
         } else {
-            Class<?>[] argumentTypes = helperMethod.getArgumentTypes();
+            String[] argumentTypes = helperMethod.getArgumentTypes();
             Argument[] arguments = new Argument[argumentNames.length];
             for (int i = 0; i < argumentNames.length; i++) {
                 arguments[i] = new Argument(argumentNames[i], typesFactory.getType(argumentTypes[i]));

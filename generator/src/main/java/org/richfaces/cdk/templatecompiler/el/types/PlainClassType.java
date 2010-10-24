@@ -25,8 +25,8 @@ import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.Set;
 
-import org.richfaces.cdk.templatecompiler.builder.model.ClassImport;
 import org.richfaces.cdk.templatecompiler.builder.model.JavaImport;
+import org.richfaces.cdk.templatecompiler.builder.model.JavaImportImpl;
 
 /**
  * @author Nick Belaevski
@@ -48,7 +48,7 @@ public final class PlainClassType implements ELType {
         }
         
         this.clazz = clazz;
-        this.imports = Collections.<JavaImport>singleton(new ClassImport(clazz));
+        this.imports = Collections.<JavaImport>singleton(new JavaImportImpl(clazz));
     }
 
     public Class<?> getPlainJavaClass(){

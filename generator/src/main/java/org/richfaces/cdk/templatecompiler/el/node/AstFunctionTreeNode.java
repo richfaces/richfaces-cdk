@@ -22,12 +22,18 @@
 package org.richfaces.cdk.templatecompiler.el.node;
 
 
+import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.COMMA;
+import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.LEFT_BRACKET;
+import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.RIGHT_BRACKET;
+import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.THIS_PREFIX;
+
 import org.jboss.el.parser.AstFunction;
 import org.jboss.el.parser.Node;
-import org.richfaces.cdk.templatecompiler.el.ELNodeConstants;
 import org.richfaces.cdk.templatecompiler.el.ELVisitor;
 import org.richfaces.cdk.templatecompiler.el.ParsingException;
 import org.richfaces.cdk.templatecompiler.el.types.ELType;
+import org.richfaces.cdk.templatecompiler.el.types.TypesFactory;
+import org.richfaces.cdk.templatecompiler.statements.HelperMethod;
 import org.richfaces.cdk.util.Strings;
 
 /**
@@ -45,23 +51,68 @@ public class AstFunctionTreeNode extends AbstractMethodTreeNode {
     @Override
     public void visit(StringBuilder sb, ELVisitor visitor) throws ParsingException {
         AstFunction functionNode = (AstFunction) getNode();
-        String functionPrefix = functionNode.getPrefix();
-        String functionName = functionNode.getLocalName();
-
-        String identifierName;
-        if (!Strings.isEmpty(functionPrefix)) {
-            // TODO: this should be a property getter, not property name. NB: 'this' & 'super' keywords
-            identifierName = functionPrefix;
+        
+        HelperMethod helperMethod = findMatchingHelperMethod(functionNode);
+        if (helperMethod != null) {
+            visitHelperMethod(sb, visitor, helperMethod, functionNode);
         } else {
-            identifierName = ELNodeConstants.THIS_PREFIX;
+            visitObjectMethod(sb, visitor, functionNode);
         }
+    }
 
+    /**
+     * @param sb
+     * @param visitor
+     * @param helperMethod
+     * @param functionNode
+     * @throws ParsingException 
+     */
+    private void visitHelperMethod(StringBuilder sb, ELVisitor visitor, HelperMethod helperMethod,
+        AstFunction functionNode) throws ParsingException {
+        visitor.addHelperMethods(helperMethod);
+        
+        visitor.setLiteral(false);
+        
+        //TODO - helper method doesn't provide this info
+        visitor.setExpressionType(TypesFactory.OBJECT_TYPE);
+
+        sb.append(helperMethod.getName());
+        sb.append(LEFT_BRACKET);
+
+        for (int i = 0; i < functionNode.jjtGetNumChildren(); i++) {
+            if (i != 0) {
+                sb.append(COMMA);
+            }
+            
+            String childOutput = getChildOutput(i, visitor);
+            sb.append(childOutput);
+        }
+        
+        sb.append(RIGHT_BRACKET);
+    }
+
+    private HelperMethod findMatchingHelperMethod(AstFunction functionNode) {
+        if (Strings.isEmpty(functionNode.getPrefix())) {
+            for (HelperMethod helperMethod: HelperMethod.values()) {
+                if (helperMethod.getName().equals(functionNode.getLocalName())) {
+                    return helperMethod;
+                }
+            }
+        }
+         
+        return null;
+    }
+    
+    private void visitObjectMethod(StringBuilder sb, ELVisitor visitor, AstFunction functionNode)
+        throws ParsingException {
+        
+        String identifierName = Strings.firstNonEmpty(functionNode.getPrefix(), THIS_PREFIX);
         sb.append(identifierName);
 
         ELType identifierType = visitor.getVariable(identifierName);
         visitor.setExpressionType(identifierType);
 
-        visitMethod(sb, visitor, functionName);
+        visitMethod(sb, visitor, functionNode.getLocalName());
         visitor.setLiteral(false);
     }
 }

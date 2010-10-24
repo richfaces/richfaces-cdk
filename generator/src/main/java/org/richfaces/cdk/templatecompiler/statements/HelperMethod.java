@@ -21,11 +21,20 @@
  */
 package org.richfaces.cdk.templatecompiler.statements;
 
-import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.*;
+import static com.google.common.collect.Iterators.forArray;
+import static com.google.common.collect.Iterators.toArray;
+import static com.google.common.collect.Iterators.transform;
+import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.CONVERT_TO_BOOLEAN_FUNCTION;
+import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.CONVERT_TO_STRING_FUNCTION;
+import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.IS_EMPTY_FUNCTION;
+import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.IS_EQUAL_FUNCTION;
+import static org.richfaces.cdk.util.JavaUtils.CLASS_TO_CLASS_NAME;
 
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.EnumSet;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import javax.faces.component.UIComponent;
@@ -46,7 +55,14 @@ public enum HelperMethod {
     SHOULD_RENDER_ATTRIBUTE("shouldRenderAttribute", Boolean.TYPE, Object.class),
     CREATE_ATTRIBUTES("attributes", "Attributes"),
     RENDER_ATTRIBUTES_SET("renderPassThroughAttributes", Void.TYPE,FacesContext.class,UIComponent.class,Collection.class),
-    RENDER_ATTRIBUTE("renderAttribute",Void.TYPE,FacesContext.class,String.class,Object.class);
+    RENDER_ATTRIBUTE("renderAttribute",Void.TYPE,FacesContext.class,String.class,Object.class),
+    ADD_TO_SCRIPT_HASH("addToScriptHash", Void.TYPE.getName(), Map.class.getName(), String.class.getName(), 
+        Object.class.getName(), Object.class.getName(), "ScriptHashVariableWrapper"),
+    ADD_TO_SCRIPT_HASH_ATTRIBUTES("addToScriptHash", Void.TYPE.getName(), Map.class.getName(), 
+        FacesContext.class.getName(), UIComponent.class.getName(), 
+        "Attributes", "ScriptHashVariableWrapper"),
+    TO_SCRIPT_ARGS("toScriptArgs", String.class, Object[].class),
+    CONCAT("concat", String.class, String[].class);
 
     public static final EnumMap<HelperMethod, String> METHOD_NAMES = Maps.newEnumMap(HelperMethod.class);
 
@@ -56,7 +72,7 @@ public enum HelperMethod {
 
     private final String returnType;
     
-    private final Class<?>[] argumentTypes;
+    private final String[] argumentTypes;
     
     static {
         for (HelperMethod method : HelperMethod.values()) {
@@ -64,14 +80,19 @@ public enum HelperMethod {
         }
     }
     
-    private HelperMethod(String name, String returnType, Class<?>... argumentTypes) {
+    private static String[] transformClassesToClassNames(Class<?>[] s) {
+        Iterator<String> transformed = transform(forArray(s), CLASS_TO_CLASS_NAME);
+        return toArray(transformed, String.class);
+    } 
+    
+    private HelperMethod(String name, String returnType, String... argumentTypes) {
         this.name = name;
         this.returnType = returnType;
         this.argumentTypes = argumentTypes;
     }
     
     private HelperMethod(String name, Class<?> returnType, Class<?>... argumentTypes) {
-        this(name,returnType.getName(),argumentTypes);
+        this(name, CLASS_TO_CLASS_NAME.apply(returnType), transformClassesToClassNames(argumentTypes));
     }
 
     public String getName() {
@@ -82,7 +103,7 @@ public enum HelperMethod {
         return returnType;
     }
     
-    public Class<?>[] getArgumentTypes() {
+    public String[] getArgumentTypes() {
         return argumentTypes;
     }
     

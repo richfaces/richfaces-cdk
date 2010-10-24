@@ -1,7 +1,7 @@
 package org.richfaces.cdk.templatecompiler.statements;
 
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import static org.easymock.EasyMock.expect;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Collections;
 
@@ -15,7 +15,7 @@ import org.richfaces.cdk.Stub;
 import org.richfaces.cdk.generate.freemarker.FreeMarkerRenderer;
 import org.richfaces.cdk.templatecompiler.builder.model.JavaField;
 import org.richfaces.cdk.templatecompiler.builder.model.JavaImport;
-import org.richfaces.cdk.templatecompiler.builder.model.RuntimeImport;
+import org.richfaces.cdk.templatecompiler.builder.model.JavaImportImpl;
 import org.richfaces.cdk.templatecompiler.el.types.TypesFactory;
 
 import com.google.common.collect.Iterables;
@@ -64,7 +64,7 @@ public class FreeMarkerTemplateStatementTest {
     public void testGetRequiredImports() {
         freeMarkerStatement.addImport("foo.Bar");
         expect(statement.getRequiredImports()).andStubReturn(
-            Collections.<JavaImport> singleton(new RuntimeImport("foo.baz")));
+            Collections.<JavaImport> singleton(new JavaImportImpl("foo.baz")));
         expect(renderer.renderTemplate("foo.ftl", freeMarkerStatement)).andReturn(FOO_CODE);
         controller.replay();
         freeMarkerStatement.addStatement(statement);

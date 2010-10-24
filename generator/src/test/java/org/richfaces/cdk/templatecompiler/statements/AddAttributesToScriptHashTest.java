@@ -23,18 +23,21 @@
 
 package org.richfaces.cdk.templatecompiler.statements;
 
-import static org.junit.Assert.*;
-
 import java.util.Collections;
-
-import javax.xml.namespace.QName;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.richfaces.cdk.CdkClassLoader;
 import org.richfaces.cdk.CdkTestRunner;
+import org.richfaces.cdk.model.ClassName;
+import org.richfaces.cdk.model.PropertyBase;
+import org.richfaces.cdk.model.PropertyModel;
 import org.richfaces.cdk.templatecompiler.builder.model.JavaField;
+import org.richfaces.cdk.templatecompiler.el.types.TypesFactory;
+import org.richfaces.cdk.templatecompiler.el.types.TypesFactoryImpl;
 
 import com.google.common.collect.Iterables;
+import com.google.inject.Binder;
 import com.google.inject.Inject;
 
 /**
@@ -45,27 +48,43 @@ import com.google.inject.Inject;
  * 
  */
 @RunWith(CdkTestRunner.class)
-public class WriteAttributesSetTest extends FreeMarkerTestBase {
+public class AddAttributesToScriptHashTest extends FreeMarkerTestBase {
 
     @Inject
-    private WriteAttributesSetStatement statement;
+    private TypesFactory typesFactory;
+    
+    @Inject
+    private ScriptObjectStatement parentStatement;
+    
+    @Inject
+    private AddAttributesToScriptHashStatement statement;
 
+    @Override
+    public void configure(Binder binder) {
+        super.configure(binder);
+        binder.bind(TypesFactory.class).to(TypesFactoryImpl.class);
+        binder.bind(CdkClassLoader.class).toInstance(createClassLoader());
+    }
+    
     /**
      * Test method for {@link org.richfaces.cdk.templatecompiler.statements.FreeMarkerTemplateStatementBase#getCode()}.
      */
     @Test
     public void testGetCode() {
-        PassThrough passThrough = new PassThrough();
-        passThrough.name = QName.valueOf("foo");
-        passThrough.type = "String";
-        passThrough.componentAttribute = "bar";
-        passThrough.defaultValue = "deflt";
+        statement.setParent(parentStatement);
+        parentStatement.setObject("hash", null);
+        
+        PropertyBase property = new PropertyModel();
+        property.setName("bar");
+        property.setDefaultValue("deflt");
+        property.setType(ClassName.get(String.class));
+        
         controller.replay();
-        statement.setAttributes(Collections.singleton(passThrough));
+        statement.setAttributes(Collections.singleton("bar"), Collections.singleton(property));
         String code = statement.getCode();
         controller.verify();
         verifyCode(code, "!attributes()", "!defaultValue(", "!if(", "");
-        verifyHelpers(statement, HelperMethod.CREATE_ATTRIBUTES, HelperMethod.RENDER_ATTRIBUTES_SET);
+        verifyHelpers(statement, HelperMethod.CREATE_ATTRIBUTES, HelperMethod.ADD_TO_SCRIPT_HASH_ATTRIBUTES);
         JavaField javaField = Iterables.getOnlyElement(statement.getRequiredFields());
         verifyCode(javaField.getValue().getCode(), "attributes()", "generic(", "defaultValue(");
     }

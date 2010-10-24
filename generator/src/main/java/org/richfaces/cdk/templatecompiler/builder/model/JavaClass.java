@@ -71,17 +71,19 @@ public class JavaClass extends JavaLanguageElement {
 
 
     public void addImport(String name) {
-        addImport(new RuntimeImport(name));
+        addImport(new JavaImportImpl(name));
     }
 
-    public void addImport(JavaImport javaImport) {
-        imports.add(javaImport);
+    public void addImport(String name, boolean _static) {
+        addImport(new JavaImportImpl(name, _static));
     }
 
     public void addImport(Class<?> claz) {
-        if (shouldAddToImports(claz.getName())) {
-            imports.add(new ClassImport(claz));
-        }
+        addImport(claz.getName());
+    }
+    
+    public void addImport(JavaImport javaImport) {
+        imports.add(javaImport);
     }
 
     public void addImports(Iterable<JavaImport> imports) {
@@ -141,20 +143,4 @@ public class JavaClass extends JavaLanguageElement {
         return simpleName;
     }
 
-    private boolean shouldAddToImports(String className) {
-        if (className == null || className.length() == 0) {
-            return false;
-        }
-
-        // default package & primitive types
-        if (className.indexOf('.') == -1) {
-            return false;
-        }
-
-        if (className.matches("^java\\.lang\\.[^\\.]+$")) {
-            return false;
-        }
-
-        return true;
-    }
 }

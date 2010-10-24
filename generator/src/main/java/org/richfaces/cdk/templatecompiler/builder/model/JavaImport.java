@@ -27,12 +27,17 @@ import java.util.Comparator;
  * @author Maksim Kaszynski
  */
 public interface JavaImport {
+    
     public Comparator<? super JavaImport> COMPARATOR = new Comparator<JavaImport>() {
         public int compare(JavaImport o1, JavaImport o2) {
             return o1.getName().compareTo(o2.getName());
         }
     };
-    String getName();
-    
-    boolean isDefault();
+
+    public String getName();
+
+    public boolean isStatic();
+
+    public boolean isDefault();
+
 }

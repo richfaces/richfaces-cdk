@@ -21,9 +21,14 @@
 
 package org.richfaces.cdk.templatecompiler.parser.el.test;
 
-import static org.junit.Assert.*;
-import static org.easymock.EasyMock.*;
-import static org.richfaces.cdk.templatecompiler.statements.HelperMethod.*;
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.richfaces.cdk.templatecompiler.statements.HelperMethod.EMPTINESS_CHECK;
+import static org.richfaces.cdk.templatecompiler.statements.HelperMethod.EQUALS_CHECK;
+import static org.richfaces.cdk.templatecompiler.statements.HelperMethod.TO_BOOLEAN_CONVERSION;
+import static org.richfaces.cdk.templatecompiler.statements.HelperMethod.TO_STRING_CONVERSION;
 
 import java.util.HashMap;
 import java.util.List;
@@ -667,5 +672,13 @@ public class ELParserTest extends CdkTestBase {
         assertTrue(parseExpression.isLiteral());
         assertEquals("\"Literal\"",parseExpression.getCode());
         assertEquals(String.class.getName(), parseExpression.getType().getRawName());
+    }
+    
+    @Test
+    public void testToScriptArgs() throws Exception {
+        TypedTemplateStatement parseExpression = parseExpression("#{toScriptArgs(clientId, bean)}");
+        
+        assertTrue(Iterables.contains(parseExpression.getRequiredMethods(), HelperMethod.TO_SCRIPT_ARGS));
+        assertEquals("toScriptArgs(clientId,bean)", parseExpression.getCode());
     }
 }

@@ -31,6 +31,7 @@ import java.util.Locale;
 import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.xmlconfig.JAXBBinding;
 
+import com.google.common.base.Function;
 import com.google.common.collect.ImmutableMap;
 
 /**
@@ -43,6 +44,12 @@ public final class JavaUtils {
             Character.class).put(Byte.TYPE, Byte.class).put(Short.TYPE, Short.class).put(Integer.TYPE, Integer.class)
             .put(Long.TYPE, Long.class).put(Float.TYPE, Float.class).put(Double.TYPE, Double.class).build();
 
+    public static final Function<Class<?>, String> CLASS_TO_CLASS_NAME = new Function<Class<?>, String>() {
+        public String apply(java.lang.Class<?> from) {
+            return from.getName();
+        }
+    };
+    
     private JavaUtils() {
         // private constructor
     }

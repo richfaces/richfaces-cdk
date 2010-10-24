@@ -82,4 +82,10 @@ public interface TemplateVisitor {
 
     void postProcess(CompositeImplementation compositeImplementation);
 
+    void startElement(CdkScriptObjectElement cdkScriptObjectElement);
+
+    void endElement(CdkScriptObjectElement cdkScriptObjectElement);
+
+    void visitElement(CdkScriptOptionElement cdkScriptOptionElement);
+
 }

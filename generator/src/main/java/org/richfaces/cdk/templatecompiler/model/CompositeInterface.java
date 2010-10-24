@@ -67,6 +67,8 @@ public class CompositeInterface implements Serializable {
 
     private Boolean rendersChildren = null;
 
+    private List<ClassImport> classImports = Lists.newArrayList();
+    
     /**
      * <p class="changed_added_4_0"></p>
      *
@@ -243,4 +245,18 @@ public class CompositeInterface implements Serializable {
         this.attributesImports = attributesImports;
     }
     
+    /**
+     * @return the classImports
+     */
+    @XmlElement(name = "import", namespace = Template.CDK_NAMESPACE)
+    public List<ClassImport> getClassImports() {
+        return classImports;
+    }
+    
+    /**
+     * @param classImports the classImports to set
+     */
+    public void setClassImports(List<ClassImport> classImports) {
+        this.classImports = classImports;
+    }
 }

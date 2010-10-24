@@ -28,8 +28,8 @@ import java.util.Set;
 import org.richfaces.cdk.generate.freemarker.FreeMarkerRenderer;
 import org.richfaces.cdk.templatecompiler.builder.model.JavaField;
 import org.richfaces.cdk.templatecompiler.builder.model.JavaImport;
+import org.richfaces.cdk.templatecompiler.builder.model.JavaImportImpl;
 import org.richfaces.cdk.templatecompiler.builder.model.JavaModifier;
-import org.richfaces.cdk.templatecompiler.builder.model.RuntimeImport;
 import org.richfaces.cdk.templatecompiler.el.types.ReferencedType;
 import org.richfaces.cdk.util.Strings;
 
@@ -121,7 +121,7 @@ public class FreeMarkerTemplateStatementBase extends StatementsContainer {
     }
     
     public void addImport(String name) {
-        imports.add(new RuntimeImport(name));
+        imports.add(new JavaImportImpl(name));
     }
     
     protected void addImports(Iterable<JavaImport> requiredImports) {

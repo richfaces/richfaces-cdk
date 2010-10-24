@@ -581,4 +581,39 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <xs:attribute name="key" use="required" form="unqualified" type="c:elStrictExpression" />
         </xs:complexType>
     </xs:element>
+
+    <xs:element name="import">
+        <xs:complexType>
+            <xs:attribute type="xs:string" use="required" name="package" />
+            <xs:attribute type="xs:NMTOKENS" name="names" />
+            <xs:attribute type="xs:boolean" name="static" />
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="scriptObject">
+        <xs:complexType>
+            <xs:attribute type="xs:string" name="name" use="required" />
+            <xs:attribute type="c:elStrictExpression" name="base" />
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="scriptOption">
+        <xs:complexType>
+            <xs:attribute type="xs:NMTOKENS" name="attributes" />
+            <xs:attribute type="xs:NMTOKENS" name="variables" />
+            <xs:attribute type="xs:string" name="name" />
+            <xs:attribute type="c:elFreeformExpression" name="value" />
+            <xs:attribute type="c:literalExpression" name="defaultValue" />
+            <xs:attribute name="wrapper">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="noop" />
+                        <xs:enumeration value="asArray" />
+                        <xs:enumeration value="eventHandler" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    
 </xs:schema>

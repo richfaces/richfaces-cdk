@@ -15,13 +15,12 @@ import org.richfaces.cdk.attributes.Attribute.Kind;
 import org.richfaces.cdk.attributes.Element;
 import org.richfaces.cdk.attributes.Schema;
 import org.richfaces.cdk.model.EventName;
+import org.richfaces.cdk.model.Named.NamePredicate;
 import org.richfaces.cdk.model.PropertyBase;
 import org.richfaces.cdk.templatecompiler.model.AnyElement;
 import org.richfaces.cdk.templatecompiler.model.Template;
-import org.richfaces.cdk.templatecompiler.statements.WriteAttributesSetStatement.PassThrough;
 import org.richfaces.cdk.util.Strings;
 
-import com.google.common.base.Predicate;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
@@ -66,7 +65,7 @@ public class AttributesStatement extends StatementsContainer {
     public void processAttributes(AnyElement element, Collection<PropertyBase> componentAttributes) {
         this.componentAttributes = componentAttributes;
         Set<String> processedAttributes = Sets.newHashSet();
-        TreeSet<WriteAttributesSetStatement.PassThrough> passThroughAttributes = Sets.newTreeSet();
+        TreeSet<PassThrough> passThroughAttributes = Sets.newTreeSet();
         this.elementName = element.getName();
         processRegularAttributes(element, processedAttributes, passThroughAttributes);
         String passThrough = element.getPassThrough();
@@ -81,7 +80,7 @@ public class AttributesStatement extends StatementsContainer {
     }
 
     private void processPassThroughWithExclusions(Set<String> processedAttributes,
-        TreeSet<WriteAttributesSetStatement.PassThrough> passThroughAttributes, String passThroughWithExclusions) {
+        TreeSet<PassThrough> passThroughAttributes, String passThroughWithExclusions) {
         if (null != passThroughWithExclusions) {
             // cdk:passThroughWithExclusions="id,class,style"
             Map<String, Element> elements = attributesSchema.getElements();
@@ -101,7 +100,7 @@ public class AttributesStatement extends StatementsContainer {
     }
 
     private void processPassThrough(Set<String> processedAttributes,
-        TreeSet<WriteAttributesSetStatement.PassThrough> passThroughAttributes, String passThrough) {
+        TreeSet<PassThrough> passThroughAttributes, String passThrough) {
         if (null != passThrough) {
             // cdk:passThrough="class:styleClass,style , id:clientId"
             Iterable<String> split = PASS_THGOUGH_SPLITTER.split(passThrough);
@@ -117,7 +116,7 @@ public class AttributesStatement extends StatementsContainer {
     }
 
     private void processRegularAttributes(AnyElement element, Set<String> processedAttributes,
-        TreeSet<WriteAttributesSetStatement.PassThrough> passThroughAttributes) {
+        TreeSet<PassThrough> passThroughAttributes) {
         for (Map.Entry<QName, Object> entry : element.getAttributes().entrySet()) {
             QName qName = entry.getKey();
             if (Template.CDK_NAMESPACE.equals(qName.getNamespaceURI())) {
@@ -174,13 +173,7 @@ public class AttributesStatement extends StatementsContainer {
 
     private PropertyBase findComponentAttribute(final String name)
         throws NoSuchElementException {
-        return Iterables.find(componentAttributes, new Predicate<PropertyBase>() {
-            @Override
-            public boolean apply(PropertyBase input) {
-                return name.equals(input.getName());
-            }
-        });
-
+        return Iterables.find(componentAttributes, new NamePredicate(name));
     }
 
     private WriteAttributeStatement setupAttributeStatement(QName qName, Object value, Attribute schemaAttribute) {

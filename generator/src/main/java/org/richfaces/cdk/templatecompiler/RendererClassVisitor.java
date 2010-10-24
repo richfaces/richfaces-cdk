@@ -25,6 +25,7 @@ package org.richfaces.cdk.templatecompiler;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
@@ -58,13 +59,17 @@ import org.richfaces.cdk.templatecompiler.model.CdkForEachElement;
 import org.richfaces.cdk.templatecompiler.model.CdkIfElement;
 import org.richfaces.cdk.templatecompiler.model.CdkObjectElement;
 import org.richfaces.cdk.templatecompiler.model.CdkOtherwiseElement;
+import org.richfaces.cdk.templatecompiler.model.CdkScriptObjectElement;
+import org.richfaces.cdk.templatecompiler.model.CdkScriptOptionElement;
 import org.richfaces.cdk.templatecompiler.model.CdkSwitchElement;
 import org.richfaces.cdk.templatecompiler.model.CdkWhenElement;
+import org.richfaces.cdk.templatecompiler.model.ClassImport;
 import org.richfaces.cdk.templatecompiler.model.CompositeImplementation;
 import org.richfaces.cdk.templatecompiler.model.CompositeInterface;
 import org.richfaces.cdk.templatecompiler.model.ResourceDependency;
 import org.richfaces.cdk.templatecompiler.model.Template;
 import org.richfaces.cdk.templatecompiler.model.TemplateVisitor;
+import org.richfaces.cdk.templatecompiler.statements.AddAttributesToScriptHashStatement;
 import org.richfaces.cdk.templatecompiler.statements.AttributesStatement;
 import org.richfaces.cdk.templatecompiler.statements.CaseStatement;
 import org.richfaces.cdk.templatecompiler.statements.ConstantReturnMethodBodyStatement;
@@ -76,6 +81,8 @@ import org.richfaces.cdk.templatecompiler.statements.HelperMethod;
 import org.richfaces.cdk.templatecompiler.statements.HelperMethodFactory;
 import org.richfaces.cdk.templatecompiler.statements.IfElseStatement;
 import org.richfaces.cdk.templatecompiler.statements.IfStatement;
+import org.richfaces.cdk.templatecompiler.statements.ScriptObjectStatement;
+import org.richfaces.cdk.templatecompiler.statements.ScriptOptionStatement;
 import org.richfaces.cdk.templatecompiler.statements.StartElementStatement;
 import org.richfaces.cdk.templatecompiler.statements.StatementsContainer;
 import org.richfaces.cdk.templatecompiler.statements.SwitchStatement;
@@ -85,6 +92,7 @@ import org.richfaces.cdk.templatecompiler.statements.WriteTextStatement;
 import org.richfaces.cdk.util.Strings;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import com.google.inject.Injector;
 
 /**
@@ -131,11 +139,6 @@ public class RendererClassVisitor implements TemplateVisitor {
      */
     static final String CLIENT_ID_VARIABLE = "clientId";
 
-    /**
-     *
-     */
-    private static final String PASS_THROUGH_ATTRIBUTES_FIELD_NAME = "PASS_THROUGH_ATTRIBUTES";
-
     private final Logger log;
 
     private final Injector injector;
@@ -147,8 +150,6 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     private JavaClass generatedClass;
     private Set<HelperMethod> addedHelperMethods = EnumSet.noneOf(HelperMethod.class);
-
-    private int passThroughCounter;
 
     public RendererClassVisitor(CompositeInterface compositeInterface, Collection<PropertyBase> attributes, Logger log,
         Injector injector, TypesFactory typesFactory, HelperMethodFactory helperFactory) {
@@ -170,6 +171,18 @@ public class RendererClassVisitor implements TemplateVisitor {
         this.generatedClass.addImport(ResponseWriter.class);
         this.generatedClass.addImport(UIComponent.class);
 
+        for (ClassImport classImport: compositeInterface.getClassImports()) {
+            List<String> importedNames = classImport.getNames();
+            if (importedNames == null || importedNames.isEmpty()) {
+                importedNames = Lists.newArrayList("*");
+            }
+                
+            for (String importedName : importedNames) {
+                this.generatedClass.addImport(Strings.DOT_JOINER.join(classImport.getPackage(), importedName), 
+                    classImport.isStatic());
+            }
+        }
+        
         // TODO - make this JavaDoc - Generated annotation is present since JDK6
         // this.generatedClass.addAnnotation(Generated.class, "\"RichFaces CDK\"");
         // TODO remove this after improving Java model
@@ -603,7 +616,6 @@ public class RendererClassVisitor implements TemplateVisitor {
      */
     public void preProcess(CompositeImplementation impl) {
         initializeJavaClass();
-        passThroughCounter = -1;
     }
 
     /**
@@ -614,4 +626,51 @@ public class RendererClassVisitor implements TemplateVisitor {
         createRendersChildrenMethod();
     }
 
+    @Override
+    public void startElement(CdkScriptObjectElement cdkScriptObjectElement) {
+        ScriptObjectStatement scriptObjectStatement = pushStatement(ScriptObjectStatement.class);
+        scriptObjectStatement.setObject(cdkScriptObjectElement.getName(), cdkScriptObjectElement.getBase());
+    }
+
+    @Override
+    public void endElement(CdkScriptObjectElement cdkScriptObjectElement) {
+        popStatement();
+    }
+    
+    private void addScriptHashAttributesPassthroughStatement(List<String> attributeNames, String wrapper) {
+        if (attributeNames == null || attributeNames.isEmpty()) {
+            return;
+        }
+        
+        AddAttributesToScriptHashStatement statement = addStatement(AddAttributesToScriptHashStatement.class);
+        statement.setWrapper(wrapper);
+        statement.setAttributes(attributeNames, attributes);
+    }
+    
+    private void addScriptOptionStatement(String name, String value, String defaultValue, String wrapper) {
+        ScriptOptionStatement scriptOptionStatement = addStatement(ScriptOptionStatement.class);
+        scriptOptionStatement.setName(name);
+        scriptOptionStatement.setValueExpression(value);
+        scriptOptionStatement.setDefaultValue(defaultValue);
+        scriptOptionStatement.setWrapper(wrapper);
+    }
+    
+    @Override
+    public void visitElement(CdkScriptOptionElement cdkScriptOptionElement) {
+        addScriptHashAttributesPassthroughStatement(cdkScriptOptionElement.getAttributes(), cdkScriptOptionElement.getWrapper());
+        
+        for (String variableName : cdkScriptOptionElement.getVariables()) {
+            addScriptOptionStatement(variableName, 
+                MessageFormat.format("#'{'{0}'}'", variableName), 
+                cdkScriptOptionElement.getDefaultValue(), 
+                cdkScriptOptionElement.getWrapper());
+        }
+        
+        if (!Strings.isEmpty(cdkScriptOptionElement.getName())) {
+            addScriptOptionStatement(cdkScriptOptionElement.getName(), 
+                cdkScriptOptionElement.getValue(), 
+                cdkScriptOptionElement.getDefaultValue(), 
+                cdkScriptOptionElement.getWrapper());
+        }
+    }
 }

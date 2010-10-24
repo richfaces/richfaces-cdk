@@ -26,8 +26,8 @@ package org.richfaces.cdk.templatecompiler.statements;
 import java.util.TreeSet;
 
 import org.richfaces.cdk.templatecompiler.builder.model.JavaImport;
+import org.richfaces.cdk.templatecompiler.builder.model.JavaImportImpl;
 import org.richfaces.cdk.templatecompiler.builder.model.JavaMethod;
-import org.richfaces.cdk.templatecompiler.builder.model.RuntimeImport;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
@@ -45,9 +45,10 @@ public class RendererUtilsMethod extends JavaMethod {
 
     public RendererUtilsMethod(HelperMethod helper,String rendererUtilsClassName) {
         super(helper.getName());
-        this.runtimeImport.add(new RuntimeImport("static " +rendererUtilsClassName+".*"));
-        this.runtimeImport.add(new RuntimeImport(rendererUtilsClassName));
-        this.runtimeImport.add(new RuntimeImport(rendererUtilsClassName+".Attributes"));
+        this.runtimeImport.add(new JavaImportImpl(rendererUtilsClassName + ".*", true));
+        this.runtimeImport.add(new JavaImportImpl(rendererUtilsClassName));
+        this.runtimeImport.add(new JavaImportImpl(rendererUtilsClassName+".Attributes"));
+        this.runtimeImport.add(new JavaImportImpl(rendererUtilsClassName+".ScriptHashVariableWrapper"));
     }
     
     @Override

@@ -23,14 +23,22 @@
 
 package org.richfaces.cdk.templatecompiler.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Test;
 import org.richfaces.cdk.model.ClassName;
 import org.richfaces.cdk.model.FacesId;
 import org.richfaces.cdk.xmlconfig.JaxbTestBase;
+
+import com.google.common.collect.Iterables;
 
 /**
  * <p class="changed_added_4_0">
@@ -230,7 +238,11 @@ public class TemplateParserTest extends JaxbTestBase {
                 + "<cdk:component-family>org.richfaces.TreeFamily</cdk:component-family>"
                 + "<cdk:renderer-type>org.richfaces.TreeRenderer</cdk:renderer-type>"
                 + "<cdk:renderkit-id>RF4_XHTML</cdk:renderkit-id>"
-                + "<cdk:renders-children>false</cdk:renders-children>" + TEMPLATE_MIDDLE + TEMPLATE_EPILOG);
+                + "<cdk:renders-children>false</cdk:renders-children>" 
+                + "<cdk:import package=\"com.foo\" names=\"Bar Fooz\" />"
+                + "<cdk:import package=\"net.foo\" names=\"Field\" static=\"true\" />"
+                + "<cdk:import package=\"org.foo\" names=\"*\" />"
+                + TEMPLATE_MIDDLE + TEMPLATE_EPILOG);
 
         CompositeInterface interfaceSection = template.getInterface();
         assertNotNull(interfaceSection);
@@ -242,6 +254,28 @@ public class TemplateParserTest extends JaxbTestBase {
         assertEquals("RF4_XHTML", interfaceSection.getRenderKitId());
         assertEquals(Boolean.FALSE, interfaceSection.getRendersChildren());
 
+        List<ClassImport> classImports = interfaceSection.getClassImports();
+        
+        ClassImport importElement;
+        
+        Iterator<ClassImport> children = classImports.iterator();
+        
+        importElement = children.next();
+        assertEquals("com.foo", importElement.getPackage());
+        assertEquals(Arrays.asList("Bar", "Fooz"), importElement.getNames());
+        assertFalse(importElement.isStatic());
+
+        importElement = children.next();
+        assertEquals("net.foo", importElement.getPackage());
+        assertEquals(Arrays.asList("Field"), importElement.getNames());
+        assertTrue(importElement.isStatic());
+        
+        importElement = children.next();
+        assertEquals("org.foo", importElement.getPackage());
+        assertEquals(Arrays.asList("*"), importElement.getNames());
+        assertFalse(importElement.isStatic());
+        
+        assertFalse(children.hasNext());
     }
 
     @Test
@@ -396,5 +430,52 @@ public class TemplateParserTest extends JaxbTestBase {
         Template template = unmarshal(Template.class, TEMPLATE_PROLOG + TEMPLATE_MIDDLE + TEMPLATE_EPILOG);
         assertNotNull(template.getInterface());
         assertNotNull(template.getImplementation());
+    }
+    
+    @Test
+    public void testScriptObject() throws Exception {
+        Template template =
+            unmarshal(Template.class, TEMPLATE_PROLOG + TEMPLATE_MIDDLE
+                + "<cdk:scriptObject name=\"hash\" base=\"#{getBaseOptions(context)}\">"
+                +   "<cdk:scriptOption name=\"name\" value=\"#{value}\" />"
+                +   "<cdk:scriptOption name=\"delay\" value=\"#{delay}\" defaultValue=\"100\" />"
+                +   "<cdk:scriptOption name=\"rowClasses\" value=\"#{rowClasses}\" wrapper=\"asArray\" />"
+                +   "<cdk:scriptOption attributes=\"min max\" />"
+                +   "<cdk:scriptOption variables=\"allowHeader allowFooter\" />"
+                + "</cdk:scriptObject>" +
+
+                TEMPLATE_EPILOG);
+
+        CompositeImplementation implementation = template.getImplementation();
+        assertNotNull(implementation);
+
+        CdkScriptObjectElement scriptObject = (CdkScriptObjectElement) Iterables.getOnlyElement(implementation.getChildren());
+        assertEquals("hash", scriptObject.getName());
+        assertEquals("#{getBaseOptions(context)}", scriptObject.getBase());
+        
+        CdkScriptOptionElement scriptOption;
+        Iterator<Object> children = scriptObject.getChildren().iterator();
+        
+        scriptOption = (CdkScriptOptionElement) children.next();
+        assertEquals("name", scriptOption.getName());
+        assertEquals("#{value}", scriptOption.getValue());
+        
+        scriptOption = (CdkScriptOptionElement) children.next();
+        assertEquals("delay", scriptOption.getName());
+        assertEquals("#{delay}", scriptOption.getValue());
+        assertEquals("100", scriptOption.getDefaultValue());
+        
+        scriptOption = (CdkScriptOptionElement) children.next();
+        assertEquals("rowClasses", scriptOption.getName());
+        assertEquals("#{rowClasses}", scriptOption.getValue());
+        assertEquals("asArray", scriptOption.getWrapper());
+
+        scriptOption = (CdkScriptOptionElement) children.next();
+        assertEquals(Arrays.asList("min", "max"), scriptOption.getAttributes());
+        
+        scriptOption = (CdkScriptOptionElement) children.next();
+        assertEquals(Arrays.asList("allowHeader", "allowFooter"), scriptOption.getVariables());
+
+        assertFalse(children.hasNext());
     }
 }

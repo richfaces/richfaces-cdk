@@ -79,7 +79,8 @@ public final class TypesFactoryImpl implements TypesFactory {
     static final ImmutableMap<Class<?>, Class<?>> PRIMITIVE_TO_WRAPPER_CLASSES_MAP = ImmutableMap
         .<Class<?>, Class<?>> builder().put(Boolean.TYPE, Boolean.class).put(Float.TYPE, Float.class)
         .put(Long.TYPE, Long.class).put(Integer.TYPE, Integer.class).put(Short.TYPE, Short.class)
-        .put(Byte.TYPE, Byte.class).put(Double.TYPE, Double.class).put(Character.TYPE, Character.class).build();
+        .put(Byte.TYPE, Byte.class).put(Double.TYPE, Double.class).put(Character.TYPE, Character.class)
+        .put(Void.TYPE, Void.class).build();
 
     static final ImmutableMap<String, Class<?>> PRIMITIVE_CLASSES_MAP;
 
