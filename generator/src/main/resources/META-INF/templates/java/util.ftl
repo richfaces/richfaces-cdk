@@ -7,6 +7,6 @@
 	<@require "CREATE_ATTRIBUTES"/>
 	<@constant "Attributes" "${fieldName}">${CREATE_ATTRIBUTES}()<#list attributes as attribute>
 	     .${attribute.builderMethod}("${attribute.name}","${attribute.componentAttribute}"<#list attribute.behaviors as behavior>,"${behavior}"</#list>)
-	     <#if attribute.defaultValue?exists >.defaultValue("${attribute.defaultValue}")</#if>
+	     <#if attribute.defaultValue?exists >.defaultValue(${attribute.defaultValue})</#if>
 	</#list></@constant>
 </#macro>
