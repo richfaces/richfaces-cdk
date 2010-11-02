@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-  <parent>
-    <artifactId>parent</artifactId>
-    <groupId>org.richfaces.cdk</groupId>
-    <version>4.0.0-SNAPSHOT</version>
-    <relativePath>../parent/pom.xml</relativePath>
-  </parent>
+	<parent>
+		<artifactId>parent</artifactId>
+		<groupId>org.richfaces.cdk</groupId>
+		<version>4.0.0-SNAPSHOT</version>
+		<relativePath>../parent/pom.xml</relativePath>
+	</parent>
 	<groupId>org.richfaces.cdk</groupId>
 	<artifactId>commons</artifactId>
 	<version>4.0.0-SNAPSHOT</version>
@@ -32,19 +33,19 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.google.inject</groupId>
-			<artifactId>guice</artifactId>
+			<groupId>org.sonatype.sisu</groupId>
+			<artifactId>sisu-guice</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.easymock</groupId>
 			<artifactId>easymock</artifactId>
 		</dependency>
 		<dependency>
-            <groupId>com.google.code.javaparser</groupId>
-            <artifactId>javaparser</artifactId>
-            <version>1.0.1</version>
-            <scope>test</scope>
-        </dependency>
-		
+			<groupId>com.google.code.javaparser</groupId>
+			<artifactId>javaparser</artifactId>
+			<version>1.0.1</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 </project>

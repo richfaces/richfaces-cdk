@@ -14,9 +14,9 @@ import org.richfaces.cdk.MockController;
 import org.richfaces.cdk.templatecompiler.builder.model.JavaImport;
 import org.richfaces.cdk.templatecompiler.el.types.TypesFactory;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
-import com.google.inject.internal.ImmutableSet;
 import com.google.inject.name.Named;
 
 @RunWith(CdkTestRunner.class)

@@ -27,6 +27,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.richfaces.cdk.generate.freemarker.FreeMarkerRenderer;
 import org.richfaces.cdk.templatecompiler.TemplateModel;
 
+import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
 /**
