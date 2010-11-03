@@ -78,7 +78,7 @@ public class RendererClassGenerator implements CdkWriter {
     }
 
     private ComponentModel findComponentByRenderer(RendererModel renderer, ComponentLibrary library) {
-        return library.getComponentByFamily(renderer.getFamily());
+        return library.getComponentByRenderer(renderer.getFamily(), renderer.getId());
     }
 
     /*
