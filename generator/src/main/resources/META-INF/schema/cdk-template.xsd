@@ -583,28 +583,116 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     </xs:element>
 
     <xs:element name="import">
+        <xs:annotation>
+            <xs:documentation>
+                <p>Part of &lt;composite:interface&gt; section to specify additional Java imports.</p>
+                <p>Examples:
+                    <ul>
+                        <li><code><![CDATA[<cdk:import package="javax.faces.component" names="UIInput UIOutput" />]]></code></li>
+                        <li><code><![CDATA[<cdk:import package="java.util" names="*" />]]></code></li>
+                        <li><code><![CDATA[<cdk:import package="java.lang" names="String.valueOf" static="true" />]]></code></li>
+                    </ul>
+                </p>
+            </xs:documentation>
+        </xs:annotation>
+    
         <xs:complexType>
-            <xs:attribute type="xs:string" use="required" name="package" />
-            <xs:attribute type="xs:NMTOKENS" name="names" />
-            <xs:attribute type="xs:boolean" name="static" />
+            <xs:attribute type="xs:string" use="required" name="package">
+                <xs:annotation>
+                    <xs:documentation><p>Base name of the package to be imported.</p></xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute type="xs:NMTOKENS" name="names">
+                <xs:annotation>
+                    <xs:documentation><p>Space-separated list of names to be imported.</p></xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute type="xs:boolean" name="static">
+                <xs:annotation>
+                    <xs:documentation><p>Defines whether the import is static.</p></xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
         </xs:complexType>
     </xs:element>
     
     <xs:element name="scriptObject">
+        <xs:annotation>
+            <xs:documentation>
+                <p>Handy tag for JavaScript hash objects creation. NB: default and empty values are not added to the result hash.</p>
+                <p>Example usage:
+                    <code><pre><![CDATA[<cdk:scriptObject name="myHash">
+                        <cdk:scriptOption name="showSomething" value="#{isShowSomething(component)}"  />
+                        ...
+                    </cdk:scriptObject>
+                    
+                    <script ...>
+                    new Component(#{toScriptArgs(clientId, myHash)});]]></pre></code>
+                </p>
+            </xs:documentation>
+        </xs:annotation>
         <xs:complexType>
-            <xs:attribute type="xs:string" name="name" use="required" />
-            <xs:attribute type="c:elStrictExpression" name="base" />
+            <xs:attribute type="xs:string" name="name" use="required">
+                <xs:annotation>
+                    <xs:documentation><p>Name of Java variable under which <code>Map&lt;String, String&gt;</code>
+                    representing the hash is available.</p></xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute type="c:elStrictExpression" name="base">
+                <xs:annotation>
+                    <xs:documentation><p>Optional base hash (<code>Map&lt;String, String&gt;</code>) to be extended from.</p></xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
         </xs:complexType>
     </xs:element>
     
     <xs:element name="scriptOption">
+        <xs:annotation>
+            <xs:documentation>
+                <p>Represents single object in the JavaScript hash. Should be enclosed into <code>&lt;cdk:scriptObject&gt;</code> tag.</p>
+            </xs:documentation>
+        </xs:annotation>
         <xs:complexType>
-            <xs:attribute type="xs:NMTOKENS" name="attributes" />
-            <xs:attribute type="xs:NMTOKENS" name="variables" />
-            <xs:attribute type="xs:string" name="name" />
-            <xs:attribute type="c:elFreeformExpression" name="value" />
-            <xs:attribute type="c:literalExpression" name="defaultValue" />
+            <xs:attribute type="xs:NMTOKENS" name="attributes">
+                <xs:annotation>
+                    <xs:documentation><p>Space-separated list of attributes to be added to the hash.</p></xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute type="xs:NMTOKENS" name="variables">
+                <xs:annotation>
+                    <xs:documentation><p>Space-separated list of Java variables to be added to the hash.</p></xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute type="xs:string" name="name">
+                <xs:annotation>
+                    <xs:documentation><p>Key of the current option in hash.</p></xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute type="c:elFreeformExpression" name="value">
+                <xs:annotation>
+                    <xs:documentation><p>Value of the current option in hash.</p></xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute type="c:literalExpression" name="defaultValue">
+                <xs:annotation>
+                    <xs:documentation><p><b>Literal</b> (i.e. non-EL) expression representing default option value. 
+                    Should be valid Java expression.</p></xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
             <xs:attribute name="wrapper">
+                <xs:annotation>
+                    <xs:documentation>
+                    <p>Optional wrapper around value.</p>
+                    <p>Currently supported are:
+                        <ul>
+                            <li><code>noop</code>: <i>(default)</i> <code>value -> value</code></li>
+                            <li><code>asArray</code>: <code>'rowClassA rowClassA1, rowClassB rowClassB1' -> ['rowClassA rowClassA1', 'rowClassB rowClassB1']</code></li>
+                            <li><code>eventHandler</code>: <code>value -> <pre><![CDATA[function (event) {
+                                value
+                            }]]></pre></code></li>
+                        </ul>
+                    </p>
+                    </xs:documentation>
+                </xs:annotation>
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="noop" />
