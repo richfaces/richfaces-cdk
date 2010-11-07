@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<parent>
 		<groupId>org.richfaces</groupId>
 		<artifactId>richfaces-root-parent</artifactId>
-		<version>4.0.0-SNAPSHOT</version>
+		<version>4.0.0.20101107-M4</version>
 		<relativePath>../../build/parent/pom.xml</relativePath>
 	</parent>
 
@@ -14,7 +13,7 @@
 
 	<groupId>org.richfaces.cdk</groupId>
 	<artifactId>parent</artifactId>
-	<version>4.0.0-SNAPSHOT</version>
+	<version>4.0.0.20101107-M4</version>
 	<packaging>pom</packaging>
 	<name>JSF Components Development Kit (CDK)</name>
 
@@ -23,9 +22,9 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 	<scm>
-		<connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/trunk/cdk/parent</connection>
-		<developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/trunk/cdk/parent</developerConnection>
-		<url>http://fisheye.jboss.org/browse/Richfaces/cdk/parent</url>
+		<connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/tags/4.0.0.20101107-M4/cdk/parent</connection>
+		<developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/tags/4.0.0.20101107-M4/cdk/parent</developerConnection>
+		<url>http://fisheye.jboss.org/browse/Richfaces/cdk/parent/tags/4.0.0.20101107-M4/cdk/parent</url>
 	</scm>
 
 	<build>

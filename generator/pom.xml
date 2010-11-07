@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
 		<artifactId>parent</artifactId>
 		<groupId>org.richfaces.cdk</groupId>
-		<version>4.0.0-SNAPSHOT</version>
+		<version>4.0.0.20101107-M4</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.richfaces.cdk</groupId>
 	<artifactId>generator</artifactId>
-	<version>4.0.0-SNAPSHOT</version>
+	<version>4.0.0.20101107-M4</version>
 	<name>Java Server Faces component generator</name>
 
 
