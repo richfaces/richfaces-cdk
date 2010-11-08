@@ -22,6 +22,7 @@
 package org.richfaces.cdk.resource.scan.impl;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.Collection;
@@ -35,6 +36,7 @@ import org.richfaces.cdk.resource.scan.impl.reflections.ReflectionsExt;
 import org.richfaces.cdk.vfs.VFSRoot;
 import org.richfaces.cdk.vfs.VFSType;
 import org.richfaces.resource.DynamicResource;
+import org.richfaces.resource.DynamicUserResource;
 import org.richfaces.resource.ResourceFactory;
 import org.richfaces.resource.ResourceKey;
 
@@ -102,17 +104,22 @@ public class DynamicResourcesScanner implements ResourcesScanner {
         ReflectionsExt refl = new ReflectionsExt(configurationBuilder);
         Collection<Class<?>> allClasses = Sets.newHashSet();
         
-        // TODO - reflections library doesn't handle @Inherited correctly
-        for (Class<?> annotatedClass : refl.getTypesAnnotatedWith(DynamicResource.class)) {
-            allClasses.add(annotatedClass);
-            allClasses.addAll(refl.getSubTypesOf(annotatedClass));
-        }
+        addAnnotatedClasses(DynamicResource.class, refl, allClasses);
+        addAnnotatedClasses(DynamicUserResource.class, refl, allClasses);
         allClasses.addAll(refl.getMarkedClasses());
 
         allClasses = Collections2.filter(allClasses, UNINSTANTIATABLE_CLASSES_PREDICATE);
         
         resources.addAll(Collections2.transform(allClasses, RESOURCE_LOCATOR_FUNCTION));
         resources.addAll(resourceFactory.getMappedDynamicResourceKeys());
+    }
+
+    private void addAnnotatedClasses(Class<? extends Annotation> annotationClass, ReflectionsExt refl, Collection<Class<?>> allClasses) {
+        // TODO - reflections library doesn't handle @Inherited correctly
+        for (Class<?> annotatedClass : refl.getTypesAnnotatedWith(annotationClass)) {
+            allClasses.add(annotatedClass);
+            allClasses.addAll(refl.getSubTypesOf(annotatedClass));
+        }
     }
 
     public Collection<ResourceKey> getResources() {
