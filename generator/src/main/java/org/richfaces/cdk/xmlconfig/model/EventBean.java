@@ -48,6 +48,7 @@ public class EventBean {
     private ClassName sourceInterface;
     private ClassName type;
     private List<TagModel> tags = Lists.newArrayList();
+    private String listenerMethod;
 
     /**
      * <p class="changed_added_4_0"></p>
@@ -164,5 +165,20 @@ public class EventBean {
      */
     public void setTags(List<TagModel> tags) {
         this.tags = tags;
+    }
+    
+    /**
+     * @return the listenerMethod
+     */
+    @XmlElement(name = "listener-method", namespace = ComponentLibrary.CDK_EXTENSIONS_NAMESPACE)
+    public String getListenerMethod() {
+        return listenerMethod;
+    }
+    
+    /**
+     * @param listenerMethod the listenerMethod to set
+     */
+    public void setListenerMethod(String listenerMethod) {
+        this.listenerMethod = listenerMethod;
     }
 }

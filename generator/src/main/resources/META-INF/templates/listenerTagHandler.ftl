@@ -98,7 +98,7 @@ public class ${tag.targetClass.simpleName} extends TagHandler {
 
     private TagAttribute listenerMethod;
 
-    public TestListenerHandler(TagConfig config) {
+    public ${tag.targetClass.simpleName}(TagConfig config) {
         super(config);
 
         this.binding = this.getAttribute("binding");
