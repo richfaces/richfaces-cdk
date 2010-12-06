@@ -19,40 +19,43 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.cdk.naming;
+package org.richfaces.cdk;
 
-import java.util.regex.Matcher;
-
-import org.richfaces.cdk.FileNameMapper;
-import org.richfaces.cdk.FileNameMapping;
+import java.util.regex.Pattern;
 
 /**
  * @author Nick Belaevski
  * 
  */
-public class FileNameMapperImpl implements FileNameMapper {
+public class FileNameMapping {
 
-    private FileNameMapping[] fileNameMappings;
+    private String name;
 
-    public FileNameMapperImpl(FileNameMapping[] fileNameMappings) {
-        super();
-        this.fileNameMappings = fileNameMappings;
+    private String value;
+
+    private Pattern namePattern = null;
+    
+    public String getName() {
+        return name;
     }
 
-    @Override
-    public String createName(String resourcePath) {
-        if (resourcePath == null) {
-            return resourcePath;
-        }
-
-        for (FileNameMapping mapping : fileNameMappings) {
-            Matcher matcher = mapping.getNamePattern().matcher(resourcePath);
-            if (matcher.find()) {
-                return matcher.replaceAll(mapping.getValue());
-            }
-        }
-
-        return resourcePath;
+    public void setName(String name) {
+        this.name = name;
     }
 
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public Pattern getNamePattern() {
+        if (namePattern == null) {
+            namePattern = Pattern.compile(name);
+        }
+        
+        return namePattern;
+    }
 }

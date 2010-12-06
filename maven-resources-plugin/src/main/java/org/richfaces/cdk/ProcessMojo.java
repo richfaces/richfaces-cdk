@@ -36,7 +36,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Properties;
 import java.util.concurrent.CompletionService;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -79,7 +78,6 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Constraints;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 /**
  * @goal process
@@ -151,7 +149,7 @@ public class ProcessMojo extends AbstractMojo {
      * @parameter
      */
     // TODO review usage of properties?
-    private Properties fileNameMappings = new Properties();
+    private FileNameMapping[] fileNameMappings = new FileNameMapping[0];
 
     /**
      * @parameter
@@ -286,7 +284,7 @@ public class ProcessMojo extends AbstractMojo {
             ResourceHandler resourceHandler = new DynamicResourceHandler(staticResourceHandler, resourceFactory);
 
             // TODO set webroot
-            faces = new FacesImpl(null, new FileNameMapperImpl(Maps.fromProperties(fileNameMappings)), resourceHandler);
+            faces = new FacesImpl(null, new FileNameMapperImpl(fileNameMappings), resourceHandler);
             faces.start();
 
             ResourceWriterImpl resourceWriter = new ResourceWriterImpl(resourceOutputDir, resourceMappingDir, resourceProcessors);
