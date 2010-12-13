@@ -52,7 +52,7 @@ public class StaticResourcesScanner implements ResourcesScanner {
         Collection<VirtualFile> children = file.getChildren();
         for (VirtualFile child : children) {
             if (child.isFile()) {
-                resources.add(new ResourceKey(child.getName()));
+                resources.add(ResourceKey.create(child.getName()));
             } else {
                 String libraryName = child.getName();
                 VirtualFile libraryDir = ResourceUtil.getLatestVersion(child, true);

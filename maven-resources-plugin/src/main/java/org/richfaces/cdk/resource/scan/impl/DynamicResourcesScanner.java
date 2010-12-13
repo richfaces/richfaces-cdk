@@ -54,7 +54,7 @@ public class DynamicResourcesScanner implements ResourcesScanner {
 
         @Override
         public ResourceKey apply(Class<?> from) {
-            ResourceKey key = new ResourceKey(from.getName());
+            ResourceKey key = ResourceKey.create(from.getName());
             
             return key;
         }
