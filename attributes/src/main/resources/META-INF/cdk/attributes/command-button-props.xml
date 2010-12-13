@@ -31,7 +31,7 @@
 		<property-class>java.lang.String</property-class>
 		<property-extension>
 			<cdk:pass-through>false</cdk:pass-through>
-			<cdk:event-name />
+			<cdk:event-name>click</cdk:event-name>
 			<cdk:event-name>action</cdk:event-name>
 			<default-behavior>true</default-behavior>
 		</property-extension>
@@ -48,22 +48,7 @@
 		<property-class>java.lang.String</property-class>
 		<property-extension>
 			<cdk:pass-through>true</cdk:pass-through>
-			<cdk:event-name />
-		</property-extension>
-	</property>
-
-	<property>
-		<description>
-			Javascript code executed when this element loses focus
-			and its value has been modified since gaining focus.
-        </description>
-		<display-name>Input Change Script</display-name>
-		<icon />
-		<property-name>onchange</property-name>
-		<property-class>java.lang.String</property-class>
-		<property-extension>
-			<cdk:pass-through>true</cdk:pass-through>
-			<cdk:event-name />
+			<cdk:event-name>dblclick</cdk:event-name>
 		</property-extension>
 	</property>
 
@@ -78,7 +63,7 @@
 		<property-class>java.lang.String</property-class>
 		<property-extension>
 			<cdk:pass-through>true</cdk:pass-through>
-			<cdk:event-name />
+			<cdk:event-name>mousedown</cdk:event-name>
 		</property-extension>
 	</property>
 
@@ -93,7 +78,7 @@
 		<property-class>java.lang.String</property-class>
 		<property-extension>
 			<cdk:pass-through>true</cdk:pass-through>
-			<cdk:event-name />
+			<cdk:event-name>mouseup</cdk:event-name>
 		</property-extension>
 	</property>
 
@@ -108,7 +93,7 @@
 		<property-class>java.lang.String</property-class>
 		<property-extension>
 			<cdk:pass-through>true</cdk:pass-through>
-			<cdk:event-name />
+			<cdk:event-name>mouseover</cdk:event-name>
 		</property-extension>
 	</property>
 
@@ -123,7 +108,7 @@
 		<property-class>java.lang.String</property-class>
 		<property-extension>
 			<cdk:pass-through>true</cdk:pass-through>
-			<cdk:event-name />
+			<cdk:event-name>mousemove</cdk:event-name>
 		</property-extension>
 	</property>
 
@@ -138,7 +123,7 @@
 		<property-class>java.lang.String</property-class>
 		<property-extension>
 			<cdk:pass-through>true</cdk:pass-through>
-			<cdk:event-name />
+			<cdk:event-name>mouseout</cdk:event-name>
 		</property-extension>
 	</property>
 
@@ -153,7 +138,7 @@
 		<property-class>java.lang.String</property-class>
 		<property-extension>
 			<cdk:pass-through>true</cdk:pass-through>
-			<cdk:event-name />
+			<cdk:event-name>keypress</cdk:event-name>
 		</property-extension>
 	</property>
 
@@ -168,7 +153,7 @@
 		<property-class>java.lang.String</property-class>
 		<property-extension>
 			<cdk:pass-through>true</cdk:pass-through>
-			<cdk:event-name />
+			<cdk:event-name>keydown</cdk:event-name>
 		</property-extension>
 	</property>
 
@@ -183,7 +168,7 @@
 		<property-class>java.lang.String</property-class>
 		<property-extension>
 			<cdk:pass-through>true</cdk:pass-through>
-			<cdk:event-name />
+			<cdk:event-name>keyup</cdk:event-name>
 		</property-extension>
 	</property>
 
