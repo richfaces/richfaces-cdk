@@ -28,7 +28,8 @@ import java.io.OutputStream;
 import org.richfaces.cdk.resource.writer.ResourceProcessor;
 
 import com.google.common.io.ByteStreams;
-import com.google.common.io.Closeables;
+import com.google.common.io.InputSupplier;
+import com.google.common.io.OutputSupplier;
 
 /**
  * @author Nick Belaevski
@@ -46,13 +47,10 @@ final class ThroughputResourceProcessor implements ResourceProcessor {
     }
 
     @Override
-    public void process(String resourceName, InputStream in, OutputStream out) throws IOException {
-        try {
-            ByteStreams.copy(in, out);
-        } finally {
-            Closeables.close(in, true);
-            Closeables.close(out, true);
-        }
-    }
+    public void process(String resourceName, InputSupplier<? extends InputStream> in,
+        OutputSupplier<? extends OutputStream> out) throws IOException {
 
+        ByteStreams.copy(in, out);
+    }
+    
 }

@@ -26,25 +26,47 @@ import static org.richfaces.cdk.strings.Constants.COLON_JOINER;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Properties;
 
 import javax.faces.application.Resource;
 
+import org.apache.maven.plugin.logging.Log;
 import org.richfaces.cdk.ResourceWriter;
 import org.richfaces.cdk.resource.writer.ResourceProcessor;
 import org.richfaces.cdk.strings.Constants;
 import org.richfaces.resource.ResourceFactory;
 
+import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
+import com.google.common.io.Files;
+import com.google.common.io.InputSupplier;
 
 /**
  * @author Nick Belaevski
  * 
  */
 public class ResourceWriterImpl implements ResourceWriter {
+
+    private static final class ResourceInputStreamSupplier implements InputSupplier<InputStream> {
+
+        private Resource resource;
+
+        public ResourceInputStreamSupplier(Resource resource) {
+            super();
+            this.resource = resource;
+        }
+
+        @Override
+        public InputStream getInput() throws IOException {
+            return resource.getInputStream();
+        }
+
+    }
 
     private File resourceContentsDir;
     
@@ -53,43 +75,65 @@ public class ResourceWriterImpl implements ResourceWriter {
     private Map<String, String> processedResources = Maps.newConcurrentMap();
     
     private Iterable<ResourceProcessor> resourceProcessors;
+
+    private Log log;
     
-    public ResourceWriterImpl(File resourceContentsDir, File resourceMappingDir, Iterable<ResourceProcessor> resourceProcessors) {
+    private long currentTime;
+    
+    public ResourceWriterImpl(File resourceContentsDir, File resourceMappingDir, Iterable<ResourceProcessor> resourceProcessors, Log log) {
         this.resourceContentsDir = resourceContentsDir;
         this.resourceMappingDir = resourceMappingDir;
         this.resourceProcessors = Iterables.concat(resourceProcessors, Collections.singleton(ThroughputResourceProcessor.INSTANCE));
+        this.log = log;
+        
         resourceContentsDir.mkdirs();
+        
+        currentTime = System.currentTimeMillis();
     }
 
     private String getResourceQualifier(Resource resource) {
         return COLON_JOINER.join(resource.getLibraryName(), resource.getResourceName());
     }
     
-    private File createOutputFile(String path) throws IOException {
+    private synchronized File createOutputFile(String path) throws IOException {
         File outFile = new File(resourceContentsDir, path);
         outFile.getParentFile().mkdirs();
-        outFile.createNewFile();
+        
+        if (outFile.exists()) {
+            if (outFile.lastModified() > currentTime) {
+                log.warn(MessageFormat.format("File {0} already exists and will be overwritten", outFile.getPath()));
+            }
+            outFile.delete();
+        }
+
+        if (!outFile.createNewFile()) {
+            log.warn(MessageFormat.format("Could not create {0} file", outFile.getPath()));
+        }
+        
 
         return outFile;
     }
     
     public void writeResource(String skinName, Resource resource) throws IOException {
-        String requestPath = resource.getRequestPath();
+        final String requestPath = resource.getRequestPath();
         String requestPathWithSkin = requestPath;
         
         if (requestPath.startsWith(ResourceFactory.SKINNED_RESOURCE_PREFIX)) {
             requestPathWithSkin = Constants.SLASH_JOINER.join(skinName, 
                 requestPath.substring(ResourceFactory.SKINNED_RESOURCE_PREFIX.length()));
         }
-        
-        for (ResourceProcessor resourceProcessor : resourceProcessors) {
-            if (resourceProcessor.isSupportedFile(requestPath)) {
-                File outFile = createOutputFile(requestPathWithSkin); 
-                resourceProcessor.process(requestPathWithSkin, resource.getInputStream(), new FileOutputStream(outFile));
-                processedResources.put(getResourceQualifier(resource), requestPath);
-                return;
+
+        ResourceProcessor matchingProcessor = Iterables.get(Iterables.filter(resourceProcessors, new Predicate<ResourceProcessor>() {
+            @Override
+            public boolean apply(ResourceProcessor input) {
+                return input.isSupportedFile(requestPath);
             }
-        }
+        }), 0);
+        
+        File outFile = createOutputFile(requestPathWithSkin); 
+        
+        matchingProcessor.process(requestPathWithSkin, new ResourceInputStreamSupplier(resource), Files.newOutputStreamSupplier(outFile));
+        processedResources.put(getResourceQualifier(resource), requestPath);
     }
 
     @Override

@@ -22,23 +22,34 @@
 package org.richfaces.cdk.resource.writer.impl;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
+import java.nio.charset.Charset;
 
 import org.apache.maven.plugin.logging.Log;
+import org.richfaces.cdk.resource.writer.ResourceProcessor;
 
+import com.google.common.io.Closeables;
+import com.google.common.io.InputSupplier;
+import com.google.common.io.OutputSupplier;
 import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
 
 /**
  * @author Nick Belaevski
  * 
  */
-public class JavaScriptResourceProcessor extends CharResourceProcessor {
+public class JavaScriptResourceProcessor implements ResourceProcessor {
 
+    private Charset charset;
+    
     private Log log;
     
-    public JavaScriptResourceProcessor(Log log) {
-        super();
+    public JavaScriptResourceProcessor(Charset charset, Log log) {
+        this.charset = charset;
         this.log = log;
     }
 
@@ -48,16 +59,29 @@ public class JavaScriptResourceProcessor extends CharResourceProcessor {
     }
 
     @Override
-    protected void doActualProcess(String resourceName, Reader in, Writer out) throws IOException {
-        MavenLogErrorReporter reporter = new MavenLogErrorReporter(resourceName);
-        new JavaScriptCompressor(in, reporter).compress(out, 0, true, true, false, false);
+    public void process(String resourceName, InputSupplier<? extends InputStream> in,
+        OutputSupplier<? extends OutputStream> out) throws IOException {
+
+        Reader reader = null;
+        Writer writer = null;
         
-        if (reporter.hasErrors() && log.isErrorEnabled()) {
-            log.error(reporter.getErrorsLog());
-        }
-        
-        if (reporter.hasWarnings() && log.isDebugEnabled()) {
-            log.debug(reporter.getWarningsLog());
+        try {
+            reader = new InputStreamReader(in.getInput(), charset);
+            writer = new OutputStreamWriter(out.getOutput(), charset);
+            
+            MavenLogErrorReporter reporter = new MavenLogErrorReporter(resourceName);
+            new JavaScriptCompressor(reader, reporter).compress(writer, 0, true, true, false, false);
+            
+            if (reporter.hasErrors() && log.isErrorEnabled()) {
+                log.error(reporter.getErrorsLog());
+            }
+            
+            if (reporter.hasWarnings() && log.isDebugEnabled()) {
+                log.debug(reporter.getWarningsLog());
+            }
+        } finally {
+            Closeables.closeQuietly(reader);
+            Closeables.closeQuietly(writer);
         }
     }
     

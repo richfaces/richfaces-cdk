@@ -35,7 +35,6 @@ import org.richfaces.cdk.resource.scan.impl.reflections.MarkerResourcesScanner;
 import org.richfaces.cdk.resource.scan.impl.reflections.ReflectionsExt;
 import org.richfaces.cdk.vfs.VFSRoot;
 import org.richfaces.cdk.vfs.VFSType;
-import org.richfaces.resource.DynamicResource;
 import org.richfaces.resource.DynamicUserResource;
 import org.richfaces.resource.ResourceFactory;
 import org.richfaces.resource.ResourceKey;
@@ -99,12 +98,11 @@ public class DynamicResourcesScanner implements ResourcesScanner {
         
         ConfigurationBuilder configurationBuilder = new ConfigurationBuilder().setUrls(urls);
         configurationBuilder.setScanners(new SubTypesScanner(), new TypeAnnotationsScanner(),
-            new MarkerResourcesScanner()).useParallelExecutor();
+            new MarkerResourcesScanner());
 
         ReflectionsExt refl = new ReflectionsExt(configurationBuilder);
         Collection<Class<?>> allClasses = Sets.newHashSet();
         
-        addAnnotatedClasses(DynamicResource.class, refl, allClasses);
         addAnnotatedClasses(DynamicUserResource.class, refl, allClasses);
         allClasses.addAll(refl.getMarkedClasses());
 

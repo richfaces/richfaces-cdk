@@ -25,6 +25,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import com.google.common.io.InputSupplier;
+import com.google.common.io.OutputSupplier;
+
 /**
  * @author Nick Belaevski
  * 
@@ -33,6 +36,6 @@ public interface ResourceProcessor {
 
     public boolean isSupportedFile(String name);
     
-    public void process(String resourceName, InputStream in, OutputStream out) throws IOException;
+    public void process(String resourceName, InputSupplier<? extends InputStream> in, OutputSupplier<? extends OutputStream> out) throws IOException;
     
 }

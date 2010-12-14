@@ -31,6 +31,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -76,6 +77,7 @@ import org.richfaces.resource.ResourceKey;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
+import com.google.common.base.Strings;
 import com.google.common.collect.Constraints;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -161,20 +163,34 @@ public class ProcessMojo extends AbstractMojo {
      */
     private String webRoot;
 
+    /**
+     * @parameter expression="${encoding}" default-value="${project.build.sourceEncoding}"
+     */
+    private String encoding;
+    
     //TODO handle resource locales
     private Locale resourceLocales;
 
     private Collection<ResourceKey> foundResources = Sets.newHashSet();
-
-    private Collection<ResourceProcessor> resourceProcessors = Arrays.<ResourceProcessor>asList(
-        new JavaScriptResourceProcessor(getLog()), 
-        new CSSResourceProcessor());
 
     // TODO executor parameters
     private static ExecutorService createExecutorService() {
         return Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     }
 
+    private Collection<ResourceProcessor> getDefaultResourceProcessors() {
+        Charset charset = Charset.defaultCharset();
+        if (!Strings.isNullOrEmpty(encoding)) {
+            charset = Charset.forName(encoding);
+        } else {
+            getLog().warn("Encoding is not set explicitly, CDK resources plugin will use default platform encoding for processing char-based resources");
+        }
+        
+        return Arrays.<ResourceProcessor>asList(
+            new JavaScriptResourceProcessor(charset, getLog()), 
+            new CSSResourceProcessor(charset));
+    }
+    
     private Predicate<Resource> createResourcesFilter() {
         Predicate<CharSequence> contentTypePredicate = MorePredicates.compose(includedContentTypes,
             excludedContentTypes, REGEX_CONTAINS_BUILDER_FUNCTION);
@@ -287,7 +303,7 @@ public class ProcessMojo extends AbstractMojo {
             faces = new FacesImpl(null, new FileNameMapperImpl(fileNameMappings), resourceHandler);
             faces.start();
 
-            ResourceWriterImpl resourceWriter = new ResourceWriterImpl(resourceOutputDir, resourceMappingDir, resourceProcessors);
+            ResourceWriterImpl resourceWriter = new ResourceWriterImpl(resourceOutputDir, resourceMappingDir, getDefaultResourceProcessors(), getLog());
             ResourceTaskFactoryImpl taskFactory = new ResourceTaskFactoryImpl(faces);
             taskFactory.setResourceWriter(resourceWriter);
 
