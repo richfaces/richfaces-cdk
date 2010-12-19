@@ -37,7 +37,6 @@ import org.richfaces.cdk.model.EventModel;
 import org.richfaces.cdk.model.FacesId;
 import org.richfaces.cdk.model.FacetModel;
 import org.richfaces.cdk.model.PropertyModel;
-import org.richfaces.cdk.model.TagModel;
 
 import com.google.common.collect.Lists;
 
@@ -144,10 +143,9 @@ public class ComponentBean extends ElementBeanBase<ComponentBean.ComponentExtens
         super.setExtension(extension);
     }
 
-    public static class ComponentExtension extends ExtensionBeanBase {
+    public static class ComponentExtension extends TagExtensionBase {
         private FacesId rendererType;
         private List<EventModel> events = Lists.newArrayList();
-        private List<TagModel> tags = Lists.newArrayList();
         private FacesId family;
 
         /**
@@ -206,25 +204,6 @@ public class ComponentBean extends ElementBeanBase<ComponentBean.ComponentExtens
          */
         public void setEvents(List<EventModel> events) {
             this.events = events;
-        }
-
-        /**
-         * <p class="changed_added_4_0"></p>
-         *
-         * @return the tags
-         */
-        @XmlElement(name = "tag", namespace = ComponentLibrary.CDK_EXTENSIONS_NAMESPACE)
-        public List<TagModel> getTags() {
-            return this.tags;
-        }
-
-        /**
-         * <p class="changed_added_4_0"></p>
-         *
-         * @param tags the tags to set
-         */
-        public void setTags(List<TagModel> tags) {
-            this.tags = tags;
         }
     }
 

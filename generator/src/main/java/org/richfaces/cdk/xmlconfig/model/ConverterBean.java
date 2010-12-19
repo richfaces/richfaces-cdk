@@ -33,6 +33,7 @@ import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.FacesId;
 import org.richfaces.cdk.model.PropertyModel;
 
+
 /**
  * @author akolonitsky
  * @since Jan 6, 2010
@@ -100,7 +101,7 @@ public class ConverterBean extends ElementBeanBase<ConverterBean.ConverterExtens
         return super.getExtension();
     }
 
-    public static class ConverterExtension extends ExtensionBeanBase {
+    public static class ConverterExtension extends TagExtensionBase {
 
     }
 }

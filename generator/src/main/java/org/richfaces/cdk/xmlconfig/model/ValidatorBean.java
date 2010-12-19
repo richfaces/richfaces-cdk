@@ -33,6 +33,7 @@ import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.FacesId;
 import org.richfaces.cdk.model.PropertyModel;
 
+
 /**
  * @author akolonitsky
  * @since Jan 13, 2010
@@ -91,7 +92,7 @@ public class ValidatorBean extends ElementBeanBase<ValidatorBean.ValidatorExtens
         super.setExtension(extension);
     }
 
-    public static class ValidatorExtension extends ExtensionBeanBase {
+    public static class ValidatorExtension extends TagExtensionBase {
 
     }
 }

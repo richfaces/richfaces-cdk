@@ -34,6 +34,7 @@ import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.FacesId;
 import org.richfaces.cdk.model.PropertyModel;
 
+
 /**
  * @author akolonitsky
  * @since Jan 21, 2010
@@ -90,6 +91,7 @@ public class BehaviorBean extends ElementBeanBase<BehaviorBean.BehaviorExtension
         super.setExtension(extension);
     }
 
-    public static class BehaviorExtension extends ExtensionBeanBase {
+    public static class BehaviorExtension extends TagExtensionBase {
+
     }
 }
