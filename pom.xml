@@ -32,9 +32,9 @@
 	</modules>
 	<!-- SCM and distribution management -->
 	<scm>
-		<connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/trunk/cdk</connection>
-		<developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/trunk/cdk</developerConnection>
-		<url>http://fisheye.jboss.org/browse/Richfaces/cdk</url>
+		<connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/branches/4.0.0.M5/cdk</connection>
+		<developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/branches/4.0.0.M5/cdk</developerConnection>
+		<url>http://fisheye.jboss.org/browse/Richfaces/cdk/branches/4.0.0.M5/cdk</url>
 	</scm>
 
 	<!-- Minimal build configuration -->
