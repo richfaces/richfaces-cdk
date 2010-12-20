@@ -6,9 +6,7 @@
 </#if>
  
     public ${attribute.typeName} ${attribute.getterName}() {
-        <#if attribute.typeForCasting?contains("Boolean")>
-        return Boolean.valueOf(getStateHelper().eval(Properties.${propertyKey}<#if attribute.defaultValue?exists>, ${attribute.defaultValue}</#if>).toString());
-        <#elseif attribute.bindingAttribute || attribute.literal >
+        <#if attribute.bindingAttribute || attribute.literal >
         return (${attribute.typeForCasting}) getStateHelper().get(Properties.${propertyKey});
         <#else>
         return (${attribute.typeForCasting}) getStateHelper().eval(Properties.${propertyKey}<#if attribute.defaultValue?exists>, ${attribute.defaultValue}</#if>);
