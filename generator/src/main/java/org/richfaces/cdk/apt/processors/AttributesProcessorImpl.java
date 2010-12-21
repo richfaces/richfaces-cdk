@@ -237,7 +237,7 @@ public class AttributesProcessorImpl implements AttributesProcessor {
             } catch (CdkException e) {
                 log.error(e);
             } catch (FileNotFoundException e) {
-                log.debug("No properties description found at " + attributes);
+                log.error("No properties description found at " + attributes);
             }
         }
     }
