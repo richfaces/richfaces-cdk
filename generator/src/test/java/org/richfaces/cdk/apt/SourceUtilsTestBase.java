@@ -33,6 +33,7 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
+import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 
 import org.junit.runner.RunWith;
@@ -42,6 +43,8 @@ import org.richfaces.cdk.Output;
 import org.richfaces.cdk.Outputs;
 import org.richfaces.cdk.Stub;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.inject.Binder;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -77,6 +80,17 @@ public abstract class SourceUtilsTestBase extends AnnotationProcessorTestBase {
         assertTrue("Compilation error",factory.get().call());
     }
     
+    protected Element findElement(RoundEnvironment roundEnvironment, final String name) {
+        Set<? extends Element> elements = roundEnvironment.getRootElements();
+        return Iterables.find(elements, new Predicate<Element>() {
+    
+            @Override
+            public boolean apply(Element input) {
+                return name.equals(input.getSimpleName().toString());
+            }
+        });
+    }
+
     /**
      * <p class="changed_added_4_0">Interface to call back test method from APT</p>
      * @author asmirnov@exadel.com

@@ -99,7 +99,7 @@ public class BehaviorRendererModel implements ModelElement<BehaviorRendererModel
      * <p class="changed_added_4_0"></p>
      * @return the generate
      */
-    public boolean isGenerate() {
+    public Boolean getGenerate() {
         return this.generate;
     }
 
@@ -107,7 +107,7 @@ public class BehaviorRendererModel implements ModelElement<BehaviorRendererModel
      * <p class="changed_added_4_0"></p>
      * @param generate the generate to set
      */
-    public void setGenerate(boolean generate) {
+    public void setGenerate(Boolean generate) {
         this.generate = generate;
     }
 

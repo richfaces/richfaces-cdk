@@ -130,7 +130,7 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
         verify(utils, componentElement, jaxb, annotation, property, facet, description);
         assertEquals(1, model.getFacets().size());
         FacetModel facetModel = Iterables.getOnlyElement(model.getFacets());
-        assertTrue(facetModel.isGenerate());
+        assertTrue(facetModel.getGenerate());
         assertEquals("foo", facetModel.getName());
         // assertEquals("my comment", facetModel.getDescription());
         // assertEquals("fooFacet", facetModel.getDisplayname());
@@ -160,7 +160,7 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
         verify(utils, componentElement, jaxb, annotation, property, facet, description);
         assertEquals(1, model.getFacets().size());
         FacetModel facetModel = Iterables.getOnlyElement(model.getFacets());
-        assertTrue(facetModel.isGenerate());
+        assertTrue(facetModel.getGenerate());
         assertEquals("foo", facetModel.getName());
         // assertEquals("my comment", facetModel.getDescription());
         // assertEquals("fooFacet", facetModel.getDisplayname());
@@ -180,7 +180,7 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
         replay(utils, componentElement, jaxb, annotation);
         processor.setClassNames(componentElement, model, "");
         verify(utils, componentElement, jaxb, annotation);
-        assertFalse(model.isGenerate());
+        assertFalse(model.getGenerate());
         assertEquals(FOO_BAR, model.getBaseClass().toString());
         assertNull(model.getTargetClass());
     }
@@ -200,7 +200,7 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
         processor.setClassNames(componentElement, model, "");
 
         verify(utils, componentElement, jaxb, annotation);
-        assertTrue(model.isGenerate());
+        assertTrue(model.getGenerate());
         assertEquals(FOO_BAR, model.getBaseClass().toString());
         assertNull(model.getTargetClass());
     }
@@ -220,7 +220,7 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
         processor.setClassNames(componentElement, model, FOO_HTML_BAR);
 
         verify(utils, componentElement, jaxb, annotation);
-        assertTrue(model.isGenerate());
+        assertTrue(model.getGenerate());
         assertEquals(FOO_BAR, model.getBaseClass().toString());
         assertEquals(FOO_HTML_BAR, model.getTargetClass().toString());
     }

@@ -33,7 +33,7 @@ public class JavaImportImpl implements JavaImport {
 
     private String name;
 
-    private boolean _static;
+    private boolean staticImport;
 
     public JavaImportImpl(String name) {
         this(name, false);
@@ -43,14 +43,14 @@ public class JavaImportImpl implements JavaImport {
         this(clazz.getName());
     }
 
-    public JavaImportImpl(String name, boolean _static) {
+    public JavaImportImpl(String name, boolean staticImport) {
         super();
         this.name = name;
-        this._static = _static;
+        this.staticImport = staticImport;
     }
 
-    public JavaImportImpl(Class<?> clazz, boolean _static) {
-        this(clazz.getName(), _static);
+    public JavaImportImpl(Class<?> clazz, boolean staticImport) {
+        this(clazz.getName(), staticImport);
     }
 
     public String getName() {
@@ -58,7 +58,7 @@ public class JavaImportImpl implements JavaImport {
     }
 
     public boolean isStatic() {
-        return _static;
+        return staticImport;
     }
 
     public boolean isDefault() {

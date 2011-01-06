@@ -2,15 +2,12 @@ package org.richfaces.cdk.apt;
 
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Set;
-import java.util.Map.Entry;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.AnnotationMirror;
@@ -28,17 +25,38 @@ import javax.lang.model.util.ElementFilter;
 import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.Logger;
 import org.richfaces.cdk.model.ClassName;
-import org.richfaces.cdk.model.InvalidNameException;
 import org.richfaces.cdk.util.PropertyUtils;
 
 import com.google.common.base.Predicate;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 
+/**
+ * <p class="changed_added_4_0">
+ * Implementation to use in annotation processor.
+ * </p>
+ * 
+ * @author asmirnov@exadel.com
+ * 
+ */
 public class AptSourceUtils implements SourceUtils {
-    private static final Set<String> PROPERTIES =
-        new HashSet<String>(Arrays.asList("getEventNames", "getDefaultEventName", "getClientBehaviors", "getFamily"));
+    private static final String IS = "is";
+
+    private static final int IS_LENGTH = IS.length();
+
+    private static final String GET = "get";
+
+    private static final String SET = "set";
+
+    private static final int SET_LENGTH = SET.length();
+
+    private static final int GET_LENGTH = GET.length();
+
+    private static final ImmutableSet<String> HIDDEN_PROPERTIES = ImmutableSet.of("eventNames", "defaultEventName",
+        "clientBehaviors", "family", "class");
 
     private final ProcessingEnvironment processingEnv;
 
@@ -66,153 +84,144 @@ public class AptSourceUtils implements SourceUtils {
      */
     public Set<BeanProperty> getBeanPropertiesAnnotatedWith(Class<? extends Annotation> annotation, TypeElement type) {
         Set<BeanProperty> properties = new HashSet<BeanProperty>();
-        List<? extends Element> members = this.processingEnv.getElementUtils().getAllMembers(type);
-
-        // Get all methods and fields annotated by annotation.
-        for (Element childElement : members) {
-            boolean annotated = null != childElement.getAnnotation(annotation);
-            if (!annotated) {
-                continue;
+        Map<String, AptBeanProperty> beanProperties = getBeanProperties(type);
+        for (BeanProperty beanProperty : beanProperties.values()) {
+            if (beanProperty.isAnnotationPresent(annotation)) {
+                properties.add(beanProperty);
             }
-
-            // Have an annotation, infer property name.
-            if (ElementKind.METHOD.equals(childElement.getKind())) {
-                processMethod(properties, childElement, annotated);
-            } else if (ElementKind.FIELD.equals(childElement.getKind())) {
-                processFiled(properties, childElement);
-            }
-
-            // TODO - merge properties with same name ?
         }
-
         return properties;
     }
 
     public Set<BeanProperty> getAbstractBeanProperties(TypeElement type) {
-        log.debug("AptSourceUtils.getAbstractBeanProperties");
-        log.debug("  - type = " + type);
-
         Set<BeanProperty> properties = new HashSet<BeanProperty>();
-        List<? extends Element> members = this.processingEnv.getElementUtils().getAllMembers(type);
-
-        Map<String, List<ExecutableElement>> props = groupMethodsBySignature(members);
-        removeNotAbstractGroups(props);
-
-        for (List<ExecutableElement> methods : props.values()) {
-            ExecutableElement method = methods.get(0);
-
-            if (ElementKind.METHOD.equals(method.getKind()) && !PROPERTIES.contains(method.getSimpleName().toString())) {
-                processMethod(properties, method, false);
+        Map<String, AptBeanProperty> beanProperties = getBeanProperties(type);
+        for (BeanProperty beanProperty : beanProperties.values()) {
+            if (!beanProperty.isExists()) {
+                properties.add(beanProperty);
             }
-
-            // TODO - merge properties with same name ?
         }
-
         return properties;
     }
 
-    private void removeNotAbstractGroups(Map<String, List<ExecutableElement>> props) {
-        List<String> removeKeys = new ArrayList<String>();
-        for (Map.Entry<String, List<ExecutableElement>> entry : props.entrySet()) {
-            List<ExecutableElement> value = entry.getValue();
-            for (ExecutableElement element : value) {
-                if (!isAbstract(element)) {
-                    removeKeys.add(entry.getKey());
-                }
-            }
-        }
+    @Override
+    public BeanProperty getBeanProperty(ClassName type, final String name) {
+        return getBeanProperty(asTypeElement(type), name);
+    }
 
-        for (String removeKey : removeKeys) {
-            props.remove(removeKey);
+    @Override
+    public BeanProperty getBeanProperty(TypeElement type, final String name) {
+        Map<String, AptBeanProperty> beanProperties = getBeanProperties(type);
+        if (beanProperties.containsKey(name)) {
+            return beanProperties.get(name);
+        } else {
+            return new PropertyImpl(name);
         }
     }
 
-    private Map<String, List<ExecutableElement>> groupMethodsBySignature(List<? extends Element> members) {
-        Map<String, List<ExecutableElement>> props = new HashMap<String, List<ExecutableElement>>();
+    /**
+     * <p class="changed_added_4_0">
+     * Utility method to get all bean properties, similar to Introspector
+     * </p>
+     * 
+     * @param type
+     * @return
+     */
+    Map<String, AptBeanProperty> getBeanProperties(TypeElement type) {
+        List<? extends Element> members = this.processingEnv.getElementUtils().getAllMembers(type);
+        // extract all getters/setters.
+        Map<String, AptBeanProperty> result = Maps.newHashMap();
         for (Element element : members) {
-            if (ElementKind.METHOD.equals(element.getKind())
-                && !PROPERTIES.contains(element.getSimpleName().toString())) {
-
+            if (ElementKind.METHOD.equals(element.getKind())) {
                 ExecutableElement method = (ExecutableElement) element;
-
-                String signature = getSignature(method);
-
-                List<ExecutableElement> methods = props.get(signature);
-                if (methods == null) {
-                    methods = new ArrayList<ExecutableElement>(5);
-                    props.put(signature, methods);
-                }
-
-                methods.add(method);
+                processMethod(type, result, method);
             }
         }
-        return props;
+        return result;
     }
 
-    private String getSignature(ExecutableElement method) {
-        String name = method.getSimpleName().toString();
-        List<? extends VariableElement> methodParams = method.getParameters();
-        StringBuilder builder = new StringBuilder(name);
-        for (VariableElement methodParam : methodParams) {
-            builder.append(":").append(methodParam.getKind().name());
+    private void processMethod(TypeElement type, Map<String, AptBeanProperty> result, ExecutableElement method) {
+        if (isPublicNonStatic(method)) {
+            if (isGetter(method)) {
+                processBeanPropertyAccessor(type, result, method, false);
+            } else if (isSetter(method)) {
+                processBeanPropertyAccessor(type, result, method, true);
+            }
         }
-        return builder.toString();
     }
 
-    private void processFiled(Set<BeanProperty> properties, Element childElement) {
-        AptBeanProperty property = new AptBeanProperty(childElement.getSimpleName().toString());
+    private void processBeanPropertyAccessor(TypeElement type, Map<String, AptBeanProperty> result,
+        ExecutableElement method, boolean setter) {
+        String propertyName = getPropertyName(method);
+        if (!HIDDEN_PROPERTIES.contains(propertyName)) {
+            ClassName propertyType = asClassDescription(setter?method.getParameters().get(0).asType():method.getReturnType());
+            if (result.containsKey(propertyName)) {
+                // Merge property with existed one.
+                AptBeanProperty beanProperty = result.get(propertyName);
+                checkPropertyType(type, propertyName, propertyType, beanProperty);
+                if (null != (setter?beanProperty.setter:beanProperty.getter)) {
+                    log.warn("Two " + (setter ? "setter" : "getter") + " methods for the same bean property "
+                        + propertyName + " in the class " + type.getQualifiedName());
+                    if(!method.getModifiers().contains(Modifier.ABSTRACT)){
+                        beanProperty.setAccessMethod(method, setter);
+                    }
+                } else {
+                    beanProperty.setAccessMethod(method, setter);
+                }
+            } else {
+                AptBeanProperty beanProperty = new AptBeanProperty(propertyName);
+                beanProperty.setAccessMethod(method, setter);
+                beanProperty.type = propertyType;
+                result.put(propertyName, beanProperty);
+            }
 
-        property.type = asClassDescription(childElement.asType());
-        property.element = childElement;
-
-        // TODO - find getter/setter, check them for abstract.
-        property.exists = true;
-
-        properties.add(property);
+        }
     }
 
-    private void processMethod(Set<BeanProperty> properties, Element childElement, boolean annotated) {
-        ExecutableElement method = (ExecutableElement) childElement;
-        boolean exists = !isAbstract(method);
-        if (!annotated && exists) {
-            log.debug("      - " + childElement.getSimpleName() + " : didn't annotated and didn't abstract.");
-            return;
-        }
+    private String getPropertyName(ExecutableElement method) {
+        return PropertyUtils.methodToName(method.getSimpleName().toString());
+    }
 
-        TypeMirror propertyType = method.getReturnType();
-        List<? extends VariableElement> parameters = method.getParameters();
-        if (TypeKind.VOID.equals(propertyType.getKind()) && 1 == parameters.size()) {
-
-            // That is setter method, get type from parameter.
-            propertyType = parameters.get(0).asType();
-        } else if (!parameters.isEmpty()) {
-            // TODO Invalid method signature for a bean property,
-            // throw exception ?
-            log.debug("      - " + childElement.getSimpleName() + " : Invalid method signature for a bean property.");
-            return;
-        }
-
-        try {
-            String name = PropertyUtils.methodToName(childElement.getSimpleName().toString());
-            AptBeanProperty property = new AptBeanProperty(name);
-
-            property.type = asClassDescription(propertyType);
-            property.element = childElement;
-            property.exists = exists;
-
-            properties.add(property);
-            log.debug("      - " + childElement.getSimpleName() + " : was added.");
-
-        } catch (InvalidNameException e) {
-            log.debug("      - " + childElement.getSimpleName() + " : Invalid method name for a bean property, throw.");
-
-            // TODO Invalid method name for a bean property, throw
-            // exception ?
+    private void checkPropertyType(TypeElement type, String propertyName, ClassName propertyType,
+        AptBeanProperty beanProperty) {
+        if (!propertyType.equals(beanProperty.type)) {
+            log.warn("Unambiguious type for bean property " + propertyName + " in the class " + type.getQualifiedName());
         }
     }
 
     private boolean isAbstract(ExecutableElement method) {
         return method.getModifiers().contains(Modifier.ABSTRACT);
+    }
+
+    private boolean isPublicNonStatic(ExecutableElement method) {
+        Set<Modifier> modifiers = method.getModifiers();
+        return modifiers.contains(Modifier.PUBLIC) && !modifiers.contains(Modifier.STATIC);
+    }
+
+    private boolean isGetter(ExecutableElement e) {
+        String methodName = e.getSimpleName().toString();
+        return (isGetterName(methodName) || isBooleanGetterName(methodName)) && 0 == e.getParameters().size();
+    }
+
+    private boolean isGetterName(String methodName) {
+        return methodName.startsWith(GET) && methodName.length() > GET_LENGTH
+            && Character.isUpperCase(methodName.charAt(GET_LENGTH));
+    }
+
+    private boolean isBooleanGetterName(String methodName) {
+        return methodName.startsWith(IS) && methodName.length() > IS_LENGTH
+            && Character.isUpperCase(methodName.charAt(IS_LENGTH));
+    }
+
+    private boolean isSetter(ExecutableElement e) {
+        String methodName = e.getSimpleName().toString();
+        return isSetterName(methodName) && 1 == e.getParameters().size() && !e.isVarArgs()
+            && TypeKind.VOID.equals(e.getReturnType().getKind());
+    }
+
+    private boolean isSetterName(String methodName) {
+        return methodName.startsWith(SET) && methodName.length() > SET_LENGTH
+            && Character.isUpperCase(methodName.charAt(SET_LENGTH));
     }
 
     private ClassName asClassDescription(TypeMirror type) {
@@ -242,12 +251,12 @@ public class AptSourceUtils implements SourceUtils {
         return null != element.getAnnotation(annotationType);
     }
 
-    
     @Override
-    public boolean isAnnotationPropertyPresent(AnnotationMirror annotation, final String propertyName){
-        return Iterables.any(getAnnotationValuesMap(annotation).entrySet(), new AnnotationAttributePredicate(propertyName));
+    public boolean isAnnotationPropertyPresent(AnnotationMirror annotation, final String propertyName) {
+        return Iterables.any(getAnnotationValuesMap(annotation).entrySet(), new AnnotationAttributePredicate(
+            propertyName));
     }
-    
+
     @Override
     public boolean isDefaultValue(AnnotationMirror annotation, String propertyName) {
         Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> attributeEntry =
@@ -255,7 +264,6 @@ public class AptSourceUtils implements SourceUtils {
         return !annotation.getElementValues().containsKey(attributeEntry.getKey());
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public <T> T getAnnotationValue(AnnotationMirror annotation, String propertyName, Class<T> expectedType) {
         Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> attributeEntry =
@@ -264,6 +272,7 @@ public class AptSourceUtils implements SourceUtils {
         return convertAnnotationValue(expectedType, annotationValue);
     }
 
+    @SuppressWarnings("unchecked")
     private <T> T convertAnnotationValue(Class<T> expectedType, AnnotationValue annotationValue) {
         if (Enum.class.isAssignableFrom(expectedType)) {
             VariableElement variable = (VariableElement) annotationValue.getValue();
@@ -275,7 +284,6 @@ public class AptSourceUtils implements SourceUtils {
             AnnotationMirror value = (AnnotationMirror) annotationValue.getValue();
             return (T) value;
         } else {
-            // TODO - check value for expected type.
             return (T) annotationValue.getValue();
         }
     }
@@ -285,7 +293,8 @@ public class AptSourceUtils implements SourceUtils {
     public <T> List<T> getAnnotationValues(AnnotationMirror annotation, String propertyName, Class<T> expectedType) {
         Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> attributeEntry =
             findAnnotationProperty(annotation, propertyName);
-        List<? extends AnnotationValue>annotationValues = (List<? extends AnnotationValue>) attributeEntry.getValue().getValue();
+        List<? extends AnnotationValue> annotationValues =
+            (List<? extends AnnotationValue>) attributeEntry.getValue().getValue();
         List<T> values = Lists.newArrayList();
         for (AnnotationValue annotationValue : annotationValues) {
             values.add(convertAnnotationValue(expectedType, annotationValue));
@@ -296,43 +305,57 @@ public class AptSourceUtils implements SourceUtils {
     private Entry<? extends ExecutableElement, ? extends AnnotationValue> findAnnotationProperty(
         AnnotationMirror annotation, final String propertyName) {
         try {
-            return Iterables.find(getAnnotationValuesMap(annotation).entrySet(),
-                new AnnotationAttributePredicate(propertyName));
+            return Iterables.find(getAnnotationValuesMap(annotation).entrySet(), new AnnotationAttributePredicate(
+                propertyName));
         } catch (NoSuchElementException e) {
             throw new CdkException("Attribute " + propertyName + " not found for annotation "
                 + annotation.getAnnotationType().toString());
         }
     }
 
-    private Map<? extends ExecutableElement, ? extends AnnotationValue> getAnnotationValuesMap(AnnotationMirror annotation) {
+    private Map<? extends ExecutableElement, ? extends AnnotationValue> getAnnotationValuesMap(
+        AnnotationMirror annotation) {
         return processingEnv.getElementUtils().getElementValuesWithDefaults(annotation);
     }
 
     /**
-     * <p class="changed_added_4_0">Set model property to the corresponding annotation attribute, if annotation attribute set to non-default value.</p>
-     * @param model Model object.
-     * @param annotation annotation to copy property from. 
-     * @param modelProperty bean attribute name in the model and annotation.
+     * <p class="changed_added_4_0">
+     * Set model property to the corresponding annotation attribute, if annotation attribute set to non-default value.
+     * </p>
+     * 
+     * @param model
+     *            Model object.
+     * @param annotation
+     *            annotation to copy property from.
+     * @param modelProperty
+     *            bean attribute name in the model and annotation.
      */
     @Override
     public void setModelProperty(Object model, AnnotationMirror annotation, String modelProperty) {
-        setModelProperty(model, annotation,  modelProperty, modelProperty);
+        setModelProperty(model, annotation, modelProperty, modelProperty);
     }
 
     /**
-     * <p class="changed_added_4_0">Set model property to the corresponding annotation attribute, if annotation attribute set to non-default value.</p>
-     * @param model Model object.
-     * @param annotation annotation to copy property from.
-     * @param modelProperty bean attribute name in model.
-     * @param annotationAttribute annotation attribute name.
+     * <p class="changed_added_4_0">
+     * Set model property to the corresponding annotation attribute, if annotation attribute set to non-default value.
+     * </p>
+     * 
+     * @param model
+     *            Model object.
+     * @param annotation
+     *            annotation to copy property from.
+     * @param modelProperty
+     *            bean attribute name in model.
+     * @param annotationAttribute
+     *            annotation attribute name.
      */
     @Override
-    public void setModelProperty(Object model, AnnotationMirror annotation, 
-        String modelProperty, String annotationAttribute) {
+    public void setModelProperty(Object model, AnnotationMirror annotation, String modelProperty,
+        String annotationAttribute) {
         if (!isDefaultValue(annotation, annotationAttribute)) {
             PropertyDescriptor propertyDescriptor = PropertyUtils.getPropertyDescriptor(model, modelProperty);
-            PropertyUtils.setPropertyValue(model, modelProperty, getAnnotationValue(annotation,
-                annotationAttribute, propertyDescriptor.getPropertyType()));
+            PropertyUtils.setPropertyValue(model, modelProperty,
+                getAnnotationValue(annotation, annotationAttribute, propertyDescriptor.getPropertyType()));
         }
     }
 
@@ -364,11 +387,14 @@ public class AptSourceUtils implements SourceUtils {
         visitor.visit(type);
     }
 
-    @Override
-    public TypeElement asTypeElement(ClassName type) {
+    private TypeElement asTypeElement(ClassName type) {
         return processingEnv.getElementUtils().getTypeElement(type.toString());
     }
 
+    public boolean isClassExists(ClassName type){
+        return null != asTypeElement(type);
+    }
+    
     @Override
     public TypeElement asTypeElement(TypeMirror mirror) {
         if (TypeKind.DECLARED.equals(mirror.getKind())) {
@@ -378,6 +404,13 @@ public class AptSourceUtils implements SourceUtils {
         }
     }
 
+    /**
+     * <p class="changed_added_4_0">
+     * </p>
+     * 
+     * @author asmirnov@exadel.com
+     * 
+     */
     private static final class AnnotationAttributePredicate implements
         Predicate<Map.Entry<? extends ExecutableElement, ? extends AnnotationValue>> {
         private final String propertyName;
@@ -401,8 +434,8 @@ public class AptSourceUtils implements SourceUtils {
      * 
      */
     protected final class AptBeanProperty implements BeanProperty {
-        private Element element;
-        private boolean exists;
+        private ExecutableElement getter;
+        private ExecutableElement setter;
         private final String name;
         private ClassName type;
 
@@ -414,6 +447,103 @@ public class AptSourceUtils implements SourceUtils {
          */
         public AptBeanProperty(String name) {
             this.name = name;
+        }
+
+        void setAccessMethod(ExecutableElement method, boolean setter) {
+            if (setter) {
+                this.setter = method;
+            } else {
+                this.getter = method;
+            }
+        }
+
+        /**
+         * <p class="changed_added_4_0">
+         * </p>
+         * 
+         * @return the name
+         */
+        public String getName() {
+            return name;
+        }
+
+        /**
+         * <p class="changed_added_4_0">
+         * Get JavaDoc comment of appropriate bean property element.
+         * </p>
+         * 
+         * @return
+         */
+        public String getDocComment() {
+            String comment = getMethodComment(getter);
+            if (null == comment) {
+                comment = getMethodComment(setter);
+            }
+            return comment;
+        }
+
+        private String getMethodComment(ExecutableElement method) {
+            if (null != method) {
+                return processingEnv.getElementUtils().getDocComment(method);
+            } else {
+                return null;
+            }
+        }
+
+        public ClassName getType() {
+            return type;
+        }
+
+        /**
+         * <p class="changed_added_4_0">
+         * </p>
+         * 
+         * @return the exists
+         */
+        public boolean isExists() {
+            return !(isAbstract(getter) || isAbstract(setter));
+        }
+
+        private boolean isAbstract(ExecutableElement method) {
+            return null != method && method.getModifiers().contains(Modifier.ABSTRACT);
+        }
+
+        public AnnotationMirror getAnnotationMirror(Class<? extends Annotation> annotationType) {
+            if (isAnnotationPresent(getter, annotationType)) {
+                return AptSourceUtils.this.getAnnotationMirror(getter, annotationType);
+            } else if (isAnnotationPresent(setter, annotationType)) {
+                return AptSourceUtils.this.getAnnotationMirror(setter, annotationType);
+            }
+            return null;
+        }
+
+        @Override
+        public boolean isAnnotationPresent(Class<? extends Annotation> annotationType) {
+            return isAnnotationPresent(getter, annotationType) || isAnnotationPresent(setter, annotationType);
+        }
+
+        @Override
+        public <T extends Annotation> T getAnnotation(Class<T> annotationType) {
+            if (isAnnotationPresent(getter, annotationType)) {
+                return getter.getAnnotation(annotationType);
+            } else if (isAnnotationPresent(setter, annotationType)) {
+                return setter.getAnnotation(annotationType);
+            }
+            return null;
+        }
+
+        private <T extends Annotation> boolean isAnnotationPresent(ExecutableElement method, Class<T> annotationType) {
+            return null != method && null != method.getAnnotation(annotationType);
+        }
+
+        @Override
+        public ACCESS_TYPE getAccessType() {
+            if (null != getter && null != setter) {
+                return ACCESS_TYPE.readWrite;
+            } else if (null == setter) {
+                return ACCESS_TYPE.readOnly;
+            }
+            return ACCESS_TYPE.writeOnly;
         }
 
         /*
@@ -463,47 +593,9 @@ public class AptSourceUtils implements SourceUtils {
             return true;
         }
 
-        /**
-         * <p class="changed_added_4_0">
-         * </p>
-         * 
-         * @return the name
-         */
-        public String getName() {
-            return name;
-        }
-
-        /**
-         * <p class="changed_added_4_0">
-         * Get JavaDoc comment of appropriate bean property element.
-         * </p>
-         * 
-         * @return
-         */
-        public String getDocComment() {
-            return processingEnv.getElementUtils().getDocComment(element);
-        }
-
-        public ClassName getType() {
-            return type;
-        }
-
-        /**
-         * <p class="changed_added_4_0">
-         * </p>
-         * 
-         * @return the exists
-         */
-        public boolean isExists() {
-            return exists;
-        }
-
-        public AnnotationMirror getAnnotationMirror(Class<? extends Annotation> annotationType) {
-            return AptSourceUtils.this.getAnnotationMirror(element, annotationType);
-        }
-
-        public <T extends Annotation> T getAnnotation(Class<T> annotationType) {
-            return element.getAnnotation(annotationType);
+        @Override
+        public String toString() {
+            return name + "[" + getType() + "]";
         }
     }
 

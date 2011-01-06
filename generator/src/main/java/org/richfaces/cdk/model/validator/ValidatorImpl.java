@@ -45,6 +45,7 @@ import org.richfaces.cdk.model.BehaviorModel;
 import org.richfaces.cdk.model.ClassName;
 import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.ComponentModel;
+import org.richfaces.cdk.model.ConverterModel;
 import org.richfaces.cdk.model.DescriptionGroup;
 import org.richfaces.cdk.model.EventModel;
 import org.richfaces.cdk.model.FacesComponent;
@@ -56,9 +57,11 @@ import org.richfaces.cdk.model.RenderKitModel;
 import org.richfaces.cdk.model.RendererModel;
 import org.richfaces.cdk.model.TagModel;
 import org.richfaces.cdk.model.Taglib;
+import org.richfaces.cdk.model.ValidatorModel;
 import org.richfaces.cdk.util.Strings;
 
 import com.google.common.base.Predicate;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
@@ -132,6 +135,77 @@ public class ValidatorImpl implements ModelValidator {
             throw new CallbackException("Cannot infer Java class name for behavior " + this.behavior);
         }
     }
+    
+    private final class ConverterTypeCallback implements NamingConventionsCallback {
+
+        private final ConverterModel converter;
+
+        public ConverterTypeCallback(ConverterModel converter) {
+            this.converter = converter;
+        }
+        @Override
+        public FacesId inferType(ClassName targetClass) throws CallbackException {
+            // TODO use actual methods
+            return namingConventions.inferComponentType(targetClass);
+        }
+
+        @Override
+        public FacesId inferType() throws CallbackException {
+            throw new CallbackException("Cannot infer type for converter " + this.converter);
+        }
+
+        @Override
+        public ClassName inferClass(FacesId id) throws CallbackException {
+            throw new CallbackException("Cannot infer target Java class name for converter " + this.converter);
+        }
+
+        @Override
+        public ClassName getDefaultBaseClass() throws CallbackException {
+            throw new CallbackException("Cannot infer base Java class name for converter " + this.converter);
+        }
+
+        @Override
+        public ClassName getDefaultClass() throws CallbackException {
+            return ClassName.get(Object.class);
+        }
+        
+    }
+
+    private final class ValidatorTypeCallback implements NamingConventionsCallback {
+
+        private final ValidatorModel validator;
+
+        public ValidatorTypeCallback(ValidatorModel validator) {
+            this.validator = validator;
+        }
+
+        @Override
+        public FacesId inferType(ClassName targetClass) throws CallbackException {
+            // TODO use actual methods
+            return namingConventions.inferComponentType(targetClass);
+        }
+
+        @Override
+        public FacesId inferType() throws CallbackException {
+            throw new CallbackException("Cannot infer type for validator " + this.validator);
+        }
+
+        @Override
+        public ClassName inferClass(FacesId id) throws CallbackException {
+            throw new CallbackException("Cannot infer target Java class name for validator " + this.validator);
+        }
+
+        @Override
+        public ClassName getDefaultBaseClass() throws CallbackException {
+            throw new CallbackException("Cannot infer default Java class name for validator " + this.validator);
+        }
+
+        @Override
+        public ClassName getDefaultClass() throws CallbackException {
+            return ClassName.get(Object.class);
+        }
+        
+    }
 
     private final class RendererTypeCallback implements NamingConventionsCallback {
         private final ComponentLibrary library;
@@ -197,6 +271,8 @@ public class ValidatorImpl implements ModelValidator {
     public static final ClassName DEFAULT_VALIDATOR_HANDLER = new ClassName(ValidatorHandler.class);
     public static final ClassName DEFAULT_CONVERTER_HANDLER = new ClassName(ConverterHandler.class);
     public static final ClassName DEFAULT_BEHAVIOR_HANDLER = new ClassName(BehaviorHandler.class);
+    public static final ImmutableSet<String> SPECIAL_PROPERTIES = ImmutableSet.of("eventNames", "defaultEventName",
+        "clientBehaviors", "family");
 
     @Inject
     private Logger log;
@@ -223,6 +299,21 @@ public class ValidatorImpl implements ModelValidator {
         verifyBehaviors(library);
         verifyRenderers(library);
         verifyTaglib(library);
+        verifyConverters(library);
+        verifyValidators(library);
+    }
+
+    private void verifyValidators(ComponentLibrary library) {
+        for (ValidatorModel validator : library.getValidators()) {
+            verifyTypes(validator, new ValidatorTypeCallback(validator));
+        }
+        
+    }
+
+    protected void verifyConverters(ComponentLibrary library) {
+        for (ConverterModel converter : library.getConverters()) {
+            verifyTypes(converter, new ConverterTypeCallback(converter));
+        }
     }
 
     protected void verifyEvents(ComponentLibrary library) {
@@ -232,7 +323,7 @@ public class ValidatorImpl implements ModelValidator {
                 // TODO - infer listener interface name.
             }
             SourceUtils sourceUtils = sourceUtilsProvider.get();
-            event.setGenerateListener(null == sourceUtils.asTypeElement(listenerInterface));
+            event.setGenerateListener(!sourceUtils.isClassExists(listenerInterface));
             String methodName = event.getListenerMethod();
             if (null == methodName) {
                 // TODO infer listener method name.
@@ -243,7 +334,7 @@ public class ValidatorImpl implements ModelValidator {
             if (null == sourceInterface) {
                 // TODO - infer source interface.
             }
-            event.setGenerateSource(null == sourceUtils.asTypeElement(sourceInterface));
+            event.setGenerateSource(!sourceUtils.isClassExists(sourceInterface));
             // Propagate event to corresponding components.
             for (ComponentModel component : library.getComponents()) {
                 for (EventModel componentEvent : component.getEvents()) {
@@ -278,7 +369,7 @@ public class ValidatorImpl implements ModelValidator {
         }
         // Verify tags. If we have renderer-specific component, it should have a tag ?
         for (ComponentModel component : library.getComponents()) {
-            if(null != component.getRendererType() && component.getTags().isEmpty()){
+            if (null != component.getRendererType() && component.getTags().isEmpty()) {
                 TagModel tag = new TagModel();
                 verifyTag(tag, component.getId(), DEFAULT_COMPONENT_HANDLER);
                 component.getTags().add(tag);
@@ -360,14 +451,7 @@ public class ValidatorImpl implements ModelValidator {
             if (null != component.getBaseClass()) {
                 try {
                     // Step one, lookup for parent.
-                    ComponentModel parentComponent =
-                        Iterables.find(library.getComponents(), new Predicate<ComponentModel>() {
-
-                            @Override
-                            public boolean apply(ComponentModel input) {
-                                return component.getBaseClass().equals(input.getTargetClass());
-                            }
-                        });
+                    ComponentModel parentComponent = findParent(library.getComponents(), component);
                     // To be sure what all properties for parent component were propagated.
                     verifyComponentAttributes(library, parentComponent, verified);
                     for (PropertyBase parentAttribute : parentComponent.getAttributes()) {
@@ -382,7 +466,7 @@ public class ValidatorImpl implements ModelValidator {
 
             } // Check attributes.
             for (PropertyBase attribute : component.getAttributes()) {
-                verifyAttribute(attribute, component.isGenerate());
+                verifyAttribute(attribute, component);
             }
             // compact(component.getAttributes());
             // Check renderers.
@@ -397,12 +481,23 @@ public class ValidatorImpl implements ModelValidator {
         }
     }
 
+    private <T extends FacesComponent> T findParent(Iterable<T> components, final T component)
+        throws NoSuchElementException {
+        return Iterables.find(components, new Predicate<T>() {
+
+            @Override
+            public boolean apply(T input) {
+                return component.getBaseClass().equals(input.getTargetClass());
+            }
+        });
+    }
+
     protected void verifyTag(TagModel tag, FacesId id, ClassName handler) {
         if (Strings.isEmpty(tag.getName())) {
             String defaultTagName = namingConventions.inferTagName(id);
             tag.setName(defaultTagName);
         }
-        if(null == tag.getType()){
+        if (null == tag.getType()) {
             tag.setType(TagType.Facelets);
         }
         if (tag.isGenerate()) {
@@ -457,14 +552,14 @@ public class ValidatorImpl implements ModelValidator {
                 }
             }
             // Check classes.
-            if (component.isGenerate()) {
-                if (null == component.getBaseClass()) {
-                    component.setBaseClass(callback.getDefaultBaseClass());
-                    // return;
-                }
+            if (null == component.getGenerate()) {
                 if (null == component.getTargetClass()) {
                     component.setTargetClass(callback.inferClass(component.getId()));
                 }
+                component.setGenerate(!sourceUtilsProvider.get().isClassExists(component.getTargetClass()));
+            } 
+            if (component.getGenerate()) {
+                verifyGeneratedClasses(component, callback);
             } else if (null == component.getTargetClass()) {
                 if (null == component.getBaseClass()) {
                     component.setBaseClass(callback.getDefaultClass());
@@ -478,7 +573,17 @@ public class ValidatorImpl implements ModelValidator {
         return true;
     }
 
-    protected void verifyAttribute(PropertyBase attribute, boolean generatedComponent) {
+    private void verifyGeneratedClasses(FacesComponent component, NamingConventionsCallback callback) throws CallbackException {
+        if (null == component.getBaseClass()) {
+            component.setBaseClass(callback.getDefaultBaseClass());
+            // return;
+        }
+        if (null == component.getTargetClass()) {
+            component.setTargetClass(callback.inferClass(component.getId()));
+        }
+    }
+
+    protected void verifyAttribute(PropertyBase attribute, FacesComponent component) {
         // Check name.
         if (Strings.isEmpty(attribute.getName())) {
             log.error("No name for attribute " + attribute);
@@ -493,6 +598,10 @@ public class ValidatorImpl implements ModelValidator {
         if (null == attribute.getType()) {
             log.error("Unknown type of attribute [" + attribute.getName() + "]");
             return;
+        } 
+        if(attribute.getType().isPrimitive() && null == attribute.getDefaultValue()){
+            // Set default value for primitive
+            attribute.setDefaultValue(attribute.getType().getDefaultValue());
         }
         // Check binding properties.
         if ("javax.faces.el.MethodBinding".equals(attribute.getType().getName())) {
@@ -505,9 +614,20 @@ public class ValidatorImpl implements ModelValidator {
         // log.error("Signature for method expression attribute "+attribute.getName()+" has not been set");
         // }
         // Check "generate" flag.
-        if (generatedComponent) {
+        if (Boolean.TRUE.equals(component.getGenerate())) {
             // TODO Attribute should be only generated if it does not exist or abstract in the base class.
             // Step one - check base class
+            SourceUtils sourceUtils = sourceUtilsProvider.get();
+            if (SPECIAL_PROPERTIES.contains(attribute.getName())) {
+                attribute.setGenerate(false);
+            } else if (null == attribute.getGenerate()) {
+                if (sourceUtils.isClassExists(component.getBaseClass())) {
+                    attribute.setGenerate(!sourceUtils.getBeanProperty(component.getBaseClass(), attribute.getName())
+                        .isExists());
+                } else {
+                    attribute.setGenerate(true);
+                }
+            }
         } else {
             attribute.setGenerate(false);
         }

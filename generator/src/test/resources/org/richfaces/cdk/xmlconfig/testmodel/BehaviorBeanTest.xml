@@ -7,7 +7,6 @@
             <attribute-name>attr2</attribute-name>
             <attribute-class>java.lang.String</attribute-class>
             <attribute-extension>
-                <cdk:generate>false</cdk:generate>
                 <cdk:hidden>false</cdk:hidden>
                 <cdk:literal>false</cdk:literal>
                 <cdk:pass-through>false</cdk:pass-through>
@@ -19,7 +18,6 @@
             <property-name>attr1</property-name>
             <property-class>java.lang.String</property-class>
             <property-extension>
-                <cdk:generate>false</cdk:generate>
                 <cdk:hidden>false</cdk:hidden>
                 <cdk:literal>false</cdk:literal>
                 <cdk:pass-through>false</cdk:pass-through>
@@ -27,9 +25,7 @@
                 <cdk:required>false</cdk:required>
             </property-extension>
         </property>
-        <behavior-extension>
-            <cdk:generate>false</cdk:generate>
-        </behavior-extension>
+        <behavior-extension/>
     </behavior>
     <faces-config-extension/>
 </faces-config>

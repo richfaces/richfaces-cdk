@@ -293,9 +293,7 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
 
     @Override
     public void merge(PropertyBase other) {
-        boolean generate = isGenerate();
         ComponentLibrary.merge(this, other);
-        setGenerate(generate || other.isGenerate());
     }
 
     public <R,D> R accept(Visitor<R,D> visitor, D data) {

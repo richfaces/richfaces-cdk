@@ -91,12 +91,12 @@ public interface FacesComponent {
      * <p class="changed_added_4_0"></p>
      * @return
      */
-    public boolean isGenerate();
+    public Boolean getGenerate();
     
     /**
      * <p class="changed_added_4_0"></p>
      * @param generate
      */
-    public void setGenerate(boolean generate);
+    public void setGenerate(Boolean generate);
 
 }

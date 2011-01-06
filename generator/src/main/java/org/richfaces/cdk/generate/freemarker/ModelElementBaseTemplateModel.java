@@ -124,7 +124,7 @@ public class ModelElementBaseTemplateModel extends StringModel implements Templa
         Set<ClassName> result = Sets.newTreeSet();
 
         for (PropertyBase entry : model.getAttributes()) {
-            if (entry.isGenerate() && !isPredefined(entry)) {
+            if (entry.getGenerate() && !isPredefined(entry)) {
                 result.add(entry.getType());
             }
         }
@@ -244,7 +244,7 @@ public class ModelElementBaseTemplateModel extends StringModel implements Templa
 
             @Override
             public boolean apply(PropertyBase input) {
-                return input.isGenerate();
+                return input.getGenerate();
             }
         }));
     }

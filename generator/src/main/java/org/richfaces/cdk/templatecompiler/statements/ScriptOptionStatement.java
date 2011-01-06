@@ -79,11 +79,12 @@ public class ScriptOptionStatement extends FreeMarkerTemplateStatementBase {
     }
     
     /**
-     * @param value the value to set
+     * @param value
+     *            the value to set
      */
     public void setValueExpression(String valueExpression) {
         try {
-           this.value = parser.parse(valueExpression, this, TypesFactory.OBJECT_TYPE);
+            this.value = parser.parse(valueExpression, this, TypesFactory.OBJECT_TYPE);
         } catch (ParsingException e) {
             logger.error("Error parse scriptOption value expression: " + valueExpression, e);
         }

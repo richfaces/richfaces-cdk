@@ -32,47 +32,47 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 public class ClassImport {
 
-    @XmlAttribute(required = true)
-    @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
-    private String _package;
+    private String packageName;
 
-    @XmlAttribute
-    private boolean _static;
+    private boolean staticImport;
     
-    @XmlAttribute
     private List<String> names;
     
     /**
      * @return the package_
      */
+    @XmlAttribute(required = true)
+    @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     public String getPackage() {
-        return _package;
+        return packageName;
     }
     
     /**
-     * @param _package the package_ to set
+     * @param packageName the package_ to set
      */
-    public void setPackage(String _package) {
-        this._package = _package;
+    public void setPackage(String packageName) {
+        this.packageName = packageName;
     }
     
     /**
      * @return the static_
      */
+    @XmlAttribute
     public boolean isStatic() {
-        return _static;
+        return staticImport;
     }
     
     /**
      * @param static_ the static_ to set
      */
-    public void setStatic(boolean _static) {
-        this._static = _static;
+    public void setStatic(boolean staticImport) {
+        this.staticImport = staticImport;
     }
     
     /**
      * @return the classes
      */
+    @XmlAttribute
     public List<String> getNames() {
         return names;
     }

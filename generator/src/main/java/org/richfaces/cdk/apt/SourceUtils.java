@@ -59,6 +59,11 @@ public interface SourceUtils {
         void visit(TypeMirror type);
     }
 
+    enum ACCESS_TYPE {
+        readOnly,
+        writeOnly,
+        readWrite
+    }
     /**
      * <p class="changed_added_4_0">
      * </p>
@@ -85,19 +90,28 @@ public interface SourceUtils {
          */
         String getDocComment();
 
+        /**
+         * <p class="changed_added_4_0">Bean property type</p>
+         * @return
+         */
         ClassName getType();
 
         /**
-         * <p class="changed_added_4_0">
+         * <p class="changed_added_4_0">Is this property implementted by component
          * </p>
          * 
          * @return the exists
          */
         boolean isExists();
+        
+        boolean isAnnotationPresent(Class<? extends Annotation> annotationType);
 
         AnnotationMirror getAnnotationMirror(Class<? extends Annotation> annotationType);
 
         <T extends Annotation> T getAnnotation(Class<T> annotationType);
+        
+        ACCESS_TYPE getAccessType();
+
     }
 
     /**
@@ -119,6 +133,23 @@ public interface SourceUtils {
      * @return
      */
     Set<BeanProperty> getAbstractBeanProperties(TypeElement type);
+    
+    
+    /**
+     * <p class="changed_added_4_0">Get bean property descriptor for particular type.</p>
+     * @param type
+     * @param name
+     * @return
+     */
+    BeanProperty getBeanProperty(TypeElement type, String name);
+
+    /**
+     * <p class="changed_added_4_0">Get bean property descriptor for particular type.</p>
+     * @param type
+     * @param name
+     * @return
+     */
+    BeanProperty getBeanProperty(ClassName type, String name);
 
     /**
      * <p class="changed_added_4_0">
@@ -172,12 +203,37 @@ public interface SourceUtils {
     <T> List<T> getAnnotationValues(AnnotationMirror annotation, String propertyName, Class<T> expectedType);
 
     /**
+     * <p class="changed_added_4_0"></p>
+     * @param annotation
+     * @param propertyName
+     * @return
+     */
+    public abstract boolean isAnnotationPropertyPresent(AnnotationMirror annotation, final String propertyName);
+
+    /**
      * <p class="changed_added_4_0">Check annotation proprrty for default value.</p>
      * @param annotation
      * @param propertyName
      * @return true if property has its default value.
      */
     boolean isDefaultValue(AnnotationMirror annotation, String propertyName);
+    /**
+     * <p class="changed_added_4_0"></p>
+     * @param model
+     * @param annotation
+     * @param modelProperty
+     * @param annotationAttribute
+     */
+    public abstract void setModelProperty(Object model, AnnotationMirror annotation, String modelProperty, String annotationAttribute);
+
+    /**
+     * <p class="changed_added_4_0"></p>
+     * @param model
+     * @param annotation
+     * @param modelProperty
+     */
+    public abstract void setModelProperty(Object model, AnnotationMirror annotation, String modelProperty);
+
     /**
      * <p class="changed_added_4_0">
      * </p>
@@ -203,7 +259,7 @@ public interface SourceUtils {
      * </p>
      * 
      * @param mirror
-     * @return
+     * @return The Element for given type
      */
     TypeElement asTypeElement(TypeMirror mirror);
 
@@ -212,14 +268,8 @@ public interface SourceUtils {
      * </p>
      * 
      * @param type
-     * @return
+     * @return true if class already exist in project source or dependent libraries.
      */
-    TypeElement asTypeElement(ClassName type);
-
-    public abstract boolean isAnnotationPropertyPresent(AnnotationMirror annotation, final String propertyName);
-
-    public abstract void setModelProperty(Object model, AnnotationMirror annotation, String modelProperty, String annotationAttribute);
-
-    public abstract void setModelProperty(Object model, AnnotationMirror annotation, String modelProperty);
+    boolean isClassExists(ClassName type);
 
 }

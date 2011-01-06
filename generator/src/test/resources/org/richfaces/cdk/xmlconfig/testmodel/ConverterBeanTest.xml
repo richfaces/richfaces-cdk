@@ -3,9 +3,7 @@
     <converter>
         <converter-id>my_converter</converter-id>
         <converter-class>java.lang.Object</converter-class>
-        <converter-extension>
-                    <cdk:generate>false</cdk:generate>
-        </converter-extension>
+        <converter-extension/>
     </converter>
     <faces-config-extension/>
 </faces-config>

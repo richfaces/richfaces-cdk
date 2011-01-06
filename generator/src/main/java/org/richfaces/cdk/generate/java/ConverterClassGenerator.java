@@ -52,7 +52,7 @@ public class ConverterClassGenerator extends FreeMarkerWriter<ConverterModel> im
     public void render(ComponentLibrary library) throws CdkException {
         Collection<ConverterModel> models = library.getConverters();
         for (ConverterModel model : models) {
-            if (model.isGenerate()) {
+            if (model.getGenerate()) {
                 this.generate(library, model);
             }
         }

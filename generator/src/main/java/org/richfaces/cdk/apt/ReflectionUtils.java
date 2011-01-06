@@ -49,9 +49,8 @@ public class ReflectionUtils implements SourceUtils {
     }
 
     @Override
-    public TypeElement asTypeElement(ClassName type) {
-        // TODO Auto-generated method stub
-        return null;
+    public boolean isClassExists(ClassName type) {
+        return true;
     }
 
     @Override
@@ -62,6 +61,17 @@ public class ReflectionUtils implements SourceUtils {
 
     @Override
     public Set<BeanProperty> getBeanPropertiesAnnotatedWith(Class<? extends Annotation> annotation, TypeElement type) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public BeanProperty getBeanProperty(TypeElement type, String name) {
+        return getBeanProperty(type, name);
+    }
+
+    @Override
+    public BeanProperty getBeanProperty(ClassName type, String name) {
         // TODO Auto-generated method stub
         return null;
     }

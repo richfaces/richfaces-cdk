@@ -36,8 +36,8 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
-import javax.tools.Diagnostic.Kind;
 
+import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.CdkProcessingException;
 import org.richfaces.cdk.LibraryBuilder;
 import org.richfaces.cdk.Logger;
@@ -96,52 +96,65 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
             for (CdkAnnotationProcessor process : processors) {
                 processAnnotation(process, roundEnv);
             }
-        } else  {
+        } else {
             // parse non-java sources
             processNonJavaSources();
+            verify();
+            if (0 == log.getErrorCount()) {
+                generate();
+            }
         }
         return false;
     }
 
-    /* (non-Javadoc)
+    private void generate() {
+        log.debug("Generate output files");
+        builder.generate(library);
+    }
+
+    private void verify() {
+        try {
+            log.debug("Validate model");
+            validator.verify(library);
+
+        } catch (CdkException e) {
+            sendError(e);
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.richfaces.cdk.apt.CdkProcessor#processNonJavaSources()
      */
     public void processNonJavaSources() {
         for (ModelBuilder builder : builders) {
-            log.debug("Run builder "+builder.getClass().getName());
-            builder.build();
-        }
-        // validator should be called even if previvous phases finish with errors, to collect all possible problems.
-        log.debug("Validate model");
-        validator.verify(library);
-        if(0 == log.getErrorCount()) {
-            // processing over, generate files.
-            log.debug("Generate output files");
-            builder.generate(library);
+            log.debug("Run builder " + builder.getClass().getName());
+            try {
+                builder.build();
+
+            } catch (CdkException e) {
+                sendError(e);
+            }
         }
 
     }
 
     protected void processAnnotation(CdkAnnotationProcessor processor, RoundEnvironment environment) {
         Class<? extends Annotation> processedAnnotation = processor.getProcessedAnnotation();
-        log.debug("Process all elements annotated with "+processedAnnotation.getName());
+        log.debug("Process all elements annotated with " + processedAnnotation.getName());
         Target target = processedAnnotation.getAnnotation(Target.class);
-        try {
-            Set<? extends Element> rootElements = environment.getRootElements();
-            for (Element element : rootElements) {
-                if (isAppropriateTarget(element, target)){
-                    processElement(processor, processedAnnotation, element);
-                } else {
-                    for (Element enclosedElement : element.getEnclosedElements()) {
-                        if (isAppropriateTarget(enclosedElement, target)){
-                            processElement(processor, processedAnnotation, enclosedElement);
-                        }
+        Set<? extends Element> rootElements = environment.getRootElements();
+        for (Element element : rootElements) {
+            if (isAppropriateTarget(element, target)) {
+                processElement(processor, processedAnnotation, element);
+            } else {
+                for (Element enclosedElement : element.getEnclosedElements()) {
+                    if (isAppropriateTarget(enclosedElement, target)) {
+                        processElement(processor, processedAnnotation, enclosedElement);
                     }
                 }
             }
-        } catch (Exception e) {
-            processingEnv.getMessager().printMessage(Kind.ERROR,
-                "Errorr processing annotation " + processedAnnotation + ": " + e);
         }
     }
 
@@ -149,22 +162,23 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
         Element element) {
         if (null != element.getAnnotation(processedAnnotation)) {
             try {
-                log.debug("Process "+element.getSimpleName()+" annotated with "+processedAnnotation.getName());
+                log.debug("Process " + element.getSimpleName() + " annotated with " + processedAnnotation.getName());
                 processor.process(element, library);
             } catch (CdkProcessingException e) {
                 sendError(element, e);
             }
         }
     }
-    
-    private boolean isAppropriateTarget(Element element,Target target){
+
+    private boolean isAppropriateTarget(Element element, Target target) {
         boolean match = false;
         ElementKind kind = element.getKind();
-        if(null != target){
-            for(ElementType targetType : target.value()){
+        if (null != target) {
+            for (ElementType targetType : target.value()) {
                 switch (targetType) {
                     case TYPE:
-                        match |= ElementKind.CLASS.equals(kind)||ElementKind.INTERFACE.equals(kind)||ElementKind.ENUM.equals(kind);
+                        match |= ElementKind.CLASS.equals(kind) || ElementKind.INTERFACE.equals(kind)
+                            || ElementKind.ENUM.equals(kind);
                         break;
                     case PACKAGE:
                         match |= ElementKind.PACKAGE.equals(kind);
@@ -181,17 +195,20 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
             }
         } else {
             // Annotation without @Target match any element.
-            match =
-                ElementKind.CLASS.equals(kind) || ElementKind.INTERFACE.equals(kind) || ElementKind.ENUM.equals(kind)
-                    || ElementKind.PACKAGE.equals(kind) || ElementKind.METHOD.equals(kind)
-                    || ElementKind.FIELD.equals(kind);
+            match = ElementKind.CLASS.equals(kind) || ElementKind.INTERFACE.equals(kind)
+                || ElementKind.ENUM.equals(kind) || ElementKind.PACKAGE.equals(kind) || ElementKind.METHOD.equals(kind)
+                || ElementKind.FIELD.equals(kind);
         }
         return match;
     }
 
-    protected void sendError(Element componentElement, CdkProcessingException e) {
+    protected void sendError(Element componentElement, Exception e) {
         // rise error and continue.
         processingEnv.getMessager().printMessage(javax.tools.Diagnostic.Kind.ERROR, e.getMessage(), componentElement);
+    }
+
+    protected void sendError(CdkException e) {
+        processingEnv.getMessager().printMessage(javax.tools.Diagnostic.Kind.ERROR, e.getMessage());
     }
 
     @Override

@@ -80,11 +80,6 @@ public enum HelperMethod {
         }
     }
     
-    private static String[] transformClassesToClassNames(Class<?>[] s) {
-        Iterator<String> transformed = transform(forArray(s), CLASS_TO_CLASS_NAME);
-        return toArray(transformed, String.class);
-    } 
-    
     private HelperMethod(String name, String returnType, String... argumentTypes) {
         this.name = name;
         this.returnType = returnType;
@@ -93,6 +88,11 @@ public enum HelperMethod {
     
     private HelperMethod(String name, Class<?> returnType, Class<?>... argumentTypes) {
         this(name, CLASS_TO_CLASS_NAME.apply(returnType), transformClassesToClassNames(argumentTypes));
+    }
+
+    private static String[] transformClassesToClassNames(Class<?>[] s) {
+        Iterator<String> transformed = transform(forArray(s), CLASS_TO_CLASS_NAME);
+        return toArray(transformed, String.class);
     }
 
     public String getName() {

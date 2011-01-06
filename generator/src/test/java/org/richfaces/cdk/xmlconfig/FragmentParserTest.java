@@ -118,7 +118,7 @@ public class FragmentParserTest extends CdkTestBase {
         assertEquals("15", property.getSuggestedValue());
 
         // CDK extensions.
-        assertTrue(property.isGenerate());
+        assertTrue(property.getGenerate());
         assertTrue(property.isHidden());
         assertTrue(property.isLiteral());
         assertTrue(property.isPassThrough());

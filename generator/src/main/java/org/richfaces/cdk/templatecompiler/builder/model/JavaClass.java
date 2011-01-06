@@ -74,8 +74,8 @@ public class JavaClass extends JavaLanguageElement {
         addImport(new JavaImportImpl(name));
     }
 
-    public void addImport(String name, boolean _static) {
-        addImport(new JavaImportImpl(name, _static));
+    public void addImport(String name, boolean staticImport) {
+        addImport(new JavaImportImpl(name, staticImport));
     }
 
     public void addImport(Class<?> claz) {

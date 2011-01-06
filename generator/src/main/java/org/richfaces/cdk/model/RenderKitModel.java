@@ -44,8 +44,6 @@ public class RenderKitModel extends DescriptionGroupBase implements ModelElement
 
     private FacesId id;
     
-    private boolean generate;
-
     public RenderKitModel() {
     }
 
@@ -96,22 +94,6 @@ public class RenderKitModel extends DescriptionGroupBase implements ModelElement
      */
     public void setBaseClass(ClassName baseClass) {
         this.baseClass = baseClass;
-    }
-
-    /**
-     * <p class="changed_added_4_0"></p>
-     * @return the generate
-     */
-    public boolean isGenerate() {
-        return this.generate;
-    }
-
-    /**
-     * <p class="changed_added_4_0"></p>
-     * @param generate the generate to set
-     */
-    public void setGenerate(boolean generate) {
-        this.generate = generate;
     }
 
     /**

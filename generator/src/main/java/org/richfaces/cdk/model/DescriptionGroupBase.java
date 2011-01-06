@@ -31,7 +31,7 @@ public class DescriptionGroupBase implements DescriptionGroup, Extensible<Config
     /**
      *  <p class="changed_added_4_0">Is that bean property generate in the class or should be generated ?</p>
      */
-    private boolean generate = false;
+    private Boolean generate ;
 
     /**
      * <p class="changed_added_4_0">
@@ -83,11 +83,11 @@ public class DescriptionGroupBase implements DescriptionGroup, Extensible<Config
     }
 
     @Merge
-    public boolean isGenerate() {
+    public Boolean getGenerate() {
         return generate;
     }
 
-    public void setGenerate(boolean generate) {
+    public void setGenerate(Boolean generate) {
         this.generate = generate;
     }
 

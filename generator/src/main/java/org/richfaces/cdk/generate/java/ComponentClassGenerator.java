@@ -55,7 +55,7 @@ public class ComponentClassGenerator extends FreeMarkerWriter<ComponentModel> im
     public void render(ComponentLibrary library) throws CdkException {
         Collection<ComponentModel> models = library.getComponents();
         for (ComponentModel model : models) {
-            if (model.isGenerate()) {
+            if (model.getGenerate()) {
                 this.generate(library, model);
             }
         }

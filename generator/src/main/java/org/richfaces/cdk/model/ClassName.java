@@ -52,6 +52,18 @@ public class ClassName implements Serializable,Comparable<ClassName> {
             .put(double.class.getName(), Double.class.getName())
             .build();
 
+    private static final ImmutableMap<String, String> DEFAULT_VALUES =
+        ImmutableMap.<String, String>builder()
+            .put(boolean.class.getName(), "Boolean.FALSE")
+            .put(byte.class.getName(), "Byte.MIN_VALUE")
+            .put(char.class.getName(), "Character.MIN_VALUE")
+            .put(short.class.getName(), "Short.MIN_VALUE")
+            .put(int.class.getName(), "Integer.MIN_VALUE")
+            .put(long.class.getName(), "Long.MIN_VALUE")
+            .put(float.class.getName(), "Float.MIN_VALUE")
+            .put(double.class.getName(), "Double.MIN_VALUE")
+            .build();
+
     private final String boxingClassName;
     private final String fullName;
 
@@ -196,6 +208,9 @@ public class ClassName implements Serializable,Comparable<ClassName> {
         return primitive;
     }
 
+    public String getDefaultValue(){
+        return DEFAULT_VALUES.get(name);
+    }
     /**
      * <p class="changed_added_4_0">
      * </p>

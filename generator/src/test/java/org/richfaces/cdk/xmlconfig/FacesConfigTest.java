@@ -104,12 +104,12 @@ public class FacesConfigTest extends CdkTestBase {
         assertEquals("panel-large.gif", component.getIcon().getLargeIcon());
         assertEquals("Panel component", component.getDescription());
         assertEquals("Panel", component.getDisplayname());
-        assertTrue(component.isGenerate());
+        assertTrue(component.getGenerate());
 
         FacetModel facet = Iterables.getOnlyElement(component.getFacets());
         assertEquals("header", facet.getName());
         assertEquals("Header facet", facet.getDescription());
-        assertTrue(facet.isGenerate());
+        assertTrue(facet.getGenerate());
 
         Collection<PropertyBase> attributes = component.getAttributes();
 

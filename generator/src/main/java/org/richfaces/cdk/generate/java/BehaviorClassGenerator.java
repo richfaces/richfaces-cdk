@@ -52,7 +52,7 @@ public class BehaviorClassGenerator extends FreeMarkerWriter<BehaviorModel> impl
     public void render(ComponentLibrary library) throws CdkException {
         Collection<BehaviorModel> models = library.getBehaviors();
         for (BehaviorModel model : models) {
-            if (model.isGenerate()) {
+            if (model.getGenerate()) {
                 this.generate(library, model);
             }
         }

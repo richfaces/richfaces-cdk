@@ -3,7 +3,6 @@ package org.richfaces.cdk.apt;
 import static org.junit.Assert.*;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.AnnotationMirror;
@@ -13,9 +12,7 @@ import org.junit.Test;
 import org.richfaces.cdk.apt.TestAnnotation.TestEnum;
 import org.richfaces.cdk.model.ClassName;
 
-import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterables;
 
 public class AptSourceUtilsAnnotationsTest extends SourceUtilsTestBase {
 
@@ -162,16 +159,5 @@ public class AptSourceUtilsAnnotationsTest extends SourceUtilsTestBase {
     @Override
     protected Iterable<String> sources() {
         return ImmutableList.of(CLASS_JAVA, SUB_CLASS_JAVA);
-    }
-
-    private Element findElement(RoundEnvironment roundEnvironment, final String name){
-        Set<? extends Element> elements = roundEnvironment.getRootElements();
-        return Iterables.find(elements, new Predicate<Element>() {
-
-            @Override
-            public boolean apply(Element input) {
-                return name.equals(input.getSimpleName().toString());
-            }
-        });
     }
 }

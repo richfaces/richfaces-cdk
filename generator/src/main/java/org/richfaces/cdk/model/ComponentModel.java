@@ -61,7 +61,6 @@ public final class ComponentModel extends ModelElementBase implements ModelEleme
         ComponentLibrary.merge(getFacets(), otherComponent.getFacets());
         ComponentLibrary.merge(getEvents(), otherComponent.getEvents());
         ComponentLibrary.merge(this, otherComponent);
-        this.setGenerate(this.isGenerate() || otherComponent.isGenerate());
     }
 
     @Override

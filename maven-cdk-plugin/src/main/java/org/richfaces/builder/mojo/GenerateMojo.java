@@ -360,10 +360,14 @@ public class GenerateMojo extends AbstractMojo {
         CdkClassLoader classLoader = null;
 
         try {
-            String outputDirectory = project.getBuild().getOutputDirectory();
-            List<File> urls = new ArrayList<File>(classpathElements.size() + 1);
-            urls.add(new File(outputDirectory));
-
+            // This Mojo executed befor process-resources phase, therefore we have to use original resource folders.
+            List<Resource> resources = project.getResources();
+            List<File> urls = new ArrayList<File>(classpathElements.size() + resources.size());
+            for (Resource resource : resources) {
+                String directory = resource.getDirectory();
+                // TODO - use includes/excludes and target path.
+                urls.add(resolveRelativePath(new File(directory)));
+            }
             for (Iterator<String> iter = classpathElements.iterator(); iter.hasNext();) {
                 String element = iter.next();
 

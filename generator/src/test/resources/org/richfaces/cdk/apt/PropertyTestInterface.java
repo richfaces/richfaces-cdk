@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: TestInterface.java 18741 2010-08-18 03:07:27Z alexsmirnov $
  *
  * License Agreement.
  *
@@ -25,19 +25,20 @@
 
 package org.richfaces.cdk.apt;
 
+import org.richfaces.cdk.apt.TestMethodAnnotation;
+
 /**
  * <p class="changed_added_4_0"></p>
  * @author asmirnov@exadel.com
  *
  */
-//@TestAnnotation("foo")
-public class TestClass {
+public interface PropertyTestInterface {
+
+    @TestMethodAnnotation("inherited")
+    public String getInheritedValue();
+
+    public void setInheritedValue(String value);
     
-    public Integer getReadOnly(){
-        return null;
-    }
+    public void setWrongValue(String value);
     
-    public void setWriteOnly(Boolean value){
-        
-    }
 }

@@ -51,7 +51,7 @@ public class ValidatorClassGenerator extends FreeMarkerWriter<ValidatorModel> im
     public void render(ComponentLibrary library) throws CdkException {
         Collection<ValidatorModel> models = library.getValidators();
         for (ValidatorModel model : models) {
-            if (model.isGenerate()) {
+            if (model.getGenerate()) {
                 this.generate(library, model);
             }
         }

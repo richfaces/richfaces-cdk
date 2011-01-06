@@ -87,6 +87,7 @@ public class ModelValidatorTest extends CdkTestBase {
         component.setTargetClass(className);
         expect(namiingConventions.inferComponentType(className)).andReturn(type);
         expect(namiingConventions.inferUIComponentFamily(type)).andReturn(FOO_BAZ);
+        expect(utils.isClassExists(className)).andReturn(true);
         replay(log, utils, namiingConventions);
         // Validator should set component type from base class.
         validator.verifyComponentType(component);
