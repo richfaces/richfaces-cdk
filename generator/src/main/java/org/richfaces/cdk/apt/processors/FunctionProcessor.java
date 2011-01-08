@@ -26,6 +26,7 @@ package org.richfaces.cdk.apt.processors;
 import java.lang.annotation.Annotation;
 import java.util.Set;
 
+import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
@@ -35,10 +36,13 @@ import javax.lang.model.element.VariableElement;
 
 import org.richfaces.cdk.CdkProcessingException;
 import org.richfaces.cdk.annotations.Function;
+import org.richfaces.cdk.apt.SourceUtils;
 import org.richfaces.cdk.model.ClassName;
 import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.FunctionModel;
-import org.richfaces.cdk.util.Strings;
+
+import com.google.common.base.Joiner;
+import com.google.common.collect.Iterables;
 
 /**
  * <p class="changed_added_4_0"></p>
@@ -47,6 +51,14 @@ import org.richfaces.cdk.util.Strings;
  */
 public class FunctionProcessor extends ProcessorBase implements CdkAnnotationProcessor {
 
+    private static final Joiner PARAMETERS_JOINER = Joiner.on(',').skipNulls();
+    private static final com.google.common.base.Function<VariableElement,String> PARAMETER_CONVERTER = new com.google.common.base.Function<VariableElement,String>(){
+
+        @Override
+        public String apply(VariableElement var) {
+            return var.asType().toString();
+        }
+    };
     /* (non-Javadoc)
      * @see org.richfaces.cdk.apt.processors.CdkAnnotationProcessor#getProcessedAnnotation()
      */
@@ -60,6 +72,7 @@ public class FunctionProcessor extends ProcessorBase implements CdkAnnotationPro
      */
     @Override
     public void process(Element element, ComponentLibrary library) throws CdkProcessingException {
+        SourceUtils utils = getSourceUtils();
         switch (element.getKind()) {
             case METHOD:
                 ExecutableElement  methodElement = (ExecutableElement) element;
@@ -72,27 +85,20 @@ public class FunctionProcessor extends ProcessorBase implements CdkAnnotationPro
                 if(!modifiers.contains(Modifier.STATIC)){
                     throw new CdkProcessingException("Only static method can be registered as EL function "+methodElement.getSimpleName());
                 }
-                Function function = methodElement.getAnnotation(Function.class);
+                AnnotationMirror function = utils.getAnnotationMirror(methodElement, Function.class);
                 FunctionModel model = new FunctionModel();
-                if(!Strings.isEmpty(function.name())){
-                    model.setName(function.name());
+                if(!utils.isDefaultValue(function, "name")){
+                    utils.setModelProperty(model, function, "name");
                 } else {
                     model.setName(methodElement.getSimpleName().toString());
                 }
-                model.setType(function.type());
-                setDescription(model, function.description(), getDocComment(methodElement));
+                utils.setModelProperty(model, function, "type");
+                setDescription(model, function, getDocComment(methodElement));
                 // Calculate method signature
                 StringBuilder signature = new StringBuilder();
                 signature.append(methodElement.getReturnType()).append(" ");
                 signature.append(methodElement.getSimpleName()).append("(");
-                boolean first = true;
-                for(VariableElement parameter :methodElement.getParameters()){
-                    if(!first){
-                        signature.append(",");
-                    }
-                    signature.append(parameter.asType());
-                    first = false;
-                }
+                PARAMETERS_JOINER.appendTo(signature, Iterables.transform(methodElement.getParameters(), PARAMETER_CONVERTER));
                 signature.append(")");
                 model.setSignature(signature.toString());
                 Element declaringClass = methodElement.getEnclosingElement();

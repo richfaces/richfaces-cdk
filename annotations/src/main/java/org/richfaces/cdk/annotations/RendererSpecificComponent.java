@@ -129,5 +129,13 @@ public @interface RendererSpecificComponent {
      * @return
      */
     public Class<?>[] interfaces() default {};
+    /**
+     * <p class="changed_added_4_0">
+     * Events fired by the component.
+     * </p>
+     * 
+     * @return
+     */
+    public Event[] fires() default {};
 
 }

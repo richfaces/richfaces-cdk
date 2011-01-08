@@ -104,7 +104,7 @@ public class BehaviorProcessorTest extends AnnotationProcessorTestBase {
         expect(componentElement.getModifiers()).andReturn(Collections.singleton(Modifier.ABSTRACT));
         expect(componentElement.getQualifiedName()).andReturn(name).atLeastOnce();
         expect(behaviorAnnotation.generate()).andReturn("foo.Bar");
-        expect(behaviorAnnotation.tag()).andReturn(tag);
+        expect(behaviorAnnotation.tag()).andReturn(new Tag[]{tag});
         expect(behaviorAnnotation.attributes()).andReturn(new String[] {});
         expect(behaviorAnnotation.description()).andReturn(this.description);
         expect(tag.handler()).andStubReturn("");

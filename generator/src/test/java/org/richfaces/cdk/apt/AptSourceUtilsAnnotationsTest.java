@@ -13,6 +13,7 @@ import org.richfaces.cdk.apt.TestAnnotation.TestEnum;
 import org.richfaces.cdk.model.ClassName;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 
 public class AptSourceUtilsAnnotationsTest extends SourceUtilsTestBase {
 
@@ -136,11 +137,11 @@ public class AptSourceUtilsAnnotationsTest extends SourceUtilsTestBase {
             public void process(SourceUtils utils, RoundEnvironment roundEnv) {
                 Element element = findElement(roundEnv, ANNOTATIONS_TEST_CLASS);
                 AnnotationMirror annotationMirror = utils.getAnnotationMirror(element, TestAnnotation.class);
-                List<T> annotationValues = utils.getAnnotationValues(annotationMirror, propertyName, type);                
-                assertEquals("Annotation values size is different from expected",expected.length, annotationValues.size());
+                Iterable<T> annotationValues = utils.getAnnotationValues(annotationMirror, propertyName, type);                
+                assertEquals("Annotation values size is different from expected",expected.length, Iterables.size(annotationValues));
                 for (int i = 0; i < expected.length; i++) {
                     Object expectedValue = expected[i];
-                    assertEquals("Annotation value at position "+i+" is different from expected",expectedValue, annotationValues.get(i));                    
+                    assertEquals("Annotation value at position "+i+" is different from expected",expectedValue, Iterables.get(annotationValues, i));                    
                 }
             }
         });

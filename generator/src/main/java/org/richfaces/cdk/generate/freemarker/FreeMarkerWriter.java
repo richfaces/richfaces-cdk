@@ -36,6 +36,7 @@ import org.richfaces.cdk.model.ClassName;
 import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.ModelElementBase;
 import org.richfaces.cdk.model.Trackable;
+import org.richfaces.cdk.model.ViewElement;
 
 import freemarker.template.TemplateException;
 
@@ -86,7 +87,7 @@ public abstract class FreeMarkerWriter<C> implements CdkWriter {
     }
 
     protected String getOutputFileName(C c) throws CdkException {
-        if (c instanceof ModelElementBase) {
+        if (c instanceof ViewElement) {
             ModelElementBase modelElement = (ModelElementBase) c;
             return modelElement.getTargetClass().getName().replace('.', File.separatorChar) + ".java";
         } else {

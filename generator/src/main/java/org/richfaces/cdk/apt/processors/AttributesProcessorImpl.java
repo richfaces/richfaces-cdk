@@ -23,6 +23,7 @@ import org.richfaces.cdk.util.JavaUtils;
 import org.richfaces.cdk.xmlconfig.CdkEntityResolver;
 import org.richfaces.cdk.xmlconfig.FragmentParser;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -83,19 +84,20 @@ public class AttributesProcessorImpl implements AttributesProcessor {
             }
         } else {
             SourceUtils utils = utilsProvider.get();
-            utils.setModelProperty(attribute, attributeAnnotarion,  "hidden");
-            utils.setModelProperty(attribute, attributeAnnotarion,  "literal");
-            utils.setModelProperty(attribute, attributeAnnotarion,  "passThrough");
-            utils.setModelProperty(attribute, attributeAnnotarion,  "required");
-            utils.setModelProperty(attribute, attributeAnnotarion,  "readOnly");
+            utils.setModelProperty(attribute, attributeAnnotarion, "hidden");
+            utils.setModelProperty(attribute, attributeAnnotarion, "literal");
+            utils.setModelProperty(attribute, attributeAnnotarion, "passThrough");
+            utils.setModelProperty(attribute, attributeAnnotarion, "required");
+            utils.setModelProperty(attribute, attributeAnnotarion, "readOnly");
             if (!utils.isDefaultValue(attributeAnnotarion, "generate")) {
                 attribute.setGenerate(utils.getAnnotationValue(attributeAnnotarion, "generate", boolean.class));
             } else {
                 attribute.setGenerate(!beanProperty.isExists());
             }
 
-            descriptionProcessor.processDescription(attribute, beanProperty.getAnnotation(Attribute.class).description(), beanProperty
-                .getDocComment());
+            descriptionProcessor.processDescription(attribute,
+                utils.getAnnotationValue(attributeAnnotarion, "description", AnnotationMirror.class),
+                beanProperty.getDocComment());
 
             setDefaultValue(attribute, attributeAnnotarion);
 
@@ -104,12 +106,12 @@ public class AttributesProcessorImpl implements AttributesProcessor {
             // MethodExpression call signature.
             attribute.setSignature(getSignature(attributeAnnotarion));
 
-            for (AnnotationMirror event : utils.getAnnotationValues(attributeAnnotarion, "events", AnnotationMirror.class)){
+            for (AnnotationMirror event : utils.getAnnotationValues(attributeAnnotarion, "events",
+                AnnotationMirror.class)) {
                 setBehaviorEvent(attribute, event);
             }
         }
     }
-
 
     private void setDefaultValue(PropertyBase attribute, AnnotationMirror attributeAnnotarion) {
         SourceUtils utils = utilsProvider.get();
@@ -165,15 +167,14 @@ public class AttributesProcessorImpl implements AttributesProcessor {
 
             if (!SIGNATURE_NONE_CLASS_NAME.equals(returnType)) {
                 MethodSignature methodSignature = new MethodSignature();
-                methodSignature.setParameters(utils.getAnnotationValues(signatureAnnotation, "parameters",
-                    ClassName.class));
+                methodSignature.setParameters(Lists.newArrayList(utils.getAnnotationValues(signatureAnnotation, "parameters",
+                    ClassName.class)));
                 methodSignature.setReturnType(returnType);
                 return methodSignature;
             }
         }
         return null;
     }
-
 
     private void setBehaviorEvent(PropertyBase attribute, AnnotationMirror eventMirror) {
         if (null != eventMirror) {

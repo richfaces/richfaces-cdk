@@ -319,22 +319,19 @@ public class ValidatorImpl implements ModelValidator {
     protected void verifyEvents(ComponentLibrary library) {
         for (EventModel event : library.getEvents()) {
             ClassName listenerInterface = event.getListenerInterface();
-            if (null == listenerInterface) {
-                // TODO - infer listener interface name.
-            }
             SourceUtils sourceUtils = sourceUtilsProvider.get();
-            event.setGenerateListener(!sourceUtils.isClassExists(listenerInterface));
+            if (null != listenerInterface) {
+                event.setGenerateListener(!sourceUtils.isClassExists(listenerInterface));
+            }
             String methodName = event.getListenerMethod();
             if (null == methodName) {
-                // TODO infer listener method name.
                 methodName = "process";
                 event.setListenerMethod(methodName);
             }
             ClassName sourceInterface = event.getSourceInterface();
-            if (null == sourceInterface) {
-                // TODO - infer source interface.
+            if (null != sourceInterface) {
+                event.setGenerateSource(!sourceUtils.isClassExists(sourceInterface));
             }
-            event.setGenerateSource(!sourceUtils.isClassExists(sourceInterface));
             // Propagate event to corresponding components.
             for (ComponentModel component : library.getComponents()) {
                 for (EventModel componentEvent : component.getEvents()) {

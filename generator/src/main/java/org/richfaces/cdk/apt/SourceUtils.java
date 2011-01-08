@@ -24,7 +24,6 @@
 package org.richfaces.cdk.apt;
 
 import java.lang.annotation.Annotation;
-import java.util.List;
 import java.util.Set;
 
 import javax.lang.model.element.AnnotationMirror;
@@ -200,7 +199,7 @@ public interface SourceUtils {
      * @param propertyName
      * @return
      */
-    <T> List<T> getAnnotationValues(AnnotationMirror annotation, String propertyName, Class<T> expectedType);
+    <T> Iterable<T> getAnnotationValues(AnnotationMirror annotation, String propertyName, Class<T> expectedType);
 
     /**
      * <p class="changed_added_4_0"></p>

@@ -24,23 +24,18 @@ package org.richfaces.cdk.apt.processors;
 import java.lang.annotation.Annotation;
 
 import javax.annotation.processing.SupportedAnnotationTypes;
-import javax.faces.render.RenderKitFactory;
+import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
-import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.type.TypeKind;
-import javax.lang.model.type.TypeMirror;
 
-import org.richfaces.cdk.Logger;
 import org.richfaces.cdk.annotations.JsfComponent;
 import org.richfaces.cdk.annotations.JsfRenderer;
-import org.richfaces.cdk.model.ClassName;
+import org.richfaces.cdk.apt.SourceUtils;
 import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.FacesId;
 import org.richfaces.cdk.model.RendererModel;
 import org.richfaces.cdk.util.Strings;
 
-import com.google.inject.Inject;
 
 /**
  * @author akolonitsky
@@ -53,60 +48,28 @@ public class RendererProcessor extends ProcessorBase implements CdkAnnotationPro
 
     private static final String RENDERER_TYPE = "RENDERER_TYPE";
     
-    @Inject
-    private Logger log;
-
-
     public void process(Element rendererElement, ComponentLibrary library) {
-        JsfRenderer annotation = rendererElement.getAnnotation(JsfRenderer.class);
+        SourceUtils sourceUtils = getSourceUtils();
+        AnnotationMirror annotation = sourceUtils.getAnnotationMirror(rendererElement, JsfRenderer.class);
 
-        RendererModel rendererModel = process((TypeElement) rendererElement, annotation, library);
-
-        addToRenderKit(annotation, library, rendererModel);
-
-    }
-
-    public RendererModel process(TypeElement rendererElement, JsfRenderer annotation, ComponentLibrary library) {
         RendererModel rendererModel = new RendererModel();
 
-        setClassNames(rendererElement, rendererModel, null);
+        TypeElement rendererTypeElement = (TypeElement) rendererElement;
+        setClassNames(rendererTypeElement, rendererModel, annotation);
 
-        setRendererType(rendererElement, rendererModel, annotation);
-        setComponentFamily(rendererElement, rendererModel, annotation);
-        setDescription(rendererModel, annotation.description(), getDocComment(rendererElement));
+        setRendererType(rendererTypeElement, rendererModel, annotation);
+        
+        setComponentFamily(rendererTypeElement, rendererModel, annotation);
+        setDescription(rendererModel, annotation, getDocComment(rendererElement));
 
-        setTemplate(rendererModel, annotation);
+        sourceUtils.setModelProperty(rendererModel, annotation, "templatePath","template");
 
-        // TODO - process @Test annotations.
-        return rendererModel;
-    }
-
-    protected void setClassNames(TypeElement componentElement, RendererModel modelElement, String generatedClass) {
-
-        if (componentElement.getModifiers().contains(Modifier.ABSTRACT) || !Strings.isEmpty(generatedClass)) {
-            modelElement.setGenerate(true);
-            modelElement.setRendererClass(ClassName.parseName(generatedClass));
-            modelElement.setBaseClass(ClassName.parseName(componentElement.getQualifiedName().toString()));
-        } else {
-            modelElement.setGenerate(false);
-            modelElement.setRendererClass(ClassName.parseName(componentElement.getQualifiedName().toString()));
-            
-            TypeMirror superclass = componentElement.getSuperclass();
-            if (superclass.getKind() == TypeKind.DECLARED) {
-                TypeElement typeElement = getSourceUtils().asTypeElement(superclass);
-                modelElement.setBaseClass(ClassName.parseName(typeElement.getQualifiedName().toString()));
-            }
-        }
-
-    }
-
-    private void addToRenderKit(JsfRenderer annotation, ComponentLibrary library, RendererModel rendererModel) {
-        String renderKitId = annotation.renderKitId();
-        if (Strings.isEmpty(renderKitId)) {
-            renderKitId = RenderKitFactory.HTML_BASIC_RENDER_KIT; // TODO ???
-        }
+        String renderKitId = sourceUtils.getAnnotationValue(annotation, "renderKitId", String.class);
         library.addRenderer(renderKitId, rendererModel);
+
     }
+
+
 
     private void setTemplate(RendererModel rendererModel, JsfRenderer annotation) {
         String template = annotation.template();
@@ -116,37 +79,12 @@ public class RendererProcessor extends ProcessorBase implements CdkAnnotationPro
     }
 
 
-    private void setComponentFamily(TypeElement rendererElement, RendererModel rendererModel, JsfRenderer annotation) {
-        String family = annotation.family();
-        if (!Strings.isEmpty(family)) {
-            rendererModel.setFamily(FacesId.parseId(family));
-            return;
-        } else {
-
-            Object value = getSourceUtils().getConstant(rendererElement, COMPONENT_FAMILY);
-            if (value != null) {
-                rendererModel.setFamily(FacesId.parseId(value.toString()));
-                return;
-            }
-        }
+    private void setComponentFamily(TypeElement rendererElement, RendererModel rendererModel, AnnotationMirror annotation) {
+        rendererModel.setFamily(FacesId.parseId(getAnnotationPropertyOrConstant(rendererElement, annotation,"family",COMPONENT_FAMILY)));
     }
 
-    private String getRendererType(TypeElement rendererElement, JsfRenderer annotation) {
-        String type = annotation.type();
-        if (!Strings.isEmpty(type)) {
-            return type;
-        }
-
-        Object value = getSourceUtils().getConstant(rendererElement, RENDERER_TYPE);
-        if (value != null) {
-            return value.toString();
-        }
-
-        return null;
-    }
-
-    private void setRendererType(TypeElement rendererElement, RendererModel rendererModel, JsfRenderer annotation) {
-        rendererModel.setId(FacesId.parseId(getRendererType(rendererElement, annotation)));
+    private void setRendererType(TypeElement rendererElement, RendererModel rendererModel, AnnotationMirror annotation) {
+        rendererModel.setId(FacesId.parseId(getAnnotationPropertyOrConstant(rendererElement, annotation,"type",RENDERER_TYPE)));
     }
 
     protected String getComponentType(TypeElement componentElement) {
