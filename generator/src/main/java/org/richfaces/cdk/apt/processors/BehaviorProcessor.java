@@ -26,15 +26,14 @@ package org.richfaces.cdk.apt.processors;
 import java.lang.annotation.Annotation;
 
 import javax.annotation.processing.SupportedAnnotationTypes;
-import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 
 import org.richfaces.cdk.CdkProcessingException;
 import org.richfaces.cdk.annotations.JsfBehavior;
-import org.richfaces.cdk.apt.SourceUtils;
 import org.richfaces.cdk.model.BehaviorModel;
 import org.richfaces.cdk.model.ComponentLibrary;
+import org.richfaces.cdk.model.FacesId;
 
 /**
  * <p class="changed_added_4_0"></p>
@@ -46,17 +45,17 @@ public class BehaviorProcessor extends ProcessorBase implements CdkAnnotationPro
 
     @Override
     public void process(Element element, ComponentLibrary library) throws CdkProcessingException {
-        SourceUtils sourceUtils = getSourceUtils();
-        AnnotationMirror behavior = sourceUtils.getAnnotationMirror(element, JsfBehavior.class);
+        JsfBehavior behavior = element.getAnnotation(JsfBehavior.class);
 
-        BehaviorModel behaviorModel = new BehaviorModel();
-        
-        sourceUtils.setModelProperty(behaviorModel, behavior, "id");
-        setClassNames((TypeElement) element, behaviorModel, behavior);
+        BehaviorModel behaviorModel = new BehaviorModel(new FacesId(behavior.id()));
+        setClassNames((TypeElement) element, behaviorModel, behavior.generate());
 
-        setTagInfo(behavior, behaviorModel);
-        processAttributes((TypeElement) element, behaviorModel, behavior);
-        setDescription(behaviorModel, behavior, getDocComment(element));
+        setTagInfo(behavior.tag(), behaviorModel);
+        AttributesProcessor attributesProcessor = getAttributeProcessor();
+        attributesProcessor.processXmlFragment(behaviorModel, behavior.attributes());
+        attributesProcessor.processType(behaviorModel, (TypeElement) element);
+        setDescription(behaviorModel, behavior.description(), getDocComment(element));
+
         library.getBehaviors().add(behaviorModel);
     }
 

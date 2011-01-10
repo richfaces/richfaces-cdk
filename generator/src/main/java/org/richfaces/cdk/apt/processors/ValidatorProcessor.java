@@ -24,14 +24,13 @@ package org.richfaces.cdk.apt.processors;
 import java.lang.annotation.Annotation;
 
 import javax.annotation.processing.SupportedAnnotationTypes;
-import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 
 import org.richfaces.cdk.CdkProcessingException;
 import org.richfaces.cdk.annotations.JsfValidator;
-import org.richfaces.cdk.apt.SourceUtils;
 import org.richfaces.cdk.model.ComponentLibrary;
+import org.richfaces.cdk.model.FacesId;
 import org.richfaces.cdk.model.ValidatorModel;
 
 /**
@@ -43,15 +42,13 @@ public class ValidatorProcessor extends ProcessorBase implements CdkAnnotationPr
 
     @Override
     public void process(Element element, ComponentLibrary library) throws CdkProcessingException {
-        SourceUtils utils = getSourceUtils();
-        AnnotationMirror validator = utils.getAnnotationMirror(element,JsfValidator.class);
+        JsfValidator validator = element.getAnnotation(JsfValidator.class);
 
-        ValidatorModel validatorModel = new ValidatorModel();
-        utils.setModelProperty(validatorModel, validator, "id");
-        setClassNames((TypeElement) element, validatorModel, validator);
-        setDescription(validatorModel, validator, getDocComment(element));
+        ValidatorModel validatorModel = new ValidatorModel(FacesId.parseId(validator.id()));
+        setClassNames((TypeElement) element, validatorModel, validator.generate());
+        setDescription(validatorModel, validator.description(), getDocComment(element));
 
-        setTagInfo(validator, validatorModel);
+        setTagInfo(validator.tag(), validatorModel);
 
         library.getValidators().add(validatorModel);
     }
@@ -59,5 +56,11 @@ public class ValidatorProcessor extends ProcessorBase implements CdkAnnotationPr
     @Override
     public Class<? extends Annotation> getProcessedAnnotation() {
         return JsfValidator.class;
+    }
+
+
+    protected String[] getAnnotationAttributes(TypeElement element) {
+        JsfValidator validator = element.getAnnotation(JsfValidator.class);
+        return validator.attributes();
     }
 }

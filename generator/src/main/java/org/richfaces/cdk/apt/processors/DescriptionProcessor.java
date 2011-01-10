@@ -23,8 +23,7 @@
 
 package org.richfaces.cdk.apt.processors;
 
-import javax.lang.model.element.AnnotationMirror;
-
+import org.richfaces.cdk.annotations.Description;
 import org.richfaces.cdk.model.DescriptionGroup;
 
 /**
@@ -37,15 +36,15 @@ public interface DescriptionProcessor {
     /**
      * <p class="changed_added_4_0">process {@link Description} annotation and set information from it into model. Optional string from the JavaDoc comment has precedence over {@link Desription#value()} attribute.</p>
      * @param model
-     * @param annotation
+     * @param description
      * @param docComment JavaDoc comment associated with described element.
      */
-    public void processDescription(DescriptionGroup model, AnnotationMirror annotation, String docComment);
+    public void processDescription(DescriptionGroup model, Description description, String docComment);
 
     /**
      * <p class="changed_added_4_0">process {@link Description} annotation and set information from it into model.</p>
      * @param model
      * @param description
      */
-    public void processDescription(DescriptionGroup model, AnnotationMirror description);
+    public void processDescription(DescriptionGroup model, Description description);
 }

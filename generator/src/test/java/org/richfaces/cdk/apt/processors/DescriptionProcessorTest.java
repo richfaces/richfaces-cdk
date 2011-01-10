@@ -27,15 +27,12 @@ import static org.easymock.EasyMock.*;
 
 import java.util.Collections;
 
-import javax.lang.model.element.AnnotationMirror;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.richfaces.cdk.CdkTestRunner;
 import org.richfaces.cdk.Mock;
 import org.richfaces.cdk.annotations.Description;
 import org.richfaces.cdk.apt.AnnotationProcessorTestBase;
-import org.richfaces.cdk.apt.SourceUtils;
 import org.richfaces.cdk.model.DescriptionGroup;
 
 import com.google.inject.Inject;
@@ -58,14 +55,12 @@ public class DescriptionProcessorTest extends AnnotationProcessorTestBase {
     private DescriptionGroup bean;
 
     @Mock
-    private AnnotationMirror description;
+    private Description description;
 
     @Inject
     private DescriptionProcessorImpl descriptionProcessor;
 
-    @Mock
-    private SourceUtils utils;
-   /**
+    /**
      * Test method for
      * {@link org.richfaces.cdk.apt.processors.DescriptionProcessorImpl#processDescription(org.richfaces.cdk.model.DescriptionGroup, org.richfaces.cdk.annotations.Description, java.lang.String)}
      * .
@@ -74,14 +69,12 @@ public class DescriptionProcessorTest extends AnnotationProcessorTestBase {
     public void testProcessDescription() {
         bean.setDescription(FOO_BAR_ELEMENT);
         expectLastCall();
-        expect(utils.isDefaultValue(description, "smallIcon")).andStubReturn(true);
-        expect(utils.isDefaultValue(description, "largeIcon")).andStubReturn(true);
-        utils.setModelProperty(bean, description, "displayName");expectLastCall();
-        utils.setModelProperty(bean, description, "description","value");expectLastCall();
-//        expect(this.description.smallIcon()).andReturn("");
-//        expect(this.description.largeIcon()).andReturn("");
-//        expect(this.description.displayName()).andReturn(FOO_FACET).times(2);
-//        expect(this.description.value()).andReturn("");
+        bean.setDisplayname(FOO_FACET);
+        expectLastCall();
+        expect(this.description.smallIcon()).andReturn("");
+        expect(this.description.largeIcon()).andReturn("");
+        expect(this.description.displayName()).andReturn(FOO_FACET).times(2);
+        expect(this.description.value()).andReturn("");
         mockController.replay();
         descriptionProcessor.processDescription(bean, description, FOO_BAR_ELEMENT);
         mockController.verify();

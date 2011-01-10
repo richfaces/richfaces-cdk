@@ -58,13 +58,6 @@ public @interface JsfRenderer {
      * @return
      */
     public String family() default "";
-    
-    
-    /**
-     * <p class="changed_added_4_0">Name of generated renderer class.</p>
-     * @return
-     */
-    public String generate() default "";
 
     /**
      * <p class="changed_added_4_0">RenderKit for which this renderer is belong to</p>

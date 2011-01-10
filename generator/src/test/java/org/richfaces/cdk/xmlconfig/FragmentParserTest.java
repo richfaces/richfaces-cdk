@@ -113,7 +113,7 @@ public class FragmentParserTest extends CdkTestBase {
         assertEquals("int", property.getType().getName());
         assertEquals("test2 property", property.getDescription());
         assertEquals("ontest2.png", property.getIcon().getSmallIcon());
-        assertEquals("test2 event property", property.getDisplayName());
+        assertEquals("test2 event property", property.getDisplayname());
         assertEquals("3", property.getDefaultValue());
         assertEquals("15", property.getSuggestedValue());
 

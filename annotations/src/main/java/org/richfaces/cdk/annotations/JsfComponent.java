@@ -134,7 +134,7 @@ public @interface JsfComponent {
      * 
      * @return
      */
-    public Event[] fires() default {};
+    public Class<? extends FacesEvent>[] fires() default {};
 
     /**
      * <p class="changed_added_4_0">

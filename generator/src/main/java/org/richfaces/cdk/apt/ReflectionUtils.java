@@ -24,6 +24,7 @@
 package org.richfaces.cdk.apt;
 
 import java.lang.annotation.Annotation;
+import java.util.List;
 import java.util.Set;
 
 import javax.lang.model.element.AnnotationMirror;
@@ -112,7 +113,7 @@ public class ReflectionUtils implements SourceUtils {
     }
 
     @Override
-    public <T> Iterable<T> getAnnotationValues(AnnotationMirror annotation, String propertyName, Class<T> expectedType) {
+    public <T> List<T> getAnnotationValues(AnnotationMirror annotation, String propertyName, Class<T> expectedType) {
         // TODO Auto-generated method stub
         return null;
     }

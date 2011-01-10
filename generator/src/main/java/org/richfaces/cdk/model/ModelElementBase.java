@@ -10,7 +10,7 @@ import com.google.common.collect.Lists;
  * @author asmirnov@exadel.com
  *
  */
-public class ModelElementBase extends BeanModelBase implements FacesComponent, ViewElement {
+public class ModelElementBase extends BeanModelBase implements FacesComponent {
 
     private FacesId id;
     
@@ -23,10 +23,10 @@ public class ModelElementBase extends BeanModelBase implements FacesComponent, V
     private final Collection<ClassName> interfaces = Lists.newArrayList();
 
 
-    /* (non-Javadoc)
-     * @see org.richfaces.cdk.model.ViewElement#getTags()
+    /**
+     * <p class="changed_added_4_0"></p>
+     * @return the tags
      */
-    @Override
     public ModelCollection<TagModel> getTags() {
         return this.tags;
     }

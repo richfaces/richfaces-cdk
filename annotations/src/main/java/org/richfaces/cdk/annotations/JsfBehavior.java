@@ -52,7 +52,7 @@ public @interface JsfBehavior {
 
     public String generate() default "";
 
-    public Tag[] tag() default {};
+    public Tag tag() default @Tag;
     
     public JsfBehaviorRenderer renderer() default @JsfBehaviorRenderer();
     /**
@@ -77,13 +77,4 @@ public @interface JsfBehavior {
      * @return
      */
     public String[] attributes() default {};
-
-    /**
-     * <p class="changed_added_4_0">
-     * Interfaces that should be implemented in the generated class. CDK processes all {@link Attribute} annotations in these interfaces
-     * </p>
-     * 
-     * @return
-     */
-    public Class<?>[] interfaces() default {};
 }

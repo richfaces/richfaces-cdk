@@ -23,8 +23,6 @@
 
 package org.richfaces.cdk.annotations;
 
-import javax.faces.component.UIComponent;
-import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -52,18 +50,13 @@ public @interface Event {
     public static final String NAME = "org.richfaces.cdk.annotations.Event";
 
     /**
-     * <p class="changed_added_4_0">Used in the {@link JsfComponent} only, to define event type.</p>
-     * @return
-     */
-    public Class<? extends FacesEvent> value() default DEFAULT.class;
-    /**
      * <p class="changed_added_4_0">
-     * The listener interface class that process annotated event.
+     * The listener interface class that process annotated event. This is mandatory parameter.
      * </p>
      * 
      * @return name of listener interface
      */
-    public Class<? extends FacesListener> listener() default DEFAULT_LISTENER.class;
+    public Class<? extends FacesListener> listener();
 
     /**
      * <p class="changed_added_4_0">Name for the listener interface method that process annotated event type.</p>
@@ -89,24 +82,4 @@ public @interface Event {
      */
     public Tag[] tag() default {};
 
-    @SuppressWarnings("serial")
-    static final class DEFAULT extends FacesEvent {
-
-        public DEFAULT(UIComponent component) {
-            super(component);
-        }
-
-        @Override
-        public boolean isAppropriateListener(FacesListener listener) {
-            return false;
-        }
-
-        @Override
-        public void processListener(FacesListener listener) {
-        }
-        }
-    
-    static final class DEFAULT_LISTENER implements FacesListener {
-        
-    }
 }

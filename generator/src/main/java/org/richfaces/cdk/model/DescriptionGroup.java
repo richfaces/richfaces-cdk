@@ -36,7 +36,7 @@ public interface DescriptionGroup {
      */
     @XmlElement(name = "display-name")
     @Merge
-    public String getDisplayName();
+    public String getDisplayname();
 
     /**
      * <p class="changed_added_4_0">
@@ -44,7 +44,7 @@ public interface DescriptionGroup {
      *
      * @param displayname the displayname to set
      */
-    public void setDisplayName(String displayname);
+    public void setDisplayname(String displayname);
 
     /**
      * <p class="changed_added_4_0">

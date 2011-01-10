@@ -159,16 +159,13 @@ public final class ComponentModel extends ModelElementBase implements ModelEleme
         return events;
     }
 
-    public EventModel addEvent(ClassName className) {
+    public EventModel addEvent(String className) {
 
+        // TODO - use a single events collection from library.
         EventModel event = new EventModel();
-        event.setType(className);
+        event.setType(new ClassName(className));
         events.add(event);
         return event;
-    }
-
-    public EventModel addEvent(String className) {
-        return addEvent(ClassName.get(className));
     }
 
     @Override

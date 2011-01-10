@@ -65,11 +65,11 @@ public class DescriptionGroupBase implements DescriptionGroup, Extensible<Config
     }
 
     @Merge
-    public final String getDisplayName() {
+    public final String getDisplayname() {
         return displayname;
     }
 
-    public final void setDisplayName(String displayname) {
+    public final void setDisplayname(String displayname) {
         this.displayname = displayname;
     }
 

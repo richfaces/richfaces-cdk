@@ -19,7 +19,7 @@ public @interface JsfValidator {
 
     public String generate() default "";
 
-    public Tag[] tag() default {};
+    public Tag tag() default @Tag;
     /**
      * <p class="changed_added_4_0">
      * Description used by IDE.
@@ -41,13 +41,4 @@ public @interface JsfValidator {
      * @return
      */
     public String[] attributes() default {};
-    /**
-     * <p class="changed_added_4_0">
-     * Interfaces that should be implemented in the generated class. CDK processes all {@link Attribute} annotations in these interfaces
-     * </p>
-     * 
-     * @return
-     */
-    public Class<?>[] interfaces() default {};
-
 }

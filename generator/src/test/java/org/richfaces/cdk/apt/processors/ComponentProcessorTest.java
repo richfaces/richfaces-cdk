@@ -28,7 +28,6 @@ import static org.junit.Assert.*;
 
 import java.util.Collections;
 
-import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 
@@ -72,7 +71,7 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
     private static final String FOO_HTML_BAR = "foo.HtmlBar";
 
     @Mock
-    private AnnotationMirror annotation;
+    private JsfComponent annotation;
 
     @Mock
     private AttributesProcessor attributesProcessor;
@@ -113,19 +112,13 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
 
     @Test
     public void testProcessFacetsFromAnnotation() throws Exception {
-        AnnotationMirror facet = createMock(AnnotationMirror.class);
+        Facet facet = createMock(Facet.class);
         expect(utils.getBeanPropertiesAnnotatedWith(eq(Facet.class), same(componentElement))).andReturn(
             Collections.<BeanProperty> emptySet());
-//        expect(annotation.facets()).andReturn(new Facet[] { facet });
-        expect(utils.getAnnotationValues(annotation, "facets",AnnotationMirror.class)).andReturn(Collections.singleton(facet));
-        expect(utils.isDefaultValue(same(facet), eq("name"))).andReturn(false);
-        expect(utils.getAnnotationValue(facet, "name",String.class)).andReturn("foo");
-        expect(utils.isDefaultValue(same(facet), eq("description"))).andReturn(true);
-        expect(utils.isDefaultValue(same(facet), eq("generate"))).andReturn(false);
-        expect(utils.getAnnotationValue(facet, "generate",Boolean.class)).andReturn(true);
-//        expect(facet.name()).andReturn("foo");
-//        expect(facet.description()).andReturn(this.description);
-//        expect(facet.generate()).andReturn(true);
+        expect(annotation.facets()).andReturn(new Facet[] { facet });
+        expect(facet.name()).andReturn("foo");
+        expect(facet.description()).andReturn(this.description);
+        expect(facet.generate()).andReturn(true);
         // expect(this.description.smallIcon()).andReturn("");
         // expect(this.description.largeIcon()).andReturn("");
         // expect(this.description.displayName()).andReturn("fooFacet").times(2);
@@ -146,17 +139,20 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
 
     @Test
     public void testProcessFacetsFromProperty() throws Exception {
-        AnnotationMirror facet = createMock(AnnotationMirror.class);
+        Facet facet = createMock(Facet.class);
         expect(utils.getBeanPropertiesAnnotatedWith(eq(Facet.class), same(componentElement))).andReturn(
             Collections.singleton(property));
-        expect(property.getAnnotationMirror(Facet.class)).andReturn(facet);
+        expect(annotation.facets()).andReturn(new Facet[0]);
+        expect(property.getAnnotation(Facet.class)).andReturn(facet);
         expect(property.getName()).andReturn("foo");
         expect(property.getDocComment()).andReturn("my comment").times(2);
         expect(property.isExists()).andReturn(true);
-        expect(utils.isDefaultValue(same(facet), eq("description"))).andReturn(true);
-        expect(utils.isDefaultValue(same(facet), eq("generate"))).andReturn(false);
-        expect(utils.getAnnotationValue(facet, "generate",Boolean.class)).andReturn(true);
-        expect(utils.getAnnotationValues(annotation, "facets",AnnotationMirror.class)).andReturn(Collections.<AnnotationMirror>emptySet());
+        expect(facet.description()).andReturn(description);
+        expect(facet.generate()).andReturn(true);
+        // expect(this.description.smallIcon()).andReturn("");
+        // expect(this.description.largeIcon()).andReturn("");
+        // expect(this.description.displayName()).andReturn("fooFacet").times(2);
+        // expect(this.description.value()).andReturn("");
         replay(utils, componentElement, jaxb, annotation, property, facet, description);
 
         processor.processFacets(componentElement, model, annotation);
@@ -166,6 +162,9 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
         FacetModel facetModel = Iterables.getOnlyElement(model.getFacets());
         assertTrue(facetModel.getGenerate());
         assertEquals("foo", facetModel.getName());
+        // assertEquals("my comment", facetModel.getDescription());
+        // assertEquals("fooFacet", facetModel.getDisplayname());
+        // assertNull(facetModel.getIcon());
     }
 
     /**
@@ -178,14 +177,12 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
     public void testSetClassNames() throws Exception {
         expect(componentElement.getModifiers()).andReturn(Collections.<Modifier> emptySet());
         expect(componentElement.getQualifiedName()).andReturn(new TestName(FOO_BAR));
-        expect(utils.isDefaultValue(annotation, "generate")).andReturn(true);
-        expect(componentElement.getQualifiedName()).andReturn(new TestName(FOO_BAR));
         replay(utils, componentElement, jaxb, annotation);
-        processor.setClassNames(componentElement, model, annotation);
+        processor.setClassNames(componentElement, model, "");
         verify(utils, componentElement, jaxb, annotation);
         assertFalse(model.getGenerate());
         assertEquals(FOO_BAR, model.getBaseClass().toString());
-        assertEquals(FOO_BAR, model.getTargetClass().toString());
+        assertNull(model.getTargetClass());
     }
 
     /**
@@ -197,11 +194,10 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
     @Test
     public void testSetClassNames1() throws Exception {
         expect(componentElement.getModifiers()).andReturn(Collections.<Modifier> singleton(Modifier.ABSTRACT));
-        utils.setModelProperty(model, annotation, "targetClass","generate");expectLastCall();
         expect(componentElement.getQualifiedName()).andReturn(new TestName(FOO_BAR));
         replay(utils, componentElement, jaxb, annotation);
 
-        processor.setClassNames(componentElement, model, annotation);
+        processor.setClassNames(componentElement, model, "");
 
         verify(utils, componentElement, jaxb, annotation);
         assertTrue(model.getGenerate());
@@ -218,16 +214,48 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
     @Test
     public void testSetClassNames2() throws Exception {
         expect(componentElement.getModifiers()).andReturn(Collections.<Modifier> emptySet());
-        expect(utils.isDefaultValue(annotation, "generate")).andReturn(false);
-        utils.setModelProperty(model, annotation, "targetClass","generate");expectLastCall();
         expect(componentElement.getQualifiedName()).andReturn(new TestName(FOO_BAR));
         replay(utils, componentElement, jaxb, annotation);
 
-        processor.setClassNames(componentElement, model, annotation);
+        processor.setClassNames(componentElement, model, FOO_HTML_BAR);
 
         verify(utils, componentElement, jaxb, annotation);
         assertTrue(model.getGenerate());
         assertEquals(FOO_BAR, model.getBaseClass().toString());
+        assertEquals(FOO_HTML_BAR, model.getTargetClass().toString());
+    }
+
+    @Test
+    public void testSetFamily() throws Exception {
+        replay(utils, componentElement, jaxb, annotation);
+
+        processor.setComponeneFamily(componentElement, model, FOO_HTML_BAR);
+
+        verify(utils, componentElement, jaxb, annotation);
+        assertEquals(FacesId.parseId(FOO_HTML_BAR), model.getFamily());
+    }
+
+    @Test
+    public void testSetFamily1() throws Exception {
+        expect(utils.getConstant(same(componentElement), eq(ComponentProcessor.COMPONENT_FAMILY))).andReturn(
+            FOO_HTML_BAR);
+        replay(utils, componentElement, jaxb, annotation);
+
+        processor.setComponeneFamily(componentElement, model, "");
+
+        verify(utils, componentElement, jaxb, annotation);
+        assertEquals(FacesId.parseId(FOO_HTML_BAR), model.getFamily());
+    }
+
+    @Test
+    public void testSetFamily2() throws Exception {
+        expect(utils.getConstant(same(componentElement), eq(ComponentProcessor.COMPONENT_FAMILY))).andReturn(null);
+        replay(utils, componentElement, jaxb, annotation);
+
+        processor.setComponeneFamily(componentElement, model, "");
+
+        verify(utils, componentElement, jaxb, annotation);
+        assertNull(model.getFamily());
     }
 
     @Override

@@ -25,7 +25,6 @@ import javax.lang.model.util.ElementFilter;
 import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.Logger;
 import org.richfaces.cdk.model.ClassName;
-import org.richfaces.cdk.model.FacesId;
 import org.richfaces.cdk.util.PropertyUtils;
 
 import com.google.common.base.Predicate;
@@ -161,7 +160,7 @@ public class AptSourceUtils implements SourceUtils {
                 AptBeanProperty beanProperty = result.get(propertyName);
                 checkPropertyType(type, propertyName, propertyType, beanProperty);
                 if (null != (setter?beanProperty.setter:beanProperty.getter)) {
-                    log.debug("Two " + (setter ? "setter" : "getter") + " methods for the same bean property "
+                    log.warn("Two " + (setter ? "setter" : "getter") + " methods for the same bean property "
                         + propertyName + " in the class " + type.getQualifiedName());
                     if(!method.getModifiers().contains(Modifier.ABSTRACT)){
                         beanProperty.setAccessMethod(method, setter);
@@ -279,11 +278,8 @@ public class AptSourceUtils implements SourceUtils {
             VariableElement variable = (VariableElement) annotationValue.getValue();
             return (T) Enum.valueOf((Class<? extends Enum>) expectedType, variable.getSimpleName().toString());
         } else if (ClassName.class.equals(expectedType)) {
-            Object value = annotationValue.getValue();
+            TypeMirror value = (TypeMirror) annotationValue.getValue();
             return (T) ClassName.get(value.toString());
-        } else if (FacesId.class.equals(expectedType)) {
-            String value = (String) annotationValue.getValue();
-            return (T) FacesId.parseId(value);
         } else if (AnnotationMirror.class.isAssignableFrom(expectedType)) {
             AnnotationMirror value = (AnnotationMirror) annotationValue.getValue();
             return (T) value;
@@ -294,7 +290,7 @@ public class AptSourceUtils implements SourceUtils {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> Iterable<T> getAnnotationValues(AnnotationMirror annotation, String propertyName, Class<T> expectedType) {
+    public <T> List<T> getAnnotationValues(AnnotationMirror annotation, String propertyName, Class<T> expectedType) {
         Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> attributeEntry =
             findAnnotationProperty(annotation, propertyName);
         List<? extends AnnotationValue> annotationValues =

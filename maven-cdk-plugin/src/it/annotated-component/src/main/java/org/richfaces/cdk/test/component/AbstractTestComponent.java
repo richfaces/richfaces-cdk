@@ -31,12 +31,9 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.component.ValueHolder;
 import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
-import javax.faces.event.ValueChangeEvent;
-import javax.faces.event.ValueChangeListener;
 
 import org.richfaces.cdk.annotations.Attribute;
 import org.richfaces.cdk.annotations.Description;
-import org.richfaces.cdk.annotations.Event;
 import org.richfaces.cdk.annotations.Facet;
 import org.richfaces.cdk.annotations.JsfComponent;
 import org.richfaces.cdk.annotations.JsfRenderer;
@@ -59,7 +56,7 @@ import org.richfaces.cdk.test.model.TestModel;
     description=@Description(displayName="Test Component",largeIcon="large.gif",smallIcon="spall.png"),
     generate="org.richfaces.cdk.test.component.UITestComponent",
     facets=@Facet(name="caption",generate=true,description=@Description("Caption Facet")),
-    fires={@Event(TestEvent.class),@Event(value=ValueChangeEvent.class,listener=ValueChangeListener.class)},
+    fires=TestEvent.class,
     interfaces=ValueHolder.class,
     components={
         @RendererSpecificComponent(type = "org.richfaces.cdk.test.TestHtmlAbbr",

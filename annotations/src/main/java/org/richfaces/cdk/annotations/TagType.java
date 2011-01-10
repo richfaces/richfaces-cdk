@@ -28,19 +28,16 @@ package org.richfaces.cdk.annotations;
  */
 public enum TagType {
     /**
-     * <p class="changed_added_4_0">
-     * Defines JSP tag.
-     * </p>
-     */
+      * <p class="changed_added_4_0">Do not generate any tags, this is default value for {@link Tag#type()} annotation.</p>
+      */
+    None, /**
+      * <p class="changed_added_4_0">Defines JSP tag.</p>
+      */
     Jsp, /**
-     * <p class="changed_added_4_0">
-     * Defines Facelets tag.
-     * </p>
-     */
+      * <p class="changed_added_4_0">Defines Facelets tag.</p>
+      */
     Facelets, /**
-     * <p class="changed_added_4_0">
-     * Enforces tag annotation to generate all known tag types
-     * </p>
-     */
+      * <p class="changed_added_4_0">Enforces tag annotation to generate all known tag types</p>
+      */
     All
 }

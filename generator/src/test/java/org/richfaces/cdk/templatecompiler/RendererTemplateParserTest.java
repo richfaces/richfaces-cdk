@@ -252,7 +252,7 @@ public class RendererTemplateParserTest extends CdkTestBase {
 
         assertTrue(requiredAttribute.isRequired());
         assertEquals("That's a required attribute", requiredAttribute.getDescription());
-        assertEquals("Required Attribute", requiredAttribute.getDisplayName());
+        assertEquals("Required Attribute", requiredAttribute.getDisplayname());
     }
 
     @Test
