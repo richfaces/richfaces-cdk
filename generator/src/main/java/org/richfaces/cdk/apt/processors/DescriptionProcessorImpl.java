@@ -23,51 +23,56 @@
 
 package org.richfaces.cdk.apt.processors;
 
-import org.richfaces.cdk.annotations.Description;
+import javax.lang.model.element.AnnotationMirror;
+
+import org.richfaces.cdk.apt.SourceUtils;
 import org.richfaces.cdk.model.DescriptionGroup;
 import org.richfaces.cdk.util.Strings;
 
+import com.google.inject.Inject;
+import com.google.inject.Provider;
+
 /**
- * <p class="changed_added_4_0"></p>
- *
+ * <p class="changed_added_4_0">
+ * </p>
+ * 
  * @author asmirnov@exadel.com
  */
 public class DescriptionProcessorImpl implements DescriptionProcessor {
 
+    private final Provider<SourceUtils> utilsProvider;
+
+    @Inject
+    public DescriptionProcessorImpl(Provider<SourceUtils> utilsProvider) {
+        this.utilsProvider = utilsProvider;
+    }
+
     @Override
-    public void processDescription(DescriptionGroup model, Description description, String docComment) {
+    public void processDescription(DescriptionGroup model, AnnotationMirror description, String docComment) {
         if (!Strings.isEmpty(docComment)) {
             model.setDescription(docComment);
         }
         if (description != null) {
+            SourceUtils utils = utilsProvider.get();
             setIcon(model, description);
-            if (!Strings.isEmpty(description.displayName())) {
-                model.setDisplayname(description.displayName());
-            }
-            if (!Strings.isEmpty(description.value())) {
-                model.setDescription(description.value());
-            }
+            utils.setModelProperty(model, description, "displayName");
+            utils.setModelProperty(model, description, "description","value");
         }
     }
 
     @Override
-    public void processDescription(DescriptionGroup model, Description description) {
+    public void processDescription(DescriptionGroup model, AnnotationMirror description) {
         processDescription(model, description, null);
 
     }
 
-    protected void setIcon(DescriptionGroup component, Description icon) {
-        if (null != icon && (!Strings.isEmpty(icon.smallIcon()) || !Strings.isEmpty(icon.largeIcon()))) {
+    protected void setIcon(DescriptionGroup component, AnnotationMirror description) {
+        SourceUtils utils = utilsProvider.get();
+        if (null != description
+            && (!utils.isDefaultValue(description, "smallIcon") || !utils.isDefaultValue(description, "largeIcon"))) {
             DescriptionGroup.Icon iconValue = new DescriptionGroup.Icon();
-
-            if (!Strings.isEmpty(icon.smallIcon())) {
-                iconValue.setSmallIcon(icon.smallIcon());
-            }
-
-            if (!Strings.isEmpty(icon.largeIcon())) {
-                iconValue.setLargeIcon(icon.largeIcon());
-            }
-
+            utils.setModelProperty(iconValue, description, "smallIcon");
+            utils.setModelProperty(iconValue, description, "largeIcon");
             component.setIcon(iconValue);
         }
     }

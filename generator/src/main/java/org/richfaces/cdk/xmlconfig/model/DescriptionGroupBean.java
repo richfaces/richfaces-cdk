@@ -7,7 +7,7 @@ import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.DescriptionGroup;
 
 @XmlType(name = "descriptionType", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE,
-        propOrder = {"description", "displayname", "icon"})
+        propOrder = {"description", "displayName", "icon"})
 public class DescriptionGroupBean implements DescriptionGroup {
     private String description;
     private String displayname;
@@ -61,7 +61,7 @@ public class DescriptionGroupBean implements DescriptionGroup {
      * @return the displayname
      */
     @XmlElement(name = "display-name", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE)
-    public final String getDisplayname() {
+    public final String getDisplayName() {
         return displayname;
     }
 
@@ -70,7 +70,7 @@ public class DescriptionGroupBean implements DescriptionGroup {
      *
      * @param displayname the displayname to set
      */
-    public final void setDisplayname(String displayname) {
+    public final void setDisplayName(String displayname) {
         this.displayname = displayname;
     }
 }

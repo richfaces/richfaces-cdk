@@ -246,7 +246,7 @@ public class RendererTemplateParser implements ModelBuilder {
 
         // TODO is it the right one?
         rendererProperty.setDescription(templateAttribute.getShortDescription());
-        rendererProperty.setDisplayname(templateAttribute.getDisplayName());
+        rendererProperty.setDisplayName(templateAttribute.getDisplayName());
 
         Set<EventName> eventNamesSet = convert(templateAttribute.getClientBehaviors());
         if (eventNamesSet != null) {

@@ -288,8 +288,8 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
         if (!Strings.isEmpty(model.getDescription())) {
             parent.addElement("description").addText(model.getDescription());
         }
-        if (!Strings.isEmpty(model.getDisplayname())) {
-            parent.addElement("display-name").addText(model.getDisplayname());
+        if (!Strings.isEmpty(model.getDisplayName())) {
+            parent.addElement("display-name").addText(model.getDisplayName());
         }
         if (null != model.getIcon()) {
             Element iconElement = parent.addElement("icon");

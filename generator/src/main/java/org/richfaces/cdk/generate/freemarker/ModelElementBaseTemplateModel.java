@@ -122,39 +122,46 @@ public class ModelElementBaseTemplateModel extends StringModel implements Templa
 
     public TemplateModel getImportClasses() throws TemplateModelException {
         Set<ClassName> result = Sets.newTreeSet();
-
+        String targetPackage = model.getTargetClass().getPackage();
         for (PropertyBase entry : model.getAttributes()) {
-            if (entry.getGenerate() && !isPredefined(entry)) {
-                result.add(entry.getType());
+            if (entry.getGenerate()) {
+                addIfNecessary(targetPackage, result, entry.getType());
             }
         }
         // Import all interfaces implemented by the generated class.
         result.addAll(model.getInterfaces());
         if (model instanceof ComponentModel) {
             ComponentModel component = (ComponentModel) model;
-            for(EventModel event :component.getEvents()){
-                result.add(event.getSourceInterface());
-                result.add(event.getListenerInterface());
+            for (EventModel event : component.getEvents()) {
+                addIfNecessary(targetPackage, result, event.getSourceInterface());
+                addIfNecessary(targetPackage, result, event.getListenerInterface());
             }
         }
         // Collection<String> list = new ArrayList<String>(result);
         return this.wrapper.wrap(result);
     }
 
+
+    private void addIfNecessary(String pkg, Set<ClassName> classNames, ClassName toadd) {
+        if (null != toadd && !isPredefined(toadd) && !pkg.equals(toadd.getPackage())) {
+            classNames.add(toadd);
+        }
+    }
+
     public TemplateModel getTagImports() throws TemplateModelException {
         Set<ClassName> result = Sets.newTreeSet();
 
         for (PropertyBase entry : model.getAttributes()) {
-            if (!(entry.isHidden()||entry.isReadOnly()||null == entry.getSignature())) {
+            if (!(entry.isHidden() || entry.isReadOnly() || null == entry.getSignature())) {
                 MethodSignature methodSignature = entry.getSignature();
-                if(!isPredefined(methodSignature.getReturnType())){
+                if (!isPredefined(methodSignature.getReturnType())) {
                     result.add(methodSignature.getReturnType());
                 }
                 for (ClassName className : methodSignature.getParameters()) {
-                    if(!isPredefined(className)){
+                    if (!isPredefined(className)) {
                         result.add(className);
                     }
-                    
+
                 }
             }
         }
@@ -173,15 +180,18 @@ public class ModelElementBaseTemplateModel extends StringModel implements Templa
 
     public TemplateModel getImplementedInterfaces() throws TemplateModelException {
         Set<ClassName> result = Sets.newTreeSet();
-        if(getEventNames().size()>0){
+        if (getEventNames().size() > 0) {
             result.add(ClassName.parseName("javax.faces.component.behavior.ClientBehaviorHolder"));
         }
         // Import all interfaces implemented by the generated class.
         result.addAll(model.getInterfaces());
         if (model instanceof ComponentModel) {
             ComponentModel component = (ComponentModel) model;
-            for(EventModel event :component.getEvents()){
-                result.add(event.getSourceInterface());
+            for (EventModel event : component.getEvents()) {
+                ClassName sourceInterface = event.getSourceInterface();
+                if (null != sourceInterface) {
+                    result.add(sourceInterface);
+                }
             }
         }
         // Collection<String> list = new ArrayList<String>(result);
@@ -193,7 +203,7 @@ public class ModelElementBaseTemplateModel extends StringModel implements Templa
     }
 
     public boolean isPredefined(ClassName type) {
-        return type.isPrimitive() ||"java.lang".equals(type.getPackage());
+        return type.isPrimitive() || "java.lang".equals(type.getPackage());
     }
 
     private TemplateModel eventNames() throws TemplateModelException {
@@ -254,7 +264,7 @@ public class ModelElementBaseTemplateModel extends StringModel implements Templa
 
             @Override
             public boolean apply(PropertyBase input) {
-                return !(input.isHidden()||input.isReadOnly());
+                return !(input.isHidden() || input.isReadOnly());
             }
         }));
     }

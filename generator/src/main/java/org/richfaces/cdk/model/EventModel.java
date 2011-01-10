@@ -41,7 +41,7 @@ import org.richfaces.cdk.util.ComparatorUtils;
 @SuppressWarnings("serial")
 @XmlType(name = "event-configType", namespace = ComponentLibrary.CDK_EXTENSIONS_NAMESPACE)
 @XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
-public class EventModel implements ModelElement<EventModel> {
+public class EventModel implements ModelElement<EventModel>, ViewElement {
     private String description;
     private ClassName listenerInterface;
     private String  listenerMethod;
