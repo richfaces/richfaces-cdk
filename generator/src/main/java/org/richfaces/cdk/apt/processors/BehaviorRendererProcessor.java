@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: BehaviorRendererProcessor.java 20938 2011-01-10 22:35:38Z alexsmirnov $
  *
  * License Agreement.
  *
@@ -25,49 +25,41 @@ package org.richfaces.cdk.apt.processors;
 
 import java.lang.annotation.Annotation;
 
-import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 
 import org.richfaces.cdk.CdkProcessingException;
-import org.richfaces.cdk.annotations.JsfBehavior;
+import org.richfaces.cdk.annotations.JsfBehaviorRenderer;
 import org.richfaces.cdk.apt.SourceUtils;
-import org.richfaces.cdk.model.BehaviorModel;
+import org.richfaces.cdk.model.BehaviorRendererModel;
 import org.richfaces.cdk.model.ComponentLibrary;
+import org.richfaces.cdk.model.FacesId;
 
 /**
  * <p class="changed_added_4_0"></p>
  * @author asmirnov@exadel.com
  *
  */
-@SupportedAnnotationTypes({"javax.faces.component.FacesComponent", JsfBehavior.NAME})
-public class BehaviorProcessor extends ProcessorBase implements CdkAnnotationProcessor {
+public class BehaviorRendererProcessor extends ProcessorBase implements CdkAnnotationProcessor {
 
     @Override
     public void process(Element element, ComponentLibrary library) throws CdkProcessingException {
         SourceUtils sourceUtils = getSourceUtils();
-        AnnotationMirror behavior = sourceUtils.getAnnotationMirror(element, JsfBehavior.class);
+        AnnotationMirror behaviorRenderer = sourceUtils.getAnnotationMirror(element, JsfBehaviorRenderer.class);
 
-        BehaviorModel behaviorModel = new BehaviorModel();
-        
-        sourceUtils.setModelProperty(behaviorModel, behavior, "id");
-        setClassNames((TypeElement) element, behaviorModel, behavior);
+        BehaviorRendererModel behaviorRendererModel = new BehaviorRendererModel();
+        setClassNames((TypeElement) element, behaviorRendererModel, behaviorRenderer);
+        sourceUtils.setModelProperty(behaviorRendererModel, behaviorRenderer, "id","type");
 
-        setTagInfo(behavior, behaviorModel);
-        processAttributes((TypeElement) element, behaviorModel, behavior);
-        setDescription(behaviorModel, behavior, getDocComment(element));
-        // Behavior renderer
-        if(!sourceUtils.isDefaultValue(behavior, "renderer")){
-            AnnotationMirror renderer = sourceUtils.getAnnotationValue(behavior, "renderer", AnnotationMirror.class);
-            sourceUtils.setModelProperty(behaviorModel, renderer, "rendererType","type");
-        }
-        library.getBehaviors().add(behaviorModel);
+        setDescription(behaviorRendererModel, behaviorRenderer, getDocComment(element));
+        FacesId renderKitId = sourceUtils.getAnnotationValue(behaviorRenderer, "renderKitId", FacesId.class);
+        library.addRenderKit(renderKitId).getBehaviorRenderers().add(behaviorRendererModel);
     }
 
     @Override
     public Class<? extends Annotation> getProcessedAnnotation() {
-        return JsfBehavior.class;
+        return JsfBehaviorRenderer.class;
     }
 
 }

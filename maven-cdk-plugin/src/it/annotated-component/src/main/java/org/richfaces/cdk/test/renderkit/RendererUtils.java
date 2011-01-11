@@ -21,7 +21,44 @@ public class RendererUtils {
         // TODO Auto-generated method stub
         return null;
     }
+    /**
+     * Wrapper class around object value used to transform values into particular JS objects
+     * 
+     * @author Nick Belaevski
+     * @since 3.3.2
+     */
+    public enum ScriptHashVariableWrapper {
 
+        /**
+         * No-op default wrapper
+         */
+        noop, 
+        
+
+        /**
+         * Convert parameter to array of srings.
+         */
+        asArray 
+        , 
+        
+        /**
+         * Event handler functions wrapper. Wraps <pre>functionCode</pre> object into:
+         * <pre>function(event) {
+         *   functionCode
+         * }</pre>
+         */
+        eventHandler;        
+        /**
+         * Method that does the wrapping
+         * 
+         * @param o object to wrap
+         * @return wrapped object
+         */
+        Object wrap(Object o){
+            return o;
+        }
+    }
+    
 
     public class Attributes {
         

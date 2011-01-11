@@ -14,12 +14,14 @@ import javax.faces.el.ValueBinding;
  * ${description?if_exists}
  **/
 @Generated({"RichFaces CDK", "4.0.0-SNAPSHOT"})
-public class ${targetClass.simpleName} extends ${baseClass} implements Behavior, PartialStateHolder {
+public class ${targetClass.simpleName} extends ${baseClass} implements Behavior, PartialStateHolder
+<#if (implemented?size > 0)>, <@util.concat seq=implemented ; interface>${interface.simpleName}</@util.concat></#if> {
 
-    @Override
-    public void broadcast(BehaviorEvent event) {
+    <#if rendererType?exists >
+    public String getRendererType() {
+        return "${rendererType}";
     }
-
+    </#if>
     <#include "_attributes-old.ftl">
 
     <#include "_state-holder-methods-old.ftl">

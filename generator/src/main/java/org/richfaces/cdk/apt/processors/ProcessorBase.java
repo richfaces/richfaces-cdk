@@ -14,6 +14,7 @@ import org.richfaces.cdk.annotations.TagType;
 import org.richfaces.cdk.apt.SourceUtils;
 import org.richfaces.cdk.model.ClassName;
 import org.richfaces.cdk.model.DescriptionGroup;
+import org.richfaces.cdk.model.GeneratedFacesComponent;
 import org.richfaces.cdk.model.ModelCollection;
 import org.richfaces.cdk.model.ModelElementBase;
 import org.richfaces.cdk.model.TagModel;
@@ -63,7 +64,7 @@ public abstract class ProcessorBase {
         return tagModel;
     }
 
-    protected void setClassNames(TypeElement componentElement, ModelElementBase modelElement, AnnotationMirror behavior) {
+    protected void setClassNames(TypeElement componentElement, GeneratedFacesComponent modelElement, AnnotationMirror behavior) {
         SourceUtils sourceUtils = getSourceUtils();
         if (componentElement.getModifiers().contains(Modifier.ABSTRACT)
             || !sourceUtils.isDefaultValue(behavior, "generate")) {

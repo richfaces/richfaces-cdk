@@ -31,11 +31,14 @@ package org.richfaces.cdk.model;
  *
  */
 @SuppressWarnings("serial")
-public class BehaviorRendererModel implements ModelElement<BehaviorRendererModel>, FacesComponent {
+public class BehaviorRendererModel  extends DescriptionGroupBase implements ModelElement<BehaviorRendererModel>, GeneratedFacesComponent {
     private ClassName baseClass;
     private ClassName targetClass;
-    private boolean generate;
     private FacesId id;
+    /**
+     *  <p class="changed_added_4_0">Is that bean property generate in the class or should be generated ?</p>
+     */
+    private Boolean generate;
 
     public BehaviorRendererModel(FacesId type) {
         this.id = type;
@@ -95,21 +98,6 @@ public class BehaviorRendererModel implements ModelElement<BehaviorRendererModel
         this.baseClass = baseClass;
     }
 
-    /**
-     * <p class="changed_added_4_0"></p>
-     * @return the generate
-     */
-    public Boolean getGenerate() {
-        return this.generate;
-    }
-
-    /**
-     * <p class="changed_added_4_0"></p>
-     * @param generate the generate to set
-     */
-    public void setGenerate(Boolean generate) {
-        this.generate = generate;
-    }
 
     @Override
     public void merge(BehaviorRendererModel other) {
@@ -132,5 +120,14 @@ public class BehaviorRendererModel implements ModelElement<BehaviorRendererModel
             return true;
         }
         return false;
+    }
+
+    @Merge
+    public Boolean getGenerate() {
+        return generate;
+    }
+
+    public void setGenerate(Boolean generate) {
+        this.generate = generate;
     }
 }

@@ -33,12 +33,32 @@ package org.richfaces.cdk.model;
 public class BehaviorModel extends ModelElementBase implements ModelElement<BehaviorModel> {
 
     private static final long serialVersionUID = -5023589072935390357L;
+    
+    private FacesId rendererType;
+
 
     public BehaviorModel() {
     }
 
     public BehaviorModel(FacesId behaviorId) {
         setId(behaviorId);
+    }
+
+    /**
+     * <p class="changed_added_4_0"></p>
+     * @param rendererType the rendererType to set
+     */
+    public void setRendererType(FacesId rendererType) {
+        this.rendererType = rendererType;
+    }
+
+    /**
+     * <p class="changed_added_4_0"></p>
+     * @return the rendererType
+     */
+    @Merge
+    public FacesId getRendererType() {
+        return rendererType;
     }
 
     public <R,D> R accept(Visitor<R,D> visitor, D data) {

@@ -38,6 +38,11 @@ public class FacetModel extends DescriptionGroupBase implements ModelElement<Fac
     
     private String name;
 
+    /**
+     *  <p class="changed_added_4_0">Is that bean property generate in the class or should be generated ?</p>
+     */
+    private Boolean generate;
+
     public FacetModel() {
     }
 
@@ -69,5 +74,14 @@ public class FacetModel extends DescriptionGroupBase implements ModelElement<Fac
     @Override
     public boolean same(FacetModel other) {
         return ComparatorUtils.nullSafeEquals(this.getName(), other.getName());
+    }
+
+    @Merge
+    public Boolean getGenerate() {
+        return generate;
+    }
+
+    public void setGenerate(Boolean generate) {
+        this.generate = generate;
     }
 }

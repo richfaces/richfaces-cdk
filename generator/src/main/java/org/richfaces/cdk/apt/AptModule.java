@@ -27,6 +27,7 @@ import org.richfaces.cdk.LibraryBuilder;
 import org.richfaces.cdk.apt.processors.AttributesProcessor;
 import org.richfaces.cdk.apt.processors.AttributesProcessorImpl;
 import org.richfaces.cdk.apt.processors.BehaviorProcessor;
+import org.richfaces.cdk.apt.processors.BehaviorRendererProcessor;
 import org.richfaces.cdk.apt.processors.CdkAnnotationProcessor;
 import org.richfaces.cdk.apt.processors.ComponentProcessor;
 import org.richfaces.cdk.apt.processors.ConverterProcessor;
@@ -58,6 +59,7 @@ public class AptModule extends AbstractModule {
         Multibinder<CdkAnnotationProcessor> setBinder = Multibinder.newSetBinder(binder(), CdkAnnotationProcessor.class);
         setBinder.addBinding().to(ComponentProcessor.class);
         setBinder.addBinding().to(BehaviorProcessor.class);
+        setBinder.addBinding().to(BehaviorRendererProcessor.class);
         setBinder.addBinding().to(RendererProcessor.class);
         setBinder.addBinding().to(ConverterProcessor.class);
         setBinder.addBinding().to(ValidatorProcessor.class);

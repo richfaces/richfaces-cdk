@@ -28,6 +28,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import javax.faces.render.RenderKitFactory;
+
 /**
  * <p class="changed_added_4_0"></p>
  * @author asmirnov@exadel.com
@@ -39,8 +41,10 @@ public @interface JsfBehaviorRenderer {
 
     public String type() default "";
 
-    public String renderKitId() default "";
+    public String renderKitId() default RenderKitFactory.HTML_BASIC_RENDER_KIT;
 
+    public String generate() default "";
+    
     public Description description() default @Description();
 
 }

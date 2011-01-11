@@ -45,7 +45,6 @@ public class BeanModelBase extends DescriptionGroupBase {
                 }
             }
         });
-
     /**
      * <p class="changed_added_4_0">
      * Represents JSF component attributes and properties.

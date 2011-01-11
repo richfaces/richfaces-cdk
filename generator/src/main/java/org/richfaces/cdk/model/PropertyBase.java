@@ -61,6 +61,11 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     private boolean binding;
 
     private String aliasFor;
+
+    /**
+     *  <p class="changed_added_4_0">Is that bean property generate in the class or should be generated ?</p>
+     */
+    private Boolean generate;
     /**
      * <p class="changed_added_4_0"></p>
      */
@@ -334,5 +339,14 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     @Override
     public String toString() {
         return "PropertyModel {name: " + getName() + ", type: " + getType().getName() + "}";
+    }
+
+    @Merge
+    public Boolean getGenerate() {
+        return generate;
+    }
+
+    public void setGenerate(Boolean generate) {
+        this.generate = generate;
     }
 }

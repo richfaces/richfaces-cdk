@@ -48,7 +48,7 @@ import org.richfaces.cdk.model.ComponentModel;
 import org.richfaces.cdk.model.ConverterModel;
 import org.richfaces.cdk.model.DescriptionGroup;
 import org.richfaces.cdk.model.EventModel;
-import org.richfaces.cdk.model.FacesComponent;
+import org.richfaces.cdk.model.GeneratedFacesComponent;
 import org.richfaces.cdk.model.FacesId;
 import org.richfaces.cdk.model.FacetModel;
 import org.richfaces.cdk.model.InvalidNameException;
@@ -478,7 +478,7 @@ public class ValidatorImpl implements ModelValidator {
         }
     }
 
-    private <T extends FacesComponent> T findParent(Iterable<T> components, final T component)
+    private <T extends GeneratedFacesComponent> T findParent(Iterable<T> components, final T component)
         throws NoSuchElementException {
         return Iterables.find(components, new Predicate<T>() {
 
@@ -536,7 +536,7 @@ public class ValidatorImpl implements ModelValidator {
      *            callback to corresponding naming conventions.
      * @return
      */
-    protected boolean verifyTypes(FacesComponent component, NamingConventionsCallback callback) {
+    protected boolean verifyTypes(GeneratedFacesComponent component, NamingConventionsCallback callback) {
         // Check JsfComponent type.
         try {
             if (null == component.getId()) {
@@ -570,7 +570,7 @@ public class ValidatorImpl implements ModelValidator {
         return true;
     }
 
-    private void verifyGeneratedClasses(FacesComponent component, NamingConventionsCallback callback) throws CallbackException {
+    private void verifyGeneratedClasses(GeneratedFacesComponent component, NamingConventionsCallback callback) throws CallbackException {
         if (null == component.getBaseClass()) {
             component.setBaseClass(callback.getDefaultBaseClass());
             // return;
@@ -580,7 +580,7 @@ public class ValidatorImpl implements ModelValidator {
         }
     }
 
-    protected void verifyAttribute(PropertyBase attribute, FacesComponent component) {
+    protected void verifyAttribute(PropertyBase attribute, GeneratedFacesComponent component) {
         // Check name.
         if (Strings.isEmpty(attribute.getName())) {
             log.error("No name for attribute " + attribute);

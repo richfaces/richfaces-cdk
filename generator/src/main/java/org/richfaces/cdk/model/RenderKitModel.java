@@ -40,8 +40,6 @@ public class RenderKitModel extends DescriptionGroupBase implements ModelElement
 
     private ClassName targetClass;
     
-    private ClassName baseClass;
-
     private FacesId id;
     
     public RenderKitModel() {
@@ -78,22 +76,6 @@ public class RenderKitModel extends DescriptionGroupBase implements ModelElement
      */
     public void setTargetClass(ClassName renderKitClass) {
         this.targetClass = renderKitClass;
-    }
-
-    /**
-     * <p class="changed_added_4_0"></p>
-     * @return the baseClass
-     */
-    public ClassName getBaseClass() {
-        return this.baseClass;
-    }
-
-    /**
-     * <p class="changed_added_4_0"></p>
-     * @param baseClass the baseClass to set
-     */
-    public void setBaseClass(ClassName baseClass) {
-        this.baseClass = baseClass;
     }
 
     /**

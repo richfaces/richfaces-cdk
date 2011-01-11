@@ -10,7 +10,7 @@ import com.google.common.collect.Lists;
  * @author asmirnov@exadel.com
  *
  */
-public class ModelElementBase extends BeanModelBase implements FacesComponent, ViewElement {
+public class ModelElementBase extends BeanModelBase implements GeneratedFacesComponent, ViewElement {
 
     private FacesId id;
     
@@ -21,6 +21,11 @@ public class ModelElementBase extends BeanModelBase implements FacesComponent, V
     private final ModelCollection<TagModel> tags = ModelSet.<TagModel>create();
     
     private final Collection<ClassName> interfaces = Lists.newArrayList();
+
+    /**
+     *  <p class="changed_added_4_0">Is that bean property generate in the class or should be generated ?</p>
+     */
+    private Boolean generate;
 
 
     /* (non-Javadoc)
@@ -40,28 +45,28 @@ public class ModelElementBase extends BeanModelBase implements FacesComponent, V
     }
 
     /* (non-Javadoc)
-     * @see org.richfaces.cdk.model.FacesComponent#getId()
+     * @see org.richfaces.cdk.model.GeneratedFacesComponent#getId()
      */
     public FacesId getId() {
         return id;
     }
 
     /* (non-Javadoc)
-     * @see org.richfaces.cdk.model.FacesComponent#setId(org.richfaces.cdk.model.FacesId)
+     * @see org.richfaces.cdk.model.GeneratedFacesComponent#setId(org.richfaces.cdk.model.FacesId)
      */
     public void setId(FacesId id) {
         this.id = id;
     }
 
     /* (non-Javadoc)
-     * @see org.richfaces.cdk.model.FacesComponent#setTargetClass(org.richfaces.cdk.model.ClassName)
+     * @see org.richfaces.cdk.model.GeneratedFacesComponent#setTargetClass(org.richfaces.cdk.model.ClassName)
      */
     public void setTargetClass(ClassName targetClass) {
         this.targetClass = targetClass;
     }
 
     /* (non-Javadoc)
-     * @see org.richfaces.cdk.model.FacesComponent#getTargetClass()
+     * @see org.richfaces.cdk.model.GeneratedFacesComponent#getTargetClass()
      */
     public ClassName getTargetClass() {
         return targetClass;
@@ -77,9 +82,18 @@ public class ModelElementBase extends BeanModelBase implements FacesComponent, V
     }
 
     /* (non-Javadoc)
-     * @see org.richfaces.cdk.model.FacesComponent#getBaseClass()
+     * @see org.richfaces.cdk.model.GeneratedFacesComponent#getBaseClass()
      */
     public ClassName getBaseClass() {
         return baseClass;
+    }
+
+    @Merge
+    public Boolean getGenerate() {
+        return generate;
+    }
+
+    public void setGenerate(Boolean generate) {
+        this.generate = generate;
     }
 }
