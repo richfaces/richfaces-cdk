@@ -1,6 +1,3 @@
-<#macro concat seq delimiter=",">
-<#list seq as item><#nested item/><#if item_has_next>${delimiter}</#if></#list>
-</#macro>
 <#include "_copyright.ftl">
 
 package ${targetClass.package};
@@ -26,7 +23,7 @@ import ${baseClass};
  **/
 @Generated({"RichFaces CDK", "4.0.0-SNAPSHOT"})
 public class ${targetClass.simpleName} extends ${baseClass.simpleName}
-    <#if (implemented?size > 0)>implements <@concat seq=implemented ; interface>${interface.simpleName}</@concat></#if>    {
+    <#if (implemented?size > 0)>implements <@util.concat seq=implemented ; interface>${interface.simpleName}</@util.concat></#if>    {
 
     public static final String COMPONENT_TYPE="${id}";
 
@@ -46,7 +43,7 @@ public class ${targetClass.simpleName} extends ${baseClass.simpleName}
 
     <#if (eventNames?size > 0)>
     private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList(
-        <@concat seq=eventNames delimiter=",\n        "; event>"${event.name}"</@concat>
+        <@util.concat seq=eventNames delimiter=",\n        "; event>"${event.name}"</@util.concat>
         ));
     
     public Collection<String> getEventNames() {
@@ -58,13 +55,9 @@ public class ${targetClass.simpleName} extends ${baseClass.simpleName}
         return <#if defaultEvent?exists>"${defaultEvent.name}"<#else>null</#if>;
     }</#if>
 
-    protected static enum Properties {
-        <@concat seq=generatedAttributes delimiter=",\n        "; attribute>${attribute.name}</@concat>
-    }
 
-    <#list generatedAttributes as attribute>
-        <#include "_attribute_accessors.ftl">
-    </#list>
+    <#include "_attributes.ftl">
+
     <#list events as event>
         <#include "_event_source_accessors.ftl">
     </#list>

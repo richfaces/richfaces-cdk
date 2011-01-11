@@ -4,17 +4,21 @@
 <#else>
      <#assign propertyKey=attribute.name>
 </#if>
+<#if utils.isKeyword(propertyKey) >
+     <#assign propertyKey>${propertyKey}Value</#assign>
+</#if>
  
     public ${attribute.typeName} ${attribute.getterName}() {
         <#if attribute.bindingAttribute || attribute.literal >
-        return (${attribute.typeForCasting}) getStateHelper().get(Properties.${propertyKey});
+        ${attribute.typeForCasting} value = (${attribute.typeForCasting}) getStateHelper().get(Properties.${propertyKey});
         <#else>
-        return (${attribute.typeForCasting}) getStateHelper().eval(Properties.${propertyKey}<#if attribute.defaultValue?exists>, ${attribute.defaultValue}</#if>);
+        ${attribute.typeForCasting} value = (${attribute.typeForCasting}) getStateHelper().eval(Properties.${propertyKey}<#if attribute.defaultValue?exists>, ${attribute.defaultValue}</#if>);
         </#if>
+        return value;
     }
     
 <#if ! attribute.readOnly >
-    public void ${attribute.setterName}(${attribute.typeName} ${attribute.name}) {
-        getStateHelper().put(Properties.${propertyKey}, ${attribute.name});
+    public void ${attribute.setterName}(${attribute.typeName} ${propertyKey}) {
+        getStateHelper().put(Properties.${propertyKey}, ${propertyKey});
     }
 </#if>

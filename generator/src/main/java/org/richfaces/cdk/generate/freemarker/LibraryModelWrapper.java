@@ -54,7 +54,7 @@ public class LibraryModelWrapper extends BeansWrapper implements ObjectWrapper {
 
     public LibraryModelWrapper() {
         super();
-        setStrict(true);
+//        setStrict(true);
         setSimpleMapWrapper(true);
         // setNullModel(TemplateScalarModel.EMPTY_STRING);
         setUseCache(true);

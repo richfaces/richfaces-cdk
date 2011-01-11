@@ -90,6 +90,11 @@ public abstract class AbstractTestComponent extends UIComponentBase /*implements
     public abstract List<String> getTestValue();
 
     /**
+     * Keyword Attribute
+     */
+    @Attribute
+    public abstract String getFor();
+    /**
      * Bar Attribute
      */
     @Attribute

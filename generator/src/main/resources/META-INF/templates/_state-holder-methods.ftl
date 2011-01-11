@@ -1,3 +1,12 @@
+    private StateHelper stateHelper = null;
+        
+    protected StateHelper getStateHelper() {
+        if (stateHelper == null) {
+            stateHelper = new PartialStateHolderHelper(this);
+        }
+        return stateHelper;
+    }
+    
     // ----------------------------------------------------- StateHolder Methods
     @Override
     public Object saveState(FacesContext context) {

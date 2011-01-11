@@ -28,8 +28,10 @@ import java.util.List;
 import org.richfaces.cdk.util.Strings;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 
 import freemarker.template.SimpleScalar;
+import freemarker.template.TemplateBooleanModel;
 import freemarker.template.TemplateHashModel;
 import freemarker.template.TemplateMethodModel;
 import freemarker.template.TemplateMethodModelEx;
@@ -43,6 +45,17 @@ import freemarker.template.TemplateModelException;
  */
 public class FreeMakerUtils implements TemplateHashModel {
 
+    private static final ImmutableSet<String> KEYWORDS = ImmutableSet.of("abstract",   "continue",    "for", "new", "switch",
+        "assert",   "default", "goto",   "package", "synchronized",
+        "boolean", "do",  "if",  "private", "this",
+        "break",   "double",  "implements",  "protected",   "throw",
+        "byte",    "else",    "import",  "public",  "throws",
+        "case",    "enum",    "instanceof",  "return",  "transient",
+        "catch",   "extends", "int", "short",   "try",
+        "char",    "final",   "interface",   "static",  "void",
+        "class",   "finally", "long",    "strictfp",  "volatile",
+        "const",  "float",   "native",  "super",   "while" );
+    
     private static final ImmutableMap<String, ? extends TemplateMethodModel> FUNCTIONS = ImmutableMap.<String, TemplateMethodModel>builder().
         put("version", new TemplateMethodModelEx() {
             @SuppressWarnings("unchecked")
@@ -57,6 +70,17 @@ public class FreeMakerUtils implements TemplateHashModel {
             public Object exec(List arguments) throws TemplateModelException {
                 if (arguments.size() == 1) {
                     return new SimpleScalar(Strings.firstToUpperCase(arguments.get(0).toString()));
+                } else {
+                    return null;
+                }
+            }
+        }). 
+        put("isKeyword", new TemplateMethodModel() {            
+            @SuppressWarnings("unchecked")
+            @Override
+            public Object exec(List arguments) throws TemplateModelException {
+                if (arguments.size() == 1) {
+                    return KEYWORDS.contains(arguments.get(0).toString())?TemplateBooleanModel.TRUE:TemplateBooleanModel.FALSE;
                 } else {
                     return null;
                 }
