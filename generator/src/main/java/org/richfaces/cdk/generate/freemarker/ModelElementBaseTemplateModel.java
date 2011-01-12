@@ -180,13 +180,13 @@ public class ModelElementBaseTemplateModel extends StringModel implements Templa
 
     public TemplateModel getImplementedInterfaces() throws TemplateModelException {
         Set<ClassName> result = Sets.newTreeSet();
-        if (getEventNames().size() > 0) {
-            result.add(ClassName.parseName("javax.faces.component.behavior.ClientBehaviorHolder"));
-        }
         // Import all interfaces implemented by the generated class.
         result.addAll(model.getInterfaces());
         if (model instanceof ComponentModel) {
             ComponentModel component = (ComponentModel) model;
+            if (getEventNames().size() > 0) {
+                result.add(ClassName.parseName("javax.faces.component.behavior.ClientBehaviorHolder"));
+            }
             for (EventModel event : component.getEvents()) {
                 ClassName sourceInterface = event.getSourceInterface();
                 if (null != sourceInterface) {
