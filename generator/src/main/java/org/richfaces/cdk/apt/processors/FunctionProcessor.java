@@ -36,6 +36,7 @@ import javax.lang.model.element.VariableElement;
 
 import org.richfaces.cdk.CdkProcessingException;
 import org.richfaces.cdk.annotations.Function;
+import org.richfaces.cdk.annotations.TagType;
 import org.richfaces.cdk.apt.SourceUtils;
 import org.richfaces.cdk.model.ClassName;
 import org.richfaces.cdk.model.ComponentLibrary;
@@ -92,7 +93,7 @@ public class FunctionProcessor extends ProcessorBase implements CdkAnnotationPro
                 } else {
                     model.setName(methodElement.getSimpleName().toString());
                 }
-                utils.setModelProperty(model, function, "type");
+                model.setType(utils.getAnnotationValue(function, "type", TagType.class));
                 setDescription(model, function, getDocComment(methodElement));
                 // Calculate method signature
                 StringBuilder signature = new StringBuilder();
