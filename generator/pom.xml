@@ -168,11 +168,20 @@
 			<artifactId>javaparser</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- <dependency> <groupId>com.google.code.guice</groupId> <artifactId>guice</artifactId> 
-			<version>1.0</version> </dependency> -->
+            <dependency>
+                <groupId>com.google.inject</groupId>
+                <artifactId>guice</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>com.google.inject.extensions</groupId>
+                <artifactId>guice-assistedinject</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>com.google.inject.extensions</groupId>
+                <artifactId>guice-multibindings</artifactId>
+            </dependency>
 
-		<!-- <dependency> <groupId>javax.inject</groupId> <artifactId>javax.inject</artifactId> 
-			<version>1</version> </dependency> -->
+	<!-- 
 		<dependency>
 			<groupId>org.sonatype.sisu</groupId>
 			<artifactId>sisu-guice</artifactId>
@@ -182,5 +191,6 @@
 			<groupId>org.sonatype.sisu.inject</groupId>
 			<artifactId>guice-multibindings</artifactId>
 		</dependency>
+	-->
 	</dependencies>
 </project>
