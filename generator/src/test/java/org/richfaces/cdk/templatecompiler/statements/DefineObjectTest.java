@@ -43,7 +43,7 @@ public class DefineObjectTest extends FreeMarkerTestBase {
         controller.replay();
         statement.setObject("foo","java.lang.String",HTTP_EXAMPLE_COM, false);
         String code = statement.getCode();
-        verifyCode(code, HTTP_EXAMPLE_COM,"String","=");
+        verifyCode(code, HTTP_EXAMPLE_COM,"String","=", "!(String)");
         controller.verify();
     }
     @Test
@@ -55,9 +55,9 @@ public class DefineObjectTest extends FreeMarkerTestBase {
         expect(parsedExpression.getRequiredMethods()).andStubReturn(Collections.<HelperMethod>emptySet());
         parsedExpression.setParent(statement);expectLastCall();
         controller.replay();
-        statement.setObject("foo",null,HTTP_EXAMPLE_COM, false);
+        statement.setObject("foo",null,HTTP_EXAMPLE_COM, true);
         String code = statement.getCode();
-        verifyCode(code, "Integer","foo","=");
+        verifyCode(code, "Integer","foo","=", "(Integer)");
         controller.verify();
     }
 
