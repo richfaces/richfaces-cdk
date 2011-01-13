@@ -35,6 +35,7 @@ import com.google.common.collect.Lists;
 
 /**
  * TODO - is the tho different collections are necessary ?
+ * 
  * @author akolonitsky
  * @since Mar 19, 2010
  */
@@ -55,29 +56,64 @@ public abstract class ElementBeanBase<E extends ConfigExtension> extends Extensi
         }
     };
 
-    private Collection<? extends PropertyBase> attributes = Lists.newArrayList();
-    
-    private Collection<PropertyModel> properties = (Collection<PropertyModel>) Collections2.filter(attributes, PROPERTY_PREDICATE);
+    private static final Predicate<PropertyBase> VISIBLE_PROPERTY_PREDICATE = new Predicate<PropertyBase>() {
+        @Override
+        public boolean apply(PropertyBase input) {
+            if (input instanceof PropertyModel) {
+                return !input.isHidden();
+            }
+            return false;
+        }
+    };
 
-    private Collection<AttributeModel> facesAttributes = (Collection<AttributeModel>) Collections2.filter(attributes, ATTRIBUTE_PREDICATE);
+    private static final Predicate<PropertyBase> VISIBLE_ATTRIBUTE_PREDICATE = new Predicate<PropertyBase>() {
+        @Override
+        public boolean apply(PropertyBase input) {
+            if (input instanceof AttributeModel) {
+                return !input.isHidden();
+            }
+            return false;
+        }
+    };
+
+    private Collection<? extends PropertyBase> attributes = Lists.newArrayList();
+
+    private Collection<PropertyModel> properties = (Collection<PropertyModel>) Collections2.filter(attributes,
+        PROPERTY_PREDICATE);
+
+    private Collection<AttributeModel> facesAttributes = (Collection<AttributeModel>) Collections2.filter(attributes,
+        ATTRIBUTE_PREDICATE);
 
     public Collection<PropertyModel> getProperties() {
         return properties;
     }
 
-
     public Collection<AttributeModel> getFacesAttributes() {
         return this.facesAttributes;
     }
-
 
     public Collection<PropertyBase> getAttributes() {
         return (Collection<PropertyBase>) attributes;
     }
 
-    public void setAttributes(Collection<PropertyBase> attributes) {
-        this.attributes = attributes;
-        properties = (Collection<PropertyModel>) Collections2.filter(this.attributes, PROPERTY_PREDICATE);
-        facesAttributes = (Collection<AttributeModel>) Collections2.filter(this.attributes, ATTRIBUTE_PREDICATE);
+    /**
+     * <p class="changed_added_4_0">Set filtering visible properties and attributes, to unmarshall public properties only.</p>
+     * @param filter
+     */
+    public void setFilterHiddenAttributes(boolean filter) {
+        if (filter) {
+            properties = (Collection<PropertyModel>) Collections2.filter(this.attributes, VISIBLE_PROPERTY_PREDICATE);
+            facesAttributes =
+                (Collection<AttributeModel>) Collections2.filter(this.attributes, VISIBLE_ATTRIBUTE_PREDICATE);
+        } else {
+            properties = (Collection<PropertyModel>) Collections2.filter(this.attributes, PROPERTY_PREDICATE);
+            facesAttributes = (Collection<AttributeModel>) Collections2.filter(this.attributes, ATTRIBUTE_PREDICATE);
+        }
     }
+
+    // public void setAttributes(Collection<PropertyBase> attributes) {
+    // this.attributes = attributes;
+    // properties = (Collection<PropertyModel>) Collections2.filter(this.attributes, PROPERTY_PREDICATE);
+    // facesAttributes = (Collection<AttributeModel>) Collections2.filter(this.attributes, ATTRIBUTE_PREDICATE);
+    // }
 }

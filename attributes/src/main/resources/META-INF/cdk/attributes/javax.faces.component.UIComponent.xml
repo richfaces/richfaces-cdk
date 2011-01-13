@@ -180,5 +180,9 @@
         <icon />
         <property-name>binding</property-name>
         <property-class>javax.faces.component.UIComponent</property-class>
+        <property-extension>
+            <cdk:generate>false</cdk:generate>
+            <cdk:literal>false</cdk:literal>
+        </property-extension>
     </property>
 </cdk:properties>
