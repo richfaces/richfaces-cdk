@@ -35,6 +35,7 @@
 		<property-name>actionExpression</property-name>
 		<property-class>javax.el.MethodExpression</property-class>
 		<property-extension>
+            <cdk:hidden>true</cdk:hidden>
 			<cdk:signature />
 		</property-extension>
 	</property>
