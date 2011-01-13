@@ -540,7 +540,7 @@ public class RendererClassVisitor implements TemplateVisitor {
         }
         String type = cdkObjectElement.getType();
         DefineObjectStatement statement = addStatement(DefineObjectStatement.class);
-        statement.setObject(name, type, value);
+        statement.setObject(name, type, value, cdkObjectElement.isCast());
     }
 
     /*

@@ -44,6 +44,8 @@ public class DefineObjectStatement extends FreeMarkerTemplateStatementBase {
 
     private String name;
 
+    private boolean cast;
+    
     private final ELParser parser;
 
     private final Logger log;
@@ -69,9 +71,10 @@ public class DefineObjectStatement extends FreeMarkerTemplateStatementBase {
      *            the initializationExpression to set
      * @throws ParsingException
      */
-    public void setObject(String name, String type, String initializationExpression) {
+    public void setObject(String name, String type, String initializationExpression, boolean cast) {
         try {
             this.name = name;
+            this.cast = cast;
             if (!Strings.isEmpty(initializationExpression)) {
                 initializationStatement = parser.parse(initializationExpression, this, TypesFactory.OBJECT_TYPE);
                 initializationStatement.setParent(this);
@@ -116,5 +119,9 @@ public class DefineObjectStatement extends FreeMarkerTemplateStatementBase {
     public List<TemplateStatement> getStatements() {
         return null != initializationStatement ? Collections.<TemplateStatement> singletonList(initializationStatement)
             : Collections.<TemplateStatement> emptyList();
+    }
+
+    public boolean isCast() {
+        return cast;
     }
 }

@@ -1,1 +1,1 @@
-${type} ${name} <#if initializationStatement?exists> = ${initializationStatement}</#if>; 
+${type} ${name} <#if initializationStatement?exists> =  <#if cast>(${type})</#if>${initializationStatement}</#if>; 

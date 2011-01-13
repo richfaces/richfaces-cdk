@@ -530,6 +530,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 							</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
+		            <xs:attribute type="xs:boolean" name="cast">
+		                <xs:annotation>
+		                    <xs:documentation><p>Defines whether type cast is needed.</p></xs:documentation>
+		                </xs:annotation>
+		            </xs:attribute>
 				</xs:extension>
 			</xs:simpleContent>
 		</xs:complexType>

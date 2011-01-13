@@ -48,6 +48,9 @@ public class CdkObjectElement implements ModelElement {
     @XmlAttribute(required = true)
     private String type;
 
+    @XmlAttribute
+    private boolean cast;
+
     @XmlAttribute(name = "type-arguments")
     private String typeArguments;
 
@@ -124,6 +127,14 @@ public class CdkObjectElement implements ModelElement {
     @Override
     public void visit(TemplateVisitor visitor) throws CdkException {
         visitor.visitElement(this);
+    }
+
+    public void setCast(boolean cast) {
+        this.cast = cast;
+    }
+
+    public boolean isCast() {
+        return cast;
     }
 
 }
