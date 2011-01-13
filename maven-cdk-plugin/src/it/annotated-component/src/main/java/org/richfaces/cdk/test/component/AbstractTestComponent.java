@@ -72,6 +72,7 @@ import org.richfaces.cdk.test.model.TestModel;
         @RendererSpecificComponent(type = "org.richfaces.cdk.test.TestHtmlDfn",
             tag=@Tag(name="dfn"),
             generate="org.richfaces.cdk.test.component.html.HtmlTestDfn",
+            renderer=@JsfRenderer(template="/testComponent.xml"),
             attributes="html5.xml")
     }
 )

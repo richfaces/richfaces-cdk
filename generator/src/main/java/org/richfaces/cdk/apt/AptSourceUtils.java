@@ -116,7 +116,7 @@ public class AptSourceUtils implements SourceUtils {
         if (beanProperties.containsKey(name)) {
             return beanProperties.get(name);
         } else {
-            return new PropertyImpl(name);
+            return new DummyPropertyImpl(name);
         }
     }
 
@@ -129,13 +129,15 @@ public class AptSourceUtils implements SourceUtils {
      * @return
      */
     Map<String, AptBeanProperty> getBeanProperties(TypeElement type) {
-        List<? extends Element> members = this.processingEnv.getElementUtils().getAllMembers(type);
-        // extract all getters/setters.
         Map<String, AptBeanProperty> result = Maps.newHashMap();
-        for (Element element : members) {
-            if (ElementKind.METHOD.equals(element.getKind())) {
-                ExecutableElement method = (ExecutableElement) element;
-                processMethod(type, result, method);
+        if (null != type) {
+            List<? extends Element> members = this.processingEnv.getElementUtils().getAllMembers(type);
+            // extract all getters/setters.
+            for (Element element : members) {
+                if (ElementKind.METHOD.equals(element.getKind())) {
+                    ExecutableElement method = (ExecutableElement) element;
+                    processMethod(type, result, method);
+                }
             }
         }
         return result;
@@ -155,15 +157,16 @@ public class AptSourceUtils implements SourceUtils {
         ExecutableElement method, boolean setter) {
         String propertyName = getPropertyName(method);
         if (!HIDDEN_PROPERTIES.contains(propertyName)) {
-            ClassName propertyType = asClassDescription(setter?method.getParameters().get(0).asType():method.getReturnType());
+            ClassName propertyType =
+                asClassDescription(setter ? method.getParameters().get(0).asType() : method.getReturnType());
             if (result.containsKey(propertyName)) {
                 // Merge property with existed one.
                 AptBeanProperty beanProperty = result.get(propertyName);
                 checkPropertyType(type, propertyName, propertyType, beanProperty);
-                if (null != (setter?beanProperty.setter:beanProperty.getter)) {
+                if (null != (setter ? beanProperty.setter : beanProperty.getter)) {
                     log.debug("Two " + (setter ? "setter" : "getter") + " methods for the same bean property "
                         + propertyName + " in the class " + type.getQualifiedName());
-                    if(!method.getModifiers().contains(Modifier.ABSTRACT)){
+                    if (!method.getModifiers().contains(Modifier.ABSTRACT)) {
                         beanProperty.setAccessMethod(method, setter);
                     }
                 } else {
@@ -395,10 +398,10 @@ public class AptSourceUtils implements SourceUtils {
         return processingEnv.getElementUtils().getTypeElement(type.toString());
     }
 
-    public boolean isClassExists(ClassName type){
+    public boolean isClassExists(ClassName type) {
         return null != asTypeElement(type);
     }
-    
+
     @Override
     public TypeElement asTypeElement(TypeMirror mirror) {
         if (TypeKind.DECLARED.equals(mirror.getKind())) {

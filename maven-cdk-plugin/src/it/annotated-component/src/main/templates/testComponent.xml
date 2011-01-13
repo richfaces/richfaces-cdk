@@ -18,7 +18,7 @@
         <cc:attribute name="onlistclick" >
             <cc:clientBehavior event="listclick"/>
         </cc:attribute>
-		<cc:attribute name="mode" default="ajax" />
+		<cc:attribute name="mode" default="&quot;ajax&quot;" />
 		<cc:attribute name="action" method-signature="void action()" />
 		<cc:attribute name="changeListener"
 			method-signature="void changeListener(ValueChangeEvent)" targets="changes changes1" />

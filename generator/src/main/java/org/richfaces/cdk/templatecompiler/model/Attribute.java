@@ -66,13 +66,13 @@ public class Attribute implements Serializable {
     private String targets;
 
     @XmlAttribute
-    private boolean required;
+    private Boolean required;
 
     @XmlAttribute
-    private boolean preferred;
+    private Boolean preferred;
 
     @XmlAttribute
-    private boolean expert;
+    private Boolean expert;
 
     @XmlAttribute
     @XmlJavaTypeAdapter(ClassAdapter.class)
@@ -194,7 +194,7 @@ public class Attribute implements Serializable {
      *
      * @return the required
      */
-    public boolean isRequired() {
+    public Boolean getRequired() {
         return this.required;
     }
 
@@ -203,7 +203,7 @@ public class Attribute implements Serializable {
      *
      * @param required the required to set
      */
-    public void setRequired(boolean required) {
+    public void setRequired(Boolean required) {
         this.required = required;
     }
 
@@ -212,7 +212,7 @@ public class Attribute implements Serializable {
      *
      * @return the preffered
      */
-    public boolean isPreferred() {
+    public Boolean getPreferred() {
         return this.preferred;
     }
 
@@ -221,7 +221,7 @@ public class Attribute implements Serializable {
      *
      * @param preffered the preffered to set
      */
-    public void setPreferred(boolean preffered) {
+    public void setPreferred(Boolean preffered) {
         this.preferred = preffered;
     }
 
@@ -230,7 +230,7 @@ public class Attribute implements Serializable {
      *
      * @return the expert
      */
-    public boolean isExpert() {
+    public Boolean getExpert() {
         return this.expert;
     }
 
@@ -239,7 +239,7 @@ public class Attribute implements Serializable {
      *
      * @param expert the expert to set
      */
-    public void setExpert(boolean expert) {
+    public void setExpert(Boolean expert) {
         this.expert = expert;
     }
 

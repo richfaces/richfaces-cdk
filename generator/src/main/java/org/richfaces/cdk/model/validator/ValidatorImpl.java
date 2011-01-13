@@ -40,7 +40,9 @@ import org.richfaces.cdk.Logger;
 import org.richfaces.cdk.ModelValidator;
 import org.richfaces.cdk.NamingConventions;
 import org.richfaces.cdk.annotations.TagType;
+import org.richfaces.cdk.apt.DummyPropertyImpl;
 import org.richfaces.cdk.apt.SourceUtils;
+import org.richfaces.cdk.apt.SourceUtils.BeanProperty;
 import org.richfaces.cdk.model.BehaviorModel;
 import org.richfaces.cdk.model.ClassName;
 import org.richfaces.cdk.model.ComponentLibrary;
@@ -48,10 +50,11 @@ import org.richfaces.cdk.model.ComponentModel;
 import org.richfaces.cdk.model.ConverterModel;
 import org.richfaces.cdk.model.DescriptionGroup;
 import org.richfaces.cdk.model.EventModel;
-import org.richfaces.cdk.model.GeneratedFacesComponent;
 import org.richfaces.cdk.model.FacesId;
 import org.richfaces.cdk.model.FacetModel;
+import org.richfaces.cdk.model.GeneratedFacesComponent;
 import org.richfaces.cdk.model.InvalidNameException;
+import org.richfaces.cdk.model.ModelElementBase;
 import org.richfaces.cdk.model.PropertyBase;
 import org.richfaces.cdk.model.RenderKitModel;
 import org.richfaces.cdk.model.RendererModel;
@@ -135,7 +138,7 @@ public class ValidatorImpl implements ModelValidator {
             throw new CallbackException("Cannot infer Java class name for behavior " + this.behavior);
         }
     }
-    
+
     private final class ConverterTypeCallback implements NamingConventionsCallback {
 
         private final ConverterModel converter;
@@ -143,6 +146,7 @@ public class ValidatorImpl implements ModelValidator {
         public ConverterTypeCallback(ConverterModel converter) {
             this.converter = converter;
         }
+
         @Override
         public FacesId inferType(ClassName targetClass) throws CallbackException {
             // TODO use actual methods
@@ -168,7 +172,7 @@ public class ValidatorImpl implements ModelValidator {
         public ClassName getDefaultClass() throws CallbackException {
             return ClassName.get(Object.class);
         }
-        
+
     }
 
     private final class ValidatorTypeCallback implements NamingConventionsCallback {
@@ -204,7 +208,7 @@ public class ValidatorImpl implements ModelValidator {
         public ClassName getDefaultClass() throws CallbackException {
             return ClassName.get(Object.class);
         }
-        
+
     }
 
     private final class RendererTypeCallback implements NamingConventionsCallback {
@@ -296,9 +300,9 @@ public class ValidatorImpl implements ModelValidator {
     public void verify(ComponentLibrary library) throws CdkException {
         verifyComponents(library);
         verifyEvents(library);
-        verifyBehaviors(library);
         verifyRenderers(library);
         verifyTaglib(library);
+        verifyBehaviors(library);
         verifyConverters(library);
         verifyValidators(library);
     }
@@ -307,7 +311,7 @@ public class ValidatorImpl implements ModelValidator {
         for (ValidatorModel validator : library.getValidators()) {
             verifyTypes(validator, new ValidatorTypeCallback(validator));
         }
-        
+
     }
 
     protected void verifyConverters(ComponentLibrary library) {
@@ -403,19 +407,48 @@ public class ValidatorImpl implements ModelValidator {
 
     protected void vefifyRenderer(final ComponentLibrary library, final RendererModel renderer) {
 
+        for (ComponentModel component : library.getComponents()) {
+            if (isTheSameTemplate(renderer, component) && null == renderer.getId()) {
+                renderer.setId(component.getRendererType());
+            }
+        }
         // Check type.
         verifyTypes(renderer, new RendererTypeCallback(library, renderer));
         // Check component type.
         for (ComponentModel component : library.getComponents()) {
             if (renderer.getId().equals(component.getRendererType())) {
-                renderer.getAttributes().addAll(component.getAttributes());
-                renderer.setFamily(component.getFamily());
+                copyRendererAttributes(renderer, component);
+            } else if (isTheSameTemplate(renderer, component)) {
+                copyRendererAttributes(renderer, component);
+                component.setRendererType(renderer.getId());
             }
         }
         // Check family.
         if (null == renderer.getFamily()) {
-            // renderer.setFamily(namingConventions.inferRendererBaseName(renderer.getId()));
+            renderer.setFamily(namingConventions.inferRendererFamily(renderer.getId()));
         }
+    }
+
+    private void copyRendererAttributes(final RendererModel renderer, ComponentModel component) {
+        for (PropertyBase property : renderer.getAttributes()) {
+            PropertyBase attribute = component.getOrCreateAttribute(property.getName());
+            attribute.merge(property);
+            verifyAttribute(attribute, component);
+        }
+        renderer.setFamily(component.getFamily());
+    }
+
+    private boolean isTheSameTemplate(final RendererModel renderer, ComponentModel component) {
+        String componentTemplatePath = component.getRendererTemplate();
+        if (null != componentTemplatePath) {
+            if (componentTemplatePath.equals(renderer.getTemplatePath())) {
+                return true;
+            } else if (null != renderer.getTemplate()
+                && renderer.getTemplate().getTemplatePath().endsWith(componentTemplatePath)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     protected void verifyComponents(ComponentLibrary library) throws CdkException {
@@ -427,6 +460,9 @@ public class ValidatorImpl implements ModelValidator {
         HashSet<ComponentModel> verified = Sets.newHashSet();
         for (ComponentModel component : library.getComponents()) {
             verifyComponentAttributes(library, component, verified);
+            if(null == component.getFamily()){
+                component.setFamily(namingConventions.inferUIComponentFamily(component.getId()));
+            }
         }
     }
 
@@ -449,6 +485,10 @@ public class ValidatorImpl implements ModelValidator {
                 try {
                     // Step one, lookup for parent.
                     ComponentModel parentComponent = findParent(library.getComponents(), component);
+                    component.setParent(parentComponent);
+                    if(null == component.getFamily()){
+                        component.setFamily(parentComponent.getFamily());
+                    }
                     // To be sure what all properties for parent component were propagated.
                     verifyComponentAttributes(library, parentComponent, verified);
                     for (PropertyBase parentAttribute : parentComponent.getAttributes()) {
@@ -484,7 +524,7 @@ public class ValidatorImpl implements ModelValidator {
 
             @Override
             public boolean apply(T input) {
-                return component.getBaseClass().equals(input.getTargetClass());
+                return component.getBaseClass().equals(input.getTargetClass()) && component != input;
             }
         });
     }
@@ -518,10 +558,7 @@ public class ValidatorImpl implements ModelValidator {
      */
     protected void verifyComponentType(ComponentModel component) throws InvalidNameException {
         // Check JsfComponent type.
-        if (verifyTypes(component, new ComponentTypeCallback()) && null == component.getFamily()) {
-            // Check family.
-            component.setFamily(namingConventions.inferUIComponentFamily(component.getId()));
-        }
+        verifyTypes(component, new ComponentTypeCallback()) ; 
     }
 
     /**
@@ -554,7 +591,7 @@ public class ValidatorImpl implements ModelValidator {
                     component.setTargetClass(callback.inferClass(component.getId()));
                 }
                 component.setGenerate(!sourceUtilsProvider.get().isClassExists(component.getTargetClass()));
-            } 
+            }
             if (component.getGenerate()) {
                 verifyGeneratedClasses(component, callback);
             } else if (null == component.getTargetClass()) {
@@ -570,7 +607,8 @@ public class ValidatorImpl implements ModelValidator {
         return true;
     }
 
-    private void verifyGeneratedClasses(GeneratedFacesComponent component, NamingConventionsCallback callback) throws CallbackException {
+    private void verifyGeneratedClasses(GeneratedFacesComponent component, NamingConventionsCallback callback)
+        throws CallbackException {
         if (null == component.getBaseClass()) {
             component.setBaseClass(callback.getDefaultBaseClass());
             // return;
@@ -592,11 +630,12 @@ public class ValidatorImpl implements ModelValidator {
             return;
         }
         // Check type
+        BeanProperty beanProperty = findBeanProperty(attribute, component);
         if (null == attribute.getType()) {
-            log.error("Unknown type of attribute [" + attribute.getName() + "]");
-            return;
-        } 
-        if(attribute.getType().isPrimitive() && null == attribute.getDefaultValue()){
+            log.warn("Unknown type of attribute [" + attribute.getName() + "]");
+            attribute.setType(beanProperty.getType());
+        }
+        if (attribute.getType().isPrimitive() && null == attribute.getDefaultValue()) {
             // Set default value for primitive
             attribute.setDefaultValue(attribute.getType().getDefaultValue());
         }
@@ -614,21 +653,36 @@ public class ValidatorImpl implements ModelValidator {
         if (Boolean.TRUE.equals(component.getGenerate())) {
             // TODO Attribute should be only generated if it does not exist or abstract in the base class.
             // Step one - check base class
-            SourceUtils sourceUtils = sourceUtilsProvider.get();
             if (SPECIAL_PROPERTIES.contains(attribute.getName())) {
                 attribute.setGenerate(false);
             } else if (null == attribute.getGenerate()) {
-                if (sourceUtils.isClassExists(component.getBaseClass())) {
-                    attribute.setGenerate(!sourceUtils.getBeanProperty(component.getBaseClass(), attribute.getName())
-                        .isExists());
-                } else {
-                    attribute.setGenerate(true);
-                }
+                attribute.setGenerate(!beanProperty.isExists());
             }
         } else {
             attribute.setGenerate(false);
         }
         verifyDescription(attribute);
+    }
+
+    private BeanProperty findBeanProperty(PropertyBase attribute, GeneratedFacesComponent component) {
+        SourceUtils sourceUtils = sourceUtilsProvider.get();
+        BeanProperty beanProperty = sourceUtils.getBeanProperty(component.getBaseClass(), attribute.getName());
+        if (beanProperty instanceof DummyPropertyImpl && component instanceof ComponentModel) {
+            ComponentModel model = (ComponentModel) component;
+            if (null != model.getParent()) {
+                beanProperty = findBeanProperty(attribute, model.getParent());
+            }
+        }
+        if (beanProperty instanceof DummyPropertyImpl && component instanceof ModelElementBase) {
+            ModelElementBase model = (ModelElementBase) component;
+            for (ClassName interfaceName : model.getInterfaces()) {
+                beanProperty = sourceUtils.getBeanProperty(interfaceName, attribute.getName());
+                if (!(beanProperty instanceof DummyPropertyImpl)) {
+                    break;
+                }
+            }
+        }
+        return beanProperty;
     }
 
     protected void verifyDescription(DescriptionGroup element) {

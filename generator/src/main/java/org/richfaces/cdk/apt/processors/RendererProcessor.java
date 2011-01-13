@@ -34,20 +34,18 @@ import org.richfaces.cdk.apt.SourceUtils;
 import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.FacesId;
 import org.richfaces.cdk.model.RendererModel;
-import org.richfaces.cdk.util.Strings;
-
 
 /**
  * @author akolonitsky
  * @since Dec 30, 2009
  */
-@SupportedAnnotationTypes({"javax.faces.component.FacesComponent", JsfRenderer.NAME})
+@SupportedAnnotationTypes({ "javax.faces.component.FacesComponent", JsfRenderer.NAME })
 public class RendererProcessor extends ProcessorBase implements CdkAnnotationProcessor {
 
     private static final String COMPONENT_FAMILY = "COMPONENT_FAMILY";
 
     private static final String RENDERER_TYPE = "RENDERER_TYPE";
-    
+
     public void process(Element rendererElement, ComponentLibrary library) {
         SourceUtils sourceUtils = getSourceUtils();
         AnnotationMirror annotation = sourceUtils.getAnnotationMirror(rendererElement, JsfRenderer.class);
@@ -58,33 +56,26 @@ public class RendererProcessor extends ProcessorBase implements CdkAnnotationPro
         setClassNames(rendererTypeElement, rendererModel, annotation);
 
         setRendererType(rendererTypeElement, rendererModel, annotation);
-        
+
         setComponentFamily(rendererTypeElement, rendererModel, annotation);
         setDescription(rendererModel, annotation, getDocComment(rendererElement));
 
-        sourceUtils.setModelProperty(rendererModel, annotation, "templatePath","template");
+        sourceUtils.setModelProperty(rendererModel, annotation, "templatePath", "template");
 
         String renderKitId = sourceUtils.getAnnotationValue(annotation, "renderKitId", String.class);
         library.addRenderer(renderKitId, rendererModel);
 
     }
 
-
-
-    private void setTemplate(RendererModel rendererModel, JsfRenderer annotation) {
-        String template = annotation.template();
-        if (!Strings.isEmpty(template)) {
-            rendererModel.setTemplatePath(template);
-        }
-    }
-
-
-    private void setComponentFamily(TypeElement rendererElement, RendererModel rendererModel, AnnotationMirror annotation) {
-        rendererModel.setFamily(FacesId.parseId(getAnnotationPropertyOrConstant(rendererElement, annotation,"family",COMPONENT_FAMILY)));
+    private void setComponentFamily(TypeElement rendererElement, RendererModel rendererModel,
+        AnnotationMirror annotation) {
+        rendererModel.setFamily(FacesId.parseId(getAnnotationPropertyOrConstant(rendererElement, annotation, "family",
+            COMPONENT_FAMILY)));
     }
 
     private void setRendererType(TypeElement rendererElement, RendererModel rendererModel, AnnotationMirror annotation) {
-        rendererModel.setId(FacesId.parseId(getAnnotationPropertyOrConstant(rendererElement, annotation,"type",RENDERER_TYPE)));
+        rendererModel.setId(FacesId.parseId(getAnnotationPropertyOrConstant(rendererElement, annotation, "type",
+            RENDERER_TYPE)));
     }
 
     protected String getComponentType(TypeElement componentElement) {

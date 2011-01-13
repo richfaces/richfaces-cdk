@@ -64,7 +64,8 @@ public abstract class ProcessorBase {
         return tagModel;
     }
 
-    protected void setClassNames(TypeElement componentElement, GeneratedFacesComponent modelElement, AnnotationMirror behavior) {
+    protected void setClassNames(TypeElement componentElement, GeneratedFacesComponent modelElement,
+        AnnotationMirror behavior) {
         SourceUtils sourceUtils = getSourceUtils();
         if (componentElement.getModifiers().contains(Modifier.ABSTRACT)
             || !sourceUtils.isDefaultValue(behavior, "generate")) {
@@ -128,14 +129,17 @@ public abstract class ProcessorBase {
         }
     }
 
-    protected String getAnnotationPropertyOrConstant(TypeElement element, AnnotationMirror annotation, String annotationAttribute, String fieldName) {
+    protected String getAnnotationPropertyOrConstant(TypeElement element, AnnotationMirror annotation,
+        String annotationAttribute, String fieldName) {
         SourceUtils utils = getSourceUtils();
         if (!utils.isDefaultValue(annotation, annotationAttribute)) {
-            return utils.getAnnotationValue(annotation, annotationAttribute,String.class);
+            return utils.getAnnotationValue(annotation, annotationAttribute, String.class);
         }
-        Object value = utils.getConstant((TypeElement) element, fieldName);
-        if (value != null) {
-            return value.toString();
+        if (null != element) {
+            Object value = utils.getConstant((TypeElement) element, fieldName);
+            if (value != null) {
+                return value.toString();
+            }
         }
         return null;
     }

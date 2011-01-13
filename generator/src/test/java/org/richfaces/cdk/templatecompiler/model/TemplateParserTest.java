@@ -91,9 +91,9 @@ public class TemplateParserTest extends JaxbTestBase {
         assertNull(attribute.getMethodSignature());
         assertEquals(DEFAULT_ATTRIBUTE_TYPE, attribute.getType());
         assertNull(attribute.getTargets());
-        assertFalse(attribute.isRequired());
-        assertFalse(attribute.isExpert());
-        assertFalse(attribute.isPreferred());
+        assertNull(attribute.getRequired());
+        assertNull(attribute.getExpert());
+        assertNull(attribute.getPreferred());
 
         attribute = attributes.get(1);
         assertNotNull(attribute);
@@ -102,9 +102,9 @@ public class TemplateParserTest extends JaxbTestBase {
         assertNull(attribute.getMethodSignature());
         assertEquals(DEFAULT_ATTRIBUTE_TYPE, attribute.getType());
         assertNull(attribute.getTargets());
-        assertFalse(attribute.isRequired());
-        assertFalse(attribute.isExpert());
-        assertFalse(attribute.isPreferred());
+        assertNull(attribute.getRequired());
+        assertNull(attribute.getExpert());
+        assertNull(attribute.getPreferred());
 
         attribute = attributes.get(2);
         assertNotNull(attribute);
@@ -113,9 +113,9 @@ public class TemplateParserTest extends JaxbTestBase {
         assertEquals("void action()", attribute.getMethodSignature());
         assertEquals(DEFAULT_ATTRIBUTE_TYPE, attribute.getType());
         assertNull(attribute.getTargets());
-        assertFalse(attribute.isRequired());
-        assertFalse(attribute.isExpert());
-        assertFalse(attribute.isPreferred());
+        assertNull(attribute.getRequired());
+        assertNull(attribute.getExpert());
+        assertNull(attribute.getPreferred());
 
         attribute = attributes.get(3);
         assertNotNull(attribute);
@@ -124,9 +124,9 @@ public class TemplateParserTest extends JaxbTestBase {
         assertEquals("void changeListener(ValueChangeEvent)", attribute.getMethodSignature());
         assertEquals(DEFAULT_ATTRIBUTE_TYPE, attribute.getType());
         assertEquals("changes changes1", attribute.getTargets());
-        assertFalse(attribute.isRequired());
-        assertFalse(attribute.isExpert());
-        assertFalse(attribute.isPreferred());
+        assertNull(attribute.getRequired());
+        assertNull(attribute.getExpert());
+        assertNull(attribute.getPreferred());
 
         attribute = attributes.get(4);
         assertNotNull(attribute);
@@ -135,9 +135,9 @@ public class TemplateParserTest extends JaxbTestBase {
         assertNull(attribute.getMethodSignature());
         assertEquals(ClassName.parseName("boolean"), attribute.getType());
         assertNull(attribute.getTargets());
-        assertFalse(attribute.isRequired());
-        assertFalse(attribute.isExpert());
-        assertFalse(attribute.isPreferred());
+        assertNull(attribute.getRequired());
+        assertNull(attribute.getExpert());
+        assertNull(attribute.getPreferred());
 
         attribute = attributes.get(5);
         assertNotNull(attribute);
@@ -146,9 +146,9 @@ public class TemplateParserTest extends JaxbTestBase {
         assertNull(attribute.getMethodSignature());
         assertEquals(ClassName.parseName("java.lang.Integer"), attribute.getType());
         assertNull(attribute.getTargets());
-        assertFalse(attribute.isRequired());
-        assertFalse(attribute.isExpert());
-        assertFalse(attribute.isPreferred());
+        assertNull(attribute.getRequired());
+        assertNull(attribute.getExpert());
+        assertNull(attribute.getPreferred());
 
         attribute = attributes.get(6);
         assertNotNull(attribute);
@@ -157,13 +157,13 @@ public class TemplateParserTest extends JaxbTestBase {
         assertNull(attribute.getMethodSignature());
         assertEquals(DEFAULT_ATTRIBUTE_TYPE, attribute.getType());
         assertNull(attribute.getTargets());
-        assertTrue(attribute.isRequired());
-        assertFalse(attribute.isExpert());
-        assertFalse(attribute.isPreferred());
+        assertTrue(attribute.getRequired());
+        assertNull(attribute.getExpert());
+        assertNull(attribute.getPreferred());
 
         attribute = attributes.get(7);
         assertNotNull(attribute);
-        assertFalse(attribute.isRequired());
+        assertNull(attribute.getRequired());
         assertEquals("experts", attribute.getName());
         assertNull(attribute.getDefaultValue());
         assertNull(attribute.getMethodSignature());
@@ -171,20 +171,20 @@ public class TemplateParserTest extends JaxbTestBase {
         assertNull(attribute.getTargets());
         assertEquals("For use by experts", attribute.getShortDescription());
         assertEquals("Expert attribute", attribute.getDisplayName());
-        assertTrue(attribute.isExpert());
-        assertFalse(attribute.isPreferred());
+        assertTrue(attribute.getExpert());
+        assertNull(attribute.getPreferred());
 
         attribute = attributes.get(8);
         assertNotNull(attribute);
-        assertFalse(attribute.isRequired());
-        assertFalse(attribute.isExpert());
+        assertNull(attribute.getRequired());
+        assertNull(attribute.getExpert());
         assertEquals("preferred", attribute.getName());
         assertNull(attribute.getDefaultValue());
         assertNull(attribute.getMethodSignature());
         assertEquals(DEFAULT_ATTRIBUTE_TYPE, attribute.getType());
         assertEquals("It's a preferred attribute", attribute.getShortDescription());
         assertEquals("Preferred attribute", attribute.getDisplayName());
-        assertTrue(attribute.isPreferred());
+        assertTrue(attribute.getPreferred());
 
         attribute = attributes.get(9);
         assertNotNull(attribute);

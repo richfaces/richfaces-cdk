@@ -8,10 +8,10 @@ import org.richfaces.cdk.apt.SourceUtils.ACCESS_TYPE;
 import org.richfaces.cdk.apt.SourceUtils.BeanProperty;
 import org.richfaces.cdk.model.ClassName;
 
-public final class PropertyImpl implements BeanProperty {
+public final class DummyPropertyImpl implements BeanProperty {
     private final String name;
 
-    public PropertyImpl(String name) {
+    public DummyPropertyImpl(String name) {
         this.name = name;
     }
 

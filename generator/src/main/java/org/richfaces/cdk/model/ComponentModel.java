@@ -37,6 +37,8 @@ public final class ComponentModel extends ModelElementBase implements ModelEleme
     
     private String rendererTemplate;
 
+    private ComponentModel parent;
+
     public ComponentModel(FacesId key) {
         this.setId(key);
     }
@@ -174,5 +176,14 @@ public final class ComponentModel extends ModelElementBase implements ModelEleme
     @Override
     public String toString() {
         return "Component {type: " + getId() + ", family: " + getFamily() + "}";
+    }
+
+    public void setParent(ComponentModel parentComponent) {
+        this.parent = parentComponent;
+    }
+    
+    @Merge
+    public ComponentModel getParent() {
+        return this.parent;
     }
 }

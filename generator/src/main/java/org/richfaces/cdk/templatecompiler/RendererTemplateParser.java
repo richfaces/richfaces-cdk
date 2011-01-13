@@ -36,13 +36,12 @@ import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.FileManager;
 import org.richfaces.cdk.Logger;
 import org.richfaces.cdk.ModelBuilder;
-import org.richfaces.cdk.NamingConventions;
-import org.richfaces.cdk.RichFacesConventions;
 import org.richfaces.cdk.Source;
 import org.richfaces.cdk.Sources;
 import org.richfaces.cdk.model.ClassName;
 import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.EventName;
+import org.richfaces.cdk.model.FacesId;
 import org.richfaces.cdk.model.MethodSignature;
 import org.richfaces.cdk.model.PropertyBase;
 import org.richfaces.cdk.model.PropertyModel;
@@ -70,8 +69,8 @@ import com.google.inject.Inject;
  */
 public class RendererTemplateParser implements ModelBuilder {
 
-    private static final Pattern PARAMETERS_STRING_PATTERN =
-        Pattern.compile("^(\\S+)\\s+(\\S+)\\s*\\(([^\\)]*)\\)$", Pattern.COMMENTS);
+    private static final Pattern PARAMETERS_STRING_PATTERN = Pattern.compile("^(\\S+)\\s+(\\S+)\\s*\\(([^\\)]*)\\)$",
+        Pattern.COMMENTS);
 
     private static final Pattern COMMA_SEPARATED_PATTERN = Pattern.compile("\\s*,\\s*", Pattern.COMMENTS);
 
@@ -84,9 +83,6 @@ public class RendererTemplateParser implements ModelBuilder {
     private FileManager sources;
 
     private FragmentParser fragmentParser;
-
-    // @Inject
-    private NamingConventions namingConventions;
 
     /**
      * <p class="changed_added_4_0">
@@ -105,48 +101,6 @@ public class RendererTemplateParser implements ModelBuilder {
         this.log = log;
         this.sources = sources;
         this.fragmentParser = fragmentParser;
-    }
-
-    private Set<EventName> convert(Collection<ClientBehavior> clientBehaviors) {
-        if (clientBehaviors == null || clientBehaviors.isEmpty()) {
-            return null;
-        }
-
-        Set<EventName> result = Sets.newLinkedHashSet();
-        for (ClientBehavior clientBehavior : clientBehaviors) {
-            EventName eventName = new EventName();
-            eventName.setName(clientBehavior.getEvent());
-            eventName.setDefaultEvent(clientBehavior.isDefaultEvent());
-            result.add(eventName);
-        }
-
-        return result;
-    }
-
-    private MethodSignature parseSignature(String signatureString) {
-
-        List<ClassName> parameters = Lists.newArrayList();
-        MethodSignature signature = null;
-        if (!Strings.isEmpty(signatureString)) {
-            Matcher parametersStringMatcher = PARAMETERS_STRING_PATTERN.matcher(signatureString);
-            if (!parametersStringMatcher.find()) {
-                throw new IllegalArgumentException(MessageFormat.format("Signature string {0} cannot be parsed!",
-                    signatureString));
-            }
-            signature = new MethodSignature();
-            signature.setReturnType(ClassName.parseName(parametersStringMatcher.group(1)));
-            String parametersString = parametersStringMatcher.group(3);
-            if (parametersString.trim().length() != 0) {
-                String[] parameterStrings = COMMA_SEPARATED_PATTERN.split(parametersString);
-                for (String parameter : parameterStrings) {
-                    String trimmedParameter = parameter.trim();
-                    parameters.add(ClassName.parseName(trimmedParameter));
-                }
-                signature.setParameters(parameters);
-            }
-
-        }
-        return signature;
     }
 
     /*
@@ -188,7 +142,7 @@ public class RendererTemplateParser implements ModelBuilder {
                     return null;
                 }
             }, absolutePath);
-            Template template = parseTemplate(file);            
+            Template template = parseTemplate(file);
             mergeTemplateIntoModel(template, existedModel);
         } catch (AlreadyProcessedException e) {
             log.warn("Template " + absolutePath + "was already processed");
@@ -204,8 +158,8 @@ public class RendererTemplateParser implements ModelBuilder {
             renderKit.getRenderers().add(renderer);
         }
         renderer.setTemplate(template);
-        setRendererType(template, compositeInterface, renderer);
-        setFamily(compositeInterface, renderer); // TODO set default values according to template name
+        setRendererType(compositeInterface, renderer);
+        setFamily(compositeInterface, renderer);
         setRendererClass(compositeInterface, renderer);
         setRendererBaseClass(compositeInterface, renderer);
 
@@ -215,26 +169,22 @@ public class RendererTemplateParser implements ModelBuilder {
         }
 
         List<ImportAttributes> attributesImports = compositeInterface.getAttributesImports();
-        if (attributesImports != null) {
-            for (ImportAttributes attributesImport : attributesImports) {
-                String importURI = attributesImport.getSource();
-                Collection<PropertyBase> properties;
-                try {
-                    properties = fragmentParser.parseProperties(importURI);
-                    if (properties != null) {
-                        renderer.getAttributes().addAll(properties);
-                    }
-                } catch (FileNotFoundException e) {
-                    throw new CdkException("File for import not found", e);
+        for (ImportAttributes attributesImport : attributesImports) {
+            String importURI = attributesImport.getSource();
+            Collection<PropertyBase> properties;
+            try {
+                properties = fragmentParser.parseProperties(importURI);
+                if (properties != null) {
+                    renderer.getAttributes().addAll(properties);
                 }
+            } catch (FileNotFoundException e) {
+                throw new CdkException("File for import not found", e);
             }
         }
 
         List<Attribute> templateAttributes = compositeInterface.getAttributes();
-        if (templateAttributes != null) {
-            for (Attribute templateAttribute : templateAttributes) {
-                renderer.getAttributes().add(buildProperty(templateAttribute));
-            }
+        for (Attribute templateAttribute : templateAttributes) {
+            renderer.getAttributes().add(buildProperty(templateAttribute));
         }
         return renderer;
     }
@@ -244,27 +194,16 @@ public class RendererTemplateParser implements ModelBuilder {
         rendererProperty.setName(templateAttribute.getName());
         rendererProperty.setDefaultValue(templateAttribute.getDefaultValue());
 
-        // TODO is it the right one?
         rendererProperty.setDescription(templateAttribute.getShortDescription());
         rendererProperty.setDisplayName(templateAttribute.getDisplayName());
 
-        Set<EventName> eventNamesSet = convert(templateAttribute.getClientBehaviors());
-        if (eventNamesSet != null) {
-            rendererProperty.getEventNames().addAll(eventNamesSet);
+        Set<EventName> eventNamesSet = convertBehaviorsToEvents(templateAttribute.getClientBehaviors());
+        rendererProperty.getEventNames().addAll(eventNamesSet);
+
+        Boolean required = templateAttribute.getRequired();
+        if (null != required) {
+            rendererProperty.setRequired(required);
         }
-
-        // rendererProperty.setAliases(aliases)
-        // rendererProperty.setExtension(extension)
-        // rendererProperty.setGenerate(exists)
-        // rendererProperty.setHidden(hidden)
-        // rendererProperty.setIcon(icon)
-        // rendererProperty.setLiteral(literal)
-        // rendererProperty.setPassThrough(passThrough)
-        // rendererProperty.setReadOnly(readOnly)
-        // rendererProperty.setSuggestedValue(suggestedValue)
-
-        rendererProperty.setRequired(templateAttribute.isRequired());
-
         MethodSignature parsedSignature = parseSignature(templateAttribute.getMethodSignature());
         rendererProperty.setSignature(parsedSignature);
 
@@ -272,40 +211,81 @@ public class RendererTemplateParser implements ModelBuilder {
         return rendererProperty;
     }
 
+    private Set<EventName> convertBehaviorsToEvents(Collection<ClientBehavior> clientBehaviors) {
+        Set<EventName> result = Sets.newLinkedHashSet();
+        for (ClientBehavior clientBehavior : clientBehaviors) {
+            EventName eventName = new EventName();
+            eventName.setName(clientBehavior.getEvent());
+            eventName.setDefaultEvent(clientBehavior.isDefaultEvent());
+            result.add(eventName);
+        }
+
+        return result;
+    }
+
+    private MethodSignature parseSignature(String signatureString) {
+
+        List<ClassName> parameters = Lists.newArrayList();
+        MethodSignature signature = null;
+        if (!Strings.isEmpty(signatureString)) {
+            Matcher parametersStringMatcher = PARAMETERS_STRING_PATTERN.matcher(signatureString);
+            if (!parametersStringMatcher.find()) {
+                throw new IllegalArgumentException(MessageFormat.format("Signature string {0} cannot be parsed!",
+                    signatureString));
+            }
+            signature = new MethodSignature();
+            signature.setReturnType(ClassName.parseName(parametersStringMatcher.group(1)));
+            String parametersString = parametersStringMatcher.group(3);
+            if (parametersString.trim().length() != 0) {
+                String[] parameterStrings = COMMA_SEPARATED_PATTERN.split(parametersString);
+                for (String parameter : parameterStrings) {
+                    String trimmedParameter = parameter.trim();
+                    parameters.add(ClassName.parseName(trimmedParameter));
+                }
+                signature.setParameters(parameters);
+            }
+
+        }
+        return signature;
+    }
+
     private void setRendererClass(CompositeInterface compositeInterface, RendererModel renderer) {
-        renderer.setRendererClass(compositeInterface.getJavaClass());
+        ClassName javaClass = compositeInterface.getJavaClass();
+        if (null != javaClass) {
+            renderer.setRendererClass(javaClass);
+        }
     }
 
     private void setRendererBaseClass(CompositeInterface compositeInterface, RendererModel renderer) {
-        renderer.setBaseClass(compositeInterface.getBaseClass());
+        ClassName baseClass = compositeInterface.getBaseClass();
+        if (null != baseClass) {
+            renderer.setBaseClass(baseClass);
+        }
     }
 
     private void setFamily(CompositeInterface compositeInterface, RendererModel renderer) {
-        renderer.setFamily(compositeInterface.getComponentFamily());
+        FacesId componentFamily = compositeInterface.getComponentFamily();
+        if (null != componentFamily) {
+            renderer.setFamily(componentFamily);
+        }
     }
 
-    private void setRendererType(Template template, CompositeInterface compositeInterface, RendererModel renderer) {
-        renderer.setId(compositeInterface.getRendererType());
+
+    private void setRendererType(CompositeInterface compositeInterface, RendererModel renderer) {
+        FacesId rendererType = compositeInterface.getRendererType();
+        if (null != rendererType) {
+            renderer.setId(rendererType);
+        }
     }
 
     protected Template parseTemplate(File file) throws CdkException {
         try {
-            Template template = jaxbBinding.unmarshal(file, "http://jboss.org/schema/richfaces/cdk/cdk-template.xsd", Template.class);
+            Template template =
+                jaxbBinding.unmarshal(file, "http://jboss.org/schema/richfaces/cdk/cdk-template.xsd", Template.class);
             template.setTemplatePath(file.getAbsolutePath());
             return template;
         } catch (FileNotFoundException e) {
             throw new CdkException("Template file not found " + file.getAbsolutePath(), e);
         }
-    }
-
-    public NamingConventions getNamingConventions() {
-        if (namingConventions == null) {
-            namingConventions = new RichFacesConventions();
-        }
-        return namingConventions;
-    }
-
-    public void setNamingConventions(NamingConventions namingConventions) {
-        this.namingConventions = namingConventions;
     }
 }
