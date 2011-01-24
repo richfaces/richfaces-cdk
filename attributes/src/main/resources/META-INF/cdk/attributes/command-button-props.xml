@@ -22,6 +22,21 @@
 
 	<property>
 		<description>
+			Flag indicating that this element must never
+			receive focus or be included in a subsequent
+			submit.
+        </description>
+		<display-name>Disabled Flag</display-name>
+		<icon />
+		<property-name>disabled</property-name>
+		<property-class>boolean</property-class>
+		<property-extension>
+			<cdk:pass-through>false</cdk:pass-through>
+		</property-extension>
+	</property>
+
+	<property>
+		<description>
 			Javascript code executed when a pointer button is
 			clicked over this element.
         </description>
