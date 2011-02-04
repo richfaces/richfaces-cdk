@@ -151,7 +151,7 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
                 Element tag = createTag(tagModel.getName());
                 Element converter = tag.addElement("converter");
                 addDescription(converter, model);
-                converter.addElement("converter-id", model.getId().toString());
+                converter.addElement("converter-id").addText(model.getId().toString());
                 addTagHandler(converter, tagModel);
                 appendAttributes(tag, model);
             }
@@ -184,7 +184,7 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
                 Element tag = createTag(tagModel.getName());
                 Element validator = tag.addElement("validator");
                 addDescription(validator, model);
-                validator.addElement("validator-id", model.getId().toString());
+                validator.addElement("validator-id").addText(model.getId().toString());
                 addTagHandler(validator, tagModel);
                 appendAttributes(tag, model);
             }

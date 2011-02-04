@@ -63,7 +63,10 @@ public class ClassDescriptionTest {
     @Parameters
     public static Collection<String[]> values() {
         return Arrays.asList(new String[] { int.class.getName(), "int", "java.lang.Integer", null, null, "int" },
-            new String[] { "java.util.List<String>", "java.util.List", "java.util.List<String>", "<String>","java.util", "List" },
+            new String[] { "java.util.List<String>", "java.util.List", "java.util.List<String>", "<String>","java.util", "List<String>" },
+            new String[] { "java.lang.String[]", "java.lang.String[]", "java.lang.String[]", null, "java.lang", "String[]" },
+            new String[] { "java.util.List<String>[]", "java.util.List[]", "java.util.List<String>[]", "<String>","java.util", "List<String>[]" },
+            new String[] { "java.util.List<java.lang.String>", "java.util.List", "java.util.List<java.lang.String>", "<java.lang.String>","java.util", "List<java.lang.String>" },
             new String[] { double.class.getName(), "double", "java.lang.Double", null, null,"double" });
     }
 

@@ -110,7 +110,7 @@ public class PropertyModel extends StringModel implements TemplateModel {
 
     private String typeForCasting() {
         ClassName type = this.property.getType();
-        return ClassName.getSimpleName(type.isPrimitive() ? type.getBoxingName() : type.getSimpleName());
+        return type.getSimpleBoxingName();
     }
 
     // Model utility methods.
@@ -132,7 +132,7 @@ public class PropertyModel extends StringModel implements TemplateModel {
 
     public String getTypeName() {
         ClassName type = this.property.getType();
-        return isFromJavaLang(type) ? type.getSimpleName() : type.getName();
+        return type.getSimpleName() ;
     }
 
 
