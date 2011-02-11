@@ -21,6 +21,8 @@
  */
 package org.richfaces.cdk.task;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletionService;
@@ -39,6 +41,8 @@ import org.richfaces.resource.ResourceKey;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
+import com.google.common.io.ByteStreams;
+import com.google.common.io.Closeables;
 
 /**
  * @author Nick Belaevski
@@ -74,6 +78,12 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
                 Resource resource = createResource(facesContext, resourceInfo);
                 CurrentResourceContext.getInstance(facesContext).setResource(resource);
                 //TODO check content type
+                
+                if (shouldCheckForEL(resource) && containsELExpression(resource)) {
+                    log.info(MessageFormat.format("Skipping {0} because it contains EL-expressions", resourceInfo));
+                    return;
+                }
+                
                 resourceWriter.writeResource(skin, resource);
             } catch (Exception e) {
                 if (skin != null) {
@@ -151,6 +161,34 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
         this.faces = faces;
     }
 
+    private boolean containsELExpression(Resource resource) {
+        InputStream is = null;
+        try {
+            is = resource.getInputStream();
+            byte[] bs = ByteStreams.toByteArray(is);
+            
+            for (int i = 0; i < bs.length; i++) {
+                byte b = bs[i];
+                
+                if (b == '#' && i + 1 < bs.length && bs[i + 1] == '{') {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        } finally {
+            Closeables.closeQuietly(is);
+        }
+
+        return false;
+    }
+    
+    private boolean shouldCheckForEL(Resource resource) {
+        String resourceName = resource.getResourceName();
+        
+        return resourceName.endsWith(".js") || resourceName.endsWith(".css");
+    }
+    
     public void setLog(Log log) {
         this.log = log;
     }
