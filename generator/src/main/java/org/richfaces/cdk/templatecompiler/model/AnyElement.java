@@ -22,16 +22,16 @@
  */
 
 package org.richfaces.cdk.templatecompiler.model;
-import static org.richfaces.cdk.templatecompiler.QNameComparator.QNAME_COMPARATOR;
+import static org.richfaces.cdk.templatecompiler.QNameComparator.*;
+
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.namespace.QName;
 
 import org.richfaces.cdk.CdkException;
-
-import com.google.common.collect.Maps;
 
 /**
  * <p class="changed_added_4_0"></p>
@@ -44,7 +44,7 @@ public class AnyElement extends ModelFragment {
     private String passThrough;
     private String passThroughWithExclusions;
 
-    private Map<QName, Object> attributes = Maps.newTreeMap(QNAME_COMPARATOR);
+    private Map<QName, Object> attributes = new TreeMap<QName, Object>(QNAME_COMPARATOR);
 
     /**
      * <p class="changed_added_4_0"></p>
