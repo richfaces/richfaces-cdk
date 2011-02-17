@@ -48,6 +48,7 @@
 			</c:when>
 			<c:otherwise>otherwise content</c:otherwise>
 		</c:choose>
+		<c:if test='#{empty ""}'>empty content</c:if>
 		<img src="#{component.attributes['imgAge']}" alt="#{component.attributes['imgAlt']}" x:ismap="disabled">
 		</img>
 		<ul x:style="listStyle" x:class="listClass" cdk:passThrough="id title:listTitle onclick:onlistclick ondblclick:onlistdblclick">

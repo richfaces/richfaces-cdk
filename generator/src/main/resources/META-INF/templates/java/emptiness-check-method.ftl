@@ -1,1 +1,1 @@
-return object == null;
+return object == null || object.toString().length() == 0;
