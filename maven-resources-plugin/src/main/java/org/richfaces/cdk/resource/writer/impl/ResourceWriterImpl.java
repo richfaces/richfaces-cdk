@@ -21,8 +21,6 @@
  */
 package org.richfaces.cdk.resource.writer.impl;
 
-import static org.richfaces.cdk.strings.Constants.COLON_JOINER;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -36,6 +34,7 @@ import javax.faces.application.Resource;
 
 import org.apache.maven.plugin.logging.Log;
 import org.richfaces.cdk.ResourceWriter;
+import org.richfaces.cdk.resource.util.ResourceUtil;
 import org.richfaces.cdk.resource.writer.ResourceProcessor;
 import org.richfaces.cdk.strings.Constants;
 import org.richfaces.resource.ResourceFactory;
@@ -91,10 +90,6 @@ public class ResourceWriterImpl implements ResourceWriter {
         currentTime = System.currentTimeMillis();
     }
 
-    private String getResourceQualifier(Resource resource) {
-        return COLON_JOINER.join(resource.getLibraryName(), resource.getResourceName());
-    }
-    
     private synchronized File createOutputFile(String path) throws IOException {
         File outFile = new File(resourceContentsDir, path);
         outFile.getParentFile().mkdirs();
@@ -133,7 +128,7 @@ public class ResourceWriterImpl implements ResourceWriter {
         File outFile = createOutputFile(requestPathWithSkin); 
         
         matchingProcessor.process(requestPathWithSkin, new ResourceInputStreamSupplier(resource), Files.newOutputStreamSupplier(outFile));
-        processedResources.put(getResourceQualifier(resource), requestPath);
+        processedResources.put(ResourceUtil.getResourceQualifier(resource), requestPath);
     }
 
     @Override

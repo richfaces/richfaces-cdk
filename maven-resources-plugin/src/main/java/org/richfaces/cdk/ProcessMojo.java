@@ -103,6 +103,12 @@ public class ProcessMojo extends AbstractMojo {
         };
     };
 
+    private static final Function<Resource, String> RESOURCE_QUALIFIER_FUNCTION = new Function<Resource, String>() {
+        public String apply(Resource from) {
+            return ResourceUtil.getResourceQualifier(from);
+        };
+    };
+
     private final Function<String, URL> filePathToURL = new Function<String, URL>() {
         public URL apply(String from) {
             try {
@@ -150,6 +156,16 @@ public class ProcessMojo extends AbstractMojo {
     /**
      * @parameter
      */
+    private List<String> includedFiles;
+    
+    /**
+     * @parameter
+     */
+    private List<String> excludedFiles;
+    
+    /**
+     * @parameter
+     */
     // TODO review usage of properties?
     private FileNameMapping[] fileNameMappings = new FileNameMapping[0];
 
@@ -192,9 +208,16 @@ public class ProcessMojo extends AbstractMojo {
     }
     
     private Predicate<Resource> createResourcesFilter() {
+        Predicate<CharSequence> qualifierPredicate = MorePredicates.compose(includedFiles,
+            excludedFiles, REGEX_CONTAINS_BUILDER_FUNCTION);
+
+        Predicate<Resource> qualifierResourcePredicate = Predicates.compose(qualifierPredicate, RESOURCE_QUALIFIER_FUNCTION);
+
         Predicate<CharSequence> contentTypePredicate = MorePredicates.compose(includedContentTypes,
             excludedContentTypes, REGEX_CONTAINS_BUILDER_FUNCTION);
-        return Predicates.compose(contentTypePredicate, CONTENT_TYPE_FUNCTION);
+        Predicate<Resource> contentTypeResourcePredicate = Predicates.compose(contentTypePredicate, CONTENT_TYPE_FUNCTION);
+
+        return Predicates.and(qualifierResourcePredicate, contentTypeResourcePredicate);
     }
 
     private URL resolveWebRoot() throws MalformedURLException {

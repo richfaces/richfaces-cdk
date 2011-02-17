@@ -21,6 +21,7 @@
  */
 package org.richfaces.cdk.resource.util;
 
+import static org.richfaces.cdk.strings.Constants.COLON_JOINER;
 import static org.richfaces.cdk.strings.Constants.DOT_JOINER;
 
 import java.io.IOException;
@@ -30,6 +31,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.faces.application.Resource;
 
 import org.richfaces.cdk.vfs.VFSRoot;
 import org.richfaces.cdk.vfs.VirtualFile;
@@ -144,4 +147,9 @@ public final class ResourceUtil {
         
         return result;
     }
+    
+    public static String getResourceQualifier(Resource resource) {
+        return COLON_JOINER.join(resource.getLibraryName(), resource.getResourceName());
+    }
+
 }
