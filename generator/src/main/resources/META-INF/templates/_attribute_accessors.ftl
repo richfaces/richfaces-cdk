@@ -20,5 +20,8 @@
 <#if ! attribute.readOnly >
     public void ${attribute.setterName}(${attribute.typeName} ${propertyKey}) {
         getStateHelper().put(Properties.${propertyKey}, ${propertyKey});
+        <#if attribute.passThrough >
+        handleAttribute("${attribute.name}",${propertyKey});
+        </#if>
     }
 </#if>
