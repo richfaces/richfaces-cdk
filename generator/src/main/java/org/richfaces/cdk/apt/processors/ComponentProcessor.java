@@ -29,6 +29,8 @@ import java.util.Set;
 import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.TypeKind;
+import javax.lang.model.type.TypeMirror;
 
 import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.annotations.Facet;
@@ -109,6 +111,15 @@ public class ComponentProcessor extends ProcessorBase implements CdkAnnotationPr
         processFacets(componentElement, component, annotation);
         processAttributes(componentElement, component, annotation);
         processEvents(componentElement, component, annotation);
+        for (TypeMirror atributesInterface : sourceUtils
+            .getAnnotationValues(annotation, "interfaces", TypeMirror.class)) {
+            if (TypeKind.DECLARED.equals(atributesInterface.getKind())) {
+                processFacetsFromType(sourceUtils.asTypeElement(atributesInterface), component, sourceUtils);
+            } else {
+                // TODO - record warning.
+            }
+        }
+
         setTagInfo(annotation, component);
 
         // TODO - process @Test annotations.
@@ -130,6 +141,19 @@ public class ComponentProcessor extends ProcessorBase implements CdkAnnotationPr
 
     final void processFacets(TypeElement componentElement, ComponentModel component, AnnotationMirror annotation) {
         SourceUtils sourceUtils = getSourceUtils();
+        processFacetsFromType(componentElement, component, sourceUtils);
+        for (AnnotationMirror facet : sourceUtils.getAnnotationValues(annotation, "facets", AnnotationMirror.class)) {
+            if (!sourceUtils.isDefaultValue(facet, "name")) {
+                String name = sourceUtils.getAnnotationValue(facet, "name", String.class);
+                FacetModel facetModel = component.getOrCreateFacet(name);
+                processFacet(facet, facetModel, null);
+            } else {
+                throw new CdkException("Facet name should be set");
+            }
+        }
+    }
+
+    private void processFacetsFromType(TypeElement componentElement, ComponentModel component, SourceUtils sourceUtils) {
         if (null != componentElement) {
             Set<BeanProperty> properties = sourceUtils.getBeanPropertiesAnnotatedWith(Facet.class, componentElement);
 
@@ -144,15 +168,6 @@ public class ComponentProcessor extends ProcessorBase implements CdkAnnotationPr
                 }
             }
 
-        }
-        for (AnnotationMirror facet : sourceUtils.getAnnotationValues(annotation, "facets", AnnotationMirror.class)) {
-            if (!sourceUtils.isDefaultValue(facet, "name")) {
-                String name = sourceUtils.getAnnotationValue(facet, "name", String.class);
-                FacetModel facetModel = component.getOrCreateFacet(name);
-                processFacet(facet, facetModel, null);
-            } else {
-                throw new CdkException("Facet name should be set");
-            }
         }
     }
 

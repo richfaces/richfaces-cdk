@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
+import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.el.MethodExpression;
 import javax.el.ValueExpression;
@@ -57,6 +58,8 @@ public class ${targetClass.simpleName} extends ${baseClass.simpleName}
 
 
     <#include "_attributes.ftl">
+
+    <#include "_facets.ftl">
 
     <#list events as event>
         <#include "_event_source_accessors.ftl">

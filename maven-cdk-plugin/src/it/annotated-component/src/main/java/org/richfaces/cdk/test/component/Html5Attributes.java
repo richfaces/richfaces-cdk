@@ -23,8 +23,11 @@
 
 package org.richfaces.cdk.test.component;
 
+import javax.faces.component.UIComponent;
+
 import org.richfaces.cdk.annotations.Attribute;
 import org.richfaces.cdk.annotations.EventName;
+import org.richfaces.cdk.annotations.Facet;
 
 /**
  * <p class="changed_added_4_0"></p>
@@ -45,25 +48,27 @@ public interface Html5Attributes {
         AUTO
     }
     
+    @Facet
+    UIComponent getHeader();
     /**
      * @return
      */
     @Attribute(events=@EventName("drag"))
-    public abstract DraggableState getDraggable();
+    DraggableState getDraggable();
 
     /**
      * @param newValue
      */
-    public abstract void setDraggable(DraggableState newValue);
+    void setDraggable(DraggableState newValue);
 
     /**
      * @return
      */
     @Attribute
-    public abstract boolean isHidden();
+    boolean isHidden();
 
     /**
      * @param newValue
      */
-    public abstract void setHidden(boolean newValue);
+    void setHidden(boolean newValue);
 }

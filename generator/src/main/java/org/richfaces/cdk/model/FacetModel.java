@@ -41,7 +41,7 @@ public class FacetModel extends DescriptionGroupBase implements ModelElement<Fac
     /**
      *  <p class="changed_added_4_0">Is that bean property generate in the class or should be generated ?</p>
      */
-    private Boolean generate;
+    private Boolean generate = Boolean.FALSE; // TODO - check in model validator.
 
     public FacetModel() {
     }

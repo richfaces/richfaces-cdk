@@ -27,6 +27,7 @@ import java.util.List;
 
 import javax.el.MethodExpression;
 import javax.el.ValueExpression;
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.ValueHolder;
 import javax.faces.el.MethodBinding;
@@ -78,8 +79,8 @@ import org.richfaces.cdk.test.model.TestModel;
 )
 public abstract class AbstractTestComponent extends UIComponentBase /*implements ValueHolder */{
     
-    @Attribute
-    private int length;
+    @Facet
+    public abstract UIComponent getFooter();
 
     @Attribute
     public abstract String getTitle();

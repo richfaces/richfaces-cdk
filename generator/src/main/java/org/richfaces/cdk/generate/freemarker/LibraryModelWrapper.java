@@ -26,6 +26,7 @@ package org.richfaces.cdk.generate.freemarker;
 import org.richfaces.cdk.model.ClassName;
 import org.richfaces.cdk.model.EventModel;
 import org.richfaces.cdk.model.FacesId;
+import org.richfaces.cdk.model.FacetModel;
 import org.richfaces.cdk.model.ModelElementBase;
 import org.richfaces.cdk.model.PropertyBase;
 import org.richfaces.cdk.model.TagModel;
@@ -72,6 +73,8 @@ public class LibraryModelWrapper extends BeansWrapper implements ObjectWrapper {
             return create(obj, EventTemplateModel.FACTORY);
         } else if (obj instanceof TagModel) {
             return create(obj, TagTemplateModel.FACTORY);
+        } else if (obj instanceof FacetModel) {
+            return create(obj, FacetTemplateModel.FACTORY);
         } else if (obj instanceof ModelElementBase ) {
             return create(obj, ModelElementBaseTemplateModel.FACTORY);
         } else {

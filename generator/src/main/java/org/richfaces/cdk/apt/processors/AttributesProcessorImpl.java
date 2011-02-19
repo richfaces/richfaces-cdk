@@ -215,7 +215,7 @@ public class AttributesProcessorImpl implements AttributesProcessor {
         log.debug("  -- Process Java files.");
         Set<BeanProperty> properties = Sets.newHashSet();
         properties.addAll(sourceUtils.getBeanPropertiesAnnotatedWith(Attribute.class, element));
-        properties.addAll(sourceUtils.getAbstractBeanProperties(element));
+//        properties.addAll(sourceUtils.getAbstractBeanProperties(element));
         for (BeanProperty beanProperty : properties) {
             processAttribute(beanProperty, component.getOrCreateAttribute(beanProperty.getName()));
         }

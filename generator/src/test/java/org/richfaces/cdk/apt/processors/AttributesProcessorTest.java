@@ -90,7 +90,7 @@ public class AttributesProcessorTest extends AnnotationProcessorTestBase {
         BeanProperty beanProperty = createNiceMock(BeanProperty.class);
         expect(utils.getBeanPropertiesAnnotatedWith(eq(Attribute.class), same(element))).andReturn(
             Collections.singleton(beanProperty));
-        expect(utils.getAbstractBeanProperties(same(element))).andReturn(new HashSet<BeanProperty>(0));
+//        expect(utils.getAbstractBeanProperties(same(element))).andReturn(new HashSet<BeanProperty>(0));
         expect(beanProperty.getName()).andReturn(FOO);
         expect(beanProperty.getType()).andReturn(ClassName.parseName(String.class.getName()));
         mockController.replay();
