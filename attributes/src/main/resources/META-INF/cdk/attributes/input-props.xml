@@ -45,7 +45,7 @@
 		<property-class>java.lang.String</property-class>
 		<property-extension>
 			<cdk:pass-through>false</cdk:pass-through>
-			<cdk:event-name />
+			<cdk:event-name>change</cdk:event-name>
 			<cdk:event-name>valueChange</cdk:event-name>
 			<default-behavior>true</default-behavior>
 		</property-extension>
@@ -62,7 +62,7 @@
 		<property-class>java.lang.String</property-class>
 		<property-extension>
 			<cdk:pass-through>true</cdk:pass-through>
-			<cdk:event-name />
+			<cdk:event-name>select</cdk:event-name>
 		</property-extension>
 	</property>
 
@@ -92,7 +92,7 @@
 		<property-name>label</property-name>
 		<property-class>java.lang.String</property-class>
 		<property-extension>
-			<renderer-attribute-ignore>true</renderer-attribute-ignore>
+			<cdk:pass-through>false</cdk:pass-through>
 		</property-extension>
 	</property>
 </cdk:properties>

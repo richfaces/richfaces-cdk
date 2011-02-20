@@ -42,7 +42,7 @@
 		<property-class>java.lang.String</property-class>
 		<property-extension>
 			<cdk:pass-through>true</cdk:pass-through>
-			<cdk:event-name />
+			<cdk:event-name>blur</cdk:event-name>
 		</property-extension>
 	</property>
 
@@ -56,7 +56,7 @@
 		<property-class>java.lang.String</property-class>
 		<property-extension>
 			<cdk:pass-through>true</cdk:pass-through>
-			<cdk:event-name />
+			<cdk:event-name>focus</cdk:event-name>
 		</property-extension>
 	</property>
 
