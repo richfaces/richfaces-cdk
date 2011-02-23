@@ -46,8 +46,7 @@
 		<property-extension>
 			<cdk:pass-through>false</cdk:pass-through>
 			<cdk:event-name>change</cdk:event-name>
-			<cdk:event-name>valueChange</cdk:event-name>
-			<default-behavior>true</default-behavior>
+			<cdk:event-name default="true">valueChange</cdk:event-name>
 		</property-extension>
 	</property>
 
