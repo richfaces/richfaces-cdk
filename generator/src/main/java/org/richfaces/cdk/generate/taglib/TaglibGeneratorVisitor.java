@@ -26,19 +26,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.richfaces.cdk.annotations.TagType;
-import org.richfaces.cdk.model.BeanModelBase;
-import org.richfaces.cdk.model.BehaviorModel;
-import org.richfaces.cdk.model.ComponentLibrary;
-import org.richfaces.cdk.model.ComponentModel;
-import org.richfaces.cdk.model.ConverterModel;
-import org.richfaces.cdk.model.DescriptionGroup;
-import org.richfaces.cdk.model.EventModel;
-import org.richfaces.cdk.model.FacesId;
-import org.richfaces.cdk.model.FunctionModel;
-import org.richfaces.cdk.model.PropertyBase;
-import org.richfaces.cdk.model.SimpleVisitor;
-import org.richfaces.cdk.model.TagModel;
-import org.richfaces.cdk.model.ValidatorModel;
+import org.richfaces.cdk.model.*;
 import org.richfaces.cdk.util.Strings;
 
 /**
@@ -262,9 +250,16 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
             if (isFaceletsTag(tagModel)) {
                 Element tag = createTag(tagModel.getName());
                 addTagHandler(tag, tagModel);
+                appendAttributesForListener(tag);
             }
         }
         return null;
+    }
+
+    private void appendAttributesForListener(Element tag) {
+        for (ListenerAttributes attribute : ListenerAttributes.values()) {
+            createAttributeElement(tag, attribute.getAttribute().getName(), attribute.getAttribute());
+        }
     }
 
     private boolean isFaceletsTag(TagType type) {
@@ -281,7 +276,7 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
      * Add common description elements.
      * </p>
      * 
-     * @param parant
+     * @param parent
      * @param model
      */
     private void addDescription(Element parent, DescriptionGroup model) {
