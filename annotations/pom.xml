@@ -4,12 +4,12 @@
   <parent>
     <artifactId>parent</artifactId>
     <groupId>org.richfaces.cdk</groupId>
-    <version>4.0.0.Final</version>
+    <version>4.0.0-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <groupId>org.richfaces.cdk</groupId>
   <artifactId>annotations</artifactId>
-  <version>4.0.0.Final</version>
+  <version>4.0.0-SNAPSHOT</version>
   <description>That project contains annotations for JSF classes</description>
   <name>annotations</name>
   <dependencies>
