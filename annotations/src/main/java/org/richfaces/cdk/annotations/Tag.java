@@ -26,8 +26,12 @@ package org.richfaces.cdk.annotations;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import javax.faces.view.facelets.TagHandler;
+import javax.faces.webapp.UIComponentTagBase;
+
 /**
  * <p class="changed_added_4_0">
+ * Defines Faces VDL ( Facelets,JSP )tag.
  * </p>
  * 
  * @author asmirnov@exadel.com
@@ -46,12 +50,30 @@ public @interface Tag {
      */
     public String name() default "";
 
+    /**
+     * <p class="changed_added_4_0">Defines target View Description Language: JSP, Facelets, or both.</p>
+     * @return
+     */
     public TagType type() default TagType.Facelets;
 
+    /**
+     * <p class="changed_added_4_0">Tag handler class. Fully qualified class name of the generated or
+     * existing tag handler. For {@link TagType#Jsp} it's {@link JspTag} or, more likely, {@link UIComponentTagBase} instance.
+     * For facelets, it's {@link TagHandler} instance.</p>
+     * @return
+     */
     public String handler() default "";
 
+    /**
+     * <p class="changed_added_4_0">Base class for generated tag handler. Default value depends from {@link #type()} attribute value.</p>
+     * @return
+     */
     public String baseClass() default "";
 
+    /**
+     * <p class="changed_added_4_0">Flag indicates that special tag handler should be generated.</p>
+     * @return
+     */
     public boolean generate() default false;
 
 }

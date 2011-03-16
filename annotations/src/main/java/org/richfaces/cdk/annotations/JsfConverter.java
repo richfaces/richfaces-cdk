@@ -28,8 +28,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import javax.faces.convert.Converter;
+
 /**
  * <p class="changed_added_4_0">
+ * This annotation defines concrete class as JSF {@link Converter}, or abstract class as the base for generated
+ * Converter implementation.
  * </p>
  * 
  * @author asmirnov@exadel.com
@@ -38,47 +42,83 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface JsfConverter {
 
+    /**
+     * <p class="changed_added_4_0">Default value for {@link #forClass} attribute.</p>
+     * @author asmirnov@exadel.com
+     *
+     */
+    public static final class NONE {
+    }
+
     public static final String NAME = "org.richfaces.cdk.annotations.JsfConverter";
 
+    /**
+     * <p class="changed_added_4_0">
+     * The "converter-id" element represents the identifier under which the corresponding Converter class should be
+     * registered.
+     * </p>
+     * 
+     * @return converter-id
+     */
     public String id() default "";
 
+    /**
+     * <p class="changed_added_4_0">
+     * represents the class for which a Converter class will be registered.
+     * </p>
+     * 
+     * @return
+     */
     public Class<?> forClass() default NONE.class;
 
-
+    /**
+     * <p class="changed_added_4_0">
+     * fully qualified class name of the generated Converter implementation. Default value means nothing to genrate from concrete class,
+     * or infer name by convention for abstract class.</p>
+     * @return
+     */
     public String generate() default "";
 
     /**
      * <p class="changed_added_4_0">
-     * Description used by IDE.
+     * Converter description to include into generated faces-config and taglib.
      * </p>
      * 
      * @return
      */
     public Description description() default @Description();
 
+    /**
+     * <p class="changed_added_4_0">
+     * Tag description. If generated tags require special handlers, provide separate description for every type of tag, JSP and Facelets.
+     * Otherwise, the only one tag tag description with name and type {@link TagType#All}. 
+     * </p>
+     * 
+     * @return
+     */
     public Tag[] tag() default {};
-    
-    public static final class NONE {}
+
 
     /**
      * <p class="changed_added_4_0">
-     * defines fragments of faces-config.xml that contain standard attribute definitions. CDK also tries to read
-     * META-INF/cdk/attributes/[classname].xml file for all component superclasses and interfaces, therefore it is not
-     * necessary to explicit include definitions for UIComponent and any other standard JSF classes. CDK defines couple
-     * of its own "urn" namespaces: "urn:resource:" for classpath resources, "urn:config:" for for project configuration
-     * folder and "urn:attributes:" for META-INF/cdk/attributes/ in the annotations library.
+     * Defines file names for fragment of faces-config.xml that contain standard attribute definitions. All names relative to the
+     * META-INF/cdk/attributes/ folder in classpath. CDK also tries to read
+     * META-INF/cdk/attributes/[classname].xml file for all component superclasses and interfaces. Therefore, it is not
+     * necessary to explicitly include definitions for Converter and any other standard JSF classes.
      * </p>
      * 
      * @return
      */
     public String[] attributes() default {};
+
     /**
      * <p class="changed_added_4_0">
-     * Interfaces that should be implemented in the generated class. CDK processes all {@link Attribute} annotations in these interfaces
+     * Interfaces that should be implemented in the generated class. CDK processes all {@link Attribute} annotations in
+     * these interfaces
      * </p>
      * 
      * @return
      */
     public Class<?>[] interfaces() default {};
-    
+
 }

@@ -28,7 +28,7 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * <p class="changed_added_4_0">
- * Attribute aliases. CDK will generate getters/setters for these aliases which delegate calls to the original attribute
+ * Attribute aliases. CDK will generate getter and setter methods for these aliases which delegate calls to the original attribute
  * methods.
  * </p>
  * 

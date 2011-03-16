@@ -29,8 +29,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import javax.faces.component.UIComponent;
+
 /**
- * <p class="changed_added_4_0">
+ * <p class="changed_added_4_0">Describes facet of {@link UIComponent}.
  * </p>
  * 
  * @author asmirnov@exadel.com
@@ -50,19 +52,19 @@ public @interface Facet {
      * @return
      */
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">Facet name</p>
      * @return
      */
     String name() default "";
     
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">If true, getter and setter methods for this facet will be generated.</p>
      * @return
      */
     boolean generate() default true;
     
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">Facet description.</p>
      * @return
      */
     Description description() default @Description;

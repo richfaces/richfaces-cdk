@@ -28,7 +28,7 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * <p class="changed_added_4_0">
- * That annotation defines  class that is generated from the concrete class defined in the {@link JsfComponent} 
+ * That annotation defines  third lvel component, specific for the concrete renderer, that is generated from the concrete class defined in the {@link JsfComponent} 
  * </p>
  * 
  * @author asmirnov@exadel.com
@@ -40,11 +40,10 @@ public @interface RendererSpecificComponent {
 
     /**
      * <p class="changed_added_4_0">
-     * Type of the component. This is mandatory parameter because CDK uses <em>component-type</em> as primary key for
-     * components library model.
+     * Type of the JSF component. 
      * </p>
-     * <p class="todo">
-     * TODO if this value is an empty, component type will be inferred from class name.
+     * <p class="naming">
+     * if this value is an empty, component type would be inferred from class name.
      * </p>
      * 
      * @return component type.
@@ -63,7 +62,7 @@ public @interface RendererSpecificComponent {
 
     /**
      * <p class="changed_added_4_0">
-     * Description used by IDE.
+     * Component description to include into generated faces-config and taglib.
      * </p>
      * 
      * @return
@@ -72,7 +71,7 @@ public @interface RendererSpecificComponent {
 
     /**
      * <p class="changed_added_4_0">
-     * Cenerated Junit test.
+     * Junit test description. Isn't used in RichFaces 4.0, reserved for future releases. 
      * </p>
      * 
      * @return
@@ -90,7 +89,8 @@ public @interface RendererSpecificComponent {
 
     /**
      * <p class="changed_added_4_0">
-     * View Description Language, JSP or Facelets, tags.
+     * Tag description. If generated tags require special handlers, provide separate description for every type of tag, JSP and Facelets.
+     * Otherwise, the only one tag tag description with name and type {@link TagType#All}. 
      * </p>
      * 
      * @return
@@ -109,11 +109,10 @@ public @interface RendererSpecificComponent {
 
     /**
      * <p class="changed_added_4_0">
-     * defines fragments of faces-config.xml that contain standard attribute definitions. CDK also tries to read
-     * META-INF/cdk/attributes/[classname].xml file for all component superclasses and interfaces, therefore it is not
-     * necessary to explicit include definitions for UIComponent and any other standard JSF classes. CDK defines couple
-     * of its own "urn" namespaces: "urn:resource:" for classpath resources, "urn:config:" for for project configuration
-     * folder and "urn:attributes:" for META-INF/cdk/attributes/ in the annotations library.
+     * Defines file names for fragment of faces-config.xml that contain standard attribute definitions. All names relative to the
+     * META-INF/cdk/attributes/ folder in classpath. CDK also tries to read
+     * META-INF/cdk/attributes/[classname].xml file for all component superclasses and interfaces. Therefore, it is not
+     * necessary to explicitly include definitions for UIComponent and any other standard JSF classes.
      * </p>
      * 
      * @return
@@ -122,7 +121,7 @@ public @interface RendererSpecificComponent {
 
     /**
      * <p class="changed_added_4_0">
-     * Interfaces that should be implemented in the generated component class. CDK processes all {@link Attribute} and
+     * Interfaces that should be implemented by the generated component class. CDK processes all {@link Attribute} and
      * {@link Facet} annotations in these interfaces
      * </p>
      * 
@@ -131,7 +130,7 @@ public @interface RendererSpecificComponent {
     public Class<?>[] interfaces() default {};
     /**
      * <p class="changed_added_4_0">
-     * Events fired by the component.
+     * @{link FacesEvent}s fired by the component.
      * </p>
      * 
      * @return

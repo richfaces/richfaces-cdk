@@ -28,10 +28,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import javax.faces.component.behavior.ClientBehavior;
+import javax.faces.render.ClientBehaviorRenderer;
+import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">Defines annotated class as JSF {@link ClientBehaviorRenderer}, or, if used in the {@link JsfBehavior} annotation,
+ * defines renderer type for {@link ClientBehavior}.</p>
  * @author asmirnov@exadel.com
  *
  */
@@ -39,12 +43,28 @@ import javax.faces.render.RenderKitFactory;
 @Target(ElementType.TYPE)
 public @interface JsfBehaviorRenderer {
 
+    /**
+     * <p class="changed_added_4_0">ClientBehavior renderer type.</p>
+     * @return
+     */
     public String type() default "";
 
+    /**
+     * <p class="changed_added_4_0">Defines {@link RenderKit} for which generated renderer is belong to.</p>
+     * @return
+     */
     public String renderKitId() default RenderKitFactory.HTML_BASIC_RENDER_KIT;
 
+    /**
+     * <p class="changed_added_4_0">Fully qualified class name of the generated renderer class.</p>
+     * @return
+     */
     public String generate() default "";
     
+    /**
+     * <p class="changed_added_4_0">Renderer description to include into generated faces-config.xml</p>
+     * @return
+     */
     public Description description() default @Description();
 
 }

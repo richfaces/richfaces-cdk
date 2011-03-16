@@ -40,13 +40,13 @@ public @interface Function {
     public Description description() default @Description();
 
     /**
-     * <p class="changed_added_4_0">Function n</p>
+     * <p class="changed_added_4_0">EL-function name</p>
      * @return
      */
     public String name() default "";
     
     /**
-     * <p class="changed_added_4_0">Tag library for include given function</p>
+     * <p class="changed_added_4_0">Tag library for which given function will be included.</p>
      * @return
      */
     public TagType type() default TagType.Facelets;

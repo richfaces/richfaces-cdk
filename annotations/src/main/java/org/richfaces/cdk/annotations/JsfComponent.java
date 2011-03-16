@@ -28,12 +28,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import javax.faces.component.UICommand;
-import javax.faces.component.UIComponentBase;
-import javax.faces.component.UIInput;
-import javax.faces.component.html.HtmlCommandButton;
-import javax.faces.component.html.HtmlCommandLink;
-import javax.faces.event.FacesEvent;
 
 /**
  * <p class="changed_added_4_0">
@@ -70,7 +64,7 @@ public @interface JsfComponent {
 
     /**
      * <p class="changed_added_4_0">
-     * Component family. For default value, it is inferred from the COMPONENT_FAMILY constant or by naming
+     * Component family. For default value, it could be got from the COMPONENT_FAMILY constant or by inferred naming
      * conventions.
      * </p>
      * 
@@ -80,7 +74,8 @@ public @interface JsfComponent {
 
     /**
      * <p class="changed_added_4_0">
-     * Name of the generated component implementation class.
+     * Name of the generated component implementation class. Default value means nothing to genrate from concrete class,
+     * or infer name by convention for abstract class.
      * </p>
      * 
      * @return
@@ -116,7 +111,8 @@ public @interface JsfComponent {
 
     /**
      * <p class="changed_added_4_0">
-     * Tag description, for JSP and Facelets, tags.
+     * Tag description. If generated tags require special handlers, provide separate description for every type of tag, JSP and Facelets.
+     * Otherwise, the only one tag tag description with name and type {@link TagType#All}. 
      * </p>
      * 
      * @return
@@ -125,7 +121,7 @@ public @interface JsfComponent {
 
     /**
      * <p class="changed_added_4_0">
-     * Faces Events fired by the component.
+     * @{link FacesEvent}s fired by the component.
      * </p>
      * 
      * @return
@@ -143,11 +139,10 @@ public @interface JsfComponent {
 
     /**
      * <p class="changed_added_4_0">
-     * Defines fragments of faces-config.xml that contain standard attribute definitions. CDK also tries to read
-     * META-INF/cdk/attributes/[classname].xml file for all component superclass's and interfaces. therefore it is not
-     * necessary to explicitly include definitions for UIComponent and any other standard JSF classes. CDK defines couple
-     * of its own "urn" namespaces: "urn:resource:" for classpath resources, "urn:config:" for for project configuration
-     * folder and "urn:attributes:" for META-INF/cdk/attributes/ in the annotations library.
+     * Defines file names for fragment of faces-config.xml that contain standard attribute definitions. All names relative to the
+     * META-INF/cdk/attributes/ folder in classpath. CDK also tries to read
+     * META-INF/cdk/attributes/[classname].xml file for all component superclasses and interfaces. Therefore, it is not
+     * necessary to explicitly include definitions for UIComponent and any other standard JSF classes.
      * </p>
      * 
      * @return
@@ -156,7 +151,7 @@ public @interface JsfComponent {
 
     /**
      * <p class="changed_added_4_0">
-     * Interfaces that should be implemented in the generated component class. CDK processes all {@link Attribute} and
+     * Interfaces that should be implemented by the generated component class. CDK processes all {@link Attribute} and
      * {@link Facet} annotations in these interfaces
      * </p>
      * 
@@ -165,8 +160,8 @@ public @interface JsfComponent {
     public Class<?>[] interfaces() default {};
     
     /**
-     * <p class="changed_added_4_0">Defines third-level renderer-specific components. Used to generate a whole family of similar components.
-     * For example, {@link UIComponentBase} provides {@link UICommand} subclass for all command components, and {@link HtmlCommandLink} with {@link HtmlCommandButton} are
+     * <p class="changed_added_4_0">Defines third-level renderer specific components. Used to generate a whole family of similar components.
+     * For example, {@link javax.faces.component.UIComponentBase} provides {@link javax.faces.component.UICommand} subclass for all command components, and {@link javax.faces.component.html.HtmlCommandLink} with {@link javax.faces.component.HtmlCommandButton} are
      * renderer-specific components for links and buttons.</p>
      * @return
      */

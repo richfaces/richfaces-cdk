@@ -28,7 +28,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation defines taglib for which all tags for JSF components from that packages belong to
+ * This annotation defines taglib for which all tags for JSF components from that packages belong to.
+ * Current limitation - there sould be only one taglib package in the project, otherwise the last processed package will
+ * override others.
  * 
  * @author asmirnov
  * @version $Id$
@@ -45,7 +47,7 @@ public @interface TagLibrary {
     public String uri();
 
     /**
-     * <p class="changed_added_4_0">Library short name ( default prefix )</p>
+     * <p class="changed_added_4_0">Library short name ( default prefix ). The same same also used for faces-config &lt;name&gt; element.</p>
      * @return
      */
     public String shortName();
@@ -76,13 +78,13 @@ public @interface TagLibrary {
     public Class<?> listenerClass()  default NONE.class;
 
     /**
-     * <p class="changed_added_4_0">Library description to use by IDE</p>
+     * <p class="changed_added_4_0">Library description, included into generated taglib and faces-config.E</p>
      * @return
      */
     public String displayName() default "";
 
     /**
-     * <p class="changed_added_4_0">Java Server Pages version for generated tld.</p>
+     * <p class="changed_added_4_0">Java Server Pages version for generated tld, for JSP taglib only.</p>
      * @return
      */
     public String jspVersion() default "2.0";

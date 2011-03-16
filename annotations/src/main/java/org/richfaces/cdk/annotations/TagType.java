@@ -23,6 +23,7 @@
 package org.richfaces.cdk.annotations;
 
 /**
+ * VDL type for {@link Tag} annotation.
  * @author akolonitsky
  * @since Feb 11, 2010
  */

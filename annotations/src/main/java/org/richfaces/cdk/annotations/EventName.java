@@ -29,8 +29,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import javax.faces.component.behavior.ClientBehavior;
+
 /**
- * <p class="changed_added_4_0">
+ * <p class="changed_added_4_0">Description of client-side event that can be associated with {@link ClientBehavior}.
  * </p>
  * 
  * @author asmirnov@exadel.com
@@ -42,7 +44,7 @@ import java.lang.annotation.Target;
 public @interface EventName {
 
     /**
-     * <p class="changed_added_4_0">
+     * <p class="changed_added_4_0">Event name ( click,change,mouseover ... ).
      * </p>
      * 
      * @return
@@ -50,7 +52,7 @@ public @interface EventName {
     public String value() default "";
 
     /**
-     * <p class="changed_added_4_0">
+     * <p class="changed_added_4_0">Defines default event. There should be only one default event per component.
      * </p>
      * 
      * @return

@@ -28,8 +28,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import javax.faces.component.behavior.ClientBehavior;
+import javax.faces.convert.Converter;
+
 /**
  * <p class="changed_added_4_0">
+ * This annotation defines concrete class as JSF {@link ClientBehavior}, or abstract class as the base for generated
+ * Behavior implementation.
  * </p>
  * 
  * @author asmirnov@exadel.com
@@ -50,10 +55,28 @@ public @interface JsfBehavior {
      */
     public String id() default "";
 
+    /**
+     * <p class="changed_added_4_0">
+     * fully qualified class name of the generated Behavior implementation. Default value means nothing to genrate from concrete class,
+     * or infer name by convention for abstract class.</p>
+     * </p>
+     * @return
+     */
     public String generate() default "";
 
+    /**
+     * <p class="changed_added_4_0">
+     * Tag description. If generated tags require special handlers, provide separate description for every type of tag, JSP and Facelets.
+     * Otherwise, the only one tag tag description with name and type {@link TagType#All}. 
+     * </p>
+     * @return
+     */
     public Tag[] tag() default {};
     
+    /**
+     * <p class="changed_added_4_0">Renderer associated with generated {@link ClientBehavior}</p>
+     * @return
+     */
     public JsfBehaviorRenderer renderer() default @JsfBehaviorRenderer();
     /**
      * <p class="changed_added_4_0">
@@ -67,11 +90,10 @@ public @interface JsfBehavior {
 
     /**
      * <p class="changed_added_4_0">
-     * defines fragments of faces-config.xml that contain standard attribute definitions. CDK also tries to read
-     * META-INF/cdk/attributes/[classname].xml file for all component superclasses and interfaces, therefore it is not
-     * necessary to explicit include definitions for UIComponent and any other standard JSF classes. CDK defines couple
-     * of its own "urn" namespaces: "urn:resource:" for classpath resources, "urn:config:" for for project configuration
-     * folder and "urn:attributes:" for META-INF/cdk/attributes/ in the annotations library.
+     * Defines file names for fragment of faces-config.xml that contain standard attribute definitions. All names relative to the
+     * META-INF/cdk/attributes/ folder in classpath. CDK also tries to read
+     * META-INF/cdk/attributes/[classname].xml file for all component superclasses and interfaces. Therefore, it is not
+     * necessary to explicitly include definitions for Converter and any other standard JSF classes.
      * </p>
      * 
      * @return

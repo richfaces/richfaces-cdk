@@ -38,7 +38,7 @@ import java.lang.annotation.Target;
  * <ul>
  * <li>Event listener interface</li>
  * <li>Event source interface</li>
- * <li>Event tag handler and binding wrapper.</li>
+ * <li>Listener tag handler and wrapper to bind listener to the EL-expression.</li>
  * </ul>
  * </p>
  * 
