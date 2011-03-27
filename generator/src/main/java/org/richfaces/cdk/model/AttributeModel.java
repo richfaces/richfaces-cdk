@@ -32,4 +32,15 @@ package org.richfaces.cdk.model;
  */
 public class AttributeModel extends PropertyBase {
 
+    public AttributeModel() {
+        super();
+    }
+
+    public AttributeModel(String name, boolean required, ClassName type) {
+        super();
+        setName(name);
+        setRequired(required);
+        setType(type);
+    }
+
 }
