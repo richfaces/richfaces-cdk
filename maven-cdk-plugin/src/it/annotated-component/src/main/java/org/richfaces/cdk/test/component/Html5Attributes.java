@@ -26,6 +26,7 @@ package org.richfaces.cdk.test.component;
 import javax.faces.component.UIComponent;
 
 import org.richfaces.cdk.annotations.Attribute;
+import org.richfaces.cdk.annotations.Description;
 import org.richfaces.cdk.annotations.EventName;
 import org.richfaces.cdk.annotations.Facet;
 
@@ -48,7 +49,7 @@ public interface Html5Attributes {
         AUTO
     }
     
-    @Facet
+    @Facet(generate=true,description=@Description())
     UIComponent getHeader();
     /**
      * @return
