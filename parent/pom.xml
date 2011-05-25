@@ -22,9 +22,9 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 	<scm>
-		<connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/trunk/cdk/parent</connection>
-		<developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/trunk/cdk/parent</developerConnection>
-		<url>http://fisheye.jboss.org/browse/Richfaces/cdk/parent</url>
+		<connection>scm:git:git://github.com/richfaces/cdk.git</connection>
+		<developerConnection>scm:git:git@github.com:richfaces/cdk.git</developerConnection>
+		<url>https://github.com/richfaces/cdk</url>
 	</scm>
 
 	<build>
