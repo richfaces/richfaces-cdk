@@ -34,23 +34,17 @@ import org.richfaces.cdk.CdkException;
  */
 @XmlRootElement(name = "object", namespace = Template.CDK_NAMESPACE)
 public class CdkObjectElement implements ModelElement {
-
     @XmlAttribute(required = true)
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     private String name;
-
     @XmlAttribute
     private String value;
-
     @XmlValue
     private String bodyValue;
-
     @XmlAttribute(required = true)
     private String type;
-
     @XmlAttribute
     private boolean cast;
-
     @XmlAttribute(name = "type-arguments")
     private String typeArguments;
 
@@ -116,14 +110,14 @@ public class CdkObjectElement implements ModelElement {
     public String getTypeArguments() {
         return typeArguments;
     }
-    
+
     /**
      * @param typeArguments the typeArguments to set
      */
     public void setTypeArguments(String typeArguments) {
         this.typeArguments = typeArguments;
     }
-    
+
     @Override
     public void visit(TemplateVisitor visitor) throws CdkException {
         visitor.visitElement(this);
@@ -136,5 +130,4 @@ public class CdkObjectElement implements ModelElement {
     public boolean isCast() {
         return cast;
     }
-
 }

@@ -33,7 +33,7 @@ package org.richfaces.cdk.apt;
 @TestInterfaceAnnotation
 public interface TestInterface {
     @TestMethodAnnotation("baz")
-    public String getValue();
+    String getValue();
 
-    public void setValue(String value);
+    void setValue(String value);
 }

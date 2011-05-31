@@ -31,13 +31,12 @@ import org.richfaces.cdk.vfs.zip.ZipVFSRoot;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public final class VFS {
-
     private VFS() {
     }
-    
+
     public static VFSRoot getRoot(URL url) throws URISyntaxException, IOException {
         File file = new File(url.toURI());
         if (file.isDirectory()) {

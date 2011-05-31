@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -31,20 +30,20 @@ import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.ConfigExtension;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
-@XmlType(name = "faces-config-facetType", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE,
-    propOrder = {"name", "extension"})
+@XmlType(name = "faces-config-facetType", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE, propOrder = { "name",
+        "extension" })
 @XmlJavaTypeAdapter(FacetAdapter.class)
 public class FacetBean extends ExtensibleBean<FacetBean.FacetExtension> {
-    
-    
     private String name;
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the name
      */
@@ -54,7 +53,8 @@ public class FacetBean extends ExtensibleBean<FacetBean.FacetExtension> {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param name the name to set
      */
@@ -63,7 +63,8 @@ public class FacetBean extends ExtensibleBean<FacetBean.FacetExtension> {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the extension
      */
@@ -78,7 +79,8 @@ public class FacetBean extends ExtensibleBean<FacetBean.FacetExtension> {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @author asmirnov@exadel.com
      */
@@ -86,7 +88,8 @@ public class FacetBean extends ExtensibleBean<FacetBean.FacetExtension> {
         private Boolean generate;
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @return the generate
          */
@@ -96,7 +99,8 @@ public class FacetBean extends ExtensibleBean<FacetBean.FacetExtension> {
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @param generate the generate to set
          */

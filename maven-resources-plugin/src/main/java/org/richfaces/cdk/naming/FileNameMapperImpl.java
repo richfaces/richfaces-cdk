@@ -28,10 +28,9 @@ import org.richfaces.cdk.FileNameMapping;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class FileNameMapperImpl implements FileNameMapper {
-
     private FileNameMapping[] fileNameMappings;
 
     public FileNameMapperImpl(FileNameMapping[] fileNameMappings) {
@@ -54,5 +53,4 @@ public class FileNameMapperImpl implements FileNameMapper {
 
         return resourcePath;
     }
-
 }

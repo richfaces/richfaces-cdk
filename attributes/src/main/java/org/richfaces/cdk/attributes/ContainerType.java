@@ -25,12 +25,10 @@ import java.util.Collection;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public interface ContainerType<V> {
+    Collection<V> getChildren();
 
-    public Collection<V> getChildren();
-    
-    public void setChildren(Collection<V> values);
-    
+    void setChildren(Collection<V> values);
 }

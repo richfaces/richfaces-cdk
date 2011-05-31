@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import java.util.Collection;
@@ -33,19 +32,15 @@ import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.FacesId;
 import org.richfaces.cdk.model.PropertyModel;
 
-
 /**
  * @author akolonitsky
  * @since Jan 13, 2010
  */
-@XmlType(name = "faces-config-validatorType", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE,
-    propOrder={"id", "targetClass", "facesAttributes", "properties", "extension"})
+@XmlType(name = "faces-config-validatorType", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE, propOrder = { "id",
+        "targetClass", "facesAttributes", "properties", "extension" })
 @XmlJavaTypeAdapter(ValidatorAdapter.class)
 public class ValidatorBean extends ElementBeanBase<ValidatorBean.ValidatorExtension> {
-
-
     private ClassName targetClass;
-
     private FacesId id;
 
     @XmlElement(name = "validator-id", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE)
@@ -56,7 +51,6 @@ public class ValidatorBean extends ElementBeanBase<ValidatorBean.ValidatorExtens
     public void setId(FacesId id) {
         this.id = id;
     }
-
 
     @Override
     @XmlElement(name = "property", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE, type = PropertyBean.class)
@@ -93,6 +87,5 @@ public class ValidatorBean extends ElementBeanBase<ValidatorBean.ValidatorExtens
     }
 
     public static class ValidatorExtension extends TagExtensionBase {
-
     }
 }

@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -31,17 +30,18 @@ import org.richfaces.cdk.model.ClassName;
 import org.richfaces.cdk.model.ComponentLibrary;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
-@XmlType(name = "faces-config-attributeType", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE,
-        propOrder = {"name", "type", "defaultValue", "suggestedValue", "extension"})
+@XmlType(name = "faces-config-attributeType", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE, propOrder = { "name",
+        "type", "defaultValue", "suggestedValue", "extension" })
 @XmlJavaTypeAdapter(AttributeAdapter.class)
 public class AttributeBean extends PropertyBase {
-
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the name
      */
@@ -51,7 +51,8 @@ public class AttributeBean extends PropertyBase {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the type
      */
@@ -60,7 +61,6 @@ public class AttributeBean extends PropertyBase {
     public ClassName getType() {
         return super.getType();
     }
-
 
     @Override
     public void setType(ClassName type) {
@@ -83,7 +83,6 @@ public class AttributeBean extends PropertyBase {
     public String getSuggestedValue() {
         return super.getSuggestedValue();
     }
-
 
     @Override
     public void setSuggestedValue(String suggestedValue) {

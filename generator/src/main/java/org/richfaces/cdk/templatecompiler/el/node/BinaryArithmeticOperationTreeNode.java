@@ -32,7 +32,6 @@ import org.richfaces.cdk.templatecompiler.el.types.TypesFactory;
  * @since 4.0
  */
 public class BinaryArithmeticOperationTreeNode extends AbstractBinaryOperationTreeNode {
-
     /**
      * @param node
      * @param operatorString
@@ -41,18 +40,19 @@ public class BinaryArithmeticOperationTreeNode extends AbstractBinaryOperationTr
         super(node, operatorString);
     }
 
-    /* (non-Javadoc)
-      * @see org.richfaces.cdk.templatecompiler.el.node.AbstractBinaryOperationTreeNode#getOperationType(java.lang.reflect.Type, java.lang.reflect.Type)
-      */
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.richfaces.cdk.templatecompiler.el.node.AbstractBinaryOperationTreeNode#getOperationType(java.lang.reflect.Type,
+     * java.lang.reflect.Type)
+     */
 
     @Override
-    protected ELType getOperationType(ELType firstArgumentType,
-                                    ELType secondArgumentType) {
+    protected ELType getOperationType(ELType firstArgumentType, ELType secondArgumentType) {
 
         ELType doubleType = TypesFactory.DOUBLE_TYPE;
 
-        if (doubleType.isAssignableFrom(firstArgumentType)
-            || doubleType.isAssignableFrom(secondArgumentType)) {
+        if (doubleType.isAssignableFrom(firstArgumentType) || doubleType.isAssignableFrom(secondArgumentType)) {
 
             return TypesFactory.DOUBLE_TYPE;
         }
@@ -60,16 +60,17 @@ public class BinaryArithmeticOperationTreeNode extends AbstractBinaryOperationTr
         return TypesFactory.INT_TYPE;
     }
 
-    /* (non-Javadoc)
-     * @see org.richfaces.cdk.templatecompiler.el.node.AbstractBinaryOperationTreeNode#getCoercedChildOutput(int, java.util.Map, org.richfaces.cdk.templatecompiler.el.ELVisitor)
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.richfaces.cdk.templatecompiler.el.node.AbstractBinaryOperationTreeNode#getCoercedChildOutput(int, java.util.Map,
+     * org.richfaces.cdk.templatecompiler.el.ELVisitor)
      */
 
     @Override
-    protected String getCoercedChildOutput(int childIndex, ELVisitor visitor)
-        throws ParsingException {
+    protected String getCoercedChildOutput(int childIndex, ELVisitor visitor) throws ParsingException {
 
-        //TODO implement coercion to number
+        // TODO implement coercion to number
         return getChildOutput(childIndex, visitor);
     }
-
 }

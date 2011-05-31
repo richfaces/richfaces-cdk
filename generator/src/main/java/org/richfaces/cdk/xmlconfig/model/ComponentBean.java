@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import java.util.Collection;
@@ -41,21 +40,22 @@ import org.richfaces.cdk.model.PropertyModel;
 import com.google.common.collect.Lists;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
-@XmlType(name = "faces-config-componentType", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE,
-    propOrder = {"id", "targetClass", "facets", "facesAttributes", "properties", "extension"})
+@XmlType(name = "faces-config-componentType", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE, propOrder = { "id",
+        "targetClass", "facets", "facesAttributes", "properties", "extension" })
 @XmlJavaTypeAdapter(ComponentAdapter.class)
 public class ComponentBean extends ElementBeanBase<ComponentBean.ComponentExtension> {
-
     private List<FacetModel> facets = Lists.newArrayList();
     private ClassName targetClass;
     private FacesId id;
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the id
      */
@@ -65,7 +65,8 @@ public class ComponentBean extends ElementBeanBase<ComponentBean.ComponentExtens
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param id the id to set
      */
@@ -88,7 +89,8 @@ public class ComponentBean extends ElementBeanBase<ComponentBean.ComponentExtens
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the targetClass
      */
@@ -99,7 +101,8 @@ public class ComponentBean extends ElementBeanBase<ComponentBean.ComponentExtens
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param className the targetClass to set
      */
@@ -108,7 +111,8 @@ public class ComponentBean extends ElementBeanBase<ComponentBean.ComponentExtens
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the facets
      */
@@ -119,7 +123,8 @@ public class ComponentBean extends ElementBeanBase<ComponentBean.ComponentExtens
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param facets the facets to set
      */
@@ -128,7 +133,8 @@ public class ComponentBean extends ElementBeanBase<ComponentBean.ComponentExtens
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the extension
      */
@@ -149,7 +155,8 @@ public class ComponentBean extends ElementBeanBase<ComponentBean.ComponentExtens
         private FacesId family;
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @param family the family to set
          */
@@ -158,7 +165,8 @@ public class ComponentBean extends ElementBeanBase<ComponentBean.ComponentExtens
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @return the family
          */
@@ -168,7 +176,8 @@ public class ComponentBean extends ElementBeanBase<ComponentBean.ComponentExtens
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @param rendererType the rendererTypes to set
          */
@@ -178,7 +187,8 @@ public class ComponentBean extends ElementBeanBase<ComponentBean.ComponentExtens
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @return the rendererTypes
          */
@@ -187,7 +197,8 @@ public class ComponentBean extends ElementBeanBase<ComponentBean.ComponentExtens
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @return the events
          */
@@ -198,7 +209,8 @@ public class ComponentBean extends ElementBeanBase<ComponentBean.ComponentExtens
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @param events the events to set
          */
@@ -206,5 +218,4 @@ public class ComponentBean extends ElementBeanBase<ComponentBean.ComponentExtens
             this.events = events;
         }
     }
-
 }

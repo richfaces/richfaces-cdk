@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import java.util.Collection;
@@ -35,27 +34,24 @@ import com.google.common.collect.Lists;
 
 /**
  * TODO - is the tho different collections are necessary ?
- * 
+ *
  * @author akolonitsky
  * @since Mar 19, 2010
  */
 @SuppressWarnings("unchecked")
 public abstract class ElementBeanBase<E extends ConfigExtension> extends ExtensibleBean<E> {
-
     private static final Predicate<PropertyBase> PROPERTY_PREDICATE = new Predicate<PropertyBase>() {
         @Override
         public boolean apply(PropertyBase input) {
             return input instanceof PropertyModel;
         }
     };
-
     private static final Predicate<PropertyBase> ATTRIBUTE_PREDICATE = new Predicate<PropertyBase>() {
         @Override
         public boolean apply(PropertyBase input) {
             return input instanceof AttributeModel;
         }
     };
-
     private static final Predicate<PropertyBase> VISIBLE_PROPERTY_PREDICATE = new Predicate<PropertyBase>() {
         @Override
         public boolean apply(PropertyBase input) {
@@ -65,7 +61,6 @@ public abstract class ElementBeanBase<E extends ConfigExtension> extends Extensi
             return false;
         }
     };
-
     private static final Predicate<PropertyBase> VISIBLE_ATTRIBUTE_PREDICATE = new Predicate<PropertyBase>() {
         @Override
         public boolean apply(PropertyBase input) {
@@ -75,14 +70,11 @@ public abstract class ElementBeanBase<E extends ConfigExtension> extends Extensi
             return false;
         }
     };
-
     private Collection<? extends PropertyBase> attributes = Lists.newArrayList();
-
     private Collection<PropertyModel> properties = (Collection<PropertyModel>) Collections2.filter(attributes,
-        PROPERTY_PREDICATE);
-
+            PROPERTY_PREDICATE);
     private Collection<AttributeModel> facesAttributes = (Collection<AttributeModel>) Collections2.filter(attributes,
-        ATTRIBUTE_PREDICATE);
+            ATTRIBUTE_PREDICATE);
 
     public Collection<PropertyModel> getProperties() {
         return properties;
@@ -97,14 +89,16 @@ public abstract class ElementBeanBase<E extends ConfigExtension> extends Extensi
     }
 
     /**
-     * <p class="changed_added_4_0">Set filtering visible properties and attributes, to unmarshall public properties only.</p>
+     * <p class="changed_added_4_0">
+     * Set filtering visible properties and attributes, to unmarshall public properties only.
+     * </p>
+     *
      * @param filter
      */
     public void setFilterHiddenAttributes(boolean filter) {
         if (filter) {
             properties = (Collection<PropertyModel>) Collections2.filter(this.attributes, VISIBLE_PROPERTY_PREDICATE);
-            facesAttributes =
-                (Collection<AttributeModel>) Collections2.filter(this.attributes, VISIBLE_ATTRIBUTE_PREDICATE);
+            facesAttributes = (Collection<AttributeModel>) Collections2.filter(this.attributes, VISIBLE_ATTRIBUTE_PREDICATE);
         } else {
             properties = (Collection<PropertyModel>) Collections2.filter(this.attributes, PROPERTY_PREDICATE);
             facesAttributes = (Collection<AttributeModel>) Collections2.filter(this.attributes, ATTRIBUTE_PREDICATE);

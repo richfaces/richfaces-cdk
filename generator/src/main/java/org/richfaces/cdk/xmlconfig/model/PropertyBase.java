@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import java.util.Set;
@@ -36,7 +35,8 @@ import org.richfaces.cdk.model.MethodSignature;
 import com.google.common.collect.Sets;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
@@ -47,7 +47,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
     private ClassName type;
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the name
      */
@@ -56,7 +57,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param name the name to set
      */
@@ -65,7 +67,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the type
      */
@@ -74,7 +77,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param type the type to set
      */
@@ -83,7 +87,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the defaultValue
      */
@@ -92,7 +97,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param defaultValue the defaultValue to set
      */
@@ -101,7 +107,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the suggestedValue
      */
@@ -110,7 +117,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param suggestedValue the suggestedValue to set
      */
@@ -129,15 +137,16 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @author asmirnov@exadel.com
      */
     public static class PropertyExtension extends ConfigExtension {
         private Boolean passThrough;
         private Set<EventName> eventNames = Sets.newLinkedHashSet();
-        private MethodSignature signature ;
-        private String aliasFor ;
+        private MethodSignature signature;
+        private String aliasFor;
         private Boolean generate;
         private Boolean hidden;
         private Boolean literal;
@@ -145,7 +154,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
         private Boolean required;
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @return the generate
          */
@@ -155,7 +165,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @param generate the generate to set
          */
@@ -164,7 +175,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @return the hidden
          */
@@ -174,7 +186,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @param hidden the hidden to set
          */
@@ -183,7 +196,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @return the literal
          */
@@ -193,7 +207,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @param literal the literal to set
          */
@@ -202,7 +217,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @return the required
          */
@@ -212,7 +228,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @param required the required to set
          */
@@ -221,7 +238,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @return the readOnly
          */
@@ -231,7 +249,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @param readOnly the readOnly to set
          */
@@ -240,7 +259,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @return the passThrough
          */
@@ -250,7 +270,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @param passThrough the passThrough to set
          */
@@ -259,7 +280,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @return the eventNames
          */
@@ -269,7 +291,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @param eventNames the eventNames to set
          */
@@ -278,7 +301,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @return the signature
          */
@@ -288,7 +312,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @param signature the signature to set
          */
@@ -297,7 +322,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @return the aliasFor
          */
@@ -307,7 +333,8 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @param aliasFor the aliasFor to set
          */

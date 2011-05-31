@@ -21,7 +21,6 @@
  */
 package org.richfaces.cdk.templatecompiler.el.node;
 
-
 import org.richfaces.cdk.templatecompiler.el.ELNodeConstants;
 import org.richfaces.cdk.templatecompiler.el.ELVisitor;
 import org.richfaces.cdk.templatecompiler.el.ParsingException;
@@ -31,22 +30,17 @@ import org.richfaces.cdk.templatecompiler.el.types.TypesFactory;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public final class ConstantValueTreeNode extends AbstractTreeNode {
-
     // XXX what class to use for null object: Void.class or null - special NullType be used
     public static final ConstantValueTreeNode NULL_NODE = new ConstantValueTreeNode(ELNodeConstants.NULL_VALUE,
-        NullType.INSTANCE);
-
+            NullType.INSTANCE);
     public static final ConstantValueTreeNode TRUE_NODE = new ConstantValueTreeNode(ELNodeConstants.TRUE_VALUE,
-        TypesFactory.BOOLEAN_TYPE);
-
+            TypesFactory.BOOLEAN_TYPE);
     public static final ConstantValueTreeNode FALSE_NODE = new ConstantValueTreeNode(ELNodeConstants.FALSE_VALUE,
-        TypesFactory.BOOLEAN_TYPE);
-
+            TypesFactory.BOOLEAN_TYPE);
     private final String value;
-
     private final ELType type;
 
     private ConstantValueTreeNode(String value, ELType type) {
@@ -58,7 +52,7 @@ public final class ConstantValueTreeNode extends AbstractTreeNode {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.el.node.AbstractTreeNode#visit(java.lang.StringBuilder, java.util.Map,
      * org.richfaces.cdk.templatecompiler.el.ELVisitor)
      */
@@ -66,9 +60,8 @@ public final class ConstantValueTreeNode extends AbstractTreeNode {
     public void visit(StringBuilder sb, ELVisitor visitor) throws ParsingException {
         sb.append(value);
         visitor.setExpressionType(type);
-        if(type.isNullType()){
+        if (type.isNullType()) {
             visitor.setLiteral(false);
         }
     }
-
 }

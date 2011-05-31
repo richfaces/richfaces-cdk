@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.model;
 
 import java.beans.IntrospectionException;
@@ -45,82 +44,67 @@ import com.google.inject.Singleton;
  * <p>
  * To keep consistence of library references, only library methods are allowed to components manipulations.
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 @Singleton
 public class ComponentLibrary implements Serializable, Extensible<ConfigExtension>, Trackable, Visitable {
     public static final String CDK_EXTENSIONS_NAMESPACE = "http://jboss.org/schema/richfaces/cdk/extensions";
     public static final String FACES_CONFIG_NAMESPACE = "http://java.sun.com/xml/ns/javaee";
-    public static final String FACES_CONFIG_SCHEMA_LOCATION =
-        "http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd";
-    public static final String TAGLIB_SCHEMA_LOCATION =
-        "http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd";
-
+    public static final String FACES_CONFIG_SCHEMA_LOCATION = "http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd";
+    public static final String TAGLIB_SCHEMA_LOCATION = "http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd";
     private static final long serialVersionUID = -6055670836731899832L;
-    private final ModelCollection<ComponentModel> components = ModelSet.<ComponentModel> create();
-
+    private final ModelCollection<ComponentModel> components = ModelSet.<ComponentModel>create();
     /**
      * <p class="changed_added_4_0">
      * JSF renderer associated with that library
      * </p>
      */
-    private final ModelCollection<RenderKitModel> renderKits = ModelSet.<RenderKitModel> create();
-
-    private final ModelCollection<ConverterModel> converters = ModelSet.<ConverterModel> create();
-
-    private final ModelCollection<ValidatorModel> validators = ModelSet.<ValidatorModel> create();
-
-    private final ModelCollection<ListenerModel> listeners = ModelSet.<ListenerModel> create();
-
-    private final ModelCollection<FunctionModel> functions = ModelSet.<FunctionModel> create();
-
+    private final ModelCollection<RenderKitModel> renderKits = ModelSet.<RenderKitModel>create();
+    private final ModelCollection<ConverterModel> converters = ModelSet.<ConverterModel>create();
+    private final ModelCollection<ValidatorModel> validators = ModelSet.<ValidatorModel>create();
+    private final ModelCollection<ListenerModel> listeners = ModelSet.<ListenerModel>create();
+    private final ModelCollection<FunctionModel> functions = ModelSet.<FunctionModel>create();
     private long lastModified = Long.MIN_VALUE;
-
     /**
      * <p class="changed_added_4_0">
      * Application level events fired by the component
      * </p>
      */
-    private final ModelCollection<EventModel> events = ModelSet.<EventModel> create();
-
-    private final ModelCollection<BehaviorModel> behaviors = ModelSet.<BehaviorModel> create();
-
+    private final ModelCollection<EventModel> events = ModelSet.<EventModel>create();
+    private final ModelCollection<BehaviorModel> behaviors = ModelSet.<BehaviorModel>create();
     private ConfigExtension extension = new ConfigExtension();
-    
     private String prefix;
-    
     private Taglib taglib;
-
     private boolean metadataComplete;
 
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      */
     public ComponentLibrary() {
     }
 
-    public <R,D> R accept(Visitor<R,D> visitor, D data) {
-        R result = visitor.visitComponentLibrary(this,data);
+    public <R, D> R accept(Visitor<R, D> visitor, D data) {
+        R result = visitor.visitComponentLibrary(this, data);
 
-        result = renderKits.accept(result,visitor,data);
-        result = components.accept(result,visitor,data);
-        result = converters.accept(result,visitor,data);
-        result = validators.accept(result,visitor,data);
-        result = listeners.accept(result,visitor,data);
-        result = events.accept(result,visitor,data);
-        result = behaviors.accept(result,visitor,data);
-        result = functions.accept(result,visitor,data);
+        result = renderKits.accept(result, visitor, data);
+        result = components.accept(result, visitor, data);
+        result = converters.accept(result, visitor, data);
+        result = validators.accept(result, visitor, data);
+        result = listeners.accept(result, visitor, data);
+        result = events.accept(result, visitor, data);
+        result = behaviors.accept(result, visitor, data);
+        result = functions.accept(result, visitor, data);
         return result;
     }
 
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @param renderKitId
      * @return
      */
@@ -145,7 +129,7 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the components
      */
     public ModelCollection<ComponentModel> getComponents() {
@@ -164,7 +148,7 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
         }
         return null;
     }
-    
+
     public ComponentModel getComponentByFamily(FacesId family) {
         if (family == null) {
             return null;
@@ -174,7 +158,6 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
             if (family.equals(component.getFamily())) {
                 return component;
             }
-            
         }
         return null;
     }
@@ -186,7 +169,7 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the renderKits
      */
     public ModelCollection<RenderKitModel> getRenderKits() {
@@ -247,7 +230,7 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the converters
      */
     public ModelCollection<ConverterModel> getConverters() {
@@ -257,7 +240,7 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the validators
      */
     public ModelCollection<ValidatorModel> getValidators() {
@@ -267,7 +250,7 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the behaviors
      */
     public ModelCollection<BehaviorModel> getBehaviors() {
@@ -277,7 +260,7 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the listeners
      */
     public ModelCollection<ListenerModel> getListeners() {
@@ -287,7 +270,7 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the events
      */
     public ModelCollection<EventModel> getEvents() {
@@ -295,7 +278,9 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the functions
      */
     public ModelCollection<FunctionModel> getFunctions() {
@@ -305,7 +290,7 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the extension
      */
     public ConfigExtension getExtension() {
@@ -315,9 +300,8 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param extension
-     *            the extension to set
+     *
+     * @param extension the extension to set
      */
     public void setExtension(ConfigExtension extension) {
         this.extension = extension;
@@ -326,7 +310,7 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the metadataComplete
      */
     public boolean isMetadataComplete() {
@@ -336,9 +320,8 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param metadataComplete
-     *            the metadataComplete to set
+     *
+     * @param metadataComplete the metadataComplete to set
      */
     public void setMetadataComplete(boolean metadataComplete) {
         this.metadataComplete = metadataComplete;
@@ -364,20 +347,22 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
     public long lastModified() {
         return lastModified;
     }
-    
+
     /**
-     * <p class="changed_added_4_0">Check that library is empty</p>
+     * <p class="changed_added_4_0">
+     * Check that library is empty
+     * </p>
+     *
      * @param this
      * @return
      */
     public boolean isEmpty() {
 
-        return this.getComponents().isEmpty() && this.getBehaviors().isEmpty()
-            && this.getConverters().isEmpty() && this.getEvents().isEmpty() && this.getFunctions().isEmpty()
-            && this.getListeners().isEmpty() && this.getRenderKits().isEmpty()
-            && this.getValidators().isEmpty() && (null == this.getExtension() || this.getExtension().getExtensions().isEmpty());
+        return this.getComponents().isEmpty() && this.getBehaviors().isEmpty() && this.getConverters().isEmpty()
+                && this.getEvents().isEmpty() && this.getFunctions().isEmpty() && this.getListeners().isEmpty()
+                && this.getRenderKits().isEmpty() && this.getValidators().isEmpty()
+                && (null == this.getExtension() || this.getExtension().getExtensions().isEmpty());
     }
-
 
     static <T extends ModelElement<T>> void merge(Collection<T> target, Collection<T> source) {
         for (T element : source) {

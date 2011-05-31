@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -33,7 +32,8 @@ import org.richfaces.cdk.model.ConfigExtension;
 import org.richfaces.cdk.model.FacesId;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
@@ -43,7 +43,8 @@ public class BehaviorRendererBean {
     private FacesId id;
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the id
      */
@@ -53,7 +54,8 @@ public class BehaviorRendererBean {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param id the id to set
      */
@@ -62,7 +64,8 @@ public class BehaviorRendererBean {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the targetClass
      */
@@ -73,7 +76,8 @@ public class BehaviorRendererBean {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param targetClass the targetClass to set
      */
@@ -82,7 +86,8 @@ public class BehaviorRendererBean {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @author asmirnov@exadel.com
      */
@@ -90,7 +95,9 @@ public class BehaviorRendererBean {
         private ClassName baseClass;
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
+         *
          * @return the baseClass
          */
         public ClassName getBaseClass() {
@@ -98,22 +105,25 @@ public class BehaviorRendererBean {
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
+         *
          * @param baseClass the baseClass to set
          */
         public void setBaseClass(ClassName baseClass) {
             this.baseClass = baseClass;
         }
-
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the extension
      */
 
-//  @XmlElement(name="client-behavior-renderer-extension",namespace=ComponentLibrary.FACES_CONFIG_NAMESPACE)
-//  public BehaviorRendererExtension getExtension() {
-//      return super.getExtension();
-//  }
+    // @XmlElement(name="client-behavior-renderer-extension",namespace=ComponentLibrary.FACES_CONFIG_NAMESPACE)
+    // public BehaviorRendererExtension getExtension() {
+    // return super.getExtension();
+    // }
 }

@@ -27,10 +27,9 @@ import javax.faces.context.FacesContext;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public abstract class ReadOnlyValueExpression extends ValueExpression {
-
     private static final long serialVersionUID = 7424302517400727467L;
 
     @Override

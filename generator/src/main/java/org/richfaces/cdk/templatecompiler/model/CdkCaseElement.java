@@ -28,18 +28,17 @@ import org.richfaces.cdk.CdkException;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 @XmlRootElement(name = "case", namespace = Template.CDK_NAMESPACE)
 public class CdkCaseElement extends ModelFragment {
-
     @XmlAttribute
     private String[] values;
-    
+
     public String[] getValues() {
         return values;
     }
-    
+
     public void setValues(String[] values) {
         this.values = values;
     }
@@ -48,7 +47,7 @@ public class CdkCaseElement extends ModelFragment {
     public void beforeVisit(TemplateVisitor visitor) throws CdkException {
         visitor.startElement(this);
     }
-    
+
     @Override
     public void afterVisit(TemplateVisitor visitor) throws CdkException {
         visitor.endElement(this);

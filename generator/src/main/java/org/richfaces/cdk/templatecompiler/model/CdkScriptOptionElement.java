@@ -31,26 +31,20 @@ import org.richfaces.cdk.CdkException;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 @XmlRootElement(name = "scriptOption", namespace = Template.CDK_NAMESPACE)
 public class CdkScriptOptionElement implements ModelElement {
-
     @XmlAttribute
     private List<String> variables = new ArrayList<String>();
-    
     @XmlAttribute
     private List<String> attributes = new ArrayList<String>();
-    
     @XmlAttribute
     private String name;
-    
     @XmlAttribute
     private String value;
-    
     @XmlAttribute
     private String defaultValue;
-    
     @XmlAttribute
     private String wrapper;
 
@@ -106,5 +100,4 @@ public class CdkScriptOptionElement implements ModelElement {
     public void visit(TemplateVisitor visitor) throws CdkException {
         visitor.visitElement(this);
     }
-    
 }

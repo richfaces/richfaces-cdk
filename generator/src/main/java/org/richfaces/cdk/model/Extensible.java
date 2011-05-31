@@ -20,22 +20,24 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.model;
 
 /**
- * <p class="changed_added_4_0">That interface marks all faces-config elements that have 'extension' element.</p>
+ * <p class="changed_added_4_0">
+ * That interface marks all faces-config elements that have 'extension' element.
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 public interface Extensible<E extends ConfigExtension> {
-
     /**
-     * <p class="changed_added_4_0">Return extension object that holds CDK-related tags and any other content as well.</p>
+     * <p class="changed_added_4_0">
+     * Return extension object that holds CDK-related tags and any other content as well.
+     * </p>
      *
      * @return
      */
-    public E getExtension();
+    E getExtension();
 
-    public void setExtension(E ext);
+    void setExtension(E ext);
 }

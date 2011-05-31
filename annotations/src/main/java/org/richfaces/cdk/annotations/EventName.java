@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.annotations;
 
 import java.lang.annotation.ElementType;
@@ -32,30 +31,32 @@ import java.lang.annotation.Target;
 import javax.faces.component.behavior.ClientBehavior;
 
 /**
- * <p class="changed_added_4_0">Description of client-side event that can be associated with {@link ClientBehavior}.
+ * <p class="changed_added_4_0">
+ * Description of client-side event that can be associated with {@link ClientBehavior}.
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 @Retention(RetentionPolicy.CLASS)
-@Target( { ElementType.METHOD, ElementType.FIELD })
+@Target({ ElementType.METHOD, ElementType.FIELD })
 @Inherited
 public @interface EventName {
-
     /**
-     * <p class="changed_added_4_0">Event name ( click,change,mouseover ... ).
+     * <p class="changed_added_4_0">
+     * Event name ( click,change,mouseover ... ).
      * </p>
-     * 
+     *
      * @return
      */
-    public String value() default "";
+    String value() default "";
 
     /**
-     * <p class="changed_added_4_0">Defines default event. There should be only one default event per component.
+     * <p class="changed_added_4_0">
+     * Defines default event. There should be only one default event per component.
      * </p>
-     * 
+     *
      * @return
      */
-    public boolean defaultEvent() default false;
+    boolean defaultEvent() default false;
 }

@@ -33,17 +33,13 @@ import com.google.common.collect.Sets;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class ComplexType implements ELType {
-
     private ELType clearComponentType;
-    
     private ELType[] typeArguments;
-    
-    
     private int arrayDepth;
-    
+
     public ComplexType(ELType clearComponentType, ELType[] typeArguments, int arrayDepth) {
         super();
         this.clearComponentType = clearComponentType;
@@ -53,19 +49,20 @@ public class ComplexType implements ELType {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#getImportsList()
      */
     @Override
     public Iterable<JavaImport> getRequiredImports() {
-        Iterable<JavaImport> imports = Iterables.concat(Iterables.transform(Arrays.asList(typeArguments), RequireImports.IMPORTS_TRANSFORM));
-        Set<JavaImport> result = Sets.newLinkedHashSet(Iterables.concat(clearComponentType.getRequiredImports(),imports));
+        Iterable<JavaImport> imports = Iterables.concat(Iterables.transform(Arrays.asList(typeArguments),
+                RequireImports.IMPORTS_TRANSFORM));
+        Set<JavaImport> result = Sets.newLinkedHashSet(Iterables.concat(clearComponentType.getRequiredImports(), imports));
         return result;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#isNullType()
      */
     @Override
@@ -75,7 +72,7 @@ public class ComplexType implements ELType {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#getTypeArguments()
      */
     @Override
@@ -95,10 +92,10 @@ public class ComplexType implements ELType {
             }
         }
     }
-    
+
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#getCode()
      */
     @Override
@@ -120,7 +117,7 @@ public class ComplexType implements ELType {
 
             sb.append(">");
         }
-        
+
         for (int i = 0; i < arrayDepth; i++) {
             sb.append("[]");
         }
@@ -128,7 +125,9 @@ public class ComplexType implements ELType {
         return sb.toString();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -141,7 +140,9 @@ public class ComplexType implements ELType {
         return result;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -172,7 +173,9 @@ public class ComplexType implements ELType {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#getRawType()
      */
     @Override
@@ -180,20 +183,24 @@ public class ComplexType implements ELType {
         return clearComponentType;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#isArray()
      */
     @Override
     public boolean isArray() {
         return arrayDepth != 0;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#isAssignableFrom(org.richfaces.cdk.templatecompiler.el.ELType)
      */
     @Override
     public boolean isAssignableFrom(ELType anotherType) {
-        
+
         if (getRawType().isAssignableFrom(anotherType.getRawType())) {
             ELType[] thisTypeArguments = getTypeArguments();
             if (ArrayUtils.isEmpty(thisTypeArguments)) {

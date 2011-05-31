@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.statements;
 
 import java.util.TreeSet;
@@ -33,24 +32,24 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class RendererUtilsMethod extends JavaMethod {
-    
-    public static final String BUILT_IN = "#built-in"; 
-
+    public static final String BUILT_IN = "#built-in";
     private TreeSet<JavaImport> runtimeImport = Sets.newTreeSet(JavaImport.COMPARATOR);
 
-    public RendererUtilsMethod(HelperMethod helper,String rendererUtilsClassName) {
+    public RendererUtilsMethod(HelperMethod helper, String rendererUtilsClassName) {
         super(helper.getName());
         this.runtimeImport.add(new JavaImportImpl(rendererUtilsClassName + ".*", true));
         this.runtimeImport.add(new JavaImportImpl(rendererUtilsClassName));
-        this.runtimeImport.add(new JavaImportImpl(rendererUtilsClassName+".Attributes"));
-        this.runtimeImport.add(new JavaImportImpl(rendererUtilsClassName+".ScriptHashVariableWrapper"));
+        this.runtimeImport.add(new JavaImportImpl(rendererUtilsClassName + ".Attributes"));
+        this.runtimeImport.add(new JavaImportImpl(rendererUtilsClassName + ".ScriptHashVariableWrapper"));
     }
-    
+
     @Override
     public boolean isHidden() {
         return true;
@@ -58,6 +57,6 @@ public class RendererUtilsMethod extends JavaMethod {
 
     @Override
     public Iterable<JavaImport> getRequiredImports() {
-        return Iterables.concat(super.getRequiredImports(),runtimeImport);
+        return Iterables.concat(super.getRequiredImports(), runtimeImport);
     }
 }

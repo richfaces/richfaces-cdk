@@ -19,10 +19,8 @@ import com.google.inject.Inject;
 
 @RunWith(CdkTestRunner.class)
 public class JaxbMarshalTest extends JaxbTestBase {
-
     @Mock
     JAXB jaxbBinding;
-
     @Inject
     ComponentLibrary library;
 

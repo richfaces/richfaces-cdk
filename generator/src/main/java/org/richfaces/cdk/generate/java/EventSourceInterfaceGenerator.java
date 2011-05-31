@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.generate.java;
 
 import java.io.File;
@@ -42,11 +41,10 @@ import com.google.inject.Inject;
  * @since Jan 20, 2010
  */
 public class EventSourceInterfaceGenerator extends FreeMarkerWriter<EventModel> implements CdkWriter {
-
     @Inject
-    public EventSourceInterfaceGenerator(@LibraryModel FreeMarkerRenderer configuration, 
-        @Output(Outputs.JAVA_CLASSES) FileManager output) {
-        super(configuration,  output);
+    public EventSourceInterfaceGenerator(@LibraryModel FreeMarkerRenderer configuration,
+            @Output(Outputs.JAVA_CLASSES) FileManager output) {
+        super(configuration, output);
     }
 
     @Override

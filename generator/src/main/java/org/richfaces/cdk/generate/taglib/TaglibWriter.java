@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.generate.taglib;
 
 import java.io.IOException;
@@ -42,12 +41,9 @@ import com.google.inject.Inject;
  * @since Feb 9, 2010
  */
 public class TaglibWriter implements CdkWriter {
-
-
     @Inject
     @Output(Outputs.RESOURCES)
     private FileManager output;
-
 
     @Override
     public void render(ComponentLibrary library) throws CdkException {
@@ -65,18 +61,17 @@ public class TaglibWriter implements CdkWriter {
             } catch (IOException e) {
                 e.printStackTrace(); // TODO
             }
-
         }
     }
 
     protected Writer getOutput(ComponentLibrary library) throws CdkException {
         try {
-            return output.createOutput("META-INF/" + library.getTaglib().getShortName() + ".taglib.xml", library.lastModified());
+            return output
+                    .createOutput("META-INF/" + library.getTaglib().getShortName() + ".taglib.xml", library.lastModified());
         } catch (IOException e) {
             throw new CdkException(e);
         }
     }
-
 
     public void setOutput(FileManager output) {
         this.output = output;

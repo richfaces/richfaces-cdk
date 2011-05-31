@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.statements;
 
 import java.util.Collections;
@@ -43,19 +42,16 @@ import com.google.inject.Inject;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 @RunWith(CdkTestRunner.class)
 public class AddAttributesToScriptHashTest extends FreeMarkerTestBase {
-
     @Inject
     private TypesFactory typesFactory;
-    
     @Inject
     private ScriptObjectStatement parentStatement;
-    
     @Inject
     private AddAttributesToScriptHashStatement statement;
 
@@ -65,7 +61,7 @@ public class AddAttributesToScriptHashTest extends FreeMarkerTestBase {
         binder.bind(TypesFactory.class).to(TypesFactoryImpl.class);
         binder.bind(CdkClassLoader.class).toInstance(createClassLoader());
     }
-    
+
     /**
      * Test method for {@link org.richfaces.cdk.templatecompiler.statements.FreeMarkerTemplateStatementBase#getCode()}.
      */
@@ -73,12 +69,12 @@ public class AddAttributesToScriptHashTest extends FreeMarkerTestBase {
     public void testGetCode() {
         statement.setParent(parentStatement);
         parentStatement.setObject("hash", null);
-        
+
         PropertyBase property = new PropertyModel();
         property.setName("bar");
         property.setDefaultValue("deflt");
         property.setType(ClassName.get(String.class));
-        
+
         controller.replay();
         statement.setAttributes(Collections.singleton("bar"), Collections.singleton(property));
         String code = statement.getCode();
@@ -88,5 +84,4 @@ public class AddAttributesToScriptHashTest extends FreeMarkerTestBase {
         JavaField javaField = Iterables.getOnlyElement(statement.getRequiredFields());
         verifyCode(javaField.getValue().getCode(), "attributes()", "generic(", "defaultValue(");
     }
-
 }

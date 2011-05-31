@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -31,18 +30,18 @@ import org.richfaces.cdk.model.ClassName;
 import org.richfaces.cdk.model.ComponentLibrary;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
-@XmlType(name = "faces-config-propertyType",
-         namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE,
-         propOrder = {"name", "type", "defaultValue", "suggestedValue", "extension"})
+@XmlType(name = "faces-config-propertyType", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE, propOrder = { "name", "type",
+        "defaultValue", "suggestedValue", "extension" })
 @XmlJavaTypeAdapter(PropertyAdapter.class)
 public class PropertyBean extends PropertyBase {
-
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the name
      */
@@ -51,13 +50,14 @@ public class PropertyBean extends PropertyBase {
         return super.getName();
     }
 
-
     @Override
     public void setName(String name) {
         super.setName(name);
     }
+
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the type
      */
@@ -66,7 +66,6 @@ public class PropertyBean extends PropertyBase {
     public ClassName getType() {
         return super.getType();
     }
-
 
     @Override
     public void setType(ClassName type) {
@@ -78,7 +77,7 @@ public class PropertyBean extends PropertyBase {
     public String getDefaultValue() {
         return super.getDefaultValue();
     }
-    
+
     @Override
     public void setDefaultValue(String defaultValue) {
         super.setDefaultValue(defaultValue);
@@ -90,12 +89,11 @@ public class PropertyBean extends PropertyBase {
         return super.getSuggestedValue();
     }
 
-
     @Override
     public void setSuggestedValue(String suggestedValue) {
         super.setSuggestedValue(suggestedValue);
     }
-    
+
     @Override
     @XmlElement(name = "property-extension", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE)
     public PropertyExtension getExtension() {

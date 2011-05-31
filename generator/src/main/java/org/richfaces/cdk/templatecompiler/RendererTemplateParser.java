@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler;
 
 import java.io.File;
@@ -64,30 +63,23 @@ import com.google.inject.Inject;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
  */
 public class RendererTemplateParser implements ModelBuilder {
-
     private static final Pattern PARAMETERS_STRING_PATTERN = Pattern.compile("^(\\S+)\\s+(\\S+)\\s*\\(([^\\)]*)\\)$",
-        Pattern.COMMENTS);
-
+            Pattern.COMMENTS);
     private static final Pattern COMMA_SEPARATED_PATTERN = Pattern.compile("\\s*,\\s*", Pattern.COMMENTS);
-
     private ComponentLibrary library;
-
     private JAXB jaxbBinding;
-
     private Logger log;
-
     private FileManager sources;
-
     private FragmentParser fragmentParser;
 
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @param library
      * @param jaxbBinding
      * @param log
@@ -95,7 +87,7 @@ public class RendererTemplateParser implements ModelBuilder {
      */
     @Inject
     public RendererTemplateParser(ComponentLibrary library, JAXB jaxbBinding, Logger log,
-        @Source(Sources.RENDERER_TEMPLATES) FileManager sources, FragmentParser fragmentParser) {
+            @Source(Sources.RENDERER_TEMPLATES) FileManager sources, FragmentParser fragmentParser) {
         this.library = library;
         this.jaxbBinding = jaxbBinding;
         this.log = log;
@@ -105,7 +97,7 @@ public class RendererTemplateParser implements ModelBuilder {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.ModelBuilder#build()
      */
     @Override
@@ -135,8 +127,7 @@ public class RendererTemplateParser implements ModelBuilder {
                                 return model;
                             }
                         } catch (FileNotFoundException e) {
-                            throw new CdkException("Template file defined in Renderer not found: "
-                                + model.getTemplatePath(), e);
+                            throw new CdkException("Template file defined in Renderer not found: " + model.getTemplatePath(), e);
                         }
                     }
                     return null;
@@ -231,7 +222,7 @@ public class RendererTemplateParser implements ModelBuilder {
             Matcher parametersStringMatcher = PARAMETERS_STRING_PATTERN.matcher(signatureString);
             if (!parametersStringMatcher.find()) {
                 throw new IllegalArgumentException(MessageFormat.format("Signature string {0} cannot be parsed!",
-                    signatureString));
+                        signatureString));
             }
             signature = new MethodSignature();
             signature.setReturnType(ClassName.parseName(parametersStringMatcher.group(1)));
@@ -244,7 +235,6 @@ public class RendererTemplateParser implements ModelBuilder {
                 }
                 signature.setParameters(parameters);
             }
-
         }
         return signature;
     }
@@ -270,7 +260,6 @@ public class RendererTemplateParser implements ModelBuilder {
         }
     }
 
-
     private void setRendererType(CompositeInterface compositeInterface, RendererModel renderer) {
         FacesId rendererType = compositeInterface.getRendererType();
         if (null != rendererType) {
@@ -280,8 +269,8 @@ public class RendererTemplateParser implements ModelBuilder {
 
     protected Template parseTemplate(File file) throws CdkException {
         try {
-            Template template =
-                jaxbBinding.unmarshal(file, "http://jboss.org/schema/richfaces/cdk/cdk-template.xsd", Template.class);
+            Template template = jaxbBinding.unmarshal(file, "http://jboss.org/schema/richfaces/cdk/cdk-template.xsd",
+                    Template.class);
             template.setTemplatePath(file.getAbsolutePath());
             return template;
         } catch (FileNotFoundException e) {

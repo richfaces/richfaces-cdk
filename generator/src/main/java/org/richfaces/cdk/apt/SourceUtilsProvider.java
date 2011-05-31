@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt;
 
 import javax.annotation.processing.ProcessingEnvironment;
@@ -31,22 +30,22 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 @Singleton
 public class SourceUtilsProvider implements Provider<SourceUtils> {
-
-    
     private SourceUtils utils;
-    
     private final ReflectionUtils defaultUtils;
-
     private final Injector injector;
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param defaultUtils
      */
     @Inject
@@ -56,15 +55,15 @@ public class SourceUtilsProvider implements Provider<SourceUtils> {
         this.injector = injector;
     }
 
-
     @Override
     public SourceUtils get() {
         return utils;
     }
 
-
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param processingEnv the processingEnv to set
      */
     public void setProcessingEnv(ProcessingEnvironment processingEnv) {
@@ -75,5 +74,4 @@ public class SourceUtilsProvider implements Provider<SourceUtils> {
             this.utils = this.defaultUtils;
         }
     }
-
 }

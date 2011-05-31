@@ -20,18 +20,18 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import org.richfaces.cdk.model.PropertyModel;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class PropertyAdapter extends AdapterBase<PropertyBean, PropertyModel> {
-
     @Override
     protected Class<? extends PropertyBean> getBeanClass(PropertyModel prop) {
         return PropertyBean.class;
@@ -41,5 +41,4 @@ public class PropertyAdapter extends AdapterBase<PropertyBean, PropertyModel> {
     protected Class<? extends PropertyModel> getModelClass(PropertyBean bean) {
         return PropertyModel.class;
     }
-
 }

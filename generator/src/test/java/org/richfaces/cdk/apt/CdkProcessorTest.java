@@ -20,10 +20,15 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt;
 
-import static org.easymock.EasyMock.*;
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.createNiceMock;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
 
 import java.util.Collections;
 import java.util.Set;
@@ -57,9 +62,9 @@ import com.google.inject.TypeLiteral;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 @RunWith(CdkTestRunner.class)
 public class CdkProcessorTest extends AnnotationProcessorTestBase {
@@ -69,32 +74,23 @@ public class CdkProcessorTest extends AnnotationProcessorTestBase {
     private static final String INTERFACE_JAVA = "org/richfaces/cdk/apt/TestInterface.java";
     private static final ImmutableSet<String> PROCESS_ANNOTATIONS = ImmutableSet.of(TestAnnotation.class.getName());
     private static final String SUB_CLASS_JAVA = "org/richfaces/cdk/apt/TestSubClass.java";
-
     @Inject
     ComponentLibrary library;
-
     @Mock
     private LibraryBuilder builder;
-
     @Inject
     private CdkAnnotationProcessor cdkProcessor;
-
     @Mock
     private TypeElement element;
-
     @Stub
     private Logger log;
-
     @Stub
     @Output(Outputs.JAVA_CLASSES)
     private FileManager output;
-
     @Inject
     private CdkProcessor processor;
-
     @Mock
     private RoundEnvironment roundEnv;
-
     @Mock
     private ModelValidator validator;
 
@@ -107,7 +103,7 @@ public class CdkProcessorTest extends AnnotationProcessorTestBase {
         binder.bind(new TypeLiteral<Set<CdkAnnotationProcessor>>() {
         }).toInstance(ImmutableSet.of(cdkProcessor));
         binder.bind(new TypeLiteral<Set<ModelBuilder>>() {
-        }).toInstance(Collections.<ModelBuilder> emptySet());
+        }).toInstance(Collections.<ModelBuilder>emptySet());
     }
 
     @Test
@@ -121,8 +117,8 @@ public class CdkProcessorTest extends AnnotationProcessorTestBase {
         expect(element.getSimpleName()).andStubReturn(new TestName("foo"));
         cdkProcessor.process(element, library);
         expectLastCall();
-//        validator.verify(library);
-//        expectLastCall();
+        // validator.verify(library);
+        // expectLastCall();
         replay(element, roundEnv, builder, validator, cdkProcessor);
         processor.process(Collections.singleton(element), roundEnv);
         verify(element, roundEnv, builder, validator, cdkProcessor);
@@ -135,8 +131,8 @@ public class CdkProcessorTest extends AnnotationProcessorTestBase {
         expect((Set<TypeElement>) roundEnv.getRootElements()).andReturn(Collections.singleton(element));
         expect(element.getKind()).andReturn(ElementKind.CLASS);
         expect(element.getAnnotation(TestAnnotation.class)).andReturn(null);
-//        validator.verify(library);
-//        expectLastCall();
+        // validator.verify(library);
+        // expectLastCall();
         replay(element, roundEnv, builder, validator, cdkProcessor);
         processor.process(Collections.singleton(element), roundEnv);
         verify(element, roundEnv, builder, validator, cdkProcessor);
@@ -174,5 +170,4 @@ public class CdkProcessorTest extends AnnotationProcessorTestBase {
     protected Iterable<String> sources() {
         return ImmutableList.of(CLASS_JAVA, INTERFACE_JAVA, SUB_CLASS_JAVA);
     }
-
 }

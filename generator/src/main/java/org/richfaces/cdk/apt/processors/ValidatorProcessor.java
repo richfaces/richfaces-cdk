@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt.processors;
 
 import java.lang.annotation.Annotation;
@@ -38,13 +37,12 @@ import org.richfaces.cdk.model.ValidatorModel;
  * @author akolonitsky
  * @since Jan 13, 2010
  */
-@SupportedAnnotationTypes({"javax.faces.component.FacesComponent", JsfValidator.NAME})
+@SupportedAnnotationTypes({ "javax.faces.component.FacesComponent", JsfValidator.NAME })
 public class ValidatorProcessor extends ProcessorBase implements CdkAnnotationProcessor {
-
     @Override
     public void process(Element element, ComponentLibrary library) throws CdkProcessingException {
         SourceUtils utils = getSourceUtils();
-        AnnotationMirror validator = utils.getAnnotationMirror(element,JsfValidator.class);
+        AnnotationMirror validator = utils.getAnnotationMirror(element, JsfValidator.class);
 
         ValidatorModel validatorModel = new ValidatorModel();
         utils.setModelProperty(validatorModel, validator, "id");

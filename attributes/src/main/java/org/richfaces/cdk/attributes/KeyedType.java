@@ -23,9 +23,8 @@ package org.richfaces.cdk.attributes;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public interface KeyedType {
-
-    public String getKey();
+    String getKey();
 }

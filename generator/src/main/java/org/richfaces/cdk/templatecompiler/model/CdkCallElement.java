@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.model;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -30,15 +29,14 @@ import javax.xml.bind.annotation.XmlValue;
 import org.richfaces.cdk.CdkException;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 @XmlRootElement(name = "call", namespace = Template.CDK_NAMESPACE)
 public class CdkCallElement implements ModelElement {
-
     private String expression;
-
     @XmlValue
     private String bodyValue;
 
@@ -46,7 +44,8 @@ public class CdkCallElement implements ModelElement {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the expression
      */
@@ -56,7 +55,8 @@ public class CdkCallElement implements ModelElement {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param expression the expression to set
      */
@@ -65,28 +65,28 @@ public class CdkCallElement implements ModelElement {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the bodyValue
      */
     public String getBodyValue() {
         return bodyValue;
     }
-    
+
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param bodyValue the bodyValue to set
      */
     public void setBodyValue(String bodyValue) {
         this.bodyValue = bodyValue;
     }
-    
+
     @Override
     public void visit(TemplateVisitor visitor) throws CdkException {
 
         visitor.visitElement(this);
-
     }
-
 }

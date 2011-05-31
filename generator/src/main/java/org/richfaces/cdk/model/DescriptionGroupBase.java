@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.model;
 
 /**
@@ -27,14 +26,12 @@ package org.richfaces.cdk.model;
  * @since Jan 22, 2010
  */
 public class DescriptionGroupBase implements DescriptionGroup, Extensible<ConfigExtension> {
-
     /**
      * <p class="changed_added_4_0">
      * Long description for documentation
      * </p>
      */
     private String description;
-
     /**
      * <p class="changed_added_4_0">
      * Short name for IDE tools
@@ -47,7 +44,6 @@ public class DescriptionGroupBase implements DescriptionGroup, Extensible<Config
      * </p>
      */
     private Icon icon;
-
     private ConfigExtension extension;
 
     @Merge
@@ -78,7 +74,8 @@ public class DescriptionGroupBase implements DescriptionGroup, Extensible<Config
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the extension
      */

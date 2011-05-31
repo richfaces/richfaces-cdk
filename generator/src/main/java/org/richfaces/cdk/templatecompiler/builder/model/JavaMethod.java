@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.builder.model;
 
 import java.util.Arrays;
@@ -59,7 +58,6 @@ public class JavaMethod extends JavaLanguageElement {
         return exceptions;
     }
 
-
     public List<Argument> getArguments() {
         return arguments;
     }
@@ -75,14 +73,17 @@ public class JavaMethod extends JavaLanguageElement {
     public void setMethodBody(JavaStatement methodBody) {
         this.methodBody = methodBody;
     }
-    
+
     @Override
     public Iterable<JavaImport> getRequiredImports() {
-        Iterable<JavaImport> exceptionsImports = Iterables.concat(Iterables.transform(getExceptions(), RequireImports.IMPORTS_TRANSFORM));
-        Iterable<JavaImport> argumentsImports = Iterables.concat(Iterables.transform(getArguments(), RequireImports.IMPORTS_TRANSFORM));
-        Iterable<JavaImport> imports = Iterables.concat(getReturnType().getRequiredImports(),exceptionsImports,argumentsImports);
-        if(null != getMethodBody()){
-            imports = Iterables.concat(imports,getMethodBody().getRequiredImports());
+        Iterable<JavaImport> exceptionsImports = Iterables.concat(Iterables.transform(getExceptions(),
+                RequireImports.IMPORTS_TRANSFORM));
+        Iterable<JavaImport> argumentsImports = Iterables.concat(Iterables.transform(getArguments(),
+                RequireImports.IMPORTS_TRANSFORM));
+        Iterable<JavaImport> imports = Iterables.concat(getReturnType().getRequiredImports(), exceptionsImports,
+                argumentsImports);
+        if (null != getMethodBody()) {
+            imports = Iterables.concat(imports, getMethodBody().getRequiredImports());
         }
         return imports;
     }

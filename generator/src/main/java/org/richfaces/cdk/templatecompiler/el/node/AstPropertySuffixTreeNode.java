@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.el.node;
 
 import org.jboss.el.parser.Node;
@@ -30,11 +29,10 @@ import org.richfaces.cdk.templatecompiler.el.types.ELType;
 
 /**
  * This class extend AbstractTreeNode and wrap AstPropertySuffix node.
- * 
+ *
  * @author amarkhel
  */
 public class AstPropertySuffixTreeNode extends AbstractTreeNode {
-
     public AstPropertySuffixTreeNode(Node node) {
         super(node);
     }

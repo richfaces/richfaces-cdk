@@ -26,17 +26,16 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class ClientBehavior {
-
     private String event;
-    
     private boolean defaultEvent;
-    
+
     /**
-     * <p class="changed_added_4_0"></p>
-     * 
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the event
      */
     @XmlAttribute
@@ -44,29 +43,32 @@ public class ClientBehavior {
     public String getEvent() {
         return event;
     }
-    
+
     /**
-     * <p class="changed_added_4_0"></p>
-     * 
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param event the event to set
      */
     public void setEvent(String event) {
         this.event = event;
     }
-    
+
     /**
-     * <p class="changed_added_4_0"></p>
-     * 
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the default
      */
     @XmlAttribute(name = "default")
     public boolean isDefaultEvent() {
         return defaultEvent;
     }
-    
+
     /**
-     * <p class="changed_added_4_0"></p>
-     * 
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param defaultEvent the default to set
      */
     public void setDefaultEvent(boolean defaultEvent) {

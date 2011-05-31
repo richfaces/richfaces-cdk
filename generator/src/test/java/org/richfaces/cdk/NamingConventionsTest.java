@@ -20,10 +20,9 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
 import org.junit.Before;
@@ -34,9 +33,9 @@ import org.richfaces.cdk.model.FacesId;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class NamingConventionsTest {
     private static final String BASE = "foo.bar";
@@ -65,14 +64,13 @@ public class NamingConventionsTest {
 
     @Test
     public void testInferComponentTypeFromMarkupClass() throws Exception {
-        assertEquals(FacesId.parseId("foo.bar.HtmlTest"), conventions.inferComponentType(new ClassName(
-            "foo.bar.component.html.HtmlTest")));
+        assertEquals(FacesId.parseId("foo.bar.HtmlTest"),
+                conventions.inferComponentType(new ClassName("foo.bar.component.html.HtmlTest")));
     }
 
     /**
-     * Test method for
-     * {@link org.richfaces.cdk.RichFacesConventions#inferComponentType(java.lang.String, java.lang.String)}.
-     * 
+     * Test method for {@link org.richfaces.cdk.RichFacesConventions#inferComponentType(java.lang.String, java.lang.String)}.
+     *
      * @throws Exception
      */
     @Test

@@ -46,18 +46,14 @@ import com.google.common.io.Closeables;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
-
     private class ResourcesRendererCallable implements Callable<Object> {
-
         private ResourceKey resourceInfo;
-        
         private boolean skinDependent;
-        
         private boolean skipped = false;
-        
+
         ResourcesRendererCallable(ResourceKey resourceInfo) {
             this.resourceInfo = resourceInfo;
         }
@@ -66,28 +62,30 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
             ResourceHandler resourceHandler = facesContext.getApplication().getResourceHandler();
             return resourceHandler.createResource(resourceInfo.getResourceName(), resourceInfo.getLibraryName());
         }
-        
+
         private void renderResource(String skin) {
             try {
                 FacesContext facesContext = faces.startRequest();
-                
+
                 if (skin != null) {
                     faces.setSkin(skin);
                 }
-                
+
                 Resource resource = createResource(facesContext, resourceInfo);
                 CurrentResourceContext.getInstance(facesContext).setResource(resource);
-                //TODO check content type
-                
+                // TODO check content type
+
                 if (shouldCheckForEL(resource) && containsELExpression(resource)) {
                     log.info(MessageFormat.format("Skipping {0} because it contains EL-expressions", resourceInfo));
                     return;
                 }
-                
+
                 resourceWriter.writeResource(skin, resource);
             } catch (Exception e) {
                 if (skin != null) {
-                    log.error(MessageFormat.format("Exception rendering resorce {0} using skin {1}: {2}", resourceInfo, skin, e.getMessage()), e);
+                    log.error(
+                            MessageFormat.format("Exception rendering resorce {0} using skin {1}: {2}", resourceInfo, skin,
+                                    e.getMessage()), e);
                 } else {
                     log.error(MessageFormat.format("Exception rendering resorce {0}: {1}", resourceInfo, e.getMessage()), e);
                 }
@@ -101,10 +99,10 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
             try {
                 FacesContext facesContext = faces.startRequest();
                 faces.setSkin("DEFAULT");
-                
+
                 Resource resource = createResource(facesContext, resourceInfo);
                 if (resource == null) {
-                    //TODO log null resource
+                    // TODO log null resource
                     skipped = true;
                     return;
                 }
@@ -113,21 +111,21 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
                     skipped = true;
                     return;
                 }
-                
+
                 String contentType = resource.getContentType();
                 if (contentType == null) {
-                    //TODO log null content type
+                    // TODO log null content type
                     skipped = true;
                     return;
                 }
-                
+
                 skinDependent = resource.getRequestPath().startsWith(ResourceFactory.SKINNED_RESOURCE_PREFIX);
             } finally {
                 faces.setSkin(null);
                 faces.stopRequest();
             }
         }
-        
+
         public Object call() throws Exception {
             checkResource();
             if (!skipped) {
@@ -141,21 +139,15 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
             }
             return null;
         }
-        
     }
-    
+
     private Log log;
-    
     private Faces faces;
-    
     private ResourceWriter resourceWriter;
-    
     private CompletionService<Object> completionService;
-    
     private String[] skins = new String[0];
-    
     private Predicate<Resource> filter = Predicates.alwaysTrue();
-    
+
     public ResourceTaskFactoryImpl(Faces faces) {
         super();
         this.faces = faces;
@@ -166,10 +158,10 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
         try {
             is = resource.getInputStream();
             byte[] bs = ByteStreams.toByteArray(is);
-            
+
             for (int i = 0; i < bs.length; i++) {
                 byte b = bs[i];
-                
+
                 if (b == '#' && i + 1 < bs.length && bs[i + 1] == '{') {
                     return true;
                 }
@@ -182,21 +174,21 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
 
         return false;
     }
-    
+
     private boolean shouldCheckForEL(Resource resource) {
         String resourceName = resource.getResourceName();
-        
+
         return resourceName.endsWith(".js") || resourceName.endsWith(".css");
     }
-    
+
     public void setLog(Log log) {
         this.log = log;
     }
-    
+
     public void setResourceWriter(ResourceWriter resourceWriter) {
         this.resourceWriter = resourceWriter;
     }
-    
+
     public void setSkins(String[] skins) {
         this.skins = skins;
     }
@@ -204,11 +196,11 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
     public void setCompletionService(CompletionService<Object> completionService) {
         this.completionService = completionService;
     }
-    
+
     public void setFilter(Predicate<Resource> filter) {
         this.filter = filter;
     }
-    
+
     public void submit(Iterable<ResourceKey> locators) {
         for (ResourceKey locator : locators) {
             completionService.submit(new ResourcesRendererCallable(locator));

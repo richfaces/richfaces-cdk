@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import org.richfaces.cdk.model.BehaviorModel;
@@ -29,7 +28,6 @@ import org.richfaces.cdk.model.BehaviorModel;
  * @since Jan 21, 2010
  */
 public class BehaviorAdapter extends ElementAdapterBase<BehaviorBean, BehaviorModel> {
-
     @Override
     protected Class<? extends BehaviorBean> getBeanClass(BehaviorModel model) {
         return BehaviorBean.class;

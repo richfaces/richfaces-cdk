@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt.processors;
 
 import java.lang.annotation.Annotation;
@@ -41,15 +40,14 @@ import org.richfaces.cdk.model.EventModel;
  * <p class="changed_added_4_0">
  * This class processes annotations for FacesEvents.
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class EventProcessor extends ProcessorBase implements CdkAnnotationProcessor {
-
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.apt.processors.CdkAnnotationProcessor#getProcessedAnnotation()
      */
     @Override
@@ -59,7 +57,7 @@ public class EventProcessor extends ProcessorBase implements CdkAnnotationProces
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.apt.processors.CdkAnnotationProcessor#process(javax.lang.model.element.Element,
      * org.richfaces.cdk.model.ComponentLibrary)
      */
@@ -78,5 +76,4 @@ public class EventProcessor extends ProcessorBase implements CdkAnnotationProces
             library.getEvents().add(model);
         }
     }
-
 }

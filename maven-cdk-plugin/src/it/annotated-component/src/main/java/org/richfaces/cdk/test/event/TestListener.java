@@ -32,6 +32,6 @@ import javax.faces.event.FacesListener;
  */
 public interface TestListener extends FacesListener {
     
-    public void process(TestEvent event);
+    void process(TestEvent event);
 
 }

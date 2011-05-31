@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler;
 
 import javax.xml.namespace.QName;
@@ -32,26 +31,26 @@ import freemarker.ext.beans.StringModel;
 import freemarker.template.TemplateModel;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class QNameTemplateModel extends StringModel implements TemplateModel {
-
     private final QName qName;
 
     public QNameTemplateModel(QName obj, BeansWrapper wrapper) {
         super(obj, wrapper);
         this.qName = obj;
     }
-    
+
     @Override
     public String getAsString() {
         StringBuilder nameBuilder = new StringBuilder();
-        if(!Template.isDefaultNamespace(qName)){
+        if (!Template.isDefaultNamespace(qName)) {
             nameBuilder.append(qName.getPrefix()).append(':');
         }
         return nameBuilder.append(qName.getLocalPart()).toString();
     }
-
 }

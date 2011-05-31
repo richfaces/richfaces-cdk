@@ -42,22 +42,16 @@ import com.google.inject.Inject;
  * @author Nick Belaevski
  */
 public class AddAttributesToScriptHashStatement extends FreeMarkerTemplateStatementBase {
-
     /**
      *
      */
     private static final String ATTRIBUTES_FIELD_NAME = "ATTRIBUTES_FOR_SCRIPT_HASH";
-
     private static AtomicInteger fieldCounter = new AtomicInteger(0);
-
     private String fieldName;
-
     private String wrapper;
-
     private Collection<PassThrough> attributes = Lists.newArrayList();
-
     private Collection<PropertyBase> componentAttributes;
-    
+
     @Inject
     public AddAttributesToScriptHashStatement(@TemplateModel FreeMarkerRenderer renderer) {
         super(renderer, "add-attributes-to-script-hash");
@@ -72,7 +66,9 @@ public class AddAttributesToScriptHashStatement extends FreeMarkerTemplateStatem
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param fieldName the fieldName to set
      */
     public void setFieldName(String fieldName) {
@@ -80,7 +76,9 @@ public class AddAttributesToScriptHashStatement extends FreeMarkerTemplateStatem
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the attributes
      */
     public Collection<PassThrough> getAttributes() {
@@ -107,12 +105,12 @@ public class AddAttributesToScriptHashStatement extends FreeMarkerTemplateStatem
      */
     public void setAttributes(Collection<String> attributeNames, Collection<PropertyBase> componentAttributes) {
         this.componentAttributes = componentAttributes;
-        
+
         for (String attributeName : attributeNames) {
             PassThrough passThrough = new PassThrough();
             passThrough.name = QName.valueOf(attributeName);
             passThrough.componentAttribute = attributeName;
-            
+
             try {
                 PropertyBase componentAttribute = findComponentAttribute(attributeName);
                 for (EventName event : componentAttribute.getEventNames()) {
@@ -120,23 +118,22 @@ public class AddAttributesToScriptHashStatement extends FreeMarkerTemplateStatem
                 }
                 passThrough.defaultValue = componentAttribute.getDefaultValue();
                 passThrough.type = componentAttribute.getType().getSimpleName();
-                
             } catch (NoSuchElementException e) {
                 passThrough.type = Object.class.getName();
             }
-            
+
             if (Boolean.TYPE.equals(passThrough.type) || Boolean.class.equals(passThrough.type)) {
                 passThrough.kind = Kind.BOOLEAN;
             } else {
                 passThrough.kind = Kind.GENERIC;
             }
-            
+
             attributes.add(passThrough);
         }
     }
-    private PropertyBase findComponentAttribute(final String name)
-        throws NoSuchElementException {
-        
+
+    private PropertyBase findComponentAttribute(final String name) throws NoSuchElementException {
+
         return Iterables.find(componentAttributes, new NamePredicate(name));
     }
 }

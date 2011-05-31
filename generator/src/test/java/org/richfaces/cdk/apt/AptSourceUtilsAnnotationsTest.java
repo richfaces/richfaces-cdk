@@ -1,8 +1,9 @@
 package org.richfaces.cdk.apt;
 
-import static org.junit.Assert.*;
-
-import java.util.List;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.AnnotationMirror;
@@ -16,7 +17,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 
 public class AptSourceUtilsAnnotationsTest extends SourceUtilsTestBase {
-
     private static final String ANNOTATIONS_TEST_SUB_CLASS = "AnnotationsTestSubClass";
     private static final String ANNOTATIONS_TEST_CLASS = "AnnotationsTestClass";
     private static final String PACKAGE_PATH = "org/richfaces/cdk/apt/";
@@ -103,7 +103,7 @@ public class AptSourceUtilsAnnotationsTest extends SourceUtilsTestBase {
     public void testGetBooleanAnnotationValue() {
         getAndCompareAnnotationValue("booleanProperty", Boolean.class, Boolean.TRUE);
     }
-    
+
     @Test
     public void testGetEnumAnnotationValue() {
         getAndCompareAnnotationValue("enumProperty", TestAnnotation.TestEnum.class, TestEnum.BAR);
@@ -111,7 +111,8 @@ public class AptSourceUtilsAnnotationsTest extends SourceUtilsTestBase {
 
     @Test
     public void testGetClassAnnotationValue() {
-        getAndCompareAnnotationValue("typeProperty", ClassName.class, ClassName.get(PACKAGE_PATH.replace('/', '.')+ANNOTATIONS_TEST_SUB_CLASS));
+        getAndCompareAnnotationValue("typeProperty", ClassName.class,
+                ClassName.get(PACKAGE_PATH.replace('/', '.') + ANNOTATIONS_TEST_SUB_CLASS));
     }
 
     @Test
@@ -119,29 +120,31 @@ public class AptSourceUtilsAnnotationsTest extends SourceUtilsTestBase {
         getAndCompareAnnotationValue("withDefault", String.class, "FOO");
     }
 
-    public <T> void getAndCompareAnnotationValue(final String propertyName,final Class<T> type, final Object expected) {
+    public <T> void getAndCompareAnnotationValue(final String propertyName, final Class<T> type, final Object expected) {
         execute(new SourceUtilsCallback() {
             @Override
             public void process(SourceUtils utils, RoundEnvironment roundEnv) {
                 Element element = findElement(roundEnv, ANNOTATIONS_TEST_CLASS);
                 AnnotationMirror annotationMirror = utils.getAnnotationMirror(element, TestAnnotation.class);
                 T annotationValue = utils.getAnnotationValue(annotationMirror, propertyName, type);
-                assertEquals("Annotation value is different from expected",expected, annotationValue);
+                assertEquals("Annotation value is different from expected", expected, annotationValue);
             }
         });
     }
-    
-    public <T> void getAndCompareAnnotationValues(final String propertyName,final Class<T> type, final Object ... expected) {
+
+    public <T> void getAndCompareAnnotationValues(final String propertyName, final Class<T> type, final Object... expected) {
         execute(new SourceUtilsCallback() {
             @Override
             public void process(SourceUtils utils, RoundEnvironment roundEnv) {
                 Element element = findElement(roundEnv, ANNOTATIONS_TEST_CLASS);
                 AnnotationMirror annotationMirror = utils.getAnnotationMirror(element, TestAnnotation.class);
-                Iterable<T> annotationValues = utils.getAnnotationValues(annotationMirror, propertyName, type);                
-                assertEquals("Annotation values size is different from expected",expected.length, Iterables.size(annotationValues));
+                Iterable<T> annotationValues = utils.getAnnotationValues(annotationMirror, propertyName, type);
+                assertEquals("Annotation values size is different from expected", expected.length,
+                        Iterables.size(annotationValues));
                 for (int i = 0; i < expected.length; i++) {
                     Object expectedValue = expected[i];
-                    assertEquals("Annotation value at position "+i+" is different from expected",expectedValue, Iterables.get(annotationValues, i));                    
+                    assertEquals("Annotation value at position " + i + " is different from expected", expectedValue,
+                            Iterables.get(annotationValues, i));
                 }
             }
         });
@@ -154,7 +157,7 @@ public class AptSourceUtilsAnnotationsTest extends SourceUtilsTestBase {
 
     @Test
     public void testGetClassAnnotationValues() {
-        getAndCompareAnnotationValues("types", ClassName.class,ClassName.get(String.class),ClassName.get(Object.class));
+        getAndCompareAnnotationValues("types", ClassName.class, ClassName.get(String.class), ClassName.get(Object.class));
     }
 
     @Override

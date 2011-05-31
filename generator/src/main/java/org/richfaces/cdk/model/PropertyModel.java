@@ -18,16 +18,13 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.cdk.model;
 
 /**
  * That class represents JSF component property.
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class PropertyModel extends PropertyBase {
-
 }

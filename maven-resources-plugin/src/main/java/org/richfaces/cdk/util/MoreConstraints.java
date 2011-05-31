@@ -25,17 +25,19 @@ import com.google.common.collect.Constraint;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public final class MoreConstraints {
+    private MoreConstraints() {
+    }
 
-    private MoreConstraints() {}
-    
     public static <E> Constraint<E> cast(final Class<E> clazz) {
         return new Constraint<E>() {
             public E checkElement(E element) {
                 return clazz.cast(element);
-            };
+            }
+
+            ;
         };
     }
 }

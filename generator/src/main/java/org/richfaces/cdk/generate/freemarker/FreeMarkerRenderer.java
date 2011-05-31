@@ -6,10 +6,7 @@ import java.io.Writer;
 import freemarker.template.TemplateException;
 
 public interface FreeMarkerRenderer {
+    void writeTemplate(String templateName, Object object, Writer writer) throws IOException, TemplateException;
 
-    public void writeTemplate(String templateName, Object object, Writer writer)
-        throws IOException, TemplateException;
-
-    public String renderTemplate(String templateName, Object object);
-
+    String renderTemplate(String templateName, Object object);
 }

@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.generate.java.taghandler;
 
 import java.io.File;
@@ -45,10 +44,9 @@ import com.google.inject.Inject;
  * @since Jan 20, 2010
  */
 public class ListenerTagHandlerGenerator extends FreeMarkerWriter<TagWithModel<EventModel>> implements CdkWriter {
-
     @Inject
-    public ListenerTagHandlerGenerator(@LibraryModel FreeMarkerRenderer configuration, 
-        @Output(Outputs.JAVA_CLASSES) FileManager output) {
+    public ListenerTagHandlerGenerator(@LibraryModel FreeMarkerRenderer configuration,
+            @Output(Outputs.JAVA_CLASSES) FileManager output) {
         super(configuration, output);
     }
 
@@ -58,12 +56,11 @@ public class ListenerTagHandlerGenerator extends FreeMarkerWriter<TagWithModel<E
         for (EventModel model : models) {
             for (TagModel tag : model.getTags()) {
                 if ((TagType.All.equals(tag.getType()) || TagType.Facelets.equals(tag.getType())) && tag.isGenerate()) {
-                    generate(library,new TagWithModel<EventModel>(tag, model));
+                    generate(library, new TagWithModel<EventModel>(tag, model));
                 }
             }
         }
     }
-    
 
     @Override
     protected String getOutputFileName(TagWithModel<EventModel> c) throws CdkException {

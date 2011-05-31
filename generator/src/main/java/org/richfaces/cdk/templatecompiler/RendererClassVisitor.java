@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler;
 
 import java.io.IOException;
@@ -98,11 +97,10 @@ import com.google.inject.Injector;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
  */
 public class RendererClassVisitor implements TemplateVisitor {
-
     /**
      *
      */
@@ -128,31 +126,27 @@ public class RendererClassVisitor implements TemplateVisitor {
      *
      */
     public static final String FACES_CONTEXT_VARIABLE = "facesContext";
-    public static final ImmutableMap<String, Object> ENCODE_METHOD_VARIABLES =
-        ImmutableMap.<String, Object> builder()
-            .put("facesContextVariable", RendererClassVisitor.FACES_CONTEXT_VARIABLE).put("componentVariable",
-                RendererClassVisitor.COMPONENT_VARIABLE).put("responseWriterVariable",
-                RendererClassVisitor.RESPONSE_WRITER_VARIABLE).put("clientIdVariable",
-                RendererClassVisitor.CLIENT_ID_VARIABLE).build();
+    public static final ImmutableMap<String, Object> ENCODE_METHOD_VARIABLES = ImmutableMap.<String, Object>builder()
+            .put("facesContextVariable", RendererClassVisitor.FACES_CONTEXT_VARIABLE)
+            .put("componentVariable", RendererClassVisitor.COMPONENT_VARIABLE)
+            .put("responseWriterVariable", RendererClassVisitor.RESPONSE_WRITER_VARIABLE)
+            .put("clientIdVariable", RendererClassVisitor.CLIENT_ID_VARIABLE).build();
     /**
      *
      */
     static final String CLIENT_ID_VARIABLE = "clientId";
-
     private final Logger log;
-
     private final Injector injector;
     private final TypesFactory typesFactory;
     private final HelperMethodFactory helperMethodFactory;
     private final CompositeInterface compositeInterface;
     private final Collection<PropertyBase> attributes;
     private StatementsContainer currentStatement;
-
     private JavaClass generatedClass;
     private Set<HelperMethod> addedHelperMethods = EnumSet.noneOf(HelperMethod.class);
 
     public RendererClassVisitor(CompositeInterface compositeInterface, Collection<PropertyBase> attributes, Logger log,
-        Injector injector, TypesFactory typesFactory, HelperMethodFactory helperFactory) {
+            Injector injector, TypesFactory typesFactory, HelperMethodFactory helperFactory) {
         this.compositeInterface = compositeInterface;
         this.attributes = attributes;
         this.injector = injector;
@@ -171,18 +165,18 @@ public class RendererClassVisitor implements TemplateVisitor {
         this.generatedClass.addImport(ResponseWriter.class);
         this.generatedClass.addImport(UIComponent.class);
 
-        for (ClassImport classImport: compositeInterface.getClassImports()) {
+        for (ClassImport classImport : compositeInterface.getClassImports()) {
             List<String> importedNames = classImport.getNames();
             if (importedNames == null || importedNames.isEmpty()) {
                 importedNames = Lists.newArrayList("*");
             }
-                
+
             for (String importedName : importedNames) {
-                this.generatedClass.addImport(Strings.DOT_JOINER.join(classImport.getPackage(), importedName), 
-                    classImport.isStatic());
+                this.generatedClass.addImport(Strings.DOT_JOINER.join(classImport.getPackage(), importedName),
+                        classImport.isStatic());
             }
         }
-        
+
         // TODO - make this JavaDoc - Generated annotation is present since JDK6
         // this.generatedClass.addAnnotation(Generated.class, "\"RichFaces CDK\"");
         // TODO remove this after improving Java model
@@ -200,20 +194,20 @@ public class RendererClassVisitor implements TemplateVisitor {
                     resources.append(',');
                 }
                 resources.append("@ResourceDependency(");
-                resources.append("name=\"").append(resource.getName()).append("\",library=\"").append(
-                    resource.getLibrary()).append("\",target=\"").append(resource.getTarget()).append("\"").append(")");
+                resources.append("name=\"").append(resource.getName()).append("\",library=\"").append(resource.getLibrary())
+                        .append("\",target=\"").append(resource.getTarget()).append("\"").append(")");
             }
             resources.append("}");
-            this.generatedClass.addAnnotation(new JavaAnnotation(typesFactory.getType(ResourceDependencies.class),
-                resources.toString()));
+            this.generatedClass.addAnnotation(new JavaAnnotation(typesFactory.getType(ResourceDependencies.class), resources
+                    .toString()));
             this.generatedClass.addImport(javax.faces.application.ResourceDependency.class);
         }
         this.createMethodContext();
     }
 
     private JavaAnnotation createResourceAnnotation(ELType dependencyType, ResourceDependency resource) {
-        return new JavaAnnotation(dependencyType, "name=\"" + resource.getName() + "\"", "library=\""
-            + resource.getLibrary() + "\"", "target=\"" + resource.getTarget() + "\"");
+        return new JavaAnnotation(dependencyType, "name=\"" + resource.getName() + "\"", "library=\"" + resource.getLibrary()
+                + "\"", "target=\"" + resource.getTarget() + "\"");
     }
 
     private void addHelperMethod(HelperMethod helperMethod) {
@@ -326,7 +320,7 @@ public class RendererClassVisitor implements TemplateVisitor {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the rendererClass
      */
     public JavaClass getGeneratedClass() {
@@ -335,7 +329,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #startElement(org.richfaces.cdk.templatecompiler.model.CdkBodyElement)
      */
@@ -347,7 +341,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #endElement(org.richfaces.cdk.templatecompiler.model.CdkBodyElement)
      */
@@ -359,7 +353,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #startElement(org.richfaces.cdk.templatecompiler.model.AnyElement)
      */
@@ -379,7 +373,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #endElement(org.richfaces.cdk.templatecompiler.model.AnyElement)
      */
@@ -393,7 +387,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor#visitElement(java.lang.String)
      */
 
@@ -410,7 +404,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #visitElement(org.richfaces.cdk.templatecompiler.model.CdkCallElement)
      */
@@ -426,7 +420,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #startElement(org.richfaces.cdk.templatecompiler.model.CdkIfElement)
      */
@@ -440,7 +434,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #endElement(org.richfaces.cdk.templatecompiler.model.CdkIfElement)
      */
@@ -453,7 +447,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #startElement(org.richfaces.cdk.templatecompiler.model.CdkChooseElement)
      */
@@ -465,7 +459,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #endElement(org.richfaces.cdk.templatecompiler.model.CdkChooseElement)
      */
@@ -477,7 +471,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #startElement(org.richfaces.cdk.templatecompiler.model.CdkWhenElement)
      */
@@ -490,7 +484,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #endElement(org.richfaces.cdk.templatecompiler.model.CdkWhenElement)
      */
@@ -502,7 +496,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #startElement(org.richfaces.cdk.templatecompiler.model.CdkOtherwiseElement)
      */
@@ -514,7 +508,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #endElement(org.richfaces.cdk.templatecompiler.model.CdkOtherwiseElement)
      */
@@ -526,7 +520,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #visitElement(org.richfaces.cdk.templatecompiler.model.CdkObjectElement)
      */
@@ -545,7 +539,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #startElement(org.richfaces.cdk.templatecompiler.model.CdkForEachElement)
      */
@@ -567,7 +561,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #endElement(org.richfaces.cdk.templatecompiler.model.CdkForEachElement)
      */
@@ -636,17 +630,17 @@ public class RendererClassVisitor implements TemplateVisitor {
     public void endElement(CdkScriptObjectElement cdkScriptObjectElement) {
         popStatement();
     }
-    
+
     private void addScriptHashAttributesPassthroughStatement(List<String> attributeNames, String wrapper) {
         if (attributeNames == null || attributeNames.isEmpty()) {
             return;
         }
-        
+
         AddAttributesToScriptHashStatement statement = addStatement(AddAttributesToScriptHashStatement.class);
         statement.setWrapper(wrapper);
         statement.setAttributes(attributeNames, attributes);
     }
-    
+
     private void addScriptOptionStatement(String name, String value, String defaultValue, String wrapper) {
         ScriptOptionStatement scriptOptionStatement = addStatement(ScriptOptionStatement.class);
         scriptOptionStatement.setName(name);
@@ -654,23 +648,19 @@ public class RendererClassVisitor implements TemplateVisitor {
         scriptOptionStatement.setDefaultValue(defaultValue);
         scriptOptionStatement.setWrapper(wrapper);
     }
-    
+
     @Override
     public void visitElement(CdkScriptOptionElement cdkScriptOptionElement) {
         addScriptHashAttributesPassthroughStatement(cdkScriptOptionElement.getAttributes(), cdkScriptOptionElement.getWrapper());
-        
+
         for (String variableName : cdkScriptOptionElement.getVariables()) {
-            addScriptOptionStatement(variableName, 
-                MessageFormat.format("#'{'{0}'}'", variableName), 
-                cdkScriptOptionElement.getDefaultValue(), 
-                cdkScriptOptionElement.getWrapper());
+            addScriptOptionStatement(variableName, MessageFormat.format("#'{'{0}'}'", variableName),
+                    cdkScriptOptionElement.getDefaultValue(), cdkScriptOptionElement.getWrapper());
         }
-        
+
         if (!Strings.isEmpty(cdkScriptOptionElement.getName())) {
-            addScriptOptionStatement(cdkScriptOptionElement.getName(), 
-                cdkScriptOptionElement.getValue(), 
-                cdkScriptOptionElement.getDefaultValue(), 
-                cdkScriptOptionElement.getWrapper());
+            addScriptOptionStatement(cdkScriptOptionElement.getName(), cdkScriptOptionElement.getValue(),
+                    cdkScriptOptionElement.getDefaultValue(), cdkScriptOptionElement.getWrapper());
         }
     }
 }

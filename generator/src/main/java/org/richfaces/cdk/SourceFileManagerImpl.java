@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk;
 
 import java.io.File;
@@ -34,8 +33,7 @@ import java.io.Writer;
  *
  * @author asmirnov@exadel.com
  */
-public class SourceFileManagerImpl implements SourceFileManager,FileManager {
-
+public class SourceFileManagerImpl implements SourceFileManager, FileManager {
     private final Iterable<File> sources;
     private final Iterable<File> folders;
 
@@ -103,7 +101,8 @@ public class SourceFileManagerImpl implements SourceFileManager,FileManager {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the folders
      */
@@ -111,5 +110,4 @@ public class SourceFileManagerImpl implements SourceFileManager,FileManager {
     public Iterable<File> getFolders() {
         return this.folders;
     }
-
 }

@@ -20,9 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.cdk.generate.freemarker;
 
 import org.richfaces.cdk.model.ClassName;
@@ -37,7 +34,9 @@ import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
@@ -50,7 +49,9 @@ public class PropertyModel extends StringModel implements TemplateModel {
     private final PropertyBase property;
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param object
      * @param wrapper
      */
@@ -60,7 +61,9 @@ public class PropertyModel extends StringModel implements TemplateModel {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the name
      */
     public String getAsString() {
@@ -132,8 +135,6 @@ public class PropertyModel extends StringModel implements TemplateModel {
 
     public String getTypeName() {
         ClassName type = this.property.getType();
-        return type.getSimpleName() ;
+        return type.getSimpleName();
     }
-
-
 }

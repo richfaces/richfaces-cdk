@@ -29,15 +29,13 @@ import org.richfaces.cdk.CdkException;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 @XmlRootElement(name = "scriptObject", namespace = Template.CDK_NAMESPACE)
 public class CdkScriptObjectElement extends ModelFragment {
-
     @XmlAttribute(required = true)
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     private String name;
-    
     @XmlAttribute
     private String base;
 

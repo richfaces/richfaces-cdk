@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import org.richfaces.cdk.model.ValidatorModel;
@@ -28,7 +27,6 @@ import org.richfaces.cdk.model.ValidatorModel;
  * @since Jan 13, 2010
  */
 public class ValidatorAdapter extends ElementAdapterBase<ValidatorBean, ValidatorModel> {
-
     @Override
     protected Class<? extends ValidatorBean> getBeanClass(ValidatorModel model) {
         return ValidatorBean.class;

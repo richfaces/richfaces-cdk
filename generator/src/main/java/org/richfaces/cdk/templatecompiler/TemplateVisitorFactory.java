@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler;
 
 import java.util.Collection;
@@ -30,12 +29,12 @@ import org.richfaces.cdk.templatecompiler.model.CompositeInterface;
 import org.richfaces.cdk.templatecompiler.model.TemplateVisitor;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
-public interface TemplateVisitorFactory <T extends TemplateVisitor> {
-    
-    public T createVisitor(CompositeInterface composite, Collection<PropertyBase> attributes);
-
+public interface TemplateVisitorFactory<T extends TemplateVisitor> {
+    T createVisitor(CompositeInterface composite, Collection<PropertyBase> attributes);
 }

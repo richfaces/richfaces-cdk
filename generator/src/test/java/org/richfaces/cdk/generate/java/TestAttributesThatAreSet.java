@@ -1,6 +1,7 @@
 package org.richfaces.cdk.generate.java;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,76 +19,70 @@ import org.junit.Test;
  * <p class="changed_added_4_0">
  * Test functionality of 'attributesThatAreSet' collection
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class TestAttributesThatAreSet {
-
     private static final String RENDERED = "rendered";
-
     private static final String ID = "id";
-
     private static final String ATTRIBUTES_THAT_ARE_SET_KEY = UIComponentBase.class.getName() + ".attributesThatAreSet";
-    
-    private static final         @SuppressWarnings("serial")
+    private static final @SuppressWarnings("serial")
     ValueExpression DUMMY_EXPRESSION = new ValueExpression() {
-        
         @Override
         public boolean isLiteralText() {
             // TODO Auto-generated method stub
             return false;
         }
-        
+
         @Override
         public int hashCode() {
             // TODO Auto-generated method stub
             return 0;
         }
-        
+
         @Override
         public String getExpressionString() {
             // TODO Auto-generated method stub
             return null;
         }
-        
+
         @Override
         public boolean equals(Object obj) {
             // TODO Auto-generated method stub
             return false;
         }
-        
+
         @Override
         public void setValue(ELContext context, Object value) {
             // TODO Auto-generated method stub
-            
+
         }
-        
+
         @Override
         public boolean isReadOnly(ELContext context) {
             // TODO Auto-generated method stub
             return false;
         }
-        
+
         @Override
         public Object getValue(ELContext context) {
             // TODO Auto-generated method stub
             return null;
         }
-        
+
         @Override
         public Class<?> getType(ELContext context) {
             // TODO Auto-generated method stub
             return null;
         }
-        
+
         @Override
         public Class<?> getExpectedType() {
             // TODO Auto-generated method stub
             return null;
         }
     };
-
 
     @Test
     public void testId() throws Exception {
@@ -101,7 +96,7 @@ public class TestAttributesThatAreSet {
     public void testIdByAttributes() throws Exception {
         UIComponentBase component = createComponentBase();
         assertAttributeNotSet(component, ID);
-        component.getAttributes().put(ID,"foo");
+        component.getAttributes().put(ID, "foo");
         assertAttributeNotSet(component, ID);
     }
 
@@ -112,7 +107,7 @@ public class TestAttributesThatAreSet {
         component.setRendered(true);
         assertAttributeNotSet(component, RENDERED);
     }
-    
+
     @Test
     public void testRenderedAttribute() throws Exception {
         UIComponentBase component = createComponentBase();
@@ -135,7 +130,7 @@ public class TestAttributesThatAreSet {
         input.setConverterMessage("foo");
         assertAttributeNotSet(input, "converterMessage");
     }
-    
+
     @Test
     public void testCustomProperty() throws Exception {
         UIInput input = new UIInput();
@@ -152,13 +147,11 @@ public class TestAttributesThatAreSet {
 
     private UIComponentBase createComponentBase() {
         UIComponentBase component = new UIComponentBase() {
-
             @Override
             public String getFamily() {
                 // TODO Auto-generated method stub
                 return null;
             }
-
         };
         return component;
     }
@@ -179,7 +172,6 @@ public class TestAttributesThatAreSet {
             assertTrue(attributesList instanceof List<?>);
             List<String> list = (List<String>) attributesList;
             return list;
-
         } else {
             return Collections.emptyList();
         }

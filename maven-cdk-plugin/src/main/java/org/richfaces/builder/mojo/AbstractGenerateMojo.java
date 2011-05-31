@@ -18,32 +18,25 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.builder.mojo;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
-
 import org.codehaus.plexus.util.DirectoryScanner;
-
-import java.io.File;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
-
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * @author shura
  *
  */
 public abstract class AbstractGenerateMojo extends AbstractMojo {
-
     /**
      * Project classpath.
      *
@@ -52,7 +45,6 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
      * @readonly
      */
     protected List<String> classpathElements;
-
     /**
      * The source directories containing the sources to be compiled.
      *
@@ -61,43 +53,35 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
      * @readonly
      */
     protected List<String> compileSourceRoots;
-
     /**
-     * Place for component configuration XML files. All '*.xml' files wil be
-     * parsed as components config. All '*.ent' files will be processed as
-     * include configurations.
+     * Place for component configuration XML files. All '*.xml' files wil be parsed as components config. All '*.ent' files will
+     * be processed as include configurations.
      *
      * @parameter expression="src/main/config/component"
      */
     protected File componentConfigDirectory;
-
     /**
-     * Place for converter configuration XML files. All '*.xml' files wil be
-     * parsed as components config. All '*.ent' files will be processed as
-     * include configurations.
+     * Place for converter configuration XML files. All '*.xml' files wil be parsed as components config. All '*.ent' files will
+     * be processed as include configurations.
      *
      * @parameter expression="src/main/config/converter"
      */
     protected File converterConfigDirectory;
-
     /**
      * Place for faces configuration XML files
      *
      * @parameter expression="src/main/config/faces"
      */
     protected File facesConfigInclude;
-
     /**
      *
      * @parameter
      */
     protected String key;
-
     /**
      * @parameter
      */
     protected Library library;
-
     /**
      * The directory for compiled classes.
      *
@@ -106,31 +90,26 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
      * @readonly
      */
     protected File outputDirectory;
-
     /**
      * Directory where the output Java Files will be located.
      *
      * @parameter expression="${project.build.directory}/generated-component/java"
      */
     protected File outputJavaDirectory;
-
     /**
      * Directory where the output Java Files will be located.
      *
      * @parameter expression="${project.build.directory}/generated-component/resources"
      */
     protected File outputResourcesDirectory;
-
     /**
      * @parameter expression="${project.build.directory}/generated-component/test"
      */
     protected File outputTestsDirectory;
-
     /**
      * @parameter expression="${project.build.directory}/generated-component/test-resources"
      */
     protected File outputTestsResourcesDirectory;
-
     /**
      * Top maven project.
      *
@@ -138,31 +117,26 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
      * @readonly
      */
     protected MavenProject project;
-
     /**
      * Place for component configuration XML files
      *
      * @parameter expression="src/main/config/resources"
      */
     protected File resourcesInclude;
-
     /**
      * Place for component configuration XML files
      *
      * @parameter expression="src/main/config/taglib"
      */
     protected File taglibInclude;
-
     /**
      *
      * @parameter expression="src/main/templates"
      */
     protected File templatesDirectory;
-
     /**
-     * Place for validator configuration XML files. All '*.xml' files wil be
-     * parsed as component config. All '*.ent' files will be processed as
-     * include configurations.
+     * Place for validator configuration XML files. All '*.xml' files wil be parsed as component config. All '*.ent' files will
+     * be processed as include configurations.
      *
      * @parameter expression="src/main/config/validator"
      */
@@ -177,7 +151,7 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 
             urls[i++] = outputDirectory.toURI().toURL();
 
-            for (Iterator<?> iter = classpathElements.iterator(); iter.hasNext(); ) {
+            for (Iterator<?> iter = classpathElements.iterator(); iter.hasNext();) {
                 String element = (String) iter.next();
 
                 urls[i++] = new File(element).toURI().toURL();

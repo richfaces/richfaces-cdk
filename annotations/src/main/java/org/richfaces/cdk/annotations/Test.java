@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.annotations;
 
 import java.lang.annotation.ElementType;
@@ -36,16 +35,14 @@ import java.lang.annotation.Target;
  * <p class="todo">
  * TODO: introduce additional parameters to refine generated test.
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
  */
 @Retention(RetentionPolicy.CLASS)
-@Target( { ElementType.TYPE, ElementType.METHOD })
+@Target({ ElementType.TYPE, ElementType.METHOD })
 @Inherited
 public @interface Test {
-
-    public static final String NAME = "org.richfaces.cdk.annotations.Test";
-    
+    String NAME = "org.richfaces.cdk.annotations.Test";
 
     /**
      * <p class="changed_added_4_0">
@@ -54,27 +51,26 @@ public @interface Test {
      * <p class="todo">
      * TODO: if this value is an empty, class will be inferred from the base class name.
      * </p>
-     * 
+     *
      * @return name of the generated test class.
      */
-    public String testClass() default "";
+    String testClass() default "";
 
     /**
      * <p class="changed_added_4_0">
      * The value of this annotation attribute is taken to be a name of the generated test method.
      * </p>
-     * 
+     *
      * @return
      */
-    public String testMethod() default "";
+    String testMethod() default "";
 
     /**
      * <p class="changed_added_4_0">
      * The value of this annotation attribute tells CDK what kind of tests should be generated.
      * </p>
-     * 
+     *
      * @return
      */
-    public TestType type() default TestType.ALL;
-
+    TestType type() default TestType.ALL;
 }

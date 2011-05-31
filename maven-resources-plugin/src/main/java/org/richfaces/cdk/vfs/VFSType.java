@@ -23,9 +23,10 @@ package org.richfaces.cdk.vfs;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public enum VFSType {
 
-    zip, file
+    zip,
+    file
 }

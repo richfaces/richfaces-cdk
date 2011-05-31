@@ -20,21 +20,18 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk;
 
 import org.richfaces.cdk.model.ComponentLibrary;
 
 /**
  * <p class="changed_added_4_0">
- * That class builds JSF library model from different sources. It acts as
- * "controller" for whole CDK generation process.
+ * That class builds JSF library model from different sources. It acts as "controller" for whole CDK generation process.
  * </p>
  *
  * @author asmirnov@exadel.com
  */
 public interface LibraryBuilder {
-
     /**
      * <p class="changed_added_4_0">
      * Build library model from all available sources.
@@ -42,14 +39,14 @@ public interface LibraryBuilder {
      *
      * @throws CdkException
      */
-    public void build() throws CdkException;
+    void build() throws CdkException;
 
     /**
      * Generate all types of files from library model.
+     *
      * @param library TODO
      *
      * @throws CdkException
      */
-    public void generate(ComponentLibrary library) throws CdkException;
-
+    void generate(ComponentLibrary library) throws CdkException;
 }

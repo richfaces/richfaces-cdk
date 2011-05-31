@@ -20,18 +20,17 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.model;
 
 import org.richfaces.cdk.CdkException;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 public interface TemplateVisitor {
-
     void visitElement(CdkCallElement cdkCallElement) throws CdkException;
 
     void visitElement(String child) throws CdkException;
@@ -71,13 +70,13 @@ public interface TemplateVisitor {
     void endElement(CdkSwitchElement cdkSwitchElement);
 
     void startElement(CdkCaseElement cdkCaseElement);
-    
+
     void endElement(CdkCaseElement cdkCaseElement);
-    
+
     void startElement(CdkDefaultElement cdkDefaultElement);
-    
+
     void endElement(CdkDefaultElement cdkDefaultElement);
-    
+
     void preProcess(CompositeImplementation compositeImplementation);
 
     void postProcess(CompositeImplementation compositeImplementation);
@@ -87,5 +86,4 @@ public interface TemplateVisitor {
     void endElement(CdkScriptObjectElement cdkScriptObjectElement);
 
     void visitElement(CdkScriptOptionElement cdkScriptOptionElement);
-
 }

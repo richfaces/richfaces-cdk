@@ -13,7 +13,7 @@ import org.junit.Test;
 
 /**
  * @author asmirnov
- * 
+ *
  */
 public class LibraryBuilderTest extends CdkTestBase {
     private static final String[] JAVA_INCLUDES = new String[] { "**/*.java" };
@@ -22,24 +22,22 @@ public class LibraryBuilderTest extends CdkTestBase {
     private static final String PROJECT_BASE = "";
     private static final String[] STRINGS_ARRAY = new String[0];
     private static final String XML_INCLUDES = "**/*.xml";
-
     protected File outputJavaDirectory = new File(PROJECT_BASE + "target/generated-sources/main/java");
     protected File outputResourcesDirectory = new File(PROJECT_BASE + "target/generated-sources/main/resources");
     protected File outputTestDirectory = new File(PROJECT_BASE + "target/generated-sources/test/java");
-
     protected File outputTestResourcesDirectory = new File(PROJECT_BASE + "target/generated-sources/test/resources");
 
     /**
      * <p class="changed_added_4_0">
      * This utility method sets output directory for particular type. I such directory does not exist, it is created.
      * </p>
-     * 
+     *
      * @param generator
      * @param directory
      * @param type
      */
     private static void setOutput(Generator generator, File directory, Outputs type) {
-    
+
         generator.addOutputFolder(type, directory);
     }
 
@@ -74,8 +72,8 @@ public class LibraryBuilderTest extends CdkTestBase {
         // configure CDK workers.
         // setupPlugins(generator);
 
-            // Build JSF library.
-            // LibraryBuilder builder = LibraryBuilder.createInstance(context);
+        // Build JSF library.
+        // LibraryBuilder builder = LibraryBuilder.createInstance(context);
         generator.init();
     }
 
@@ -94,16 +92,16 @@ public class LibraryBuilderTest extends CdkTestBase {
         return new CdkClassLoader(this.getClass().getClassLoader());
     }
 
-    private Iterable<File> findFacesConfigFiles()  {
+    private Iterable<File> findFacesConfigFiles() {
 
         return Collections.emptySet();
     }
 
-    private Iterable<File> findJavaFiles()  {
+    private Iterable<File> findJavaFiles() {
         return Collections.emptySet();
     }
 
-    private Iterable<File> findTemplateFiles()  {
+    private Iterable<File> findTemplateFiles() {
         return Collections.emptySet();
     }
 }

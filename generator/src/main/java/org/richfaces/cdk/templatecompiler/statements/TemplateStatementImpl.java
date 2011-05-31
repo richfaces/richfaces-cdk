@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.statements;
 
 import java.util.Collections;
@@ -29,12 +28,13 @@ import org.richfaces.cdk.templatecompiler.builder.model.JavaField;
 import org.richfaces.cdk.templatecompiler.builder.model.JavaImport;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class TemplateStatementImpl implements TemplateStatement {
-
     private final String code;
     private StatementsContainer parent;
 
@@ -42,7 +42,10 @@ public class TemplateStatementImpl implements TemplateStatement {
         this.code = code;
         // TODO Auto-generated constructor stub
     }
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.builder.model.JavaStatement#getCode()
      */
     @Override
@@ -50,7 +53,9 @@ public class TemplateStatementImpl implements TemplateStatement {
         return code;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.builder.model.RequireImports#getRequiredImports()
      */
     @Override
@@ -58,7 +63,9 @@ public class TemplateStatementImpl implements TemplateStatement {
         return Collections.emptySet();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.statements.TemplateStatement#getRequiredFields()
      */
     @Override
@@ -66,7 +73,9 @@ public class TemplateStatementImpl implements TemplateStatement {
         return Collections.emptySet();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.statements.TemplateStatement#getRequiredMethods()
      */
     @Override
@@ -74,12 +83,15 @@ public class TemplateStatementImpl implements TemplateStatement {
         return Collections.emptySet();
     }
 
-    /* (non-Javadoc)
-     * @see org.richfaces.cdk.templatecompiler.statements.TemplateStatement#setParent(org.richfaces.cdk.templatecompiler.statements.StatementsContainer)
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * org.richfaces.cdk.templatecompiler.statements.TemplateStatement#setParent(org.richfaces.cdk.templatecompiler.statements
+     * .StatementsContainer)
      */
     @Override
     public void setParent(StatementsContainer parent) {
         this.parent = parent;
     }
-
 }

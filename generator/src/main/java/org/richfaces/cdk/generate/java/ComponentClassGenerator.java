@@ -20,9 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.cdk.generate.java;
 
 import java.util.Collection;
@@ -40,14 +37,16 @@ import org.richfaces.cdk.model.ComponentModel;
 import com.google.inject.Inject;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class ComponentClassGenerator extends FreeMarkerWriter<ComponentModel> implements CdkWriter {
-
     @Inject
-    public ComponentClassGenerator(@LibraryModel FreeMarkerRenderer configuration,  @Output(Outputs.JAVA_CLASSES) FileManager output) {
+    public ComponentClassGenerator(@LibraryModel FreeMarkerRenderer configuration,
+            @Output(Outputs.JAVA_CLASSES) FileManager output) {
         super(configuration, output);
     }
 

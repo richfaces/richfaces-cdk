@@ -43,40 +43,31 @@ import com.google.common.primitives.Ints;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public final class ResourceUtil {
-
     private static final String CLASSPATH_RESOURCES_LOCATION = "META-INF/resources";
-
     private static final String WEB_RESOURCES_LOCATION = "resources";
-
     private static final Pattern LIBRARY_VERSION_PATTERN = Pattern.compile("^(\\d+)(_\\d+)+");
-    
     private static final Pattern RESOURCE_VERSION_PATTERN = Pattern.compile("^((?:\\d+)(?:_\\d+)+)[\\.]?(\\w+)?");
-    
+
     public static final class VersionKey {
-
         static final Ordering<VersionKey> ORDERING = Ordering.from(new Comparator<VersionKey>() {
-
             @Override
             public int compare(VersionKey o1, VersionKey o2) {
                 return Ints.lexicographicalComparator().compare(o1.versionVector, o2.versionVector);
             }
         }).nullsFirst();
-        
         private String version;
-        
         private int[] versionVector;
-
         private String extension;
-        
+
         public VersionKey(String version, String extension) throws NumberFormatException {
             this.version = version;
             this.versionVector = parseVersionString(version);
             this.extension = extension;
         }
-        
+
         private static int[] parseVersionString(String s) {
             String[] split = s.split("_");
             int[] result = new int[split.length];
@@ -85,17 +76,18 @@ public final class ResourceUtil {
             }
             return result;
         }
-       
+
         public String toString() {
             return DOT_JOINER.join(version, extension);
         }
     }
-    
-    private ResourceUtil() {}
-    
+
+    private ResourceUtil() {
+    }
+
     public static VirtualFile getLatestVersion(VirtualFile file, boolean library) {
         VersionKey latestVersionKey = null;
-        
+
         Collection<VirtualFile> children = file.getChildren();
         for (VirtualFile child : children) {
             if (library && child.isDirectory()) {
@@ -106,50 +98,52 @@ public final class ResourceUtil {
             } else if (!library && child.isFile()) {
                 Matcher matcher = RESOURCE_VERSION_PATTERN.matcher(child.getName());
                 if (matcher.matches()) {
-                    latestVersionKey = VersionKey.ORDERING.max(latestVersionKey, new VersionKey(matcher.group(1), matcher.group(2)));
+                    latestVersionKey = VersionKey.ORDERING.max(latestVersionKey,
+                            new VersionKey(matcher.group(1), matcher.group(2)));
                 }
             }
         }
-        
+
         VirtualFile result;
-        
+
         if (latestVersionKey != null) {
             result = file.getChild(latestVersionKey.toString());
         } else {
             result = file;
         }
-        
+
         if (result != null && (library ^ result.isFile())) {
             return result;
         }
-        
+
         return null;
     }
-    
-    private static Collection<VirtualFile> getExistingChildren(Iterable<VFSRoot> files, String path) throws URISyntaxException, IOException {
+
+    private static Collection<VirtualFile> getExistingChildren(Iterable<VFSRoot> files, String path) throws URISyntaxException,
+            IOException {
         Collection<VirtualFile> result = Lists.newArrayList();
 
-        for (VirtualFile file: files) {
+        for (VirtualFile file : files) {
             VirtualFile child = file.getChild(path, true);
             if (child != null) {
                 result.add(child);
             }
         }
-        
+
         return result;
     }
-    
-    public static Collection<VirtualFile> getResourceRoots(Iterable<VFSRoot> cpRoots, Iterable<VFSRoot> webRoots) throws URISyntaxException, IOException {
+
+    public static Collection<VirtualFile> getResourceRoots(Iterable<VFSRoot> cpRoots, Iterable<VFSRoot> webRoots)
+            throws URISyntaxException, IOException {
         List<VirtualFile> result = Lists.newArrayList();
-        
+
         result.addAll(getExistingChildren(cpRoots, CLASSPATH_RESOURCES_LOCATION));
         result.addAll(getExistingChildren(webRoots, WEB_RESOURCES_LOCATION));
-        
+
         return result;
     }
-    
+
     public static String getResourceQualifier(Resource resource) {
         return COLON_JOINER.join(resource.getLibraryName(), resource.getResourceName());
     }
-
 }

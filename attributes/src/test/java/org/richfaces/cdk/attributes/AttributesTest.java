@@ -42,29 +42,28 @@ import org.richfaces.cdk.attributes.Attribute.Kind;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class AttributesTest {
-
     private SchemaSet schemaSet;
-    
+
     private String marshal(SchemaSet schemaSet) throws Exception {
         StringWriter writer = new StringWriter();
         JAXBContext jc = JAXBContext.newInstance(SchemaSet.class);
         Marshaller marshaller = jc.createMarshaller();
-        
+
         marshaller.setProperty("jaxb.formatted.output", Boolean.TRUE);
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         marshaller.marshal(schemaSet, new StreamResult(writer));
 
         return writer.toString();
     }
-    
+
     private SchemaSet unmarshal(String xmlData) throws Exception {
         StringReader reader = new StringReader(xmlData);
         JAXBContext jc = JAXBContext.newInstance(SchemaSet.class);
         Unmarshaller unmarshaller = jc.createUnmarshaller();
-        
+
         return (SchemaSet) unmarshaller.unmarshal(reader);
     }
 
@@ -73,20 +72,20 @@ public class AttributesTest {
         schemaSet = new SchemaSet();
         Schema schema = new Schema("urn:abc");
         schemaSet.addSchema(schema);
-        
+
         Element spanElement = new Element("span");
         schema.addElement(spanElement);
 
         Attribute idAttribute = new Attribute("id");
         spanElement.addAttribute(idAttribute);
-        
+
         Element imgElement = new Element("img");
         schema.addElement(imgElement);
 
         Attribute altAttribute = new Attribute("alt");
         altAttribute.setRequired(true);
         imgElement.addAttribute(altAttribute);
-        
+
         Attribute srcAttribute = new Attribute("src");
         srcAttribute.setKind(Kind.URI);
         imgElement.addAttribute(srcAttribute);
@@ -99,29 +98,29 @@ public class AttributesTest {
         classAttribute.setComponentAttributeName("styleClass");
         imgElement.addAttribute(classAttribute);
     }
-    
+
     public void tearDown() {
         schemaSet = null;
     }
-    
+
     @Test
     public void testMarshalUnmarshal() throws Exception {
         String marshalledData = marshal(schemaSet);
-        
+
         assertNotNull(marshalledData);
         assertTrue(marshalledData.length() > 0);
-        
+
         SchemaSet restoredSchemaSet = unmarshal(marshalledData);
         assertNotNull(restoredSchemaSet);
-        
+
         assertEquals(1, restoredSchemaSet.getSchemas().size());
         Schema restoredSchema = restoredSchemaSet.getSchemas().get("urn:abc");
         assertEquals("urn:abc", restoredSchema.getNamespace());
         assertEquals("urn:abc", restoredSchema.getKey());
-    
+
         Map<String, Element> restoredElements = restoredSchema.getElements();
         assertEquals(2, restoredElements.size());
-        
+
         Element restoredSpanElement = restoredElements.get("span");
         assertNotNull(restoredSpanElement);
         assertEquals("span", restoredSpanElement.getName());
@@ -136,7 +135,7 @@ public class AttributesTest {
         assertNull(restoredIdAttribute.getDefaultValue());
         assertFalse(restoredIdAttribute.isRequired());
         assertEquals(Kind.GENERIC, restoredIdAttribute.getKind());
-        
+
         Element restoredImgElement = restoredElements.get("img");
         assertNotNull(restoredImgElement);
         assertEquals("img", restoredImgElement.getName());

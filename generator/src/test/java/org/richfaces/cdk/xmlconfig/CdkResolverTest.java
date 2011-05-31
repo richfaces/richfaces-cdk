@@ -1,7 +1,9 @@
 package org.richfaces.cdk.xmlconfig;
 
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -29,9 +31,7 @@ import com.google.inject.Inject;
 
 @RunWith(CdkTestRunner.class)
 public class CdkResolverTest extends CdkTestBase {
-
     private class MyURLConnection extends URLConnection {
-
         private InputStream inputStream;
 
         MyURLConnection(URL u, InputStream inputStream) {
@@ -50,7 +50,6 @@ public class CdkResolverTest extends CdkTestBase {
     }
 
     private class MyURLStreamHandler extends URLStreamHandler {
-
         private InputStream inputStream;
 
         MyURLStreamHandler(InputStream inputStream) {
@@ -64,14 +63,11 @@ public class CdkResolverTest extends CdkTestBase {
     }
 
     private static final String TEST_HTML = "org/richfaces/cdk/apt/test.html";
-
     @Inject
     private CdkEntityResolver entityResolver;
-
     @Mock
     @Source(Sources.FACES_CONFIGS)
     private FileManager facesConfigSource;
-
     @Mock
     @Source(Sources.RENDERER_TEMPLATES)
     private FileManager templatesSource;
@@ -80,34 +76,32 @@ public class CdkResolverTest extends CdkTestBase {
     public void configure(Binder binder) {
         super.configure(binder);
         try {
-            CdkClassLoader classLoader =
-                new CdkClassLoader(ImmutableList.of(getLibraryFile("test.source.properties"),
+            CdkClassLoader classLoader = new CdkClassLoader(ImmutableList.of(getLibraryFile("test.source.properties"),
                     getLibraryFile(JsfComponent.class)), null) {
-                    @Override
-                    public URL getResource(String name) {
-                        if ("foo/bar.xml".equals(name)) {
-                            try {
-                                MyURLStreamHandler myURLStreamHandler = new MyURLStreamHandler(getBarXmlStream());
-                                return new URL("file", "localhost", 80, "/foo/bar.xml", myURLStreamHandler);
-                            } catch (MalformedURLException e) {
-                                e.printStackTrace();
-                                return null;
-                            }
-                        } else {
-                            return super.getResource(name);
+                @Override
+                public URL getResource(String name) {
+                    if ("foo/bar.xml".equals(name)) {
+                        try {
+                            MyURLStreamHandler myURLStreamHandler = new MyURLStreamHandler(getBarXmlStream());
+                            return new URL("file", "localhost", 80, "/foo/bar.xml", myURLStreamHandler);
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                            return null;
                         }
+                    } else {
+                        return super.getResource(name);
                     }
+                }
 
-                    @Override
-                    public InputStream getResourceAsStream(String name) {
-                        if ("foo/bar.xml".equals(name)) {
-                            return getBarXmlStream();
-                        } else {
-                            return super.getResourceAsStream(name);
-                        }
+                @Override
+                public InputStream getResourceAsStream(String name) {
+                    if ("foo/bar.xml".equals(name)) {
+                        return getBarXmlStream();
+                    } else {
+                        return super.getResourceAsStream(name);
                     }
-
-                };
+                }
+            };
             binder.bind(CdkClassLoader.class).toInstance(classLoader);
         } catch (Exception e) {
             throw new RuntimeException(e);

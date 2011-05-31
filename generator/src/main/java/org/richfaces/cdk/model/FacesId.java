@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.model;
 
 import java.io.Serializable;
@@ -28,17 +27,19 @@ import java.io.Serializable;
 import org.richfaces.cdk.util.Strings;
 
 /**
- * <p class="changed_added_4_0">This is a FacesId class that should be used to find JSF elements in {@link ComponentLibrary}</p>
+ * <p class="changed_added_4_0">
+ * This is a FacesId class that should be used to find JSF elements in {@link ComponentLibrary}
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 public class FacesId implements Serializable, Comparable<FacesId> {
     private static final long serialVersionUID = -8199984910177820771L;
-    
     private final String type;
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param type
      */
@@ -51,7 +52,8 @@ public class FacesId implements Serializable, Comparable<FacesId> {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the type
      */
@@ -65,7 +67,8 @@ public class FacesId implements Serializable, Comparable<FacesId> {
     }
 
     /*
-     *  (non-Javadoc)
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -79,7 +82,8 @@ public class FacesId implements Serializable, Comparable<FacesId> {
     }
 
     /*
-     *  (non-Javadoc)
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override

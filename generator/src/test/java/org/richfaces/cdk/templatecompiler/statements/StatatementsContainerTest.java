@@ -1,7 +1,11 @@
 package org.richfaces.cdk.templatecompiler.statements;
 
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Collections;
 
@@ -21,14 +25,11 @@ import com.google.inject.name.Named;
 
 @RunWith(CdkTestRunner.class)
 public class StatatementsContainerTest extends CdkTestBase {
-
     @Mock
     private TemplateStatement statement;
-
     @Mock
     @Named("second")
     private TemplateStatement statement1;
-
     @Mock
     private JavaImport import1;
     @Mock
@@ -37,10 +38,8 @@ public class StatatementsContainerTest extends CdkTestBase {
     @Mock
     @Named("third")
     private JavaImport import3;
-
     @Inject
     private MockController controller;
-
     @Inject
     private StatementsContainer container;
 

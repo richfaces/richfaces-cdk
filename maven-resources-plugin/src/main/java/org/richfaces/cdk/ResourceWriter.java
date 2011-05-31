@@ -27,12 +27,10 @@ import javax.faces.application.Resource;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public interface ResourceWriter {
+    void writeResource(String skinName, Resource resource) throws IOException;
 
-    public void writeResource(String skinName, Resource resource) throws IOException;
-
-    public void writeProcessedResourceMappings() throws IOException;
-    
+    void writeProcessedResourceMappings() throws IOException;
 }

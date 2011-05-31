@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.model;
 
 import javax.xml.bind.annotation.XmlType;
@@ -31,31 +30,26 @@ import org.richfaces.cdk.util.ComparatorUtils;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 @XmlType(name = "function-configType", namespace = ComponentLibrary.CDK_EXTENSIONS_NAMESPACE)
 public class FunctionModel extends DescriptionGroupBase implements Named, ModelElement<FunctionModel> {
-
     /**
      * <p class="changed_added_4_0">
      * </p>
      */
     private static final long serialVersionUID = -358069932548425030L;
-
     private String name;
-
     private String signature;
-
     private TagType type;
-
     private ClassName functionClass;
 
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the name
      */
     @Merge
@@ -66,9 +60,8 @@ public class FunctionModel extends DescriptionGroupBase implements Named, ModelE
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param name
-     *            the name to set
+     *
+     * @param name the name to set
      */
     public void setName(String name) {
         this.name = name;
@@ -77,7 +70,7 @@ public class FunctionModel extends DescriptionGroupBase implements Named, ModelE
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the signature
      */
     @Merge
@@ -88,9 +81,8 @@ public class FunctionModel extends DescriptionGroupBase implements Named, ModelE
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param signature
-     *            the signature to set
+     *
+     * @param signature the signature to set
      */
     public void setSignature(String signature) {
         this.signature = signature;
@@ -99,7 +91,7 @@ public class FunctionModel extends DescriptionGroupBase implements Named, ModelE
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the type
      */
     @Merge
@@ -110,9 +102,8 @@ public class FunctionModel extends DescriptionGroupBase implements Named, ModelE
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param type
-     *            the type to set
+     *
+     * @param type the type to set
      */
     public void setType(TagType type) {
         this.type = type;
@@ -121,7 +112,7 @@ public class FunctionModel extends DescriptionGroupBase implements Named, ModelE
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the functionClass
      */
     @Merge
@@ -132,9 +123,8 @@ public class FunctionModel extends DescriptionGroupBase implements Named, ModelE
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param functionClass
-     *            the functionClass to set
+     *
+     * @param functionClass the functionClass to set
      */
     public void setFunctionClass(ClassName functionClass) {
         this.functionClass = functionClass;
@@ -151,8 +141,7 @@ public class FunctionModel extends DescriptionGroupBase implements Named, ModelE
     }
 
     @Override
-    public <R,D> R accept(Visitor<R,D> visitor, D data) {
-        return visitor.visitFunction(this,data);
+    public <R, D> R accept(Visitor<R, D> visitor, D data) {
+        return visitor.visitFunction(this, data);
     }
-
 }

@@ -19,7 +19,6 @@ Fr * JBoss, Home of Professional Open Source
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.generate.java;
 
 import java.io.IOException;
@@ -61,36 +60,30 @@ import freemarker.template.ObjectWrapper;
  * @since Jan 20, 2010
  */
 public abstract class AbstractClassGeneratorTest extends CdkTestBase {
-
     @Inject
     @LibraryModel
     protected FreeMarkerRenderer configuration;
-
     @Inject
     protected ComponentLibrary library;
-
     @Inject
     protected Logger log;
-
     @Mock
     @Output(Outputs.JAVA_CLASSES)
     protected FileManager output;
-
-
     @Inject
     protected ObjectWrapper wrapper;
-    
+
     @Override
     public void configure(Binder binder) {
         super.configure(binder);
         binder.bind(FreeMarkerRenderer.class).annotatedWith(LibraryModel.class).to(CdkConfiguration.class);
         binder.bind(ObjectWrapper.class).to(LibraryModelWrapper.class);
         binder.bind(FreeMakerUtils.class);
-        binder.bind(new TypeLiteral<Map<String,String>>(){}).annotatedWith(DefaultImports.class).toInstance(ImmutableMap.of("util","util.ftl"));
+        binder.bind(new TypeLiteral<Map<String, String>>() {
+        }).annotatedWith(DefaultImports.class).toInstance(ImmutableMap.of("util", "util.ftl"));
     }
 
-    protected static PropertyBase addAttribute(ModelElementBase model, String attributeName, Class<?> type,
-        boolean generate) {
+    protected static PropertyBase addAttribute(ModelElementBase model, String attributeName, Class<?> type, boolean generate) {
         PropertyBase attribute = model.getOrCreateAttribute(attributeName);
         attribute.setType(new ClassName(type));
         attribute.setGenerate(generate);
@@ -115,7 +108,7 @@ public abstract class AbstractClassGeneratorTest extends CdkTestBase {
 
             if (refLine != null && outLine != null && !refLine.trim().equals(outLine.trim())) {
                 Assert.fail("Difference found on line " + ref.getLineNumber() + ".\nReference text is: " + refLine
-                    + "\nOutput text is: " + outLine);
+                        + "\nOutput text is: " + outLine);
             }
         }
     }

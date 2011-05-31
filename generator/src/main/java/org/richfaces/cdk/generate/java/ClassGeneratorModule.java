@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.generate.java;
 
 import java.util.Map;
@@ -45,15 +44,14 @@ import freemarker.template.ObjectWrapper;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class ClassGeneratorModule extends AbstractModule {
-
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.google.inject.AbstractModule#configure()
      */
     @Override
@@ -71,8 +69,7 @@ public class ClassGeneratorModule extends AbstractModule {
         privateBinder.expose(FreeMarkerRenderer.class).annotatedWith(LibraryModel.class);
         privateBinder.bind(ObjectWrapper.class).to(LibraryModelWrapper.class);
         privateBinder.bind(FreeMakerUtils.class);
-        privateBinder.bind(new TypeLiteral<Map<String,String>>(){}).annotatedWith(DefaultImports.class).toInstance(ImmutableMap.of("util","util.ftl"));
-
+        privateBinder.bind(new TypeLiteral<Map<String, String>>() {
+        }).annotatedWith(DefaultImports.class).toInstance(ImmutableMap.of("util", "util.ftl"));
     }
-
 }

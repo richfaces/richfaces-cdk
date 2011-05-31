@@ -6,12 +6,12 @@ import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlMixed;
 
 public interface LeafModelElement extends ModelElement {
-
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.model.ModelElement#getChildren()
      */
     @XmlAnyElement(lax = true, value = ElementsHandler.class)
     @XmlMixed
-    public List<Object> getChildren();
-
+    List<Object> getChildren();
 }

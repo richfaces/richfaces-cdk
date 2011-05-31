@@ -31,36 +31,30 @@ import com.google.inject.Provider;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class AttributesProcessorImpl implements AttributesProcessor {
-
     private static final ClassName SIGNATURE_NONE_CLASS_NAME = ClassName.get(Signature.NONE.class);
-
     private static final ClassName STRING_TYPE = ClassName.get(String.class);
-
     @Inject
     private Logger log;
-
     private final DescriptionProcessor descriptionProcessor;
-
     private final Provider<SourceUtils> utilsProvider;
-
     private final FragmentParser parser;
 
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @param descriptionProcessor
      * @param utilsProvider
      * @param parser
      */
     @Inject
     public AttributesProcessorImpl(DescriptionProcessor descriptionProcessor, Provider<SourceUtils> utilsProvider,
-        FragmentParser parser) {
+            FragmentParser parser) {
         this.descriptionProcessor = descriptionProcessor;
         this.utilsProvider = utilsProvider;
         this.parser = parser;
@@ -96,8 +90,8 @@ public class AttributesProcessorImpl implements AttributesProcessor {
             }
 
             descriptionProcessor.processDescription(attribute,
-                utils.getAnnotationValue(attributeAnnotarion, "description", AnnotationMirror.class),
-                beanProperty.getDocComment());
+                    utils.getAnnotationValue(attributeAnnotarion, "description", AnnotationMirror.class),
+                    beanProperty.getDocComment());
 
             setDefaultValue(attribute, attributeAnnotarion);
 
@@ -106,8 +100,7 @@ public class AttributesProcessorImpl implements AttributesProcessor {
             // MethodExpression call signature.
             attribute.setSignature(getSignature(attributeAnnotarion));
 
-            for (AnnotationMirror event : utils.getAnnotationValues(attributeAnnotarion, "events",
-                AnnotationMirror.class)) {
+            for (AnnotationMirror event : utils.getAnnotationValues(attributeAnnotarion, "events", AnnotationMirror.class)) {
                 setBehaviorEvent(attribute, event);
             }
         }
@@ -161,14 +154,14 @@ public class AttributesProcessorImpl implements AttributesProcessor {
         SourceUtils utils = utilsProvider.get();
 
         if (!utils.isDefaultValue(attributeAnnotarion, "signature")) {
-            AnnotationMirror signatureAnnotation =
-                utils.getAnnotationValue(attributeAnnotarion, "signature", AnnotationMirror.class);
+            AnnotationMirror signatureAnnotation = utils.getAnnotationValue(attributeAnnotarion, "signature",
+                    AnnotationMirror.class);
             ClassName returnType = utils.getAnnotationValue(signatureAnnotation, "returnType", ClassName.class);
 
             if (!SIGNATURE_NONE_CLASS_NAME.equals(returnType)) {
                 MethodSignature methodSignature = new MethodSignature();
                 methodSignature.setParameters(Lists.newArrayList(utils.getAnnotationValues(signatureAnnotation, "parameters",
-                    ClassName.class)));
+                        ClassName.class)));
                 methodSignature.setReturnType(returnType);
                 return methodSignature;
             }
@@ -196,7 +189,6 @@ public class AttributesProcessorImpl implements AttributesProcessor {
         log.debug("     -> sourceUtils.visitSupertypes...");
         SourceUtils sourceUtils = getSourceUtils();
         sourceUtils.visitSupertypes(element, new SuperTypeVisitor() {
-
             @Override
             public void visit(TypeMirror type) {
                 String uri = type.toString() + ".xml";
@@ -209,13 +201,12 @@ public class AttributesProcessorImpl implements AttributesProcessor {
                     log.debug("No properties description found at " + uri);
                 }
             }
-
         });
 
         log.debug("  -- Process Java files.");
         Set<BeanProperty> properties = Sets.newHashSet();
         properties.addAll(sourceUtils.getBeanPropertiesAnnotatedWith(Attribute.class, element));
-//        properties.addAll(sourceUtils.getAbstractBeanProperties(element));
+        // properties.addAll(sourceUtils.getAbstractBeanProperties(element));
         for (BeanProperty beanProperty : properties) {
             processAttribute(beanProperty, component.getOrCreateAttribute(beanProperty.getName()));
         }
@@ -242,5 +233,4 @@ public class AttributesProcessorImpl implements AttributesProcessor {
             }
         }
     }
-
 }

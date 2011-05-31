@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.generate.freemarker;
 
 import org.richfaces.cdk.model.TagModel;
@@ -35,13 +34,13 @@ import freemarker.template.TemplateModelException;
  * @author akolonitsky
  * @since Feb 23, 2010
  */
-public class TagTemplateModel  extends BeanModel implements TemplateModel{
-
+public class TagTemplateModel extends BeanModel implements TemplateModel {
     static final ModelFactory FACTORY = new ModelFactory() {
         public TemplateModel create(Object object, ObjectWrapper wrapper) {
             return new TagTemplateModel((TagModel) object, (BeansWrapper) wrapper);
         }
     };
+
     /**
      * <p class="changed_added_4_0">
      * </p>
@@ -53,13 +52,9 @@ public class TagTemplateModel  extends BeanModel implements TemplateModel{
         super(object, wrapper);
     }
 
-    @Override              
+    @Override
     public TemplateModel get(String key) throws TemplateModelException {
 
         return super.get(key);
     }
-
-
-
-
 }
