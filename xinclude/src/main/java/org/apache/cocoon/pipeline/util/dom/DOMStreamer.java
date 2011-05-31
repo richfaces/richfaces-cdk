@@ -1,28 +1,26 @@
-
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
 package org.apache.cocoon.pipeline.util.dom;
 
 import java.util.Map.Entry;
 
 import org.apache.cocoon.pipeline.component.sax.SAXConsumer;
-
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.EntityReference;
@@ -30,13 +28,11 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.ProcessingInstruction;
 import org.w3c.dom.Text;
-
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
 final class DOMStreamer {
     private ElementInfo currentElementInfo;
-
     /** Counter used when generating new namespace prefixes. */
     private int newPrefixCounter;
     private SAXConsumer xmlConsumer;
@@ -98,20 +94,20 @@ final class DOMStreamer {
 
     private void startNode(Node node) throws SAXException {
         switch (node.getNodeType()) {
-            case Node.COMMENT_NODE :
+            case Node.COMMENT_NODE:
 
                 // ignore comment
                 break;
 
-            case Node.DOCUMENT_FRAGMENT_NODE :
+            case Node.DOCUMENT_FRAGMENT_NODE:
 
                 // ??;
                 break;
 
-            case Node.DOCUMENT_NODE :
+            case Node.DOCUMENT_NODE:
                 break;
 
-            case Node.ELEMENT_NODE :
+            case Node.ELEMENT_NODE:
                 NamedNodeMap atts = node.getAttributes();
                 int nAttrs = atts.getLength();
 
@@ -274,14 +270,12 @@ final class DOMStreamer {
                             attrQName = attrLocalName;
                         }
 
-                        newAttrs.addAttribute(assignedAttrNsURI, attrLocalName, attrQName, "CDATA",
-                                              attr.getNodeValue());
+                        newAttrs.addAttribute(assignedAttrNsURI, attrLocalName, attrQName, "CDATA", attr.getNodeValue());
                     }
                 }
 
                 // add local namespace declaration and fire startPrefixMapping events
-                if (currentElementInfo.namespaceDeclarations != null
-                        && currentElementInfo.namespaceDeclarations.size() > 0) {
+                if (currentElementInfo.namespaceDeclarations != null && currentElementInfo.namespaceDeclarations.size() > 0) {
                     for (Entry<String, String> entry : currentElementInfo.namespaceDeclarations.entrySet()) {
                         String pr = (String) entry.getKey();
                         String ns = (String) entry.getValue();
@@ -302,14 +296,14 @@ final class DOMStreamer {
 
                 break;
 
-            case Node.PROCESSING_INSTRUCTION_NODE :
+            case Node.PROCESSING_INSTRUCTION_NODE:
                 ProcessingInstruction pi = (ProcessingInstruction) node;
 
                 xmlConsumer.processingInstruction(pi.getNodeName(), pi.getData());
 
                 break;
 
-            case Node.CDATA_SECTION_NODE :
+            case Node.CDATA_SECTION_NODE:
                 if (xmlConsumer != null) {
                     xmlConsumer.startCDATA();
                 }
@@ -322,12 +316,12 @@ final class DOMStreamer {
 
                 break;
 
-            case Node.TEXT_NODE :
+            case Node.TEXT_NODE:
                 dispatchChars(node);
 
                 break;
 
-            case Node.ENTITY_REFERENCE_NODE :
+            case Node.ENTITY_REFERENCE_NODE:
                 EntityReference eref = (EntityReference) node;
 
                 if (xmlConsumer != null) {
@@ -339,22 +333,20 @@ final class DOMStreamer {
 
                 break;
 
-            default :
+            default:
         }
     }
 
     private void endNode(Node node) throws SAXException {
         switch (node.getNodeType()) {
-            case Node.DOCUMENT_NODE :
+            case Node.DOCUMENT_NODE:
                 break;
 
-            case Node.ELEMENT_NODE :
-                xmlConsumer.endElement(currentElementInfo.namespaceURI, currentElementInfo.localName,
-                                       currentElementInfo.qName);
+            case Node.ELEMENT_NODE:
+                xmlConsumer.endElement(currentElementInfo.namespaceURI, currentElementInfo.localName, currentElementInfo.qName);
 
                 // generate endPrefixMapping events if needed
-                if (currentElementInfo.namespaceDeclarations != null
-                        && currentElementInfo.namespaceDeclarations.size() > 0) {
+                if (currentElementInfo.namespaceDeclarations != null && currentElementInfo.namespaceDeclarations.size() > 0) {
                     for (Entry<String, String> entry : currentElementInfo.namespaceDeclarations.entrySet()) {
                         xmlConsumer.endPrefixMapping((String) entry.getKey());
                     }
@@ -364,10 +356,10 @@ final class DOMStreamer {
 
                 break;
 
-            case Node.CDATA_SECTION_NODE :
+            case Node.CDATA_SECTION_NODE:
                 break;
 
-            case Node.ENTITY_REFERENCE_NODE :
+            case Node.ENTITY_REFERENCE_NODE:
                 EntityReference eref = (EntityReference) node;
 
                 if (xmlConsumer != null) {
@@ -376,7 +368,7 @@ final class DOMStreamer {
 
                 break;
 
-            default :
+            default:
         }
     }
 
@@ -389,19 +381,17 @@ final class DOMStreamer {
     }
 
     /**
-     * Searches the namespace for a given namespace prefix starting from a
-     * given Element.
+     * Searches the namespace for a given namespace prefix starting from a given Element.
      *
-     * <p>Note that this resolves the prefix in the orginal DOM-tree, not in
-     * the {@link ElementInfo} objects. This is used to resolve prefixes
-     * of elements or attributes created with createElement or setAttribute
-     * instead of createElementNS or setAttributeNS.
+     * <p>
+     * Note that this resolves the prefix in the orginal DOM-tree, not in the {@link ElementInfo} objects. This is used to
+     * resolve prefixes of elements or attributes created with createElement or setAttribute instead of createElementNS or
+     * setAttributeNS.
      *
-     * <p>The code in this method is largely based on
-     * org.apache.xml.utils.DOMHelper.getNamespaceForPrefix() (from Xalan).
+     * <p>
+     * The code in this method is largely based on org.apache.xml.utils.DOMHelper.getNamespaceForPrefix() (from Xalan).
      *
-     * @param prefix the prefix to look for, can be empty or null to find the
-     * default namespace
+     * @param prefix the prefix to look for, can be empty or null to find the default namespace
      *
      * @return the namespace, or null if not found.
      */
@@ -429,8 +419,7 @@ final class DOMStreamer {
                 type = parent.getNodeType();
             }
 
-            while (parent != null && namespace == null
-                    && (type == Node.ELEMENT_NODE || type == Node.ENTITY_REFERENCE_NODE)) {
+            while (parent != null && namespace == null && (type == Node.ELEMENT_NODE || type == Node.ENTITY_REFERENCE_NODE)) {
                 if (type == Node.ELEMENT_NODE) {
                     Attr attr = ((Element) parent).getAttributeNode(declname);
 
@@ -455,8 +444,7 @@ final class DOMStreamer {
     /**
      * Splits a nodeName into a prefix and a localName
      *
-     * @return an array containing two elements, the first one is the prefix (can be null), the
-     * second one is the localName
+     * @return an array containing two elements, the first one is the prefix (can be null), the second one is the localName
      */
     private String[] getPrefixAndLocalName(String nodeName) {
         String prefix;
@@ -471,6 +459,6 @@ final class DOMStreamer {
             localName = nodeName;
         }
 
-        return new String[] {prefix, localName};
+        return new String[] { prefix, localName };
     }
 }

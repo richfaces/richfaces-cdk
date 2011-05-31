@@ -42,14 +42,10 @@
  * file under either the MPL or the GPL.
  *
  * ***** END LICENSE BLOCK ***** */
-
-
-
 package org.mozilla.javascript;
 
 import java.io.Reader;
 import java.io.IOException;
-
 import java.util.Hashtable;
 
 /**
@@ -64,17 +60,15 @@ import java.util.Hashtable;
  * @author Brendan Eich
  */
 public class Parser {
-
     // TokenInformation flags : currentFlaggedToken stores them together
     // with token type
     final static int CLEAR_TI_MASK = 0xFFFF, // mask to clear token information bits
-                     TI_AFTER_EOL = 1 << 16, // first token of the source line
-                     TI_CHECK_LABEL = 1 << 17; // indicates to check for label
+            TI_AFTER_EOL = 1 << 16, // first token of the source line
+            TI_CHECK_LABEL = 1 << 17; // indicates to check for label
     boolean calledByCompileFunction;
     CompilerEnvirons compilerEnv;
     private int currentFlaggedToken;
-
-//  The following are per function variables and should be saved/restored
+    //  The following are per function variables and should be saved/restored
 //  during function parsing.
 //  XXX Move to separated class?
     ScriptOrFnNode currentScriptOrFn;
@@ -82,8 +76,7 @@ public class Parser {
     private String encodedSource;
     private ErrorReporter errorReporter;
     private int functionEndFlags;
-
-//  end of per function variables
+    //  end of per function variables
     private boolean hasReturnValue;
     private Hashtable labelSet; // map of label names into nodes
     private ObjArray loopAndSwitchSet;
@@ -353,7 +346,7 @@ public class Parser {
         Node pn = nf.createLeaf(Token.BLOCK);
 
         try {
-            for (;;) {
+            for (; ; ) {
                 int tt = peekToken();
 
                 if (tt <= Token.EOF) {
@@ -367,7 +360,7 @@ public class Parser {
 
                     try {
                         n = function(calledByCompileFunction
-                                     ? FunctionNode.FUNCTION_EXPRESSION : FunctionNode.FUNCTION_STATEMENT);
+                                ? FunctionNode.FUNCTION_EXPRESSION : FunctionNode.FUNCTION_STATEMENT);
                     } catch (ParserException e) {
                         break;
                     }
@@ -421,23 +414,24 @@ public class Parser {
         Node pn = nf.createBlock(ts.getLineno());
 
         try {
-            bodyLoop:for (;;) {
+            bodyLoop:
+            for (; ; ) {
                 Node n;
                 int tt = peekToken();
 
                 switch (tt) {
-                    case Token.ERROR :
-                    case Token.EOF :
-                    case Token.RC :
+                    case Token.ERROR:
+                    case Token.EOF:
+                    case Token.RC:
                         break bodyLoop;
 
-                    case Token.FUNCTION :
+                    case Token.FUNCTION:
                         consumeToken();
                         n = function(FunctionNode.FUNCTION_STATEMENT);
 
                         break;
 
-                    default :
+                    default:
                         n = statement();
 
                         break;
@@ -691,21 +685,23 @@ public class Parser {
 
                 return pn;
             }
-        } catch (ParserException e) {}
+        } catch (ParserException e) {
+        }
 
         // skip to end of statement
         int lineno = ts.getLineno();
 
-        guessingStatementEnd:for (;;) {
+        guessingStatementEnd:
+        for (; ; ) {
             int tt = peekTokenOrEOL();
 
             consumeToken();
 
             switch (tt) {
-                case Token.ERROR :
-                case Token.EOF :
-                case Token.EOL :
-                case Token.SEMI :
+                case Token.ERROR:
+                case Token.EOF:
+                case Token.EOL:
+                case Token.SEMI:
                     break guessingStatementEnd;
             }
         }
@@ -724,7 +720,7 @@ public class Parser {
         tt = peekToken();
 
         switch (tt) {
-            case Token.IF : {
+            case Token.IF: {
                 consumeToken();
                 decompiler.addToken(Token.IF);
 
@@ -749,7 +745,7 @@ public class Parser {
                 return pn;
             }
 
-            case Token.SWITCH : {
+            case Token.SWITCH: {
                 consumeToken();
                 decompiler.addToken(Token.SWITCH);
 
@@ -767,16 +763,17 @@ public class Parser {
 
                     boolean hasDefault = false;
 
-                    switchLoop:for (;;) {
+                    switchLoop:
+                    for (; ; ) {
                         tt = nextToken();
 
                         Node caseExpression;
 
                         switch (tt) {
-                            case Token.RC :
+                            case Token.RC:
                                 break switchLoop;
 
-                            case Token.CASE :
+                            case Token.CASE:
                                 decompiler.addToken(Token.CASE);
                                 caseExpression = expr(false);
                                 mustMatchToken(Token.COLON, "msg.no.colon.case");
@@ -784,7 +781,7 @@ public class Parser {
 
                                 break;
 
-                            case Token.DEFAULT :
+                            case Token.DEFAULT:
                                 if (hasDefault) {
                                     reportError("msg.double.switch.default");
                                 }
@@ -797,7 +794,7 @@ public class Parser {
 
                                 break;
 
-                            default :
+                            default:
                                 reportError("msg.bad.switch");
 
                                 break switchLoop;
@@ -823,7 +820,7 @@ public class Parser {
                 return pn;
             }
 
-            case Token.WHILE : {
+            case Token.WHILE: {
                 consumeToken();
                 decompiler.addToken(Token.WHILE);
 
@@ -845,7 +842,7 @@ public class Parser {
                 return pn;
             }
 
-            case Token.DO : {
+            case Token.DO: {
                 consumeToken();
                 decompiler.addToken(Token.DO);
                 decompiler.addEOL(Token.LC);
@@ -875,7 +872,7 @@ public class Parser {
                 return pn;
             }
 
-            case Token.FOR : {
+            case Token.FOR: {
                 consumeToken();
 
                 boolean isForEach = false;
@@ -966,7 +963,7 @@ public class Parser {
                 return pn;
             }
 
-            case Token.TRY : {
+            case Token.TRY: {
                 consumeToken();
 
                 int lineno = ts.getLineno();
@@ -1012,7 +1009,7 @@ public class Parser {
                         mustMatchToken(Token.LC, "msg.no.brace.catchblock");
                         decompiler.addEOL(Token.LC);
                         nf.addChildToBack(catchblocks,
-                                          nf.createCatch(varName, catchCond, statements(), ts.getLineno()));
+                                nf.createCatch(varName, catchCond, statements(), ts.getLineno()));
                         mustMatchToken(Token.RC, "msg.no.brace.after.body");
                         decompiler.addEOL(Token.RC);
                     }
@@ -1032,7 +1029,7 @@ public class Parser {
                 return pn;
             }
 
-            case Token.THROW : {
+            case Token.THROW: {
                 consumeToken();
 
                 if (peekTokenOrEOL() == Token.EOL) {
@@ -1050,7 +1047,7 @@ public class Parser {
                 break;
             }
 
-            case Token.BREAK : {
+            case Token.BREAK: {
                 consumeToken();
 
                 int lineno = ts.getLineno();
@@ -1075,7 +1072,7 @@ public class Parser {
                 break;
             }
 
-            case Token.CONTINUE : {
+            case Token.CONTINUE: {
                 consumeToken();
 
                 int lineno = ts.getLineno();
@@ -1110,7 +1107,7 @@ public class Parser {
                 break;
             }
 
-            case Token.WITH : {
+            case Token.WITH: {
                 consumeToken();
                 decompiler.addToken(Token.WITH);
 
@@ -1140,15 +1137,15 @@ public class Parser {
                 return pn;
             }
 
-            case Token.CONST :
-            case Token.VAR : {
+            case Token.CONST:
+            case Token.VAR: {
                 consumeToken();
                 pn = variables(tt);
 
                 break;
             }
 
-            case Token.RETURN : {
+            case Token.RETURN: {
                 if (!insideFunction()) {
                     reportError("msg.bad.return");
                 }
@@ -1163,16 +1160,16 @@ public class Parser {
                 tt = peekTokenOrEOL();
 
                 switch (tt) {
-                    case Token.SEMI :
-                    case Token.RC :
-                    case Token.EOF :
-                    case Token.EOL :
-                    case Token.ERROR :
+                    case Token.SEMI:
+                    case Token.RC:
+                    case Token.EOF:
+                    case Token.EOL:
+                    case Token.ERROR:
                         retExpr = null;
 
                         break;
 
-                    default :
+                    default:
                         retExpr = expr(false);
                         hasReturnValue = true;
                 }
@@ -1197,7 +1194,7 @@ public class Parser {
                 break;
             }
 
-            case Token.LC :
+            case Token.LC:
                 consumeToken();
 
                 if (statementLabel != null) {
@@ -1213,23 +1210,23 @@ public class Parser {
 
                 return pn;
 
-            case Token.ERROR :
+            case Token.ERROR:
 
-            // Fall thru, to have a node for error recovery to work on
-            case Token.SEMI :
+                // Fall thru, to have a node for error recovery to work on
+            case Token.SEMI:
                 consumeToken();
                 pn = nf.createLeaf(Token.EMPTY);
 
                 return pn;
 
-            case Token.FUNCTION : {
+            case Token.FUNCTION: {
                 consumeToken();
                 pn = function(FunctionNode.FUNCTION_EXPRESSION_STATEMENT);
 
                 return pn;
             }
 
-            case Token.DEFAULT :
+            case Token.DEFAULT:
                 consumeToken();
                 mustHaveXML();
                 decompiler.addToken(Token.DEFAULT);
@@ -1260,7 +1257,7 @@ public class Parser {
 
                 break;
 
-            case Token.NAME : {
+            case Token.NAME: {
                 int lineno = ts.getLineno();
                 String name = ts.getString();
 
@@ -1320,7 +1317,7 @@ public class Parser {
                 break;
             }
 
-            default : {
+            default: {
                 int lineno = ts.getLineno();
 
                 pn = expr(false);
@@ -1333,21 +1330,21 @@ public class Parser {
         int ttFlagged = peekFlaggedToken();
 
         switch (ttFlagged & CLEAR_TI_MASK) {
-            case Token.SEMI :
+            case Token.SEMI:
 
                 // Consume ';' as a part of expression
                 consumeToken();
 
                 break;
 
-            case Token.ERROR :
-            case Token.EOF :
-            case Token.RC :
+            case Token.ERROR:
+            case Token.EOF:
+            case Token.RC:
 
                 // Autoinsert ;
                 break;
 
-            default :
+            default:
                 if ((ttFlagged & TI_AFTER_EOL) == 0) {
 
                     // Report error if no EOL or autoinsert ; otherwise
@@ -1383,7 +1380,7 @@ public class Parser {
             decompiler.addToken(Token.VAR);
         }
 
-        for (;;) {
+        for (; ; ) {
             Node name;
             Node init;
 
@@ -1547,14 +1544,14 @@ public class Parser {
     private Node eqExpr(boolean inForInit) throws IOException, ParserException {
         Node pn = relExpr(inForInit);
 
-        for (;;) {
+        for (; ; ) {
             int tt = peekToken();
 
             switch (tt) {
-                case Token.EQ :
-                case Token.NE :
-                case Token.SHEQ :
-                case Token.SHNE :
+                case Token.EQ:
+                case Token.NE:
+                case Token.SHEQ:
+                case Token.SHNE:
                     consumeToken();
 
                     int decompilerToken = tt;
@@ -1568,22 +1565,22 @@ public class Parser {
                         // canonical source and in 1.2 ===, !== are allowed
                         // only as an alias to ==, !=.
                         switch (tt) {
-                            case Token.EQ :
+                            case Token.EQ:
                                 parseToken = Token.SHEQ;
 
                                 break;
 
-                            case Token.NE :
+                            case Token.NE:
                                 parseToken = Token.SHNE;
 
                                 break;
 
-                            case Token.SHEQ :
+                            case Token.SHEQ:
                                 decompilerToken = Token.EQ;
 
                                 break;
 
-                            case Token.SHNE :
+                            case Token.SHNE:
                                 decompilerToken = Token.NE;
 
                                 break;
@@ -1605,21 +1602,21 @@ public class Parser {
     private Node relExpr(boolean inForInit) throws IOException, ParserException {
         Node pn = shiftExpr();
 
-        for (;;) {
+        for (; ; ) {
             int tt = peekToken();
 
             switch (tt) {
-                case Token.IN :
+                case Token.IN:
                     if (inForInit) {
                         break;
                     }
 
-                // fall through
-                case Token.INSTANCEOF :
-                case Token.LE :
-                case Token.LT :
-                case Token.GE :
-                case Token.GT :
+                    // fall through
+                case Token.INSTANCEOF:
+                case Token.LE:
+                case Token.LT:
+                case Token.GE:
+                case Token.GT:
                     consumeToken();
                     decompiler.addToken(tt);
                     pn = nf.createBinary(tt, pn, shiftExpr());
@@ -1636,13 +1633,13 @@ public class Parser {
     private Node shiftExpr() throws IOException, ParserException {
         Node pn = addExpr();
 
-        for (;;) {
+        for (; ; ) {
             int tt = peekToken();
 
             switch (tt) {
-                case Token.LSH :
-                case Token.URSH :
-                case Token.RSH :
+                case Token.LSH:
+                case Token.URSH:
+                case Token.RSH:
                     consumeToken();
                     decompiler.addToken(tt);
                     pn = nf.createBinary(tt, pn, addExpr());
@@ -1659,7 +1656,7 @@ public class Parser {
     private Node addExpr() throws IOException, ParserException {
         Node pn = mulExpr();
 
-        for (;;) {
+        for (; ; ) {
             int tt = peekToken();
 
             if (tt == Token.ADD || tt == Token.SUB) {
@@ -1681,13 +1678,13 @@ public class Parser {
     private Node mulExpr() throws IOException, ParserException {
         Node pn = unaryExpr();
 
-        for (;;) {
+        for (; ; ) {
             int tt = peekToken();
 
             switch (tt) {
-                case Token.MUL :
-                case Token.DIV :
-                case Token.MOD :
+                case Token.MUL:
+                case Token.DIV:
+                case Token.MOD:
                     consumeToken();
                     decompiler.addToken(tt);
                     pn = nf.createBinary(tt, pn, unaryExpr());
@@ -1707,16 +1704,16 @@ public class Parser {
         tt = peekToken();
 
         switch (tt) {
-            case Token.VOID :
-            case Token.NOT :
-            case Token.BITNOT :
-            case Token.TYPEOF :
+            case Token.VOID:
+            case Token.NOT:
+            case Token.BITNOT:
+            case Token.TYPEOF:
                 consumeToken();
                 decompiler.addToken(tt);
 
                 return nf.createUnary(tt, unaryExpr());
 
-            case Token.ADD :
+            case Token.ADD:
                 consumeToken();
 
                 // Convert to special POS token in decompiler and parse tree
@@ -1724,7 +1721,7 @@ public class Parser {
 
                 return nf.createUnary(Token.POS, unaryExpr());
 
-            case Token.SUB :
+            case Token.SUB:
                 consumeToken();
 
                 // Convert to special NEG token in decompiler and parse tree
@@ -1732,26 +1729,26 @@ public class Parser {
 
                 return nf.createUnary(Token.NEG, unaryExpr());
 
-            case Token.INC :
-            case Token.DEC :
+            case Token.INC:
+            case Token.DEC:
                 consumeToken();
                 decompiler.addToken(tt);
 
                 return nf.createIncDec(tt, false, memberExpr(true));
 
-            case Token.DELPROP :
+            case Token.DELPROP:
                 consumeToken();
                 decompiler.addToken(Token.DELPROP);
 
                 return nf.createUnary(Token.DELPROP, unaryExpr());
 
-            case Token.ERROR :
+            case Token.ERROR:
                 consumeToken();
 
                 break;
 
             // XML stream encountered in expression.
-            case Token.LT :
+            case Token.LT:
                 if (compilerEnv.isXmlAvailable()) {
                     consumeToken();
 
@@ -1760,8 +1757,8 @@ public class Parser {
                     return memberExprTail(true, pn);
                 }
 
-            // Fall thru to the default handling of RELOP
-            default :
+                // Fall thru to the default handling of RELOP
+            default:
                 Node pn = memberExpr(true);
 
                 // Don't look across a newline boundary for a postfix incop.
@@ -1802,7 +1799,7 @@ public class Parser {
 
         for (; ; tt = ts.getNextXMLToken()) {
             switch (tt) {
-                case Token.XML :
+                case Token.XML:
                     xml = ts.getString();
                     decompiler.addName(xml);
                     mustMatchToken(Token.LC, "msg.syntax");
@@ -1833,7 +1830,7 @@ public class Parser {
 
                     break;
 
-                case Token.XMLEND :
+                case Token.XMLEND:
                     xml = ts.getString();
                     decompiler.addName(xml);
 
@@ -1847,7 +1844,7 @@ public class Parser {
 
                     return pnXML;
 
-                default :
+                default:
                     reportError("msg.syntax");
 
                     return null;
@@ -1925,12 +1922,13 @@ public class Parser {
     }
 
     private Node memberExprTail(boolean allowCallSyntax, Node pn) throws IOException, ParserException {
-        tailLoop:for (;;) {
+        tailLoop:
+        for (; ; ) {
             int tt = peekToken();
 
             switch (tt) {
-                case Token.DOT :
-                case Token.DOTDOT : {
+                case Token.DOT:
+                case Token.DOTDOT: {
                     int memberTypeFlags;
                     String s;
 
@@ -1957,7 +1955,7 @@ public class Parser {
                     switch (tt) {
 
                         // handles: name, ns::name, ns::*, ns::[expr]
-                        case Token.NAME :
+                        case Token.NAME:
                             s = ts.getString();
                             decompiler.addName(s);
                             pn = propertyName(pn, s, memberTypeFlags);
@@ -1965,7 +1963,7 @@ public class Parser {
                             break;
 
                         // handles: *, *::name, *::*, *::[expr]
-                        case Token.MUL :
+                        case Token.MUL:
                             decompiler.addName("*");
                             pn = propertyName(pn, "*", memberTypeFlags);
 
@@ -1973,20 +1971,20 @@ public class Parser {
 
                         // handles: '@attr', '@ns::attr', '@ns::*', '@ns::*',
                         // '@::attr', '@::*', '@*', '@*::attr', '@*::*'
-                        case Token.XMLATTR :
+                        case Token.XMLATTR:
                             decompiler.addToken(Token.XMLATTR);
                             pn = attributeAccess(pn, memberTypeFlags);
 
                             break;
 
-                        default :
+                        default:
                             reportError("msg.no.name.after.dot");
                     }
                 }
 
                 break;
 
-                case Token.DOTQUERY :
+                case Token.DOTQUERY:
                     consumeToken();
                     mustHaveXML();
                     decompiler.addToken(Token.DOTQUERY);
@@ -1996,7 +1994,7 @@ public class Parser {
 
                     break;
 
-                case Token.LB :
+                case Token.LB:
                     consumeToken();
                     decompiler.addToken(Token.LB);
                     pn = nf.createElementGet(pn, null, expr(false), 0);
@@ -2005,7 +2003,7 @@ public class Parser {
 
                     break;
 
-                case Token.LP :
+                case Token.LP:
                     if (!allowCallSyntax) {
                         break tailLoop;
                     }
@@ -2019,7 +2017,7 @@ public class Parser {
 
                     break;
 
-                default :
+                default:
                     break tailLoop;
             }
         }
@@ -2039,7 +2037,7 @@ public class Parser {
         switch (tt) {
 
             // handles: @name, @ns::name, @ns::*, @ns::[expr]
-            case Token.NAME : {
+            case Token.NAME: {
                 String s = ts.getString();
 
                 decompiler.addName(s);
@@ -2049,14 +2047,14 @@ public class Parser {
             break;
 
             // handles: @*, @*::name, @*::*, @*::[expr]
-            case Token.MUL :
+            case Token.MUL:
                 decompiler.addName("*");
                 pn = propertyName(pn, "*", memberTypeFlags);
 
                 break;
 
             // handles @[expr]
-            case Token.LB :
+            case Token.LB:
                 decompiler.addToken(Token.LB);
                 pn = nf.createElementGet(pn, null, expr(false), memberTypeFlags);
                 mustMatchToken(Token.RB, "msg.no.bracket.index");
@@ -2064,7 +2062,7 @@ public class Parser {
 
                 break;
 
-            default :
+            default:
                 reportError("msg.no.name.after.xmlAttr");
                 pn = nf.createPropertyGet(pn, null, "?", memberTypeFlags);
 
@@ -2089,21 +2087,21 @@ public class Parser {
             switch (tt) {
 
                 // handles name::name
-                case Token.NAME :
+                case Token.NAME:
                     name = ts.getString();
                     decompiler.addName(name);
 
                     break;
 
                 // handles name::*
-                case Token.MUL :
+                case Token.MUL:
                     decompiler.addName("*");
                     name = "*";
 
                     break;
 
                 // handles name::[expr]
-                case Token.LB :
+                case Token.LB:
                     decompiler.addToken(Token.LB);
                     pn = nf.createElementGet(pn, namespace, expr(false), memberTypeFlags);
                     mustMatchToken(Token.RB, "msg.no.bracket.index");
@@ -2111,7 +2109,7 @@ public class Parser {
 
                     return pn;
 
-                default :
+                default:
                     reportError("msg.no.name.after.coloncolon");
                     name = "?";
             }
@@ -2128,10 +2126,10 @@ public class Parser {
         int tt = ttFlagged & CLEAR_TI_MASK;
 
         switch (tt) {
-            case Token.FUNCTION :
+            case Token.FUNCTION:
                 return function(FunctionNode.FUNCTION_EXPRESSION);
 
-            case Token.LB : {
+            case Token.LB: {
                 ObjArray elems = new ObjArray();
                 int skipCount = 0;
 
@@ -2139,7 +2137,7 @@ public class Parser {
 
                 boolean after_lb_or_comma = true;
 
-                for (;;) {
+                for (; ; ) {
                     tt = peekToken();
 
                     if (tt == Token.COMMA) {
@@ -2170,7 +2168,7 @@ public class Parser {
                 return nf.createArrayLiteral(elems, skipCount);
             }
 
-            case Token.LC : {
+            case Token.LC: {
                 ObjArray elems = new ObjArray();
 
                 decompiler.addToken(Token.LC);
@@ -2178,7 +2176,8 @@ public class Parser {
                 if (!matchToken(Token.RC)) {
                     boolean first = true;
 
-                    commaloop:do {
+                    commaloop:
+                    do {
                         Object property;
 
                         if (!first) {
@@ -2190,8 +2189,8 @@ public class Parser {
                         tt = peekToken();
 
                         switch (tt) {
-                            case Token.NAME :
-                            case Token.STRING :
+                            case Token.NAME:
+                            case Token.STRING:
                                 consumeToken();
 
                                 // map NAMEs to STRINGs in object literal context
@@ -2235,7 +2234,7 @@ public class Parser {
 
                                 break;
 
-                            case Token.NUMBER :
+                            case Token.NUMBER:
                                 consumeToken();
 
                                 double n = ts.getNumber();
@@ -2246,12 +2245,12 @@ public class Parser {
 
                                 break;
 
-                            case Token.RC :
+                            case Token.RC:
 
                                 // trailing comma is OK.
                                 break commaloop;
 
-                            default :
+                            default:
                                 reportError("msg.bad.prop");
 
                                 break commaloop;
@@ -2266,7 +2265,7 @@ public class Parser {
                 return nf.createObjectLiteral(elems);
             }
 
-            case Token.LP :
+            case Token.LP:
 
                 /*
                  *  Brendan's IR-jsparse.c makes a new node tagged with
@@ -2283,14 +2282,14 @@ public class Parser {
 
                 return pn;
 
-            case Token.XMLATTR :
+            case Token.XMLATTR:
                 mustHaveXML();
                 decompiler.addToken(Token.XMLATTR);
                 pn = attributeAccess(null, 0);
 
                 return pn;
 
-            case Token.NAME : {
+            case Token.NAME: {
                 String name = ts.getString();
 
                 if ((ttFlagged & TI_CHECK_LABEL) != 0) {
@@ -2314,7 +2313,7 @@ public class Parser {
                 return pn;
             }
 
-            case Token.NUMBER : {
+            case Token.NUMBER: {
                 double n = ts.getNumber();
 
                 decompiler.addNumber(n);
@@ -2322,7 +2321,7 @@ public class Parser {
                 return nf.createNumber(n);
             }
 
-            case Token.STRING : {
+            case Token.STRING: {
                 String s = ts.getString();
 
                 decompiler.addString(s);
@@ -2330,8 +2329,8 @@ public class Parser {
                 return nf.createString(s);
             }
 
-            case Token.DIV :
-            case Token.ASSIGN_DIV : {
+            case Token.DIV:
+            case Token.ASSIGN_DIV: {
 
                 // Got / or /= which should be treated as regexp in fact
                 ts.readRegExp(tt);
@@ -2349,30 +2348,30 @@ public class Parser {
                 return nf.createRegExp(index);
             }
 
-            case Token.NULL :
-            case Token.THIS :
-            case Token.FALSE :
-            case Token.TRUE :
+            case Token.NULL:
+            case Token.THIS:
+            case Token.FALSE:
+            case Token.TRUE:
                 decompiler.addToken(tt);
 
                 return nf.createLeaf(tt);
 
-            case Token.RESERVED :
+            case Token.RESERVED:
                 reportError("msg.reserved.id");
 
                 break;
 
-            case Token.ERROR :
+            case Token.ERROR:
 
                 /* the scanner or one of its subroutines reported the error. */
                 break;
 
-            case Token.EOF :
+            case Token.EOF:
                 reportError("msg.unexpected.eof");
 
                 break;
 
-            default :
+            default:
                 reportError("msg.syntax");
 
                 break;

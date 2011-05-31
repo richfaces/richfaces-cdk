@@ -7,15 +7,11 @@
  *
  * This code is a port of Isaac Schlueter's cssmin utility.
  */
-
-
-
 package com.yahoo.platform.yui.compressor;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -127,7 +123,7 @@ public class CssCompressor {
         // filter: chroma(color="#FFF");
         // which makes the filter break in IE.
         p = Pattern.compile(
-            "([^\"'=\\s])(\\s*)#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])");
+                "([^\"'=\\s])(\\s*)#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])");
         m = p.matcher(css);
         sb = new StringBuffer();
 

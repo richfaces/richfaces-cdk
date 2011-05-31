@@ -32,9 +32,6 @@
  * file under either the MPL or the GPL.
  *
  * ***** END LICENSE BLOCK ***** */
-
-
-
 package net.sf.alchim.mojo.yuicompressor;
 
 import java.io.BufferedReader;
@@ -45,7 +42,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import org.codehaus.plexus.util.IOUtil;
-
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.ErrorReporter;
 import org.mozilla.javascript.EvaluatorException;
@@ -100,7 +96,7 @@ public class BasicRhinoShell extends ScriptableObject {
             // Note
             // that these functions are not part of ECMA.
             String[] names = {
-                "print", "quit", "version", "load", "help", "readFile"
+                    "print", "quit", "version", "load", "help", "readFile"
             };
 
             BasicRhinoShell.defineFunctionProperties(names, BasicRhinoShell.class, ScriptableObject.DONTENUM);
