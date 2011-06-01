@@ -22,130 +22,105 @@ You should have received a copy of the GNU Lesser General Public
 License along with this software; if not, write to the Free
 Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
---> 
+-->
 
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://jboss.org/schema/richfaces/cdk/core" xmlns="http://jboss.org/schema/richfaces/cdk/core"
-	elementFormDefault="qualified" attributeFormDefault="unqualified"
-	xmlns:xhtml="http://jboss.org/schema/richfaces/cdk/xhtml-el" xmlns:javaee="http://java.sun.com/xml/ns/javaee"
-	xmlns:c="http://jboss.org/schema/richfaces/cdk/jstl/core" 
-	xmlns:cc="http://jboss.org/schema/richfaces/cdk/jsf/composite"
-	xmlns:x="http://jboss.org/schema/richfaces/cdk/ext">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://jboss.org/schema/richfaces/cdk/core"
+    xmlns="http://jboss.org/schema/richfaces/cdk/core" elementFormDefault="qualified" attributeFormDefault="unqualified"
+    xmlns:xhtml="http://jboss.org/schema/richfaces/cdk/xhtml-el" xmlns:javaee="http://java.sun.com/xml/ns/javaee" xmlns:c="http://jboss.org/schema/richfaces/cdk/jstl/core"
+    xmlns:cc="http://jboss.org/schema/richfaces/cdk/jsf/composite" xmlns:x="http://jboss.org/schema/richfaces/cdk/ext">
 
-	<xs:annotation>
-		<xs:documentation>
-			RichFaces CDK core tags and attributes.
-		</xs:documentation>
-	</xs:annotation>
+    <xs:annotation>
+        <xs:documentation>
+            RichFaces CDK core tags and attributes.
+        </xs:documentation>
+    </xs:annotation>
 
-	<xs:import schemaLocation="http://java.sun.com/xml/ns/javaee/web-facesuicomponent_2_0.xsd" namespace="http://java.sun.com/xml/ns/javaee" />
-	<xs:import schemaLocation="cdk-composite.xsd" namespace="http://jboss.org/schema/richfaces/cdk/jsf/composite" />
-	<xs:import schemaLocation="cdk-jstl-core.xsd" namespace="http://jboss.org/schema/richfaces/cdk/jstl/core" />
+    <xs:import schemaLocation="http://java.sun.com/xml/ns/javaee/web-facesuicomponent_2_0.xsd" namespace="http://java.sun.com/xml/ns/javaee" />
+    <xs:import schemaLocation="cdk-composite.xsd" namespace="http://jboss.org/schema/richfaces/cdk/jsf/composite" />
+    <xs:import schemaLocation="cdk-jstl-core.xsd" namespace="http://jboss.org/schema/richfaces/cdk/jstl/core" />
     <xs:import schemaLocation="cdk-extensions.xsd" namespace="http://jboss.org/schema/richfaces/cdk/ext" />
 
+    <xs:simpleType name="resourceDependencyTargets">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="body" />
+            <xs:enumeration value="form" />
+            <xs:enumeration value="head" />
+        </xs:restriction>
+    </xs:simpleType>
 
-	<xs:simpleType name="resourceDependencyTargets">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="body" />
-			<xs:enumeration value="form" />
-			<xs:enumeration value="head" />
-		</xs:restriction>
-	</xs:simpleType>
+    <xs:complexType name="resourceDependenciesType">
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="resource-dependency" type="resourceDependencyType" />
+        </xs:sequence>
+    </xs:complexType>
 
-	<xs:complexType name="resourceDependenciesType">
-		<xs:sequence minOccurs="0" maxOccurs="unbounded">
-			<xs:element name="resource-dependency" type="resourceDependencyType" />
-		</xs:sequence>
-	</xs:complexType>
+    <xs:complexType name="resourceDependencyType">
+        <xs:attribute name="name" use="required" form="unqualified" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>
+                    <p>The resourceName of the resource pointed to by this ResourceDependency.</p>
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="library" form="unqualified" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>
+                    <p>The libraryName in which the resource pointed to by this ResourceDependency resides.
+                        If not specified,
+                        defaults to the empty string.
+                    </p>
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="target" form="unqualified" type="resourceDependencyTargets">
+            <xs:annotation>
+                <xs:documentation>
+                    <p>
+                        The value given for this attribute will be passed as the "target" argument to
+                        <code>javax.faces.component.UIViewRoot.addComponentResource(javax.faces.context.FacesContext,
+                            javax.faces.component.UIComponent, java.lang.String).
+                        </code>
+                    </p>
+                    <p>
+                        If this attribute is specified,
+                        <code>javax.faces.component.UIViewRoot.addComponentResource(javax.faces.context.FacesContext,
+                            javax.faces.component.UIComponent)
+                        </code>
+                        must be called instead, as described above.
+                    </p>
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
 
-	<xs:complexType name="resourceDependencyType">
-		<xs:attribute name="name" use="required" form="unqualified" type="xs:string">
-			<xs:annotation>
-				<xs:documentation><p>The resourceName of the resource pointed to by this ResourceDependency.</p></xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-		<xs:attribute name="library" form="unqualified" type="xs:string">
-			<xs:annotation>
-				<xs:documentation>
-					<p>The libraryName in which the resource pointed to by this ResourceDependency resides. 
-					If not specified, defaults to the empty string.
-					</p>
-				</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-		<xs:attribute name="target" form="unqualified"
-			type="resourceDependencyTargets">
-			<xs:annotation>
-				<xs:documentation>
-					<p>The value given for this attribute will be passed as the "target" argument to 
-						<code>javax.faces.component.UIViewRoot.addComponentResource(javax.faces.context.FacesContext, javax.faces.component.UIComponent, java.lang.String).</code>
-					</p>
-					<p>
-						If this attribute is specified, <code>javax.faces.component.UIViewRoot.addComponentResource(javax.faces.context.FacesContext, javax.faces.component.UIComponent)</code> 
-						must be called instead, as described above.
-					</p> 
-				</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:complexType>
-
-
-	<xs:attribute name="passThroughWithExclusions">
-		<xs:annotation>
-			<xs:documentation>
-				<p>Enables pass-through rendering of attributes. Allows to define whitespace-separated list of attributes 
-				to exclude from pass-through encoding or empty string "" if all attributes should be encoded.</p>
-				<p> 
-					Examples:
-					
-					<ul>
-						<li><code><![CDATA[<div cdk:passThroughWithExclusions="title style"></code>]]></code></li>
-						<li><code><![CDATA[<div cdk:passThroughWithExclusions="">]]></code></li>
-					</ul>
-					
-					<span class="usage">
-						Attributes already defined on the tag are automatically excluded from pass-through 
-						rendering.
-					</span>					
-				</p>
-				<p>If "disabled" attribute of the component is true (i.e. boolean true or "true"), then 
-				attributes that have associated behavior events are not encoded.</p>
-			</xs:documentation>
-		</xs:annotation>
-		<xs:simpleType>
-			<xs:restriction>
-				<xs:simpleType>
-					<xs:list>
-						<xs:simpleType>
-							<xs:restriction base="xs:NMTOKEN" />
-						</xs:simpleType>
-					</xs:list>
-				</xs:simpleType>
-				<xs:minLength value="0" />
-			</xs:restriction>
-		</xs:simpleType>		
-	</xs:attribute>
-
-    <xs:attribute name="passThrough">
+    <xs:attribute name="passThroughWithExclusions">
         <xs:annotation>
             <xs:documentation>
-                <p>Enables pass-through rendering of attributes. Allows to define whitespace-separated list of attributes 
-                to include. If component attribute name is different from default, the exact name can be added after colon.</p>
-                <p> 
-                    Examples:
-                    
-                    <ul>
-                        <li><code><![CDATA[<div cdk:passThrough="title style"></code>]]></code></li>
-                        <li><code><![CDATA[<div cdk:passThrough="title:headTitle style">]]></code></li>
-                    </ul>
-                    
-                    <span class="usage">
-                        Attributes already defined on the tag are automatically excluded from pass-through 
-                        rendering.
-                    </span>                 
+                <p>Enables pass-through rendering of attributes. Allows to define whitespace-separated list of attributes
+                    to
+                    exclude from pass-through encoding or empty string "" if all attributes should be encoded.
                 </p>
-                <p>If "disabled" attribute of the component is true (i.e. boolean true or "true"), then 
-                attributes that have associated behavior events are not encoded.</p>
+                <p>
+                    Examples:
+
+                    <ul>
+                        <li>
+                            <code><![CDATA[<div cdk:passThroughWithExclusions="title style"></code>]]></code>
+                        </li>
+                        <li>
+                            <code><![CDATA[<div cdk:passThroughWithExclusions="">]]></code>
+                        </li>
+                    </ul>
+
+                    <span class="usage">
+                        Attributes already defined on the tag are automatically excluded from pass-through
+                        rendering.
+                    </span>
+                </p>
+                <p>If "disabled" attribute of the component is true (i.e. boolean true or "true"), then
+                    attributes that have
+                    associated behavior events are not encoded.
+                </p>
             </xs:documentation>
         </xs:annotation>
         <xs:simpleType>
@@ -159,144 +134,240 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 </xs:simpleType>
                 <xs:minLength value="0" />
             </xs:restriction>
-        </xs:simpleType>        
+        </xs:simpleType>
     </xs:attribute>
 
-	<xs:attributeGroup name="core.attrs">
-		<xs:attribute ref="passThroughWithExclusions" />
+    <xs:attribute name="passThrough">
+        <xs:annotation>
+            <xs:documentation>
+                <p>Enables pass-through rendering of attributes. Allows to define whitespace-separated list of attributes
+                    to
+                    include. If component attribute name is different from default, the exact name can be added after colon.
+                </p>
+                <p>
+                    Examples:
+
+                    <ul>
+                        <li>
+                            <code><![CDATA[<div cdk:passThrough="title style"></code>]]></code>
+                        </li>
+                        <li>
+                            <code><![CDATA[<div cdk:passThrough="title:headTitle style">]]></code>
+                        </li>
+                    </ul>
+
+                    <span class="usage">
+                        Attributes already defined on the tag are automatically excluded from pass-through
+                        rendering.
+                    </span>
+                </p>
+                <p>If "disabled" attribute of the component is true (i.e. boolean true or "true"), then
+                    attributes that have
+                    associated behavior events are not encoded.
+                </p>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction>
+                <xs:simpleType>
+                    <xs:list>
+                        <xs:simpleType>
+                            <xs:restriction base="xs:NMTOKEN" />
+                        </xs:simpleType>
+                    </xs:list>
+                </xs:simpleType>
+                <xs:minLength value="0" />
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:attribute>
+
+    <xs:attributeGroup name="core.attrs">
+        <xs:attribute ref="passThroughWithExclusions" />
         <xs:attribute ref="passThrough" />
-	</xs:attributeGroup>
+    </xs:attributeGroup>
 
-	<xs:element name="root">
-		<xs:annotation>
-			<xs:documentation><p>Root template tag containing cc:interface &amp; cc:implementation tags.</p></xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="cc:interface" />
-				<xs:element ref="cc:implementation" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
+    <xs:element name="root">
+        <xs:annotation>
+            <xs:documentation>
+                <p>Root template tag containing cc:interface &amp; cc:implementation tags.</p>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="cc:interface" />
+                <xs:element ref="cc:implementation" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
-	<xs:element name="resource-dependencies" type="resource-dependenciesComplexType">
-		<xs:annotation>
-			<xs:documentation>
-				<p>
-					Container tag to specify multiple <code><![CDATA[<resource-dependency>]]></code> tags 
-					on a single class.
-				</p>
-				<p><span class="usage">Should be used within cc:interface element.</span></p>
-			</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="class" type="javaee:fully-qualified-classType">
-		<xs:annotation>
-			<xs:documentation>
-				<p>Fully-qualified name of the generated renderer class.</p>
-				<p><span class="usage">Should be used within cc:interface element.</span></p>
-			</xs:documentation>
-		</xs:annotation>
-	</xs:element>
+    <xs:element name="resource-dependencies" type="resource-dependenciesComplexType">
+        <xs:annotation>
+            <xs:documentation>
+                <p>
+                    Container tag to specify multiple
+                    <code><![CDATA[<resource-dependency>]]></code>
+                    tags
+                    on a single class.
+                </p>
+                <p>
+                    <span class="usage">Should be used within cc:interface element.</span>
+                </p>
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
 
-	<xs:element name="superclass" type="javaee:fully-qualified-classType">
-		<xs:annotation>
-			<xs:documentation>
-				<p>Fully-qualified name of the renderer superclass.</p> 
-				<p><span class="usage">Should be used within cc:interface element.</span></p>
-			</xs:documentation>
-		</xs:annotation>
-	</xs:element>
+    <xs:element name="class" type="javaee:fully-qualified-classType">
+        <xs:annotation>
+            <xs:documentation>
+                <p>Fully-qualified name of the generated renderer class.</p>
+                <p>
+                    <span class="usage">Should be used within cc:interface element.</span>
+                </p>
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
 
-	<xs:element name="renderkit-id">
-		<xs:annotation>
-			<xs:documentation>
-				<p>ID of the renderkit to include this renderer to. Defaults to 'HTML_BASIC'.</p>
-				<p><span class="usage">Should be used within cc:interface element.</span></p>
-			</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="component-family">
-		<xs:annotation>
-			<xs:documentation>
-				<p>Family of the component to be rendered by this renderer.</p>
-				<p><span class="usage">Should be used within cc:interface element.</span></p>
-			 </xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="renderer-type">
-		<xs:annotation>
-			<xs:documentation>
-				<p>Renderer type identifier for this renderer.</p>
-				<p><span class="usage">Should be used within cc:interface element.</span></p>
-			</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="renders-children" type="xs:boolean">
-		<xs:annotation>
-			<xs:documentation>
-				<p>Indicating whether generated renderer is responsible for rendering the children of the component 
-				it is asked to render.</p>
-				<p><span class="usage">Should be used within cc:interface element.</span></p>
-			</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	
-	<xs:element name="import-attributes">
-		<xs:annotation>
-			<xs:documentation>
-				<p>Defines fragment of faces configuration file to import attributes from.</p>
-				<p><span class="usage">Should be used within cc:interface element.</span></p></xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:attribute use="required" name="src" type="xs:anyURI" form="unqualified">
-				<xs:annotation>
-					<xs:documentation>
-						URI of the file to import. Any URI supported by CDK is allowed to be used here. 
-						Imported file should have <code><![CDATA[<cdk:properties>]]></code> tag as root element.
-					</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-		</xs:complexType>
-	</xs:element>
+    <xs:element name="superclass" type="javaee:fully-qualified-classType">
+        <xs:annotation>
+            <xs:documentation>
+                <p>Fully-qualified name of the renderer superclass.</p>
+                <p>
+                    <span class="usage">Should be used within cc:interface element.</span>
+                </p>
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
 
-	<xs:group name="structural">
-		<xs:choice>
-			<xs:element name="body">
-				<xs:annotation>
-					<xs:documentation>
-						<p>
-							Template body marker tag. <span class="usage">Should be used only once in template document.</span>
-							Component renderers in JSF define three methods for content rendering, so the following 
-							rules are applied for <code><![CDATA[<cc:implementation>]]></code> part of template document:
-							
-							<ul>
-								<li>
-									all content declared before <code><![CDATA[<cdk:body>]]></code> tag is compiled into
-									statements of <code>encodeBegin(...)</code> method
-								</li>
-								<li>
-									all content declared inside <code><![CDATA[<cdk:body>]]></code> tag is compiled into
-									statements of <code>encodeChildren(...)</code> method. If content of body element is empty,
-									no encodeChildren(...) method will be generated unless 'enforce' attribute set to true. 
-								</li>
-								<li>
-									all content declared after <code><![CDATA[<cdk:body>]]></code> tag is compiled into
-									statements of <code>encodeEnd(...)</code> method
-								</li>
-							</ul>
-							
-							If there are no compiled statements for one of the aforementioned methods, then definition 
-							for this method is not created in the generated file.<br />
-							If template document doesn't declare <code><![CDATA[<cdk:body>]]></code> tag, then contents 
-							of <code><![CDATA[<cc:implementation>]]></code> part is compiled into statements of 
-							<code>encodeEnd(...)</code> method.
-						</p>
-						<p>
-							Examples:<br /><br />
-							
-							The following code snippet:
-							<pre><![CDATA[
+    <xs:element name="renderkit-id">
+        <xs:annotation>
+            <xs:documentation>
+                <p>ID of the renderkit to include this renderer to. Defaults to 'HTML_BASIC'.</p>
+                <p>
+                    <span class="usage">Should be used within cc:interface element.</span>
+                </p>
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="component-family">
+        <xs:annotation>
+            <xs:documentation>
+                <p>Family of the component to be rendered by this renderer.</p>
+                <p>
+                    <span class="usage">Should be used within cc:interface element.</span>
+                </p>
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="renderer-type">
+        <xs:annotation>
+            <xs:documentation>
+                <p>Renderer type identifier for this renderer.</p>
+                <p>
+                    <span class="usage">Should be used within cc:interface element.</span>
+                </p>
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="renders-children" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation>
+                <p>Indicating whether generated renderer is responsible for rendering the children of the component
+                    it is asked
+                    to render.
+                </p>
+                <p>
+                    <span class="usage">Should be used within cc:interface element.</span>
+                </p>
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="import-attributes">
+        <xs:annotation>
+            <xs:documentation>
+                <p>Defines fragment of faces configuration file to import attributes from.</p>
+                <p>
+                    <span class="usage">Should be used within cc:interface element.</span>
+                </p>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attribute use="required" name="src" type="xs:anyURI" form="unqualified">
+                <xs:annotation>
+                    <xs:documentation>
+                        URI of the file to import. Any URI supported by CDK is allowed to be used here.
+                        Imported file should have
+                        <code><![CDATA[<cdk:properties>]]></code>
+                        tag as root element.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:group name="structural">
+        <xs:choice>
+            <xs:element name="body">
+                <xs:annotation>
+                    <xs:documentation>
+                        <p>
+                            Template body marker tag.
+                            <span class="usage">Should be used only once in template document.</span>
+                            Component renderers in JSF define three methods for content rendering, so the following
+                            rules are
+                            applied for
+                            <code><![CDATA[<cc:implementation>]]></code>
+                            part of template document:
+
+                            <ul>
+                                <li>
+                                    all content declared before
+                                    <code><![CDATA[<cdk:body>]]></code>
+                                    tag is compiled into
+                                    statements of
+                                    <code>encodeBegin(...)</code>
+                                    method
+                                </li>
+                                <li>
+                                    all content declared inside
+                                    <code><![CDATA[<cdk:body>]]></code>
+                                    tag is compiled into
+                                    statements of
+                                    <code>encodeChildren(...)</code>
+                                    method. If content of body element is empty,
+                                    no encodeChildren(...) method will be generated
+                                    unless 'enforce' attribute set to true.
+                                </li>
+                                <li>
+                                    all content declared after
+                                    <code><![CDATA[<cdk:body>]]></code>
+                                    tag is compiled into
+                                    statements of
+                                    <code>encodeEnd(...)</code>
+                                    method
+                                </li>
+                            </ul>
+
+                            If there are no compiled statements for one of the aforementioned methods, then definition
+                            for this
+                            method is not created in the generated file.
+                            <br />
+                            If template document doesn't declare
+                            <code><![CDATA[<cdk:body>]]></code>
+                            tag, then contents
+                            of
+                            <code><![CDATA[<cc:implementation>]]></code>
+                            part is compiled into statements of
+                            <code>encodeEnd(...)</code>
+                            method.
+                        </p>
+                        <p>
+                            Examples:
+                            <br />
+                            <br />
+
+                            The following code snippet:
+                            <pre><![CDATA[
 								...
 								<cc:implementation>
 									<div id="myId">
@@ -307,8 +378,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 								</cc:implementation>
 								...
 							]]></pre>
-							produces the following code (unsignificant details are ommitted):
-							<pre><![CDATA[
+                            produces the following code (unsignificant details are ommitted):
+                            <pre><![CDATA[
 								...
 								
 								encodeBegin(...) {
@@ -331,10 +402,11 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
 								...
 							]]></pre>
-							
-							<br /><br />
-							The following code snippet:
-							<pre><![CDATA[
+
+                            <br />
+                            <br />
+                            The following code snippet:
+                            <pre><![CDATA[
 								...
 								<cc:implementation>
 									<div id="myId">
@@ -343,8 +415,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 								</cc:implementation>
 								...
 							]]></pre>
-							produces the following code (unsignificant details are ommitted):
-							<pre><![CDATA[
+                            produces the following code (unsignificant details are ommitted):
+                            <pre><![CDATA[
 								...
 								
 								encodeBegin(...) {
@@ -361,7 +433,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 								...
 							]]></pre>
 
-							<br /><br />
+                            <br />
+                            <br />
                             If you want to disable default encodeChildren method, use enforce attribute:
                             <pre><![CDATA[
                                 ...
@@ -394,9 +467,10 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                                 ...
                             ]]></pre>
 
-                            <br /><br />
-							The following code snippet:
-							<pre><![CDATA[
+                            <br />
+                            <br />
+                            The following code snippet:
+                            <pre><![CDATA[
 								...
 								<cc:implementation>
 									<div id="myId">
@@ -405,8 +479,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 								</cc:implementation>
 								...
 							]]></pre>
-							produces the following code (unsignificant details are ommitted):
-							<pre><![CDATA[
+                            produces the following code (unsignificant details are ommitted):
+                            <pre><![CDATA[
 								...
 								
 								encodeEnd(...) {
@@ -418,149 +492,199 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
 								...
 							]]></pre>
-						</p>
-					</xs:documentation>
-				</xs:annotation>
-				<xs:complexType mixed="true">
-					<xs:choice>
-						<xs:any minOccurs="0" maxOccurs="unbounded" />
-					</xs:choice>
-                    <xs:attribute name="enforce" type="xs:boolean"/>
-				</xs:complexType>
-			</xs:element>
-			<xs:element ref="c:if" />
-			<xs:element ref="c:choose" />
-			<xs:element ref="call" />
+                        </p>
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType mixed="true">
+                    <xs:choice>
+                        <xs:any minOccurs="0" maxOccurs="unbounded" />
+                    </xs:choice>
+                    <xs:attribute name="enforce" type="xs:boolean" />
+                </xs:complexType>
+            </xs:element>
+            <xs:element ref="c:if" />
+            <xs:element ref="c:choose" />
+            <xs:element ref="call" />
             <xs:element ref="switch" />
             <xs:element ref="object" />
-		</xs:choice>
-	</xs:group>
+        </xs:choice>
+    </xs:group>
 
-	<xs:element name="call">
-		<xs:annotation>
-			<xs:documentation>
-				<p>Arbitrary method invocation statement. Should be used within cc:implementation element.</p>
-				<p><span class="usage">Note: method return value is ignored.</span></p>
-			</xs:documentation>
-		</xs:annotation>
-		<xs:complexType mixed="true">
-			<xs:attribute name="expression" form="unqualified" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>
-						<p>Method invocation expression. If this attribute is ommitted, body of the tag is used instead.</p>
-						<p>Examples:
-							
-							<ul>
-								<li><code><![CDATA[<cdk:call expression="responseWriter.writeAttribute(&quot;id&quot;, clientId, &quot;id&quot;)" ...>]]></code></li>
-								<li><code><![CDATA[<cdk:call>responseWriter.writeAttribute("id", clientId, "id")</cdk:call>]]></code></li>
-							</ul>
-						</p>
-					</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-		</xs:complexType>
-	</xs:element>
-	
-	<xs:element name="object">
-		<xs:annotation>
-			<xs:documentation>
-				<p>Introduces new variable. Variable's scope is limited to the context of the current method, 
-				i.e. variables defined before &lt;cdk:body&gt; are not available after it.</p>
-				
-				<p><span class="usage">Should be used within cc:implementation element.</span></p>
-				<p>Usage example:
-					<ul>
-						<li>
-							<code><![CDATA[<cdk:object name="children" type="List" type-arguments="UIComponent" value="#{cc.children}" />]]></code>
-						</li>
-					</ul>
-				</p>
-			</xs:documentation>
-		</xs:annotation>
-		<xs:complexType mixed="true">
-			<xs:simpleContent>
-				<xs:extension base="xs:string">
-					<xs:attribute name="name" form="unqualified" type="c:literalExpression" use="required">
-						<xs:annotation>
-							<xs:documentation>
-								<p>Name of the variable, corresponding to Java identifier syntax.</p>
-								<p>Examples:
-									<ul>
-										<li><code><![CDATA[<cdk:object name="children" ...>]]></code></li>
-										<li><code><![CDATA[<cdk:object name="myVariable" ...>]]></code></li>
-										<li><code><![CDATA[<cdk:object name="_children0" ...>]]></code></li>
-									</ul>
-								</p> 
-							</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-					<xs:attribute name="value" form="unqualified" type="xs:string">
-						<xs:annotation>
-							<xs:documentation>
-								<p>EL-expression specifying initial value of the variable. If this attribute 
-								is ommitted, body of the tag is used instead.</p>
-							
-								<p>Examples:
-									<ul>
-										<li><code><![CDATA[<cdk:object value="#{cc.rendered}" ...>]]></code></li>
-										<li><code><![CDATA[<cdk:object value="#{myObject} ...>]]></code></li>
-										<li><code><![CDATA[<cdk:object value="#{getSubmittedValue(facesContext, cc)} ...>]]></code></li>
-										<li><code><![CDATA[<cdk:object ...>#{cc.getClientId(facesContext)}</cdk:object>]]></code></li>
-									</ul>
-								</p>
-							</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-					<xs:attribute name="type" form="unqualified" type="xs:string">
-						<xs:annotation>
-							<xs:documentation>
-								<p>Variable type name. CDK automatically resolves simple names for primitive types, 
-								JSF API classes and objects from java.lang.* or java.util.*. 
-								For parametrised types you can use java generics syntax </p>
-								<p>Examples:
-									<ul>
-										<li><code><![CDATA[<cdk:object type="java.lang.String" ...>]]></code></li>
-										<li><code><![CDATA[<cdk:object type="float" ...>]]></code></li>
-										<li><code><![CDATA[<cdk:object type="List<String>" ...>]]></code></li>
-										<li><code><![CDATA[<cdk:object type="UIComponent" ...>]]></code></li>
-									</ul>
-								</p>
-								<p>If type is not defined explicitly, CDK will try to infer variable type 
-								from its value.</p>
-							</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-		            <xs:attribute type="xs:boolean" name="cast">
-		                <xs:annotation>
-		                    <xs:documentation><p>Defines whether type cast is needed.</p></xs:documentation>
-		                </xs:annotation>
-		            </xs:attribute>
-				</xs:extension>
-			</xs:simpleContent>
-		</xs:complexType>
-	</xs:element>
-	
-	<xs:complexType name="resource-dependenciesComplexType">
-		<xs:sequence minOccurs="0" maxOccurs="unbounded">
-			<xs:choice>
-				<xs:element name="resource-dependency"
-					type="resourceDependencyType">
-					
-					<xs:annotation>
-						<xs:documentation>
-							<p>Resource dependency tag. Defines dependent resource for the renderer 
-							(see documentation for @ResourceDependency annotation for more information).
-							</p>
-							<p>
-								<span class="warning">Support for this tag is not currently implemented.</span>
-							</p>
-						</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-			</xs:choice>
-		</xs:sequence>
-	</xs:complexType>
-    
+    <xs:element name="call">
+        <xs:annotation>
+            <xs:documentation>
+                <p>Arbitrary method invocation statement. Should be used within cc:implementation element.</p>
+                <p>
+                    <span class="usage">Note: method return value is ignored.</span>
+                </p>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType mixed="true">
+            <xs:attribute name="expression" form="unqualified" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>
+                        <p>Method invocation expression. If this attribute is ommitted, body of the tag is used instead.</p>
+                        <p>
+                            Examples:
+
+                            <ul>
+                                <li>
+                                    <code>
+                                        <![CDATA[<cdk:call expression="responseWriter.writeAttribute(&quot;id&quot;, clientId, &quot;id&quot;)" ...>]]></code>
+                                </li>
+                                <li>
+                                    <code>
+                                        <![CDATA[<cdk:call>responseWriter.writeAttribute("id", clientId, "id")</cdk:call>]]></code>
+                                </li>
+                            </ul>
+                        </p>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="object">
+        <xs:annotation>
+            <xs:documentation>
+                <p>Introduces new variable. Variable's scope is limited to the context of the current method,
+                    i.e. variables
+                    defined before &lt;cdk:body&gt; are not available after it.
+                </p>
+
+                <p>
+                    <span class="usage">Should be used within cc:implementation element.</span>
+                </p>
+                <p>
+                    Usage example:
+                    <ul>
+                        <li>
+                            <code>
+                                <![CDATA[<cdk:object name="children" type="List" type-arguments="UIComponent" value="#{cc.children}" />]]></code>
+                        </li>
+                    </ul>
+                </p>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType mixed="true">
+            <xs:simpleContent>
+                <xs:extension base="xs:string">
+                    <xs:attribute name="name" form="unqualified" type="c:literalExpression" use="required">
+                        <xs:annotation>
+                            <xs:documentation>
+                                <p>Name of the variable, corresponding to Java identifier syntax.</p>
+                                <p>
+                                    Examples:
+                                    <ul>
+                                        <li>
+                                            <code><![CDATA[<cdk:object name="children" ...>]]></code>
+                                        </li>
+                                        <li>
+                                            <code><![CDATA[<cdk:object name="myVariable" ...>]]></code>
+                                        </li>
+                                        <li>
+                                            <code><![CDATA[<cdk:object name="_children0" ...>]]></code>
+                                        </li>
+                                    </ul>
+                                </p>
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+                    <xs:attribute name="value" form="unqualified" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>
+                                <p>EL-expression specifying initial value of the variable. If this attribute
+                                    is ommitted, body of
+                                    the tag is used instead.
+                                </p>
+
+                                <p>
+                                    Examples:
+                                    <ul>
+                                        <li>
+                                            <code><![CDATA[<cdk:object value="#{cc.rendered}" ...>]]></code>
+                                        </li>
+                                        <li>
+                                            <code><![CDATA[<cdk:object value="#{myObject} ...>]]></code>
+                                        </li>
+                                        <li>
+                                            <code>
+                                                <![CDATA[<cdk:object value="#{getSubmittedValue(facesContext, cc)} ...>]]></code>
+                                        </li>
+                                        <li>
+                                            <code>
+                                                <![CDATA[<cdk:object ...>#{cc.getClientId(facesContext)}</cdk:object>]]></code>
+                                        </li>
+                                    </ul>
+                                </p>
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+                    <xs:attribute name="type" form="unqualified" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>
+                                <p>Variable type name. CDK automatically resolves simple names for primitive types,
+                                    JSF API
+                                    classes and objects from java.lang.* or java.util.*.
+                                    For parametrised types you can use java
+                                    generics syntax
+                                </p>
+                                <p>
+                                    Examples:
+                                    <ul>
+                                        <li>
+                                            <code><![CDATA[<cdk:object type="java.lang.String" ...>]]></code>
+                                        </li>
+                                        <li>
+                                            <code><![CDATA[<cdk:object type="float" ...>]]></code>
+                                        </li>
+                                        <li>
+                                            <code><![CDATA[<cdk:object type="List<String>" ...>]]></code>
+                                        </li>
+                                        <li>
+                                            <code><![CDATA[<cdk:object type="UIComponent" ...>]]></code>
+                                        </li>
+                                    </ul>
+                                </p>
+                                <p>If type is not defined explicitly, CDK will try to infer variable type
+                                    from its value.
+                                </p>
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+                    <xs:attribute type="xs:boolean" name="cast">
+                        <xs:annotation>
+                            <xs:documentation>
+                                <p>Defines whether type cast is needed.</p>
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="resource-dependenciesComplexType">
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:choice>
+                <xs:element name="resource-dependency" type="resourceDependencyType">
+
+                    <xs:annotation>
+                        <xs:documentation>
+                            <p>Resource dependency tag. Defines dependent resource for the renderer
+                                (see documentation for
+                                @ResourceDependency annotation for more information).
+                            </p>
+                            <p>
+                                <span class="warning">Support for this tag is not currently implemented.</span>
+                            </p>
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:element name="switch">
         <xs:complexType>
             <xs:sequence>
@@ -591,111 +715,176 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <xs:annotation>
             <xs:documentation>
                 <p>Part of &lt;composite:interface&gt; section to specify additional Java imports.</p>
-                <p>Examples:
+                <p>
+                    Examples:
                     <ul>
-                        <li><code><![CDATA[<cdk:import package="javax.faces.component" names="UIInput UIOutput" />]]></code></li>
-                        <li><code><![CDATA[<cdk:import package="java.util" names="*" />]]></code></li>
-                        <li><code><![CDATA[<cdk:import package="java.lang" names="String.valueOf" static="true" />]]></code></li>
+                        <li>
+                            <code><![CDATA[<cdk:import package="javax.faces.component" names="UIInput UIOutput" />]]></code>
+                        </li>
+                        <li>
+                            <code><![CDATA[<cdk:import package="java.util" names="*" />]]></code>
+                        </li>
+                        <li>
+                            <code><![CDATA[<cdk:import package="java.lang" names="String.valueOf" static="true" />]]></code>
+                        </li>
                     </ul>
                 </p>
             </xs:documentation>
         </xs:annotation>
-    
+
         <xs:complexType>
             <xs:attribute type="xs:string" use="required" name="package">
                 <xs:annotation>
-                    <xs:documentation><p>Base name of the package to be imported.</p></xs:documentation>
+                    <xs:documentation>
+                        <p>Base name of the package to be imported.</p>
+                    </xs:documentation>
                 </xs:annotation>
             </xs:attribute>
             <xs:attribute type="xs:NMTOKENS" name="names">
                 <xs:annotation>
-                    <xs:documentation><p>Space-separated list of names to be imported.</p></xs:documentation>
+                    <xs:documentation>
+                        <p>Space-separated list of names to be imported.</p>
+                    </xs:documentation>
                 </xs:annotation>
             </xs:attribute>
             <xs:attribute type="xs:boolean" name="static">
                 <xs:annotation>
-                    <xs:documentation><p>Defines whether the import is static.</p></xs:documentation>
+                    <xs:documentation>
+                        <p>Defines whether the import is static.</p>
+                    </xs:documentation>
                 </xs:annotation>
             </xs:attribute>
         </xs:complexType>
     </xs:element>
-    
+
     <xs:element name="scriptObject">
         <xs:annotation>
             <xs:documentation>
-                <p>Handy tag for JavaScript hash objects creation. NB: default and empty values are not added to the result hash.</p>
-                <p>Example usage:
-                    <code><pre><![CDATA[<cdk:scriptObject name="myHash">
+                <p>Handy tag for JavaScript hash objects creation. NB: default and empty values are not added to the result
+                    hash.
+                </p>
+                <p>
+                    Example usage:
+                    <code>
+                        <pre><![CDATA[<cdk:scriptObject name="myHash">
                         <cdk:scriptOption name="showSomething" value="#{isShowSomething(component)}"  />
                         ...
                     </cdk:scriptObject>
                     
                     <script ...>
-                    new Component(#{toScriptArgs(clientId, myHash)});]]></pre></code>
+                    new Component(#{toScriptArgs(clientId, myHash)});]]></pre>
+                    </code>
                 </p>
             </xs:documentation>
         </xs:annotation>
         <xs:complexType>
             <xs:attribute type="xs:string" name="name" use="required">
                 <xs:annotation>
-                    <xs:documentation><p>Name of Java variable under which <code>Map&lt;String, String&gt;</code>
-                    representing the hash is available.</p></xs:documentation>
+                    <xs:documentation>
+                        <p>
+                            Name of Java variable under which
+                            <code>Map&lt;String, String&gt;</code>
+                            representing the hash is available.
+                        </p>
+                    </xs:documentation>
                 </xs:annotation>
             </xs:attribute>
             <xs:attribute type="c:elStrictExpression" name="base">
                 <xs:annotation>
-                    <xs:documentation><p>Optional base hash (<code>Map&lt;String, String&gt;</code>) to be extended from.</p></xs:documentation>
+                    <xs:documentation>
+                        <p>
+                            Optional base hash (
+                            <code>Map&lt;String, String&gt;</code>
+                            ) to be extended from.
+                        </p>
+                    </xs:documentation>
                 </xs:annotation>
             </xs:attribute>
         </xs:complexType>
     </xs:element>
-    
+
     <xs:element name="scriptOption">
         <xs:annotation>
             <xs:documentation>
-                <p>Represents single object in the JavaScript hash. Should be enclosed into <code>&lt;cdk:scriptObject&gt;</code> tag.</p>
+                <p>
+                    Represents single object in the JavaScript hash. Should be enclosed into
+                    <code>&lt;cdk:scriptObject&gt;</code>
+                    tag.
+                </p>
             </xs:documentation>
         </xs:annotation>
         <xs:complexType>
             <xs:attribute type="xs:NMTOKENS" name="attributes">
                 <xs:annotation>
-                    <xs:documentation><p>Space-separated list of attributes to be added to the hash.</p></xs:documentation>
+                    <xs:documentation>
+                        <p>Space-separated list of attributes to be added to the hash.</p>
+                    </xs:documentation>
                 </xs:annotation>
             </xs:attribute>
             <xs:attribute type="xs:NMTOKENS" name="variables">
                 <xs:annotation>
-                    <xs:documentation><p>Space-separated list of Java variables to be added to the hash.</p></xs:documentation>
+                    <xs:documentation>
+                        <p>Space-separated list of Java variables to be added to the hash.</p>
+                    </xs:documentation>
                 </xs:annotation>
             </xs:attribute>
             <xs:attribute type="xs:string" name="name">
                 <xs:annotation>
-                    <xs:documentation><p>Key of the current option in hash.</p></xs:documentation>
+                    <xs:documentation>
+                        <p>Key of the current option in hash.</p>
+                    </xs:documentation>
                 </xs:annotation>
             </xs:attribute>
             <xs:attribute type="c:elFreeformExpression" name="value">
                 <xs:annotation>
-                    <xs:documentation><p>Value of the current option in hash.</p></xs:documentation>
+                    <xs:documentation>
+                        <p>Value of the current option in hash.</p>
+                    </xs:documentation>
                 </xs:annotation>
             </xs:attribute>
             <xs:attribute type="c:literalExpression" name="defaultValue">
                 <xs:annotation>
-                    <xs:documentation><p><b>Literal</b> (i.e. non-EL) expression representing default option value. 
-                    Should be valid Java expression.</p></xs:documentation>
+                    <xs:documentation>
+                        <p>
+                            <b>Literal</b>
+                            (i.e. non-EL) expression representing default option value.
+                            Should be valid Java expression.
+                        </p>
+                    </xs:documentation>
                 </xs:annotation>
             </xs:attribute>
             <xs:attribute name="wrapper">
                 <xs:annotation>
                     <xs:documentation>
-                    <p>Optional wrapper around value.</p>
-                    <p>Currently supported are:
-                        <ul>
-                            <li><code>noop</code>: <i>(default)</i> <code>value -> value</code></li>
-                            <li><code>asArray</code>: <code>'rowClassA rowClassA1, rowClassB rowClassB1' -> ['rowClassA rowClassA1', 'rowClassB rowClassB1']</code></li>
-                            <li><code>eventHandler</code>: <code>value -> <pre><![CDATA[function (event) {
+                        <p>Optional wrapper around value.</p>
+                        <p>
+                            Currently supported are:
+                            <ul>
+                                <li>
+                                    <code>noop</code>
+                                    :
+                                    <i>(default)</i>
+                                    <code>value -> value</code>
+                                </li>
+                                <li>
+                                    <code>asArray</code>
+                                    :
+                                    <code>'rowClassA rowClassA1, rowClassB rowClassB1' -> ['rowClassA rowClassA1', 'rowClassB
+                                        rowClassB1']
+                                    </code>
+                                </li>
+                                <li>
+                                    <code>eventHandler</code>
+                                    :
+                                    <code>
+                                        value ->
+                                        <pre><![CDATA[function (event) {
                                 value
-                            }]]></pre></code></li>
-                        </ul>
-                    </p>
+                            }]]></pre>
+                                    </code>
+                                </li>
+                            </ul>
+                        </p>
                     </xs:documentation>
                 </xs:annotation>
                 <xs:simpleType>
@@ -708,5 +897,5 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </xs:attribute>
         </xs:complexType>
     </xs:element>
-    
+
 </xs:schema>
