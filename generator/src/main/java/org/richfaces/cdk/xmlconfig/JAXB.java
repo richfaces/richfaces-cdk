@@ -9,13 +9,11 @@ import javax.xml.transform.Result;
 import org.richfaces.cdk.CdkException;
 
 public interface JAXB {
+    <T> T unmarshal(File file, String schemaLocation, Class<T> bindClass) throws CdkException, FileNotFoundException;
 
-    public abstract <T> T unmarshal(File file, String schemaLocation, Class<T> bindClass) throws CdkException,FileNotFoundException;
+    <T> T unmarshal(String url, String schemaLocation, Class<T> bindClass) throws CdkException, FileNotFoundException;
 
-    public abstract <T> T unmarshal(String url, String schemaLocation, Class<T> bindClass) throws CdkException,FileNotFoundException;
+    <T> void marshal(Writer output, String schemaLocation, T model) throws CdkException;
 
-    public abstract <T> void marshal(Writer output, String schemaLocation, T model) throws CdkException;
-
-    public abstract <T> void marshal(Result output, String schemaLocation, T model) throws CdkException;
-
+    <T> void marshal(Result output, String schemaLocation, T model) throws CdkException;
 }

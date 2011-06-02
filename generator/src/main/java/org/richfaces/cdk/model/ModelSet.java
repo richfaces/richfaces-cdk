@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.model;
 
 import java.util.Collection;
@@ -38,18 +37,16 @@ import com.google.common.collect.Lists;
 
 /**
  * <p class="changed_added_4_0">
- * Base class for all model collections. This collection use {@link Mergeable#same(Object)} method instead of equals
- * to lookup objects in the {@link #contains(Object)} and {@link #remove(Object)} methods. In addition, it merges same objects instead of replace in the {@link #add(ModelElement)} method.
+ * Base class for all model collections. This collection use {@link Mergeable#same(Object)} method instead of equals to lookup
+ * objects in the {@link #contains(Object)} and {@link #remove(Object)} methods. In addition, it merges same objects instead of
+ * replace in the {@link #add(ModelElement)} method.
  * </p>
  *
  * @author asmirnov@exadel.com
  */
-public class ModelSet<E extends ModelElement<? super E>> implements ModelCollection<E>,Set<E> {
-
+public class ModelSet<E extends ModelElement<? super E>> implements ModelCollection<E>, Set<E> {
     private final List<E> elements = Lists.newArrayList();
-    
     private Comparator<E> comparator;
-    
 
     public static <T extends ModelElement<? super T>> ModelSet<T> create() {
         return new ModelSet<T>();
@@ -62,7 +59,9 @@ public class ModelSet<E extends ModelElement<? super E>> implements ModelCollect
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the comparator
      */
     public Comparator<E> getComparator() {
@@ -70,7 +69,9 @@ public class ModelSet<E extends ModelElement<? super E>> implements ModelCollect
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param comparator the comparator to set
      */
     public void setComparator(Comparator<E> comparator) {
@@ -142,7 +143,7 @@ public class ModelSet<E extends ModelElement<? super E>> implements ModelCollect
 
     @Override
     public Iterator<E> iterator() {
-        if(null == comparator){
+        if (null == comparator) {
             return elements.iterator();
         } else {
             List<E> list = Lists.newArrayList(elements);
@@ -161,7 +162,6 @@ public class ModelSet<E extends ModelElement<? super E>> implements ModelCollect
                     return true;
                 }
             }
-
         }
         return false;
     }
@@ -199,18 +199,17 @@ public class ModelSet<E extends ModelElement<? super E>> implements ModelCollect
     }
 
     @Override
-    public <R,D> R accept(R result, Visitor<R,D> visitor, D data) {
-        return null==result?accept(visitor, data):result;
+    public <R, D> R accept(R result, Visitor<R, D> visitor, D data) {
+        return null == result ? accept(visitor, data) : result;
     }
 
-    public <R,D> R accept(Visitor<R,D> visitor, D data) {
+    public <R, D> R accept(Visitor<R, D> visitor, D data) {
         for (ModelElement element : elements) {
-            R result = element.accept(visitor,data);
-            if(null != result){
+            R result = element.accept(visitor, data);
+            if (null != result) {
                 return result;
             }
         }
         return null;
     }
-
 }

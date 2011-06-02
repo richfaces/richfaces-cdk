@@ -20,18 +20,16 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.model;
 
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class ModelBean implements ModelElement<ModelBean> {
-
     public static final class Type extends FacesId {
         private static final long serialVersionUID = 6227413669285563473L;
 
@@ -39,18 +37,17 @@ public class ModelBean implements ModelElement<ModelBean> {
             super(type);
         }
     }
+
     /**
      * <p class="changed_added_4_0">
      * </p>
      */
     private static final long serialVersionUID = -4853397197172488116L;
     String readOnly;
-
     String writeOnly;
     private String doNotReplace;
     private Object result;
     private Type type;
-
     private boolean vizited = false;
 
     public ModelBean() {
@@ -69,7 +66,7 @@ public class ModelBean implements ModelElement<ModelBean> {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the doNotReplace
      */
     @Merge(false)
@@ -80,7 +77,7 @@ public class ModelBean implements ModelElement<ModelBean> {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the readOnly
      */
     @Merge
@@ -91,7 +88,7 @@ public class ModelBean implements ModelElement<ModelBean> {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the result
      */
     @Merge
@@ -102,7 +99,7 @@ public class ModelBean implements ModelElement<ModelBean> {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the type
      */
     public Type getType() {
@@ -112,7 +109,7 @@ public class ModelBean implements ModelElement<ModelBean> {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the vizited
      */
     @Merge
@@ -133,9 +130,8 @@ public class ModelBean implements ModelElement<ModelBean> {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param doNotReplace
-     *            the doNotReplace to set
+     *
+     * @param doNotReplace the doNotReplace to set
      */
     public void setDoNotReplace(String doNotReplace) {
         this.doNotReplace = doNotReplace;
@@ -144,9 +140,8 @@ public class ModelBean implements ModelElement<ModelBean> {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param result
-     *            the result to set
+     *
+     * @param result the result to set
      */
     public void setResult(Object result) {
         this.result = result;
@@ -155,9 +150,8 @@ public class ModelBean implements ModelElement<ModelBean> {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param type
-     *            the type to set
+     *
+     * @param type the type to set
      */
     public void setType(Type type) {
         this.type = type;
@@ -166,9 +160,8 @@ public class ModelBean implements ModelElement<ModelBean> {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param vizited
-     *            the vizited to set
+     *
+     * @param vizited the vizited to set
      */
     public void setVizited(boolean vizited) {
         this.vizited = vizited;
@@ -177,9 +170,8 @@ public class ModelBean implements ModelElement<ModelBean> {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param writeOnly
-     *            the writeOnly to set
+     *
+     * @param writeOnly the writeOnly to set
      */
     public void setWriteOnly(String writeOnly) {
         this.writeOnly = writeOnly;

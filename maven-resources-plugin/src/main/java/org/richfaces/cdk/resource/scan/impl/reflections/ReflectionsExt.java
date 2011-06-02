@@ -37,10 +37,9 @@ import com.google.common.collect.Multimap;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class ReflectionsExt extends Reflections {
-
     private static final Function<String, Class<?>> CLASS_FOR_NAME = new Function<String, Class<?>>() {
         public java.lang.Class<?> apply(String from) {
             try {
@@ -52,9 +51,11 @@ public class ReflectionsExt extends Reflections {
                 // TODO: handle exception
                 e.printStackTrace();
             }
-            
+
             return null;
-        };
+        }
+
+        ;
     };
 
     public ReflectionsExt() {
@@ -76,8 +77,7 @@ public class ReflectionsExt extends Reflections {
             return Collections.emptySet();
         }
 
-        return Collections2.filter(Collections2.transform(scannerMMap.get(MarkerResourcesScanner.STORE_KEY), CLASS_FOR_NAME), 
-            Predicates.notNull());
+        return Collections2.filter(Collections2.transform(scannerMMap.get(MarkerResourcesScanner.STORE_KEY), CLASS_FOR_NAME),
+                Predicates.notNull());
     }
-
 }

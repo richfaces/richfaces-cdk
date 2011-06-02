@@ -21,7 +21,7 @@
  */
 package org.richfaces.cdk.templatecompiler.el.node;
 
-import static org.richfaces.cdk.templatecompiler.statements.HelperMethod.*;
+import static org.richfaces.cdk.templatecompiler.statements.HelperMethod.EQUALS_CHECK;
 
 import org.jboss.el.parser.Node;
 import org.richfaces.cdk.templatecompiler.el.ELNodeConstants;
@@ -32,12 +32,11 @@ import org.richfaces.cdk.templatecompiler.el.types.TypesFactory;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class EqualityTestTreeNode extends AbstractTreeNode {
-
     private boolean negateValue = false;
-    
+
     /**
      * @param node
      */
@@ -47,14 +46,14 @@ public class EqualityTestTreeNode extends AbstractTreeNode {
 
     public EqualityTestTreeNode(Node node, boolean negateValue) {
         super(node);
-        
+
         this.negateValue = negateValue;
     }
-    
+
     private boolean isPrimitive(ELType type) {
         return type.isPrimitive();
     }
-    
+
     private boolean useIsEqualsMethod(ELType firstType, ELType secondType) {
         if (firstType.isNullType() && !isPrimitive(secondType)) {
             return false;
@@ -63,16 +62,19 @@ public class EqualityTestTreeNode extends AbstractTreeNode {
         if (secondType.isNullType() && !isPrimitive(firstType)) {
             return false;
         }
-        
+
         if (isPrimitive(firstType) && isPrimitive(secondType)) {
             return false;
         }
-        
+
         return true;
     }
-    
-    /* (non-Javadoc)
-     * @see org.richfaces.cdk.templatecompiler.el.node.AbstractTreeNode#visit(java.lang.StringBuilder, java.util.Map, org.richfaces.cdk.templatecompiler.el.ELVisitor)
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.richfaces.cdk.templatecompiler.el.node.AbstractTreeNode#visit(java.lang.StringBuilder, java.util.Map,
+     * org.richfaces.cdk.templatecompiler.el.ELVisitor)
      */
     @Override
     public void visit(StringBuilder sb, ELVisitor visitor) throws ParsingException {
@@ -82,15 +84,15 @@ public class EqualityTestTreeNode extends AbstractTreeNode {
         ELType secondChildType = visitor.getType();
 
         if (useIsEqualsMethod(firstChildType, secondChildType)) {
-            
+
             if (negateValue) {
                 sb.append(ELNodeConstants.EXCLAMATION_MARK);
             } else {
-                //do nothing
+                // do nothing
             }
-            
+
             sb.append(EQUALS_CHECK.getName());
-            
+
             sb.append(ELNodeConstants.LEFT_BRACKET);
             sb.append(firstChildOutput);
             sb.append(ELNodeConstants.COMMA);
@@ -102,20 +104,19 @@ public class EqualityTestTreeNode extends AbstractTreeNode {
             sb.append(ELNodeConstants.LEFT_BRACKET);
 
             sb.append(firstChildOutput);
-            
+
             if (negateValue) {
                 sb.append(ELNodeConstants.INEQUALITY_OPERATOR);
             } else {
                 sb.append(ELNodeConstants.EQUALITY_OPERATOR);
             }
-            
+
             sb.append(secondChildOutput);
 
             sb.append(ELNodeConstants.RIGHT_BRACKET);
         }
-        
+
         visitor.setLiteral(false);
         visitor.setExpressionType(TypesFactory.BOOLEAN_TYPE);
     }
-
 }

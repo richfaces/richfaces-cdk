@@ -5,9 +5,6 @@
  * Code licensed under the BSD License:
  *     http://developer.yahoo.net/yui/license.txt
  */
-
-
-
 package com.yahoo.platform.yui.compressor;
 
 import java.util.ArrayList;

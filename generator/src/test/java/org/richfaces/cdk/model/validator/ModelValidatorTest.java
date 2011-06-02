@@ -19,11 +19,14 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.model.validator;
 
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,25 +46,19 @@ import com.google.inject.Inject;
 /**
  * @author asmirnov
  * @version $Id$
- * 
+ *
  */
 @RunWith(CdkTestRunner.class)
 public class ModelValidatorTest extends CdkTestBase {
-
     private static final FacesId FOO_BAZ = FacesId.parseId("foo.baz");
-
     @Mock
     protected Logger log;
-
     @Mock
     SourceUtils utils;
-
     @Inject
     ValidatorImpl validator;
-
     @Inject
     private ComponentLibrary library;
-
     @Mock
     private NamingConventions namiingConventions;
 
@@ -93,5 +90,4 @@ public class ModelValidatorTest extends CdkTestBase {
         verify(log, utils, namiingConventions);
         assertEquals(type, component.getId());
     }
-
 }

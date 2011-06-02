@@ -28,16 +28,14 @@ import com.google.inject.Inject;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class ConstantReturnMethodBodyStatement extends FreeMarkerTemplateStatementBase {
-
     private String returnValue;
-    
+
     @Inject
     public ConstantReturnMethodBodyStatement(@TemplateModel FreeMarkerRenderer renderer) {
-        super(renderer,"constant-return");
-        
+        super(renderer, "constant-return");
     }
 
     public String getReturnValue() {
@@ -45,7 +43,9 @@ public class ConstantReturnMethodBodyStatement extends FreeMarkerTemplateStateme
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param returnValue the returnValue to set
      */
     public void setReturnValue(String returnValue) {

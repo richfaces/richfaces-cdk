@@ -30,12 +30,10 @@ import org.richfaces.skin.SkinFactory;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class VariableMapperImpl extends VariableMapper {
-
     private static final ValueExpression SKIN_VALUE_EXPRESSION = new ReadOnlyValueExpression() {
-
         private static final long serialVersionUID = 3552483406787835235L;
 
         @Override
@@ -44,9 +42,7 @@ public class VariableMapperImpl extends VariableMapper {
             return SkinFactory.getInstance(facesContext).getSkin(facesContext);
         }
     };
-
     private static final ValueExpression RESOURCE_VALUE_EXPRESSION = new ReadOnlyValueExpression() {
-
         private static final long serialVersionUID = -8545250767102884398L;
 
         @Override
@@ -55,9 +51,10 @@ public class VariableMapperImpl extends VariableMapper {
             return facesContext.getApplication().getResourceHandler();
         }
     };
-    
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.el.VariableMapper#resolveVariable(java.lang.String)
      */
     @Override
@@ -67,11 +64,13 @@ public class VariableMapperImpl extends VariableMapper {
         } else if ("resource".equals(variable)) {
             return RESOURCE_VALUE_EXPRESSION;
         }
-        
+
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.el.VariableMapper#setVariable(java.lang.String, javax.el.ValueExpression)
      */
     @Override
@@ -79,5 +78,4 @@ public class VariableMapperImpl extends VariableMapper {
         // TODO Auto-generated method stub
         return null;
     }
-
 }

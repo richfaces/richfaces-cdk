@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt.processors;
 
 import java.lang.annotation.Annotation;
@@ -41,9 +40,7 @@ import org.richfaces.cdk.model.RendererModel;
  */
 @SupportedAnnotationTypes({ "javax.faces.component.FacesComponent", JsfRenderer.NAME })
 public class RendererProcessor extends ProcessorBase implements CdkAnnotationProcessor {
-
     private static final String COMPONENT_FAMILY = "COMPONENT_FAMILY";
-
     private static final String RENDERER_TYPE = "RENDERER_TYPE";
 
     public void process(Element rendererElement, ComponentLibrary library) {
@@ -64,18 +61,16 @@ public class RendererProcessor extends ProcessorBase implements CdkAnnotationPro
 
         String renderKitId = sourceUtils.getAnnotationValue(annotation, "renderKitId", String.class);
         library.addRenderer(renderKitId, rendererModel);
-
     }
 
-    private void setComponentFamily(TypeElement rendererElement, RendererModel rendererModel,
-        AnnotationMirror annotation) {
+    private void setComponentFamily(TypeElement rendererElement, RendererModel rendererModel, AnnotationMirror annotation) {
         rendererModel.setFamily(FacesId.parseId(getAnnotationPropertyOrConstant(rendererElement, annotation, "family",
-            COMPONENT_FAMILY)));
+                COMPONENT_FAMILY)));
     }
 
     private void setRendererType(TypeElement rendererElement, RendererModel rendererModel, AnnotationMirror annotation) {
-        rendererModel.setId(FacesId.parseId(getAnnotationPropertyOrConstant(rendererElement, annotation, "type",
-            RENDERER_TYPE)));
+        rendererModel.setId(FacesId
+                .parseId(getAnnotationPropertyOrConstant(rendererElement, annotation, "type", RENDERER_TYPE)));
     }
 
     protected String getComponentType(TypeElement componentElement) {

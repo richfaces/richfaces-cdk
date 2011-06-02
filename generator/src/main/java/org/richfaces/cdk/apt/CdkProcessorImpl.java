@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt;
 
 import java.lang.annotation.Annotation;
@@ -50,36 +49,28 @@ import com.google.inject.Inject;
 
 /**
  * <p class="changed_added_4_0">
- * Base class for all CDK Annotation processors. That class provides access to current CDK context and utility methods
- * for Java source models.
+ * Base class for all CDK Annotation processors. That class provides access to current CDK context and utility methods for Java
+ * source models.
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor {
-
     private static final Set<String> PROCESSED_ANNOTATION = Collections.singleton("*");
-
     @Inject
     private Logger log;
-
     @Inject
     private Set<CdkAnnotationProcessor> processors;
-
     // TODO - set library as parameter.
     @Inject
     private ComponentLibrary library;
-
     @Inject
     private Set<ModelBuilder> builders;
-
     @Inject
     private SourceUtilsProvider sourceUtilsProducer;
-
     @Inject
     private ModelValidator validator;
-
     @Inject
     private LibraryBuilder builder;
 
@@ -116,7 +107,6 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
         try {
             log.debug("Validate model");
             validator.verify(library);
-
         } catch (CdkException e) {
             sendError(e);
         }
@@ -124,7 +114,7 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.apt.CdkProcessor#processNonJavaSources()
      */
     public void processNonJavaSources() {
@@ -132,12 +122,10 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
             log.debug("Run builder " + builder.getClass().getName());
             try {
                 builder.build();
-
             } catch (CdkException e) {
                 sendError(e);
             }
         }
-
     }
 
     protected void processAnnotation(CdkAnnotationProcessor processor, RoundEnvironment environment) {
@@ -159,7 +147,7 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
     }
 
     private void processElement(CdkAnnotationProcessor processor, Class<? extends Annotation> processedAnnotation,
-        Element element) {
+            Element element) {
         if (null != element.getAnnotation(processedAnnotation)) {
             try {
                 log.debug("Process " + element.getSimpleName() + " annotated with " + processedAnnotation.getName());
@@ -178,7 +166,7 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
                 switch (targetType) {
                     case TYPE:
                         match |= ElementKind.CLASS.equals(kind) || ElementKind.INTERFACE.equals(kind)
-                            || ElementKind.ENUM.equals(kind);
+                                || ElementKind.ENUM.equals(kind);
                         break;
                     case PACKAGE:
                         match |= ElementKind.PACKAGE.equals(kind);
@@ -195,9 +183,8 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
             }
         } else {
             // Annotation without @Target match any element.
-            match = ElementKind.CLASS.equals(kind) || ElementKind.INTERFACE.equals(kind)
-                || ElementKind.ENUM.equals(kind) || ElementKind.PACKAGE.equals(kind) || ElementKind.METHOD.equals(kind)
-                || ElementKind.FIELD.equals(kind);
+            match = ElementKind.CLASS.equals(kind) || ElementKind.INTERFACE.equals(kind) || ElementKind.ENUM.equals(kind)
+                    || ElementKind.PACKAGE.equals(kind) || ElementKind.METHOD.equals(kind) || ElementKind.FIELD.equals(kind);
         }
         return match;
     }
@@ -222,5 +209,4 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
         // CDK supports Java 5 or 6 source code.
         return SourceVersion.RELEASE_6;
     }
-
 }

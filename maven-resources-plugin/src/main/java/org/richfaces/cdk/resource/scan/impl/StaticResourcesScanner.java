@@ -32,14 +32,12 @@ import com.google.common.collect.Sets;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class StaticResourcesScanner implements ResourcesScanner {
-
     private Collection<ResourceKey> resources = Sets.newHashSet();
-
     private Collection<VirtualFile> resourceRoots;
-    
+
     public StaticResourcesScanner(Collection<VirtualFile> resourceRoots) {
         this.resourceRoots = resourceRoots;
     }
@@ -48,7 +46,7 @@ public class StaticResourcesScanner implements ResourcesScanner {
         if (file == null) {
             return;
         }
-        
+
         Collection<VirtualFile> children = file.getChildren();
         for (VirtualFile child : children) {
             if (child.isFile()) {
@@ -83,9 +81,8 @@ public class StaticResourcesScanner implements ResourcesScanner {
             scanResourcesRoot(resourceRoot);
         }
     }
-    
+
     public Collection<ResourceKey> getResources() {
         return resources;
     }
-    
 }

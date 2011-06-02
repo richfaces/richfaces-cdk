@@ -20,11 +20,19 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt.processors;
 
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.eq;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.same;
+import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Collections;
 
@@ -43,13 +51,11 @@ import org.richfaces.cdk.Sources;
 import org.richfaces.cdk.Stub;
 import org.richfaces.cdk.annotations.Description;
 import org.richfaces.cdk.annotations.Facet;
-import org.richfaces.cdk.annotations.JsfComponent;
 import org.richfaces.cdk.apt.AnnotationProcessorTestBase;
 import org.richfaces.cdk.apt.SourceUtils;
 import org.richfaces.cdk.apt.SourceUtils.BeanProperty;
 import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.ComponentModel;
-import org.richfaces.cdk.model.FacesId;
 import org.richfaces.cdk.model.FacetModel;
 import org.richfaces.cdk.xmlconfig.JAXB;
 
@@ -59,9 +65,9 @@ import com.google.inject.Inject;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 @RunWith(CdkTestRunner.class)
 public class ComponentProcessorTest extends AnnotationProcessorTestBase {
@@ -70,44 +76,31 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
     private static final String COMPONENT_CLASS_JAVA = "org/richfaces/cdk/test/component/AbstractTestComponent.java";
     private static final String FACES_COMPONENT_CLASS_JAVA = "org/richfaces/cdk/test/component/UITestCommand.java";
     private static final String FOO_HTML_BAR = "foo.HtmlBar";
-
     @Mock
     private AnnotationMirror annotation;
-
     @Mock
     private AttributesProcessor attributesProcessor;
-
     @Mock
     private TypeElement componentElement;
-
     @Mock
     private NamingConventions conventions;
-
     @Mock
     private Description description;
-
     @Stub
     private DescriptionProcessor descriptionProcessor;
-
     @Mock
     private JAXB jaxb;
-
     @Inject
     private ComponentLibrary library;
-
     @Inject
     private ComponentModel model;
-
     @Inject
     private ComponentProcessor processor;
-
     @Mock
     private BeanProperty property;
-
     @Stub
     @Source(Sources.RENDERER_TEMPLATES)
     private FileManager sources;
-
     @Mock
     private SourceUtils utils;
 
@@ -115,17 +108,17 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
     public void testProcessFacetsFromAnnotation() throws Exception {
         AnnotationMirror facet = createMock(AnnotationMirror.class);
         expect(utils.getBeanPropertiesAnnotatedWith(eq(Facet.class), same(componentElement))).andReturn(
-            Collections.<BeanProperty> emptySet());
-//        expect(annotation.facets()).andReturn(new Facet[] { facet });
-        expect(utils.getAnnotationValues(annotation, "facets",AnnotationMirror.class)).andReturn(Collections.singleton(facet));
+                Collections.<BeanProperty>emptySet());
+        // expect(annotation.facets()).andReturn(new Facet[] { facet });
+        expect(utils.getAnnotationValues(annotation, "facets", AnnotationMirror.class)).andReturn(Collections.singleton(facet));
         expect(utils.isDefaultValue(same(facet), eq("name"))).andReturn(false);
-        expect(utils.getAnnotationValue(facet, "name",String.class)).andReturn("foo");
+        expect(utils.getAnnotationValue(facet, "name", String.class)).andReturn("foo");
         expect(utils.isDefaultValue(same(facet), eq("description"))).andReturn(true);
         expect(utils.isDefaultValue(same(facet), eq("generate"))).andReturn(false);
-        expect(utils.getAnnotationValue(facet, "generate",Boolean.class)).andReturn(true);
-//        expect(facet.name()).andReturn("foo");
-//        expect(facet.description()).andReturn(this.description);
-//        expect(facet.generate()).andReturn(true);
+        expect(utils.getAnnotationValue(facet, "generate", Boolean.class)).andReturn(true);
+        // expect(facet.name()).andReturn("foo");
+        // expect(facet.description()).andReturn(this.description);
+        // expect(facet.generate()).andReturn(true);
         // expect(this.description.smallIcon()).andReturn("");
         // expect(this.description.largeIcon()).andReturn("");
         // expect(this.description.displayName()).andReturn("fooFacet").times(2);
@@ -148,15 +141,16 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
     public void testProcessFacetsFromProperty() throws Exception {
         AnnotationMirror facet = createMock(AnnotationMirror.class);
         expect(utils.getBeanPropertiesAnnotatedWith(eq(Facet.class), same(componentElement))).andReturn(
-            Collections.singleton(property));
+                Collections.singleton(property));
         expect(property.getAnnotationMirror(Facet.class)).andReturn(facet);
         expect(property.getName()).andReturn("foo");
         expect(property.getDocComment()).andReturn("my comment").times(2);
         expect(property.isExists()).andReturn(true);
         expect(utils.isDefaultValue(same(facet), eq("description"))).andReturn(true);
         expect(utils.isDefaultValue(same(facet), eq("generate"))).andReturn(false);
-        expect(utils.getAnnotationValue(facet, "generate",Boolean.class)).andReturn(true);
-        expect(utils.getAnnotationValues(annotation, "facets",AnnotationMirror.class)).andReturn(Collections.<AnnotationMirror>emptySet());
+        expect(utils.getAnnotationValue(facet, "generate", Boolean.class)).andReturn(true);
+        expect(utils.getAnnotationValues(annotation, "facets", AnnotationMirror.class)).andReturn(
+                Collections.<AnnotationMirror>emptySet());
         replay(utils, componentElement, jaxb, annotation, property, facet, description);
 
         processor.processFacets(componentElement, model, annotation);
@@ -171,12 +165,12 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
     /**
      * Test method for
      * {@link org.richfaces.cdk.apt.CdkProcessorImpl#process(java.util.Set, javax.annotation.processing.RoundEnvironment)} .
-     * 
+     *
      * @throws Exception
      */
     @Test
     public void testSetClassNames() throws Exception {
-        expect(componentElement.getModifiers()).andReturn(Collections.<Modifier> emptySet());
+        expect(componentElement.getModifiers()).andReturn(Collections.<Modifier>emptySet());
         expect(componentElement.getQualifiedName()).andReturn(new TestName(FOO_BAR));
         expect(utils.isDefaultValue(annotation, "generate")).andReturn(true);
         expect(componentElement.getQualifiedName()).andReturn(new TestName(FOO_BAR));
@@ -191,13 +185,14 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
     /**
      * Test method for
      * {@link org.richfaces.cdk.apt.CdkProcessorImpl#process(java.util.Set, javax.annotation.processing.RoundEnvironment)} .
-     * 
+     *
      * @throws Exception
      */
     @Test
     public void testSetClassNames1() throws Exception {
-        expect(componentElement.getModifiers()).andReturn(Collections.<Modifier> singleton(Modifier.ABSTRACT));
-        utils.setModelProperty(model, annotation, "targetClass","generate");expectLastCall();
+        expect(componentElement.getModifiers()).andReturn(Collections.<Modifier>singleton(Modifier.ABSTRACT));
+        utils.setModelProperty(model, annotation, "targetClass", "generate");
+        expectLastCall();
         expect(componentElement.getQualifiedName()).andReturn(new TestName(FOO_BAR));
         replay(utils, componentElement, jaxb, annotation);
 
@@ -212,14 +207,15 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
     /**
      * Test method for
      * {@link org.richfaces.cdk.apt.CdkProcessorImpl#process(java.util.Set, javax.annotation.processing.RoundEnvironment)} .
-     * 
+     *
      * @throws Exception
      */
     @Test
     public void testSetClassNames2() throws Exception {
-        expect(componentElement.getModifiers()).andReturn(Collections.<Modifier> emptySet());
+        expect(componentElement.getModifiers()).andReturn(Collections.<Modifier>emptySet());
         expect(utils.isDefaultValue(annotation, "generate")).andReturn(false);
-        utils.setModelProperty(model, annotation, "targetClass","generate");expectLastCall();
+        utils.setModelProperty(model, annotation, "targetClass", "generate");
+        expectLastCall();
         expect(componentElement.getQualifiedName()).andReturn(new TestName(FOO_BAR));
         replay(utils, componentElement, jaxb, annotation);
 
@@ -234,5 +230,4 @@ public class ComponentProcessorTest extends AnnotationProcessorTestBase {
     protected Iterable<String> sources() {
         return Collections.singleton(COMPONENT_CLASS_JAVA);
     }
-
 }

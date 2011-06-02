@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt.processors;
 
 import java.lang.annotation.Annotation;
@@ -37,20 +36,21 @@ import org.richfaces.cdk.model.BehaviorModel;
 import org.richfaces.cdk.model.ComponentLibrary;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
-@SupportedAnnotationTypes({"javax.faces.component.FacesComponent", JsfBehavior.NAME})
+@SupportedAnnotationTypes({ "javax.faces.component.FacesComponent", JsfBehavior.NAME })
 public class BehaviorProcessor extends ProcessorBase implements CdkAnnotationProcessor {
-
     @Override
     public void process(Element element, ComponentLibrary library) throws CdkProcessingException {
         SourceUtils sourceUtils = getSourceUtils();
         AnnotationMirror behavior = sourceUtils.getAnnotationMirror(element, JsfBehavior.class);
 
         BehaviorModel behaviorModel = new BehaviorModel();
-        
+
         sourceUtils.setModelProperty(behaviorModel, behavior, "id");
         setClassNames((TypeElement) element, behaviorModel, behavior);
 
@@ -58,9 +58,9 @@ public class BehaviorProcessor extends ProcessorBase implements CdkAnnotationPro
         processAttributes((TypeElement) element, behaviorModel, behavior);
         setDescription(behaviorModel, behavior, getDocComment(element));
         // Behavior renderer
-        if(!sourceUtils.isDefaultValue(behavior, "renderer")){
+        if (!sourceUtils.isDefaultValue(behavior, "renderer")) {
             AnnotationMirror renderer = sourceUtils.getAnnotationValue(behavior, "renderer", AnnotationMirror.class);
-            sourceUtils.setModelProperty(behaviorModel, renderer, "rendererType","type");
+            sourceUtils.setModelProperty(behaviorModel, renderer, "rendererType", "type");
         }
         library.getBehaviors().add(behaviorModel);
     }
@@ -69,5 +69,4 @@ public class BehaviorProcessor extends ProcessorBase implements CdkAnnotationPro
     public Class<? extends Annotation> getProcessedAnnotation() {
         return JsfBehavior.class;
     }
-
 }

@@ -28,16 +28,13 @@ import com.google.common.collect.Multimap;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class MarkerResourcesScanner extends AbstractScanner {
-
     static final String STORE_KEY = "org.richfaces.cdk.dynamicResourceNames";
-
     private static final String RESOURCE_PROPERTIES_EXT = ".resource.properties";
-
     private static final String META_INF = "META-INF/";
-    
+
     @Override
     public void scan(Object cls) {
         throw new UnsupportedOperationException();
@@ -48,12 +45,13 @@ public class MarkerResourcesScanner extends AbstractScanner {
         String relativePath = file.getRelativePath();
         if (relativePath.startsWith(META_INF) && relativePath.endsWith(RESOURCE_PROPERTIES_EXT)) {
             Multimap<String, String> store = getStore();
-            
-            String className = relativePath.substring(META_INF.length(), relativePath.length() - RESOURCE_PROPERTIES_EXT.length());
+
+            String className = relativePath.substring(META_INF.length(),
+                    relativePath.length() - RESOURCE_PROPERTIES_EXT.length());
             store.put(STORE_KEY, className);
         }
     }
-    
+
     @Override
     public boolean acceptsInput(String file) {
         return true;

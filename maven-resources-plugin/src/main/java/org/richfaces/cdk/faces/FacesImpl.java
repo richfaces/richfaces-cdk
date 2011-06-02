@@ -41,16 +41,13 @@ import org.richfaces.skin.SkinFactory;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class FacesImpl implements Faces {
-
     private String webroot;
-    
     private FileNameMapper fileNameMapper;
-
     private ResourceHandler resourceHandler;
-    
+
     public FacesImpl(String webroot, FileNameMapper fileNameMapper, ResourceHandler resourceHandler) {
         super();
         this.webroot = webroot;
@@ -61,7 +58,6 @@ public class FacesImpl implements Faces {
     public void start() {
         final ServicesFactoryImpl serviceFactory = new ServicesFactoryImpl();
         Module module = new Module() {
-            
             public void configure(ServicesFactory factory) {
                 serviceFactory.setInstance(ConfigurationService.class, new ConfigurationServiceImpl());
                 serviceFactory.setInstance(SkinFactory.class, new SkinFactoryImpl());
@@ -86,7 +82,7 @@ public class FacesImpl implements Faces {
         FacesContextImpl facesContextImpl = new FacesContextImpl();
         facesContextImpl.getExternalContext().setWebRoot(webroot);
         assert FacesContext.getCurrentInstance() != null;
-        
+
         return facesContextImpl;
     }
 
@@ -94,5 +90,4 @@ public class FacesImpl implements Faces {
         FacesContext.getCurrentInstance().release();
         assert FacesContext.getCurrentInstance() == null;
     }
-
 }

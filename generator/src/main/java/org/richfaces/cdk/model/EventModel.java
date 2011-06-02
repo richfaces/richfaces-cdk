@@ -20,9 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.cdk.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -32,8 +29,9 @@ import javax.xml.bind.annotation.XmlType;
 import org.richfaces.cdk.util.ComparatorUtils;
 
 /**
- * <p class="changed_added_4_0">That bean represent {@link javax.faces.event.FacesEvent} subclass that can be fired by
- * component.</p>
+ * <p class="changed_added_4_0">
+ * That bean represent {@link javax.faces.event.FacesEvent} subclass that can be fired by component.
+ * </p>
  *
  * @author asmirnov@exadel.com
  *
@@ -44,20 +42,21 @@ import org.richfaces.cdk.util.ComparatorUtils;
 public class EventModel implements ModelElement<EventModel>, ViewElement {
     private String description;
     private ClassName listenerInterface;
-    private String  listenerMethod;
+    private String listenerMethod;
     private boolean generateListener;
     private ClassName sourceInterface;
     private boolean generateSource;
     private final ModelCollection<TagModel> tags = ModelSet.<TagModel>create();
-
     /**
-     *  <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      */
     private ClassName type;
 
-
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the description
      */
     @Merge
@@ -66,7 +65,9 @@ public class EventModel implements ModelElement<EventModel>, ViewElement {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param description the description to set
      */
     public void setDescription(String description) {
@@ -74,7 +75,9 @@ public class EventModel implements ModelElement<EventModel>, ViewElement {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the type
      */
     public ClassName getType() {
@@ -82,7 +85,9 @@ public class EventModel implements ModelElement<EventModel>, ViewElement {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param type the type to set
      */
     public void setType(ClassName type) {
@@ -90,7 +95,9 @@ public class EventModel implements ModelElement<EventModel>, ViewElement {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the listenerInterface
      */
     @Merge
@@ -99,7 +106,9 @@ public class EventModel implements ModelElement<EventModel>, ViewElement {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param listenerInterface the listenerInterface to set
      */
     public void setListenerInterface(ClassName listenerInterface) {
@@ -107,7 +116,9 @@ public class EventModel implements ModelElement<EventModel>, ViewElement {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the listenerMethod
      */
     @Merge
@@ -116,7 +127,9 @@ public class EventModel implements ModelElement<EventModel>, ViewElement {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param listenerMethod the listenerMethod to set
      */
     public void setListenerMethod(String listenerMethodName) {
@@ -124,7 +137,9 @@ public class EventModel implements ModelElement<EventModel>, ViewElement {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the generateListener
      */
     @Merge
@@ -133,7 +148,9 @@ public class EventModel implements ModelElement<EventModel>, ViewElement {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param generateListener the generateListener to set
      */
     public void setGenerateListener(boolean generateListener) {
@@ -141,7 +158,9 @@ public class EventModel implements ModelElement<EventModel>, ViewElement {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the sourceInterface
      */
     @Merge
@@ -150,7 +169,9 @@ public class EventModel implements ModelElement<EventModel>, ViewElement {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param sourceInterface the sourceInterface to set
      */
     public void setSourceInterface(ClassName sourceInterface) {
@@ -158,7 +179,9 @@ public class EventModel implements ModelElement<EventModel>, ViewElement {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the generateSource
      */
     @Merge
@@ -167,7 +190,9 @@ public class EventModel implements ModelElement<EventModel>, ViewElement {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param generateSource the generateSource to set
      */
     public void setGenerateSource(boolean generateSource) {
@@ -175,7 +200,9 @@ public class EventModel implements ModelElement<EventModel>, ViewElement {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the tags
      */
     @Merge
@@ -188,13 +215,12 @@ public class EventModel implements ModelElement<EventModel>, ViewElement {
         ComponentLibrary.merge(this, other);
     }
 
-    public <R,D> R accept(Visitor<R,D> visitor, D data) {
-        return visitor.visitEvent(this,data);
+    public <R, D> R accept(Visitor<R, D> visitor, D data) {
+        return visitor.visitEvent(this, data);
     }
 
     @Override
     public boolean same(EventModel other) {
         return ComparatorUtils.nullSafeEquals(getType(), other.getType());
     }
-
 }

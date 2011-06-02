@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.generate.freemarker;
 
 import java.util.NoSuchElementException;
@@ -52,9 +51,9 @@ import freemarker.template.TemplateModelException;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class ModelElementBaseTemplateModel extends StringModel implements TemplateModel {
     static final ModelFactory FACTORY = new ModelFactory() {
@@ -62,7 +61,6 @@ public class ModelElementBaseTemplateModel extends StringModel implements Templa
             return new ModelElementBaseTemplateModel((ModelElementBase) object, (BeansWrapper) wrapper);
         }
     };
-
     private final ModelElementBase model;
     private Set<EventName> eventNames;
     private final String name;
@@ -70,7 +68,7 @@ public class ModelElementBaseTemplateModel extends StringModel implements Templa
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @param object
      * @param wrapper
      */
@@ -141,7 +139,6 @@ public class ModelElementBaseTemplateModel extends StringModel implements Templa
         return this.wrapper.wrap(result);
     }
 
-
     private void addIfNecessary(String pkg, Set<ClassName> classNames, ClassName toadd) {
         if (null != toadd && !isPredefined(toadd) && !pkg.equals(toadd.getPackage())) {
             classNames.add(toadd);
@@ -161,7 +158,6 @@ public class ModelElementBaseTemplateModel extends StringModel implements Templa
                     if (!isPredefined(className)) {
                         result.add(className);
                     }
-
                 }
             }
         }
@@ -170,7 +166,6 @@ public class ModelElementBaseTemplateModel extends StringModel implements Templa
 
     public TemplateModel hasBindingAttribute() throws TemplateModelException {
         return wrapper.wrap(Iterables.any(model.getAttributes(), new Predicate<PropertyBase>() {
-
             @Override
             public boolean apply(PropertyBase input) {
                 return input.isBindingAttribute();
@@ -241,7 +236,6 @@ public class ModelElementBaseTemplateModel extends StringModel implements Templa
 
     private TemplateModel requiredAttributes() throws TemplateModelException {
         return wrapper.wrap(Collections2.filter(model.getAttributes(), new Predicate<PropertyBase>() {
-
             @Override
             public boolean apply(PropertyBase input) {
                 return input.isRequired();
@@ -251,7 +245,6 @@ public class ModelElementBaseTemplateModel extends StringModel implements Templa
 
     private TemplateModel generatedAttributes() throws TemplateModelException {
         return wrapper.wrap(Collections2.filter(model.getAttributes(), new Predicate<PropertyBase>() {
-
             @Override
             public boolean apply(PropertyBase input) {
                 return input.getGenerate();
@@ -261,12 +254,10 @@ public class ModelElementBaseTemplateModel extends StringModel implements Templa
 
     private TemplateModel tagAttributes() throws TemplateModelException {
         return wrapper.wrap(Collections2.filter(model.getAttributes(), new Predicate<PropertyBase>() {
-
             @Override
             public boolean apply(PropertyBase input) {
                 return !(input.isHidden() || input.isReadOnly());
             }
         }));
     }
-
 }

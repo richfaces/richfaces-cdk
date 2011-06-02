@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlType;
 import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.DescriptionGroup;
 
-@XmlType(name = "descriptionType", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE,
-        propOrder = {"description", "displayName", "icon"})
+@XmlType(name = "descriptionType", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE, propOrder = { "description",
+        "displayName", "icon" })
 public class DescriptionGroupBean implements DescriptionGroup {
     private String description;
     private String displayname;
@@ -18,7 +18,8 @@ public class DescriptionGroupBean implements DescriptionGroup {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the icon
      */
@@ -28,7 +29,8 @@ public class DescriptionGroupBean implements DescriptionGroup {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param icon the icon to set
      */
@@ -37,7 +39,8 @@ public class DescriptionGroupBean implements DescriptionGroup {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the description
      */
@@ -47,7 +50,8 @@ public class DescriptionGroupBean implements DescriptionGroup {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param description the description to set
      */
@@ -56,7 +60,8 @@ public class DescriptionGroupBean implements DescriptionGroup {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the displayname
      */
@@ -66,7 +71,8 @@ public class DescriptionGroupBean implements DescriptionGroup {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param displayname the displayname to set
      */

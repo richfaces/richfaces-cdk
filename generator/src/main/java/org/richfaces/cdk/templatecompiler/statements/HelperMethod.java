@@ -44,7 +44,7 @@ import com.google.common.collect.Maps;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public enum HelperMethod {
 
@@ -54,38 +54,32 @@ public enum HelperMethod {
     EQUALS_CHECK(IS_EQUAL_FUNCTION, Boolean.TYPE, Object.class, Object.class),
     SHOULD_RENDER_ATTRIBUTE("shouldRenderAttribute", Boolean.TYPE, Object.class),
     CREATE_ATTRIBUTES("attributes", "Attributes"),
-    RENDER_ATTRIBUTES_SET("renderPassThroughAttributes", Void.TYPE,FacesContext.class,UIComponent.class,Collection.class),
-    RENDER_ATTRIBUTE("renderAttribute",Void.TYPE,FacesContext.class,String.class,Object.class),
-    ADD_TO_SCRIPT_HASH("addToScriptHash", Void.TYPE.getName(), Map.class.getName(), String.class.getName(), 
-        Object.class.getName(), Object.class.getName(), "ScriptHashVariableWrapper"),
-    ADD_TO_SCRIPT_HASH_ATTRIBUTES("addToScriptHash", Void.TYPE.getName(), Map.class.getName(), 
-        FacesContext.class.getName(), UIComponent.class.getName(), 
-        "Attributes", "ScriptHashVariableWrapper"),
+    RENDER_ATTRIBUTES_SET("renderPassThroughAttributes", Void.TYPE, FacesContext.class, UIComponent.class, Collection.class),
+    RENDER_ATTRIBUTE("renderAttribute", Void.TYPE, FacesContext.class, String.class, Object.class),
+    ADD_TO_SCRIPT_HASH("addToScriptHash", Void.TYPE.getName(), Map.class.getName(), String.class.getName(), Object.class
+            .getName(), Object.class.getName(), "ScriptHashVariableWrapper"),
+    ADD_TO_SCRIPT_HASH_ATTRIBUTES("addToScriptHash", Void.TYPE.getName(), Map.class.getName(), FacesContext.class.getName(),
+            UIComponent.class.getName(), "Attributes", "ScriptHashVariableWrapper"),
     TO_SCRIPT_ARGS("toScriptArgs", String.class, Object[].class),
     CONCAT("concat", String.class, String[].class);
-
     public static final EnumMap<HelperMethod, String> METHOD_NAMES = Maps.newEnumMap(HelperMethod.class);
-
     private static final Set<HelperMethod> CONVERSION_METHODS = EnumSet.of(TO_STRING_CONVERSION, TO_BOOLEAN_CONVERSION);
-    
     private final String name;
-
     private final String returnType;
-    
     private final String[] argumentTypes;
-    
+
     static {
         for (HelperMethod method : HelperMethod.values()) {
             METHOD_NAMES.put(method, method.getName());
         }
     }
-    
+
     private HelperMethod(String name, String returnType, String... argumentTypes) {
         this.name = name;
         this.returnType = returnType;
         this.argumentTypes = argumentTypes;
     }
-    
+
     private HelperMethod(String name, Class<?> returnType, Class<?>... argumentTypes) {
         this(name, CLASS_TO_CLASS_NAME.apply(returnType), transformClassesToClassNames(argumentTypes));
     }
@@ -98,15 +92,15 @@ public enum HelperMethod {
     public String getName() {
         return name;
     }
-    
+
     public String getReturnType() {
         return returnType;
     }
-    
+
     public String[] getArgumentTypes() {
         return argumentTypes;
     }
-    
+
     public static Set<HelperMethod> getConversionMethods() {
         return CONVERSION_METHODS;
     }

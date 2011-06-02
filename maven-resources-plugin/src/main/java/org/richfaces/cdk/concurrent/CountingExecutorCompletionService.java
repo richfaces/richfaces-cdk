@@ -30,16 +30,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class CountingExecutorCompletionService<T> extends ExecutorCompletionService<T> {
-
     private AtomicInteger tasksCounter = new AtomicInteger(0);
 
     public CountingExecutorCompletionService(Executor executor) {
         super(executor);
     }
-    
+
     public CountingExecutorCompletionService(Executor executor, BlockingQueue<Future<T>> completionQueue) {
         super(executor, completionQueue);
     }
@@ -49,12 +48,12 @@ public class CountingExecutorCompletionService<T> extends ExecutorCompletionServ
         tasksCounter.getAndIncrement();
         return super.submit(task);
     }
-    
+
     public Future<T> submit(Runnable task, T result) {
         tasksCounter.getAndIncrement();
         return super.submit(task, result);
     }
-    
+
     @Override
     public Future<T> take() throws InterruptedException {
         if (tasksCounter.get() == 0) {

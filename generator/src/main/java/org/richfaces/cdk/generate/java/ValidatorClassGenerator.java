@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.generate.java;
 
 import java.util.Collection;
@@ -41,9 +40,9 @@ import com.google.inject.Inject;
  * @since Jan 15, 2010
  */
 public class ValidatorClassGenerator extends FreeMarkerWriter<ValidatorModel> implements CdkWriter {
-    
     @Inject
-    public ValidatorClassGenerator(@LibraryModel FreeMarkerRenderer configuration, @Output(Outputs.JAVA_CLASSES) FileManager output) {
+    public ValidatorClassGenerator(@LibraryModel FreeMarkerRenderer configuration,
+            @Output(Outputs.JAVA_CLASSES) FileManager output) {
         super(configuration, output);
     }
 

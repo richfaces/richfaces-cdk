@@ -20,24 +20,22 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.annotations;
 
 /**
  * <p class="changed_added_4_0">
  * This annotation defines a Java method signature for attributes that hold EL {@code MethodExpression} values.
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public @interface Signature {
-
     /**
      * <p class="changed_added_4_0">
      * Method return type. Default is {@code Object}
      * </p>
-     * 
+     *
      * @return
      */
     Class<?> returnType() default Void.class;
@@ -46,10 +44,11 @@ public @interface Signature {
      * <p class="changed_added_4_0">
      * Method parameters. Default is no-argument method.
      * </p>
-     * 
+     *
      * @return
      */
     Class<?>[] parameters() default {};
-    
-    public static final class NONE {}
+
+    public static final class NONE {
+    }
 }

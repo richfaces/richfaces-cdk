@@ -20,12 +20,16 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.statements;
 
-import static org.easymock.EasyMock.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.easymock.EasyMock.eq;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.isA;
+import static org.easymock.EasyMock.same;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 import java.util.Collection;
 import java.util.Map;
@@ -60,67 +64,73 @@ import com.google.inject.Inject;
 import com.google.inject.name.Names;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 @RunWith(CdkTestRunner.class)
 public class AttributesStatementTest extends CdkTestBase {
-
     @Mock
     private Logger log;
-    
     @Mock
     private ELParser parser;
     @Mock
     private TypedTemplateStatement parsedExpression;
-    
-    @Mock 
+    @Mock
     @TemplateModel
     private FreeMarkerRenderer renderer;
-        
     @Inject
     private AttributesStatement statement;
-    
     @Inject
     private MockController controller;
-    
-    
+
     @Override
     public void configure(Binder binder) {
         super.configure(binder);
         Schema schema = new Schema();
         Element element = new Element("div");
-        createSchemaAttribute(element, "class",null,Kind.GENERIC);
-        createSchemaAttribute(element, "href",null,Kind.URI);
-        createSchemaAttribute(element, "disabled",null,Kind.BOOLEAN);
+        createSchemaAttribute(element, "class", null, Kind.GENERIC);
+        createSchemaAttribute(element, "href", null, Kind.URI);
+        createSchemaAttribute(element, "disabled", null, Kind.BOOLEAN);
         schema.addElement(element);
         binder.bind(Schema.class).annotatedWith(Names.named(Template.XHTML_EL_NAMESPACE)).toInstance(schema);
     }
-    private void createSchemaAttribute(Element element, String name,String defaultValue,Kind kind) {
+
+    private void createSchemaAttribute(Element element, String name, String defaultValue, Kind kind) {
         Attribute attribute = new Attribute(name);
         attribute.setDefaultValue(defaultValue);
-        attribute.setComponentAttributeName(name+"Component");
+        attribute.setComponentAttributeName(name + "Component");
         attribute.setKind(kind);
         element.addAttribute(attribute);
     }
+
     /**
-     * Test method for {@link org.richfaces.cdk.templatecompiler.statements.AttributesStatement#processAttributes(java.util.Map, java.util.Collection)}.
-     * @throws Exception 
+     * Test method for
+     * {@link org.richfaces.cdk.templatecompiler.statements.AttributesStatement#processAttributes(java.util.Map, java.util.Collection)}
+     * .
+     *
+     * @throws Exception
      */
     @Test
     public void testProcessSimpleHtmlAttribute() throws Exception {
-        expect(parser.parse(eq("header"), isA(WriteAttributeStatement.class), same(TypesFactory.OBJECT_TYPE))).andReturn(parsedExpression);
-        parsedExpression.setParent(isA(WriteAttributeStatement.class));expectLastCall();
+        expect(parser.parse(eq("header"), isA(WriteAttributeStatement.class), same(TypesFactory.OBJECT_TYPE))).andReturn(
+                parsedExpression);
+        parsedExpression.setParent(isA(WriteAttributeStatement.class));
+        expectLastCall();
         processAttributes("div", "id", "header");
         assertEquals(1, statement.getStatements().size());
         assertThat(statement.getStatements().get(0), instanceOf(WriteAttributeStatement.class));
     }
-    private void processAttributes(String element, String attribute, String value)  throws Exception {
+
+    private void processAttributes(String element, String attribute, String value) throws Exception {
         Collection<PropertyBase> componentAttributes = createComponentAttributes();
-        processAttributes(element, attribute, value, componentAttributes);        
+        processAttributes(element, attribute, value, componentAttributes);
     }
-    private void processAttributes(String element, String attribute, String value, Collection<PropertyBase> componentAttributes)  throws Exception {
+
+    private void processAttributes(String element, String attribute, String value, Collection<PropertyBase> componentAttributes)
+            throws Exception {
         controller.replay();
         AnyElement anyElement = new AnyElement();
         anyElement.setName(QName.valueOf(element));
@@ -128,35 +138,43 @@ public class AttributesStatementTest extends CdkTestBase {
         statement.processAttributes(anyElement, componentAttributes);
         controller.verify();
     }
-    
+
     /**
-     * Test method for {@link org.richfaces.cdk.templatecompiler.statements.AttributesStatement#processAttributes(java.util.Map, java.util.Collection)}.
+     * Test method for
+     * {@link org.richfaces.cdk.templatecompiler.statements.AttributesStatement#processAttributes(java.util.Map, java.util.Collection)}
+     * .
      */
     @Test
     public void testProcessLiteralAttribute() {
-        
+
     }
+
     /**
-     * Test method for {@link org.richfaces.cdk.templatecompiler.statements.AttributesStatement#processAttributes(java.util.Map, java.util.Collection)}.
+     * Test method for
+     * {@link org.richfaces.cdk.templatecompiler.statements.AttributesStatement#processAttributes(java.util.Map, java.util.Collection)}
+     * .
      */
     @Test
     public void testProcessElAttribute() {
-        
+
     }
+
     /**
-     * Test method for {@link org.richfaces.cdk.templatecompiler.statements.AttributesStatement#processAttributes(java.util.Map, java.util.Collection)}.
+     * Test method for
+     * {@link org.richfaces.cdk.templatecompiler.statements.AttributesStatement#processAttributes(java.util.Map, java.util.Collection)}
+     * .
      */
     @Test
     public void testProcessHtmlAttributeWithBehavior() {
-        
+
     }
 
-    private Map<QName, Object> createAttributesMap(String name, String value){
-        ImmutableMap<QName,Object> map = ImmutableMap.<QName, Object>of(QName.valueOf(name),value);
+    private Map<QName, Object> createAttributesMap(String name, String value) {
+        ImmutableMap<QName, Object> map = ImmutableMap.<QName, Object>of(QName.valueOf(name), value);
         return map;
     }
 
-    private PropertyBase createComponentAttribute(String name,String ...events) {
+    private PropertyBase createComponentAttribute(String name, String... events) {
         PropertyBase property = new PropertyModel();
         property.setName(name);
         for (String event : events) {
@@ -167,7 +185,7 @@ public class AttributesStatementTest extends CdkTestBase {
         return property;
     }
 
-    private Collection<PropertyBase> createComponentAttributes(PropertyBase ...properties) {
+    private Collection<PropertyBase> createComponentAttributes(PropertyBase... properties) {
         ModelSet<PropertyBase> attributes = ModelSet.<PropertyBase>create();
         for (PropertyBase prop : properties) {
             attributes.add(prop);

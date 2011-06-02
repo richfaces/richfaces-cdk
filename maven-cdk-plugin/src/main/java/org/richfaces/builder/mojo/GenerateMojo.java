@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.builder.mojo;
 
 import java.io.File;
@@ -51,7 +50,7 @@ import org.richfaces.cdk.Sources;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
  * @goal generate
  * @requiresDependencyResolution compile
@@ -63,110 +62,95 @@ public class GenerateMojo extends AbstractMojo {
     private static final String MAIN_TEMPLATES = "src/main/templates";
     private static final String[] STRINGS_ARRAY = new String[0];
     private static final String XML_INCLUDES = "**/*.xml";
-
     /**
      * Project classpath.
-     * 
+     *
      * @parameter expression="${project.compileClasspathElements}"
      * @required
      * @readonly
      */
     protected List<String> classpathElements;
-
     /**
      * The source directories containing the sources to be compiled.
-     * 
+     *
      * @parameter expression="${project.compileSourceRoots}"
      * @required
      * @readonly
      */
     protected List<String> compileSourceRoots;
-
     /**
      * The list of JSF configuration files that will be processed by CDK. By default, CDK looks for all files in the
      * <code>src/main/config</code> folder with "xml" extension.
-     * 
+     *
      * @parameter
      */
     protected FileSet[] facesConfigs;
-
     /**
      * @parameter
      */
     protected Map<String, String> options;
-
     /**
      * @parameter
      */
     protected Library library;
-
     /**
      * The directory for compiled classes.
-     * 
+     *
      * @parameter expression="${project.build.outputDirectory}"
      * @required
      * @readonly
      */
     protected File outputDirectory;
-
     /**
      * Directory where the output Java Files will be located.
-     * 
+     *
      * @parameter expression="${project.build.directory}/generated-sources/main/java"
      */
     protected File outputJavaDirectory;
-
     /**
      * Directory where the output Java Files will be located.
-     * 
+     *
      * @parameter expression="${project.build.directory}/generated-sources/main/resources"
      */
     protected File outputResourcesDirectory;
-
     /**
      * @parameter expression="${project.build.directory}/generated-sources/test/java"
      */
     protected File outputTestDirectory;
-
     /**
      * Directory where the output Java Files will be located.
-     * 
+     *
      * @parameter expression="${project.build.directory}/generated-sources/test/resources"
      */
     protected File outputTestResourcesDirectory;
-
     /**
      * Top maven project.
-     * 
+     *
      * @parameter expression="${project}"
      * @readonly
      */
     protected MavenProject project;
-
     /**
-     * List of filename patterns that will be excluded from process by annotations processor. By default, all *.java
-     * files will be processed.
-     * 
+     * List of filename patterns that will be excluded from process by annotations processor. By default, all *.java files will
+     * be processed.
+     *
      * @parameter
      */
     protected String[] sourceExcludes;
-
     /**
-     * List of filename patterns that will be included to process by annotations processor. By default, all *.java files
-     * will be processed.
-     * 
+     * List of filename patterns that will be included to process by annotations processor. By default, all *.java files will be
+     * processed.
+     *
      * @parameter
      */
     protected String[] sourceIncludes;
-
     /**
      * The list of JsfRenderer template files that will be processed by CDK. By default, CDK looks for all files in the
      * <code>src/main/templates</code> folder with "xml" extension.
-     * 
+     *
      * @parameter
      */
     protected FileSet[] templates;
-
     /**
      * @parameter
      */
@@ -174,7 +158,7 @@ public class GenerateMojo extends AbstractMojo {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.apache.maven.plugin.Mojo#execute()
      */
     @Override
@@ -222,8 +206,7 @@ public class GenerateMojo extends AbstractMojo {
         }
 
         try {
-            if (this.library != null && this.library.getTaglib() != null
-                && this.library.getTaglib().getShortName() != null) {
+            if (this.library != null && this.library.getTaglib() != null && this.library.getTaglib().getShortName() != null) {
 
                 generator.setNamespace(this.library.getTaglib().getShortName());
             }
@@ -238,7 +221,6 @@ public class GenerateMojo extends AbstractMojo {
             // Tell project about generated files.
             if (outputJavaDirectory.exists()) {
                 project.addCompileSourceRoot(outputJavaDirectory.getAbsolutePath());
-
             }
 
             if (outputResourcesDirectory.exists()) {
@@ -246,18 +228,15 @@ public class GenerateMojo extends AbstractMojo {
 
                 resource.setDirectory(outputResourcesDirectory.getAbsolutePath());
                 project.addResource(resource);
-
             }
             if (outputTestDirectory.exists()) {
                 project.addTestCompileSourceRoot(outputTestDirectory.getAbsolutePath());
-
             }
             if (outputTestResourcesDirectory.exists()) {
                 Resource testResource = new Resource();
 
                 testResource.setDirectory(outputTestResourcesDirectory.getAbsolutePath());
                 project.addTestResource(testResource);
-
             }
         } catch (CdkException e) {
             throw new MojoExecutionException("CDK build error", e);
@@ -267,7 +246,7 @@ public class GenerateMojo extends AbstractMojo {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @param generator
      * @throws MojoFailureException
      */
@@ -279,7 +258,7 @@ public class GenerateMojo extends AbstractMojo {
      * <p class="changed_added_4_0">
      * This utility method sets output directory for particular type. I such directory does not exist, it is created.
      * </p>
-     * 
+     *
      * @param generator
      * @param directory
      * @param type
@@ -401,7 +380,7 @@ public class GenerateMojo extends AbstractMojo {
 
     /**
      * Skan Array of filesets for selected resources.
-     * 
+     *
      * @param filesets
      * @return
      * @throws MojoExecutionException

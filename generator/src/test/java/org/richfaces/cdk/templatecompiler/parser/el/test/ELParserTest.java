@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.parser.el.test;
 
 import static org.easymock.EasyMock.anyObject;
@@ -60,18 +59,14 @@ import com.google.inject.Inject;
 
 @RunWith(CdkTestRunner.class)
 public class ELParserTest extends CdkTestBase {
-
     @Inject
     @As(ELParserImpl.class)
     private ELParser parser;
-
     @Mock
     private Logger log;
-
     @Inject
     @As(TypesFactoryImpl.class)
     private TypesFactory typesFactory;
-
     @Inject
     private MockController controller;
 
@@ -86,35 +81,35 @@ public class ELParserTest extends CdkTestBase {
     }
 
     private TypedTemplateStatement parseExpression(String expression, String expected, HelperMethod... requiredMethods)
-        throws ParsingException {
+            throws ParsingException {
         return parseExpression(expression, Object.class, expected, requiredMethods);
     }
 
     private TypedTemplateStatement parseExpression(String expression, String expected, Class<?> expectedType,
-        HelperMethod... requiredMethods) throws ParsingException {
+            HelperMethod... requiredMethods) throws ParsingException {
         return parseExpression(expression, Object.class, expected, expectedType, requiredMethods);
     }
 
     private TypedTemplateStatement parseExpression(String expression, Class<?> returnType, String expected,
-        Class<?> expectedType, HelperMethod... requiredMethods) throws ParsingException {
+            Class<?> expectedType, HelperMethod... requiredMethods) throws ParsingException {
         TypedTemplateStatement statement = parseExpression(expression, returnType, expected, requiredMethods);
         assertEquals(expectedType.getName(), statement.getType().getRawName());
         return statement;
     }
 
     private TypedTemplateStatement parseExpression(String expression, Class<?> returnType, String expected,
-        HelperMethod... requiredMethods) throws ParsingException {
+            HelperMethod... requiredMethods) throws ParsingException {
         controller.replay();
         TypedTemplateStatement parseExpression = parseExpression(expression, returnType);
         controller.verify();
         assertEquals(expected, parseExpression.getCode());
         for (HelperMethod helperMethod : requiredMethods) {
             assertTrue("Expect helper method " + helperMethod.getName(),
-                Iterables.contains(parseExpression.getRequiredMethods(), helperMethod));
+                    Iterables.contains(parseExpression.getRequiredMethods(), helperMethod));
         }
         for (HelperMethod helperMethod : parseExpression.getRequiredMethods()) {
             assertTrue("Unexpected helper method " + helperMethod.getName(),
-                Iterables.contains(ImmutableSet.of(requiredMethods), helperMethod));
+                    Iterables.contains(ImmutableSet.of(requiredMethods), helperMethod));
         }
         return parseExpression;
     }
@@ -123,7 +118,6 @@ public class ELParserTest extends CdkTestBase {
         final Map<String, ELType> contextMap = new HashMap<String, ELType>();
 
         Variables variables = new Variables() {
-
             @Override
             public ELType getVariable(String name) throws ParsingException {
                 return contextMap.get(name);
@@ -138,7 +132,6 @@ public class ELParserTest extends CdkTestBase {
             public ELType setVariable(String name, ELType type) throws ParsingException {
                 return contextMap.put(name, type);
             }
-
         };
         contextMap.put("action", this.getType(org.richfaces.cdk.templatecompiler.parser.el.test.Bean.class));
         contextMap.put("clientId", this.getType(String.class));
@@ -200,7 +193,7 @@ public class ELParserTest extends CdkTestBase {
     @Test
     public void testChoice2() throws Exception {
         parseExpression("#{action ? null : 'string'}", Object.class, "(convertToBoolean(action) ? null : \"string\")",
-            TO_BOOLEAN_CONVERSION);
+                TO_BOOLEAN_CONVERSION);
     }
 
     @Test
@@ -337,20 +330,17 @@ public class ELParserTest extends CdkTestBase {
 
     @Test
     public void testLiteralWithDeferred() throws Exception {
-        parseExpression("#{1}#{2}", "convertToString(1) + convertToString(2)", String.class,
-            HelperMethod.TO_STRING_CONVERSION);
+        parseExpression("#{1}#{2}", "convertToString(1) + convertToString(2)", String.class, HelperMethod.TO_STRING_CONVERSION);
     }
 
     @Test
     public void testLiteralWithDeferred1() throws Exception {
-        parseExpression("abs #{getType()}", "\"abs \" + convertToString(this.getType())", String.class,
-            TO_STRING_CONVERSION);
+        parseExpression("abs #{getType()}", "\"abs \" + convertToString(this.getType())", String.class, TO_STRING_CONVERSION);
     }
 
     @Test
     public void testLiteralWithDeferred2() throws Exception {
-        parseExpression("#{getType()} abs ", "convertToString(this.getType()) + \" abs \"", String.class,
-            TO_STRING_CONVERSION);
+        parseExpression("#{getType()} abs ", "convertToString(this.getType()) + \" abs \"", String.class, TO_STRING_CONVERSION);
     }
 
     @Test
@@ -360,7 +350,7 @@ public class ELParserTest extends CdkTestBase {
 
     @Test
     public void testMethodReturnArray() throws Exception {
-        parseExpression("#{action.array}", "action.getArray()"/*, UIComponent[].class*/);
+        parseExpression("#{action.array}", "action.getArray()"/* , UIComponent[].class */);
     }
 
     @Test
@@ -370,8 +360,7 @@ public class ELParserTest extends CdkTestBase {
 
     @Test
     public void testMethodReturnList() throws Exception {
-        TypedTemplateStatement statement =
-            parseExpression("#{action.components}", "action.getComponents()", List.class);
+        TypedTemplateStatement statement = parseExpression("#{action.components}", "action.getComponents()", List.class);
         ELType variableType = statement.getType();
         assertEquals(List.class.getName(), variableType.getRawName());
         assertEquals(UIComponent.class.getName(), variableType.getContainerType().getRawName());
@@ -431,14 +420,13 @@ public class ELParserTest extends CdkTestBase {
     public void testMethodReturnMapElement4() throws Exception {
         // assertEquals("action.getFacet(\"header\").isRendered()",
         // resolveExpression("#{action.getFacet('header').rendered}"));
-        parseExpression("#{action.facets['header'].rendered}", "action.getFacets().get(\"header\").isRendered()",
-            Boolean.TYPE);
+        parseExpression("#{action.facets['header'].rendered}", "action.getFacets().get(\"header\").isRendered()", Boolean.TYPE);
     }
 
     @Test
     public void testMethodWithParam() throws Exception {
         parseExpression("#{getType(action.array[0].rendered, action.readOnly, true)}",
-            "this.getType(action.getArray()[0].isRendered(),action.isReadOnly(),true)");
+                "this.getType(action.getArray()[0].isRendered(),action.isReadOnly(),true)");
     }
 
     @Test
@@ -570,7 +558,7 @@ public class ELParserTest extends CdkTestBase {
     public void testOr2() throws Exception {
 
         parseExpression("#{action or otherTest}", "(convertToBoolean(action) || otherTest)", Boolean.TYPE,
-            TO_BOOLEAN_CONVERSION);
+                TO_BOOLEAN_CONVERSION);
     }
 
     @Test
@@ -652,32 +640,32 @@ public class ELParserTest extends CdkTestBase {
         parseExpression("#{objectVar.getType()}", "objectVar.getType()");
     }
 
-    @Test(/*expected = ParsingException.class*/)
+    @Test(/* expected = ParsingException.class */)
     public void testWrongExpression() throws Exception {
         log.warn((CharSequence) anyObject());
         expectLastCall();
-        parseExpression("#{bean.property}","bean.getProperty()");
+        parseExpression("#{bean.property}", "bean.getProperty()");
     }
 
     @Test
     public void testWrongExpression2() throws Exception {
         parseExpression("#{action.property}", "action.getProperty()", Object.class);
     }
-    
+
     @Test
     public void testLiteralExpression() throws Exception {
         controller.replay();
         TypedTemplateStatement parseExpression = parseExpression("Literal", Object.class);
         controller.verify();
         assertTrue(parseExpression.isLiteral());
-        assertEquals("\"Literal\"",parseExpression.getCode());
+        assertEquals("\"Literal\"", parseExpression.getCode());
         assertEquals(String.class.getName(), parseExpression.getType().getRawName());
     }
-    
+
     @Test
     public void testToScriptArgs() throws Exception {
         TypedTemplateStatement parseExpression = parseExpression("#{toScriptArgs(clientId, bean)}");
-        
+
         assertTrue(Iterables.contains(parseExpression.getRequiredMethods(), HelperMethod.TO_SCRIPT_ARGS));
         assertEquals("toScriptArgs(clientId,bean)", parseExpression.getCode());
     }

@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.util;
 
 import java.beans.IntrospectionException;
@@ -32,7 +31,8 @@ import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.model.InvalidNameException;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
@@ -43,32 +43,31 @@ public final class PropertyUtils {
     public static String methodToName(String methodName) throws InvalidNameException {
         if (null != methodName) {
             if (methodName.length() > 3 && Character.isUpperCase(methodName.charAt(3))
-                && (methodName.startsWith("set") || methodName.startsWith("get"))) {
+                    && (methodName.startsWith("set") || methodName.startsWith("get"))) {
                 return Strings.firstToLowerCase(methodName.substring(3));
-            } else if (methodName.length() > 2 && Character.isUpperCase(methodName.charAt(2))
-                && methodName.startsWith("is")) {
+            } else if (methodName.length() > 2 && Character.isUpperCase(methodName.charAt(2)) && methodName.startsWith("is")) {
                 return Strings.firstToLowerCase(methodName.substring(2));
             }
         }
 
         throw new InvalidNameException("Method name " + methodName + " is not valid bean property getter or setter");
     }
-    
-    public static void setPropertyValue(Object bean,String propertyName,Object newValue){
+
+    public static void setPropertyValue(Object bean, String propertyName, Object newValue) {
         PropertyDescriptor propertyDescriptor = getPropertyDescriptor(bean, propertyName);
-        if(null != propertyDescriptor.getWriteMethod()){
+        if (null != propertyDescriptor.getWriteMethod()) {
             try {
                 propertyDescriptor.getWriteMethod().invoke(bean, newValue);
             } catch (Exception e) {
-                throw new CdkException("Cannot set new value for bean property "+bean.getClass().getName()+"#"+propertyName,e);
+                throw new CdkException("Cannot set new value for bean property " + bean.getClass().getName() + "#"
+                        + propertyName, e);
             }
         } else {
-            throw new CdkException("Bean property not writable "+bean.getClass().getName()+"#"+propertyName);
-
+            throw new CdkException("Bean property not writable " + bean.getClass().getName() + "#" + propertyName);
         }
     }
-    
-    public static PropertyDescriptor getPropertyDescriptor(Object bean,String propertyName){
+
+    public static PropertyDescriptor getPropertyDescriptor(Object bean, String propertyName) {
         PropertyDescriptor[] properties;
         try {
             properties = Introspector.getBeanInfo(bean.getClass()).getPropertyDescriptors();
@@ -76,10 +75,10 @@ public final class PropertyUtils {
             throw new CdkException(e);
         }
         for (PropertyDescriptor propertyDescriptor : properties) {
-            if(propertyName.equals(propertyDescriptor.getName())){
+            if (propertyName.equals(propertyDescriptor.getName())) {
                 return propertyDescriptor;
             }
         }
-        throw new NoSuchElementException("Bean property "+propertyName+" not found in class "+bean.getClass().getName());
+        throw new NoSuchElementException("Bean property " + propertyName + " not found in class " + bean.getClass().getName());
     }
 }

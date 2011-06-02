@@ -30,17 +30,17 @@ import com.google.common.collect.Iterables;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public final class MorePredicates {
-
-    private MorePredicates() {}
+    private MorePredicates() {
+    }
 
     public static <S, D> Predicate<D> any(Iterable<S> options, Function<S, Predicate<D>> function) {
         if (options == null || Iterables.isEmpty(options)) {
             return Predicates.alwaysTrue();
         }
-        
+
         return Predicates.or(Iterables.transform(options, function));
     }
 
@@ -48,11 +48,11 @@ public final class MorePredicates {
         if (options == null || Iterables.isEmpty(options)) {
             return Predicates.alwaysTrue();
         }
-        
+
         Predicate<D> compositePredicate = Predicates.or(Iterables.transform(options, function));
         return Predicates.not(compositePredicate);
     }
-    
+
     public static <S, D> Predicate<D> compose(Iterable<S> includes, Iterable<S> excludes, Function<S, Predicate<D>> function) {
         final Predicate<D> includesPredicate = any(includes, function);
         final Predicate<D> excludesPredicate = none(excludes, function);
@@ -79,5 +79,5 @@ public final class MorePredicates {
                 return pattern.matcher(input).matches();
             }
         };
-    } 
+    }
 }

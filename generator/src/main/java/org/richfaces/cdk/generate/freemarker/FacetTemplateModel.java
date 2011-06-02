@@ -20,9 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.cdk.generate.freemarker;
 
 import org.richfaces.cdk.model.FacetModel;
@@ -36,7 +33,9 @@ import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
@@ -49,7 +48,9 @@ public class FacetTemplateModel extends StringModel implements TemplateModel {
     private final FacetModel facet;
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param object
      * @param wrapper
      */
@@ -59,7 +60,9 @@ public class FacetTemplateModel extends StringModel implements TemplateModel {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the name
      */
     public String getAsString() {
@@ -85,8 +88,6 @@ public class FacetTemplateModel extends StringModel implements TemplateModel {
         return wrapper.wrap(value);
     }
 
-
-
     // Model utility methods.
     public String getGetterName() {
         return "get" + capitalizeName();
@@ -99,6 +100,4 @@ public class FacetTemplateModel extends StringModel implements TemplateModel {
     public String capitalizeName() {
         return Strings.firstToUpperCase(getAsString());
     }
-
-
 }

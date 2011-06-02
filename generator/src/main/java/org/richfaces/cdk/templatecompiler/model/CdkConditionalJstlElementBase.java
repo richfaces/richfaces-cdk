@@ -28,7 +28,6 @@ import javax.xml.bind.annotation.XmlAttribute;
  * @since 4.0
  */
 public abstract class CdkConditionalJstlElementBase extends ModelFragment {
-
     @XmlAttribute(required = true)
     private String test;
 
@@ -45,5 +44,4 @@ public abstract class CdkConditionalJstlElementBase extends ModelFragment {
     public void setTest(String test) {
         this.test = test;
     }
-
 }

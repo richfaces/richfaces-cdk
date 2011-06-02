@@ -20,10 +20,9 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -36,9 +35,9 @@ import org.junit.runners.Parameterized.Parameters;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 @RunWith(Parameterized.class)
 public class ClassDescriptionTest {
@@ -47,11 +46,10 @@ public class ClassDescriptionTest {
     private final String expectedCanonicalName;
     private final String expectedTypeParameter;
     private final String packageName;
-
     private final String simpleName;
 
     public ClassDescriptionTest(String className, String expectedCanonicalName, String expectedBoxedName,
-        String expectedTypeParameter, String packageName, String simpleName) {
+            String expectedTypeParameter, String packageName, String simpleName) {
         this.className = className;
         this.expectedCanonicalName = expectedCanonicalName;
         this.expectedBoxedName = expectedBoxedName;
@@ -63,11 +61,13 @@ public class ClassDescriptionTest {
     @Parameters
     public static Collection<String[]> values() {
         return Arrays.asList(new String[] { int.class.getName(), "int", "java.lang.Integer", null, null, "int" },
-            new String[] { "java.util.List<String>", "java.util.List", "java.util.List<String>", "<String>","java.util", "List<String>" },
-            new String[] { "java.lang.String[]", "java.lang.String[]", "java.lang.String[]", null, "java.lang", "String[]" },
-            new String[] { "java.util.List<String>[]", "java.util.List[]", "java.util.List<String>[]", "<String>","java.util", "List<String>[]" },
-            new String[] { "java.util.List<java.lang.String>", "java.util.List", "java.util.List<java.lang.String>", "<java.lang.String>","java.util", "List<java.lang.String>" },
-            new String[] { double.class.getName(), "double", "java.lang.Double", null, null,"double" });
+                new String[] { "java.util.List<String>", "java.util.List", "java.util.List<String>", "<String>", "java.util",
+                        "List<String>" }, new String[] { "java.lang.String[]", "java.lang.String[]", "java.lang.String[]",
+                        null, "java.lang", "String[]" }, new String[] { "java.util.List<String>[]", "java.util.List[]",
+                        "java.util.List<String>[]", "<String>", "java.util", "List<String>[]" }, new String[] {
+                        "java.util.List<java.lang.String>", "java.util.List", "java.util.List<java.lang.String>",
+                        "<java.lang.String>", "java.util", "List<java.lang.String>" }, new String[] { double.class.getName(),
+                        "double", "java.lang.Double", null, null, "double" });
     }
 
     /**

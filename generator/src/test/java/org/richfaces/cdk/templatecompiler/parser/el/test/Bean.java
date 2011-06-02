@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.parser.el.test;
 
 import java.util.ArrayList;
@@ -79,10 +78,10 @@ public class Bean {
         return readOnly;
     }
 
-    public FacesContext getContext(){
+    public FacesContext getContext() {
         return null;
     }
-    
+
     public void setArray(UIComponent[] array) {
         this.array = array;
     }
@@ -109,7 +108,7 @@ public class Bean {
 
     public void test(UIComponent comp, boolean test) {
     }
-    
+
     @Override
     public String toString() {
         return super.toString();

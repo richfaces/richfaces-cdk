@@ -35,10 +35,10 @@ import org.richfaces.cdk.apt.TestMethodAnnotation;
 public interface PropertyTestInterface {
 
     @TestMethodAnnotation("inherited")
-    public String getInheritedValue();
+    String getInheritedValue();
 
-    public void setInheritedValue(String value);
+    void setInheritedValue(String value);
     
-    public void setWrongValue(String value);
+    void setWrongValue(String value);
     
 }

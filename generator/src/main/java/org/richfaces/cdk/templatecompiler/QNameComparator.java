@@ -21,7 +21,7 @@
  */
 package org.richfaces.cdk.templatecompiler;
 
-import static org.richfaces.cdk.util.ComparatorUtils.*;
+import static org.richfaces.cdk.util.ComparatorUtils.nullSafeCompare;
 
 import java.util.Comparator;
 
@@ -29,27 +29,25 @@ import javax.xml.namespace.QName;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public final class QNameComparator implements Comparator<QName> {
-
     public static final Comparator<QName> QNAME_COMPARATOR = new QNameComparator();
-    
+
     private QNameComparator() {
-        //private constructor
+        // private constructor
     }
-    
+
     @Override
     public int compare(QName o1, QName o2) {
         int result;
-        
+
         result = nullSafeCompare(o1.getNamespaceURI(), o2.getNamespaceURI());
-        
+
         if (result == 0) {
             result = nullSafeCompare(o1.getLocalPart(), o2.getLocalPart());
         }
-        
+
         return result;
     }
-
 }

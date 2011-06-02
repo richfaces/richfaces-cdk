@@ -29,16 +29,15 @@ import org.richfaces.skin.Theme;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class SkinFactoryImpl extends AbstractSkinFactory {
-
     private static ThreadLocal<String> skinNames = new ThreadLocal<String>();
 
     public static void setSkinName(String skinName) {
         skinNames.set(skinName);
     }
-    
+
     @Override
     public Skin getDefaultSkin(FacesContext context) {
         // TODO Auto-generated method stub
@@ -50,7 +49,9 @@ public class SkinFactoryImpl extends AbstractSkinFactory {
         return getSkin(context, skinNames.get());
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.skin.SkinFactory#getBaseSkin(javax.faces.context.FacesContext)
      */
     @Override
@@ -59,7 +60,9 @@ public class SkinFactoryImpl extends AbstractSkinFactory {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.skin.SkinFactory#getTheme(javax.faces.context.FacesContext, java.lang.String)
      */
     @Override
@@ -67,5 +70,4 @@ public class SkinFactoryImpl extends AbstractSkinFactory {
         // TODO Auto-generated method stub
         return null;
     }
-
 }

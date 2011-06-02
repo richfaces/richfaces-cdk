@@ -20,14 +20,14 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import org.richfaces.cdk.model.ConfigExtension;
 import org.richfaces.cdk.model.Extensible;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
@@ -35,7 +35,8 @@ public class ExtensibleBean<E extends ConfigExtension> extends DescriptionGroupB
     private E extension;
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the extension
      */
@@ -44,7 +45,8 @@ public class ExtensibleBean<E extends ConfigExtension> extends DescriptionGroupB
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param extension the extension to set
      */

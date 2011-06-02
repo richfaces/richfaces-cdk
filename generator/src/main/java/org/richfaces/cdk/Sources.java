@@ -20,15 +20,17 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk;
 
-
 /**
- * <p class="changed_added_4_0">This enumeration defines standard types for project sources.</p>
+ * <p class="changed_added_4_0">
+ * This enumeration defines standard types for project sources.
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 public enum Sources {
-    JAVA_SOURCES, FACES_CONFIGS, RENDERER_TEMPLATES
+    JAVA_SOURCES,
+    FACES_CONFIGS,
+    RENDERER_TEMPLATES
 }

@@ -20,23 +20,25 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.cdk.model;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 @SuppressWarnings("serial")
-public class BehaviorRendererModel  extends DescriptionGroupBase implements ModelElement<BehaviorRendererModel>, GeneratedFacesComponent {
+public class BehaviorRendererModel extends DescriptionGroupBase implements ModelElement<BehaviorRendererModel>,
+        GeneratedFacesComponent {
     private ClassName baseClass;
     private ClassName targetClass;
     private FacesId id;
     /**
-     *  <p class="changed_added_4_0">Is that bean property generate in the class or should be generated ?</p>
+     * <p class="changed_added_4_0">
+     * Is that bean property generate in the class or should be generated ?
+     * </p>
      */
     private Boolean generate;
 
@@ -48,16 +50,19 @@ public class BehaviorRendererModel  extends DescriptionGroupBase implements Mode
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param id the id to set
      */
     public void setId(FacesId type) {
         this.id = type;
     }
 
-
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the id
      */
     public FacesId getId() {
@@ -65,7 +70,9 @@ public class BehaviorRendererModel  extends DescriptionGroupBase implements Mode
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the targetClass
      */
     @Merge
@@ -74,7 +81,9 @@ public class BehaviorRendererModel  extends DescriptionGroupBase implements Mode
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param targetClass the targetClass to set
      */
     public void setTargetClass(ClassName rendererClass) {
@@ -82,7 +91,9 @@ public class BehaviorRendererModel  extends DescriptionGroupBase implements Mode
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the baseClass
      */
     @Merge
@@ -91,13 +102,14 @@ public class BehaviorRendererModel  extends DescriptionGroupBase implements Mode
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param baseClass the baseClass to set
      */
     public void setBaseClass(ClassName baseClass) {
         this.baseClass = baseClass;
     }
-
 
     @Override
     public void merge(BehaviorRendererModel other) {
@@ -105,8 +117,8 @@ public class BehaviorRendererModel  extends DescriptionGroupBase implements Mode
     }
 
     @Override
-    public <R,D> R accept(Visitor<R,D> visitor, D data) {
-        return visitor.visitBehaviorRenderer(this,data);
+    public <R, D> R accept(Visitor<R, D> visitor, D data) {
+        return visitor.visitBehaviorRenderer(this, data);
     }
 
     @Override
@@ -114,7 +126,7 @@ public class BehaviorRendererModel  extends DescriptionGroupBase implements Mode
         if (null != getId() && null != other.getId()) {
             // Both types not null, compare them.
             return getId().equals(other.getId());
-        } 
+        }
         // one or both types are null, compare classes.
         if (null != getTargetClass() && getTargetClass().equals(other.getTargetClass())) {
             return true;

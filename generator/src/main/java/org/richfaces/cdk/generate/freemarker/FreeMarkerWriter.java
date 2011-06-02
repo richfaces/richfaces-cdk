@@ -20,9 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.cdk.generate.freemarker;
 
 import java.io.File;
@@ -41,15 +38,15 @@ import org.richfaces.cdk.model.ViewElement;
 import freemarker.template.TemplateException;
 
 /**
- * <p class="changed_added_4_0">Base class for all output file buildes that use FreeMarker as template engine.</p>
+ * <p class="changed_added_4_0">
+ * Base class for all output file buildes that use FreeMarker as template engine.
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public abstract class FreeMarkerWriter<C> implements CdkWriter {
-
-
     private final FreeMarkerRenderer configuration;
-
     private final FileManager output;
 
     public FreeMarkerWriter(FreeMarkerRenderer configuration, FileManager output) {
@@ -57,11 +54,11 @@ public abstract class FreeMarkerWriter<C> implements CdkWriter {
         this.output = output;
     }
 
-    public void generate(ComponentLibrary library,C c) throws CdkException {
+    public void generate(ComponentLibrary library, C c) throws CdkException {
         try {
             Writer out = getOutput(library, c);
-            if(null != out){
-                configuration.writeTemplate(getTemplateName(),c, out);
+            if (null != out) {
+                configuration.writeTemplate(getTemplateName(), c, out);
                 out.close();
             }
         } catch (IOException e) {
@@ -94,11 +91,10 @@ public abstract class FreeMarkerWriter<C> implements CdkWriter {
             throw new CdkException("Unknown model object " + c);
         }
     }
-    
-    protected String getJavaFileName(ClassName targetClass){
+
+    protected String getJavaFileName(ClassName targetClass) {
         return targetClass.getName().replace('.', File.separatorChar) + ".java";
     }
 
     protected abstract String getTemplateName();
-
 }

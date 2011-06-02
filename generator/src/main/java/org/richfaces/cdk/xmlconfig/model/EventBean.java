@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import java.util.List;
@@ -36,7 +35,8 @@ import org.richfaces.cdk.model.TagModel;
 import com.google.common.collect.Lists;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
@@ -51,7 +51,8 @@ public class EventBean {
     private String listenerMethod;
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the type
      */
@@ -61,7 +62,8 @@ public class EventBean {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param type the type to set
      */
@@ -70,7 +72,8 @@ public class EventBean {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the description
      */
@@ -80,7 +83,8 @@ public class EventBean {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param description the description to set
      */
@@ -89,7 +93,8 @@ public class EventBean {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the listenerInterface
      */
@@ -100,7 +105,8 @@ public class EventBean {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param listenerInterface the listenerInterface to set
      */
@@ -109,7 +115,9 @@ public class EventBean {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the listenerWrapper
      */
     @XmlElement(name = "listener-wrapper-class", namespace = ComponentLibrary.CDK_EXTENSIONS_NAMESPACE)
@@ -118,7 +126,9 @@ public class EventBean {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param listenerWrapper the listenerWrapper to set
      */
     public void setListenerWrapper(ClassName listenerWrapper) {
@@ -126,7 +136,8 @@ public class EventBean {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the sourceInterface
      */
@@ -137,7 +148,8 @@ public class EventBean {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param sourceInterface the sourceInterface to set
      */
@@ -146,11 +158,14 @@ public class EventBean {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the tags
      */
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the tags
      */
@@ -160,13 +175,15 @@ public class EventBean {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param tags the tags to set
      */
     public void setTags(List<TagModel> tags) {
         this.tags = tags;
     }
-    
+
     /**
      * @return the listenerMethod
      */
@@ -174,7 +191,7 @@ public class EventBean {
     public String getListenerMethod() {
         return listenerMethod;
     }
-    
+
     /**
      * @param listenerMethod the listenerMethod to set
      */

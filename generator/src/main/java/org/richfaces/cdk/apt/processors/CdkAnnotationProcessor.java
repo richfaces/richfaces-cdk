@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt.processors;
 
 import java.lang.annotation.Annotation;
@@ -31,21 +30,22 @@ import org.richfaces.cdk.CdkProcessingException;
 import org.richfaces.cdk.model.ComponentLibrary;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
-public interface CdkAnnotationProcessor  {
-    
-
+public interface CdkAnnotationProcessor {
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param element
      * @param library TODO
      * @throws CdkProcessingException
      */
-    public void process(Element element, ComponentLibrary library) throws CdkProcessingException;
-    
-    public Class<? extends Annotation> getProcessedAnnotation();
+    void process(Element element, ComponentLibrary library) throws CdkProcessingException;
 
+    Class<? extends Annotation> getProcessedAnnotation();
 }

@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig;
 
 import java.io.File;
@@ -60,17 +59,15 @@ import com.google.inject.Inject;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class JAXBBinding implements JAXB {
     public static final ImmutableSet<String> IGNORE_PROPERTIES = ImmutableSet.of("class", "extension");
     private static final FacesConfigNamespacePreffixMapper PREFFIX_MAPPER = new FacesConfigNamespacePreffixMapper();
-
     @Inject
     private EntityResolver2 resolver;
-
     @Inject
     private Logger log;
 
@@ -79,12 +76,11 @@ public class JAXBBinding implements JAXB {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.xmlconfig.JAXB#unmarshal(java.io.File, java.lang.String, java.lang.Class)
      */
     @Override
-    public <T> T unmarshal(File file, String schemaLocation, Class<T> bindClass) throws CdkException,
-        FileNotFoundException {
+    public <T> T unmarshal(File file, String schemaLocation, Class<T> bindClass) throws CdkException, FileNotFoundException {
         InputSource input = new InputSource(new FileInputStream(file));
 
         input.setSystemId(file.toURI().toString());
@@ -96,12 +92,11 @@ public class JAXBBinding implements JAXB {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.xmlconfig.JAXB#unmarshal(java.lang.String, java.lang.String, java.lang.Class)
      */
     @Override
-    public <T> T unmarshal(String url, String schemaLocation, Class<T> bindClass) throws CdkException,
-        FileNotFoundException {
+    public <T> T unmarshal(String url, String schemaLocation, Class<T> bindClass) throws CdkException, FileNotFoundException {
         try {
             InputSource inputSource;
             try {
@@ -177,7 +172,7 @@ public class JAXBBinding implements JAXB {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.xmlconfig.JAXB#marshal(java.io.File, java.lang.String, T)
      */
     @Override
@@ -197,7 +192,7 @@ public class JAXBBinding implements JAXB {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.xmlconfig.JAXB#marshal(javax.xml.transform.Result, java.lang.String, T)
      */
     @Override
@@ -231,7 +226,7 @@ public class JAXBBinding implements JAXB {
      * <p class="changed_added_4_0">
      * Close input source after parsing.
      * </p>
-     * 
+     *
      * @param source
      */
     private void closeSource(Source source) {

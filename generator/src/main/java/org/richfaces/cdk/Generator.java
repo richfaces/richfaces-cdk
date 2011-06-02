@@ -19,10 +19,9 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk;
 
-import static com.google.common.base.Preconditions.*;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -52,34 +51,21 @@ import com.google.inject.name.Names;
 /**
  * @author asmirnov
  * @version $Id$
- * 
+ *
  */
 public class Generator {
-
     public static final String RENDERER_UTILS_CLASS = "rendererUtils";
-
     public static final String OPTIONS = "OPTIONS";
-
     private CdkClassLoader loader;
-
     private Logger log = new JavaLogger();
-
     private Injector injector;
-
     private String namespace;
-
     private Locale locale = Locale.getDefault();
-
     private Charset charset = Charset.defaultCharset();
-
     private Map<Outputs, FileManager> outputFolders = Maps.newEnumMap(Outputs.class);
-
     private Map<Sources, FileManager> sources = Maps.newEnumMap(Sources.class);
-
     private LibraryBuilder libraryBuilder;
-
     private Map<String, String> options = Maps.newHashMap();
-
     private java.util.logging.Logger logger;
 
     public Generator() {
@@ -130,12 +116,10 @@ public class Generator {
 
     public void setOptions(Map<String, String> options) {
         this.options = options;
-
     }
 
     public void init() {
-        injector =
-            Guice.createInjector(Stage.PRODUCTION, new CdkConfigurationModule(), new AptModule(), new ModelModule(),
+        injector = Guice.createInjector(Stage.PRODUCTION, new CdkConfigurationModule(), new AptModule(), new ModelModule(),
                 new ClassGeneratorModule(), new TemplateModule(), new XmlModule(), new TaglibModule());
 
         if (!log.isDebugEnabled()) {
@@ -180,7 +164,6 @@ public class Generator {
     }
 
     public class CdkConfigurationModule extends AbstractModule {
-
         @Override
         protected void configure() {
             bind(CdkClassLoader.class).toInstance(loader);
@@ -198,7 +181,6 @@ public class Generator {
             bind(ModelValidator.class).to(ValidatorImpl.class);
             Names.bindProperties(binder(), options);
         }
-
     }
 
     public String getNamespace() {

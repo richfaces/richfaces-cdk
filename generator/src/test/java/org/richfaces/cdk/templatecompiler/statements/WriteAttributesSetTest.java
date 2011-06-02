@@ -20,10 +20,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.statements;
-
-import static org.junit.Assert.*;
 
 import java.util.Collections;
 
@@ -40,13 +37,12 @@ import com.google.inject.Inject;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 @RunWith(CdkTestRunner.class)
 public class WriteAttributesSetTest extends FreeMarkerTestBase {
-
     @Inject
     private WriteAttributesSetStatement statement;
 
@@ -69,5 +65,4 @@ public class WriteAttributesSetTest extends FreeMarkerTestBase {
         JavaField javaField = Iterables.getOnlyElement(statement.getRequiredFields());
         verifyCode(javaField.getValue().getCode(), "attributes()", "generic(", "defaultValue(");
     }
-
 }

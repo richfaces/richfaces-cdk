@@ -39,26 +39,23 @@ import com.google.common.collect.Sets;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class FreeMarkerTemplateStatementBase extends StatementsContainer {
-
     protected StatementsContainer parent;
     private String templateName;
     private final FreeMarkerRenderer renderer;
     private final Set<JavaImport> imports = Sets.newTreeSet(JavaImport.COMPARATOR);
     private final EnumSet<HelperMethod> requiredMethods = EnumSet.noneOf(HelperMethod.class);
     private final List<JavaField> fields = Lists.newArrayList();
-    
     private boolean parsed = false;
     private String code;
 
     protected FreeMarkerTemplateStatementBase(FreeMarkerRenderer renderer, String templateName) {
         super();
         this.renderer = renderer;
-        this.templateName = templateName+".ftl";
+        this.templateName = templateName + ".ftl";
     }
-
 
     @Override
     public String getCode() {
@@ -67,36 +64,39 @@ public class FreeMarkerTemplateStatementBase extends StatementsContainer {
     }
 
     private void parse() {
-        if(!parsed){
+        if (!parsed) {
             code = renderer.renderTemplate(templateName, this);
             parsed = true;
         }
     }
 
     /**
-     * <p class="changed_added_4_0">Some templates use modelItem variable</p>
+     * <p class="changed_added_4_0">
+     * Some templates use modelItem variable
+     * </p>
+     *
      * @return
      */
     public Object getModelItem() {
         return this;
     }
-    
+
     @Override
     public Iterable<JavaImport> getRequiredImports() {
         parse();
-        return Iterables.concat(super.getRequiredImports(),imports);
+        return Iterables.concat(super.getRequiredImports(), imports);
     }
 
     @Override
     public Iterable<JavaField> getRequiredFields() {
         parse();
-        return Iterables.concat(super.getRequiredFields(),fields);
+        return Iterables.concat(super.getRequiredFields(), fields);
     }
 
     @Override
     public Iterable<HelperMethod> getRequiredMethods() {
         parse();
-        return Iterables.concat(super.getRequiredMethods(),requiredMethods);
+        return Iterables.concat(super.getRequiredMethods(), requiredMethods);
     }
 
     protected void addRequiredMethods(HelperMethod... methods) {
@@ -104,30 +104,29 @@ public class FreeMarkerTemplateStatementBase extends StatementsContainer {
             requiredMethods.add(helperMethod);
         }
     }
-    
+
     public void setTemplateName(String templateName) {
-        this.templateName = templateName+".ftl";
+        this.templateName = templateName + ".ftl";
     }
 
     public void addConstant(String type, String name, String code) {
-        JavaField field = new JavaField(new ReferencedType(type),name);
+        JavaField field = new JavaField(new ReferencedType(type), name);
         field.addModifier(JavaModifier.PRIVATE);
         field.addModifier(JavaModifier.STATIC);
         field.addModifier(JavaModifier.FINAL);
-        if(!Strings.isEmpty(code)){
+        if (!Strings.isEmpty(code)) {
             field.setValue(new TemplateStatementImpl(code));
         }
         fields.add(field);
     }
-    
+
     public void addImport(String name) {
         imports.add(new JavaImportImpl(name));
     }
-    
-    protected void addImports(Iterable<JavaImport> requiredImports) {
-        Iterables.addAll(imports, requiredImports);        
-    }
 
+    protected void addImports(Iterable<JavaImport> requiredImports) {
+        Iterables.addAll(imports, requiredImports);
+    }
 
     public void addRequiredMethod(String helperMethodName) {
         HelperMethod helperMethod = HelperMethod.valueOf(helperMethodName);

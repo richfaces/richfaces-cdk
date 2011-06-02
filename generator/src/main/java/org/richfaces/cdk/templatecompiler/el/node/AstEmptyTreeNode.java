@@ -18,12 +18,9 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.cdk.templatecompiler.el.node;
 
-import static org.richfaces.cdk.templatecompiler.statements.HelperMethod.*;
+import static org.richfaces.cdk.templatecompiler.statements.HelperMethod.EMPTINESS_CHECK;
 
 import org.jboss.el.parser.Node;
 import org.richfaces.cdk.templatecompiler.el.ELNodeConstants;
@@ -45,15 +42,15 @@ public class AstEmptyTreeNode extends AbstractTreeNode {
     @Override
     public void visit(StringBuilder sb, ELVisitor visitor) throws ParsingException {
         visitor.addHelperMethods(EMPTINESS_CHECK);
-    	
+
         sb.append(EMPTINESS_CHECK.getName());
         sb.append(ELNodeConstants.LEFT_BRACKET);
 
         String childOutput = getChildOutput(0, visitor);
         sb.append(childOutput);
-        
+
         sb.append(ELNodeConstants.RIGHT_BRACKET);
-        
+
         visitor.setExpressionType(TypesFactory.BOOLEAN_TYPE);
         visitor.setLiteral(false);
     }

@@ -10,25 +10,18 @@
  * only.</li>
  * <li>Encapsulates <a href="http://www.jboss.org/community/docs/DOC-13693">CDK naming conventions</a></li>
  * <li>Provides 'Visitor' pattern methods. see {@link Visitor} for reference.</li>
- * </ul> 
+ * </ul>
  *
  */
 @XmlAccessorType(XmlAccessType.NONE)
-@javax.xml.bind.annotation.XmlSchema(
-    namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE,
-    location = ComponentLibrary.FACES_CONFIG_SCHEMA_LOCATION,
-    elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED,    
-    xmlns = {@javax.xml.bind.annotation.XmlNs(prefix = "cdk",
-        namespaceURI = ComponentLibrary.CDK_EXTENSIONS_NAMESPACE),
-        @javax.xml.bind.annotation.XmlNs(prefix = "",
-            namespaceURI = ComponentLibrary.FACES_CONFIG_NAMESPACE)})
-@XmlJavaTypeAdapters({
-    @XmlJavaTypeAdapter(type = ClassName.class, value = ClassAdapter.class),
-    @XmlJavaTypeAdapter(type = AttributeModel.class, value = AttributeAdapter.class),
-    @XmlJavaTypeAdapter(type = PropertyModel.class, value = PropertyAdapter.class),
-    @XmlJavaTypeAdapter(type = FacesId.class, value = FacesIdAdapter.class),
-    @XmlJavaTypeAdapter(type = ComponentLibrary.class, value = FacesConfigAdapter.class)
-})
+@javax.xml.bind.annotation.XmlSchema(namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE, location = ComponentLibrary.FACES_CONFIG_SCHEMA_LOCATION, elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED, xmlns = {
+        @javax.xml.bind.annotation.XmlNs(prefix = "cdk", namespaceURI = ComponentLibrary.CDK_EXTENSIONS_NAMESPACE),
+        @javax.xml.bind.annotation.XmlNs(prefix = "", namespaceURI = ComponentLibrary.FACES_CONFIG_NAMESPACE) })
+@XmlJavaTypeAdapters({ @XmlJavaTypeAdapter(type = ClassName.class, value = ClassAdapter.class),
+        @XmlJavaTypeAdapter(type = AttributeModel.class, value = AttributeAdapter.class),
+        @XmlJavaTypeAdapter(type = PropertyModel.class, value = PropertyAdapter.class),
+        @XmlJavaTypeAdapter(type = FacesId.class, value = FacesIdAdapter.class),
+        @XmlJavaTypeAdapter(type = ComponentLibrary.class, value = FacesConfigAdapter.class) })
 package org.richfaces.cdk.model;
 
 import javax.xml.bind.annotation.XmlAccessType;

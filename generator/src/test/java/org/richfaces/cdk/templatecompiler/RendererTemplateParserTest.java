@@ -21,8 +21,18 @@
  */
 package org.richfaces.cdk.templatecompiler;
 
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.eq;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.isNull;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -62,24 +72,19 @@ import com.google.inject.Inject;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 @RunWith(CdkTestRunner.class)
 public class RendererTemplateParserTest extends CdkTestBase {
-
     @Inject
     @As(JAXBBinding.class)
     private JAXB binding;
-
     @Inject
     private ComponentLibrary library;
-
     @Inject
     private RendererTemplateParser parser;
-
     @Mock
     private EntityResolver2 resolver;
-
     @Mock
     @Source(Sources.RENDERER_TEMPLATES)
     private FileManager templatesSource;
@@ -119,7 +124,7 @@ public class RendererTemplateParserTest extends CdkTestBase {
 
     /**
      * Checks that method signature satisfies the following declaration: <code>java.lang.String action()</code>
-     * 
+     *
      * @param actionProperty
      */
     private void checkDummyComponentAction(PropertyBase actionProperty) {
@@ -134,28 +139,29 @@ public class RendererTemplateParserTest extends CdkTestBase {
     /**
      * Checks that method signature satisfies the following declaration:
      * <code>void actionListener(javax.faces.event.ActionEvent)</code>
-     * 
+     *
      * @param actionListenerProperty
      */
     private void checkDummyComponentActionListener(PropertyBase actionListenerProperty) {
         assertNotNull(actionListenerProperty);
         assertNoEventNames(actionListenerProperty);
 
-        assertEquals(Lists.newArrayList(new ClassName(ActionEvent.class)), actionListenerProperty.getSignature().getParameters());
+        assertEquals(Lists.newArrayList(new ClassName(ActionEvent.class)), actionListenerProperty.getSignature()
+                .getParameters());
     }
 
     /**
      * Checks that method signature satisfies the following declaration:
      * <code>float coolMethod(int, java.lang.String, javax.faces.validator.Validator)</code>
-     * 
+     *
      * @param coolMethodProperty
      */
     private void checkDummyComponentCoolMethod(PropertyBase coolMethodProperty) {
         assertNotNull(coolMethodProperty);
         assertNoEventNames(coolMethodProperty);
 
-        ArrayList<ClassName> expectedSignature =
-            Lists.newArrayList(new ClassName(int.class), new ClassName(String.class), new ClassName(Validator.class));
+        ArrayList<ClassName> expectedSignature = Lists.newArrayList(new ClassName(int.class), new ClassName(String.class),
+                new ClassName(Validator.class));
 
         assertEquals(expectedSignature, coolMethodProperty.getSignature().getParameters());
     }
@@ -187,7 +193,7 @@ public class RendererTemplateParserTest extends CdkTestBase {
      * Checks the following conditions for attribute:<br />
      * - signature is empty<br />
      * - There's a single "change" event name that is not a default event<br />
-     * 
+     *
      * @param onchangeAttr
      */
     private void checkDummyComponentOnchange(PropertyBase onchangeAttr) {
@@ -210,11 +216,11 @@ public class RendererTemplateParserTest extends CdkTestBase {
 
     /**
      * Checks the following conditions for attribute:<br />
-     * 
+     *
      * - signature is empty<br />
      * - First event name is "click" and it's not a default event<br />
      * - Second event name is "action" and it is a default event<br />
-     * 
+     *
      * @param onclickAttr
      */
     private void checkDummyComponentOnclick(PropertyBase onclickAttr) {
@@ -258,16 +264,17 @@ public class RendererTemplateParserTest extends CdkTestBase {
     @Test
     // TODO - fix import-attributes.
     public void dummyComponentTest() throws Exception {
-        expect(resolver.getExternalSubset(EasyMock.<String> eq("cdk:root"), (String) anyObject())).andReturn(null);
+        expect(resolver.getExternalSubset(EasyMock.<String>eq("cdk:root"), (String) anyObject())).andReturn(null);
         expect(
-            resolver.resolveEntity((String) isNull(),
-                eq("urn:resource:org/richfaces/cdk/templatecompiler/dummy-attributes.xml"))).andReturn(
-                new InputSource(this.getClass().getResourceAsStream(
-                    "/org/richfaces/cdk/templatecompiler/dummy-attributes.xml")));
-        expect(resolver.getExternalSubset(EasyMock.<String> eq("cdk:properties"), (String) isNull())).andReturn(null);
+                resolver.resolveEntity((String) isNull(),
+                        eq("urn:resource:org/richfaces/cdk/templatecompiler/dummy-attributes.xml")))
+                .andReturn(
+                        new InputSource(this.getClass().getResourceAsStream(
+                                "/org/richfaces/cdk/templatecompiler/dummy-attributes.xml")));
+        expect(resolver.getExternalSubset(EasyMock.<String>eq("cdk:properties"), (String) isNull())).andReturn(null);
         expect(resolver.resolveEntity((String) isNull(), eq("urn:attributes:dummy-template-props.xml"))).andReturn(
-            new InputSource(this.getClass().getResourceAsStream("/META-INF/cdk/attributes/dummy-template-props.xml")));
-        expect(resolver.getExternalSubset(EasyMock.<String> eq("cdk:properties"), (String) isNull())).andReturn(null);
+                new InputSource(this.getClass().getResourceAsStream("/META-INF/cdk/attributes/dummy-template-props.xml")));
+        expect(resolver.getExternalSubset(EasyMock.<String>eq("cdk:properties"), (String) isNull())).andReturn(null);
 
         replay(resolver, templatesSource);
         Template template = parser.parseTemplate(getJavaFile("org/richfaces/cdk/templatecompiler/dummy.template.xml"));
@@ -332,5 +339,4 @@ public class RendererTemplateParserTest extends CdkTestBase {
 
         return renderKit;
     }
-
 }

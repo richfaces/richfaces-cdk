@@ -20,10 +20,10 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 import java.util.List;
@@ -55,28 +55,23 @@ import com.google.inject.Inject;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 @RunWith(CdkTestRunner.class)
 public class FacesConfigTest extends CdkTestBase {
-
     @Inject
     @As(JAXBBinding.class)
     JAXB jaxbBinding;
-
     @Inject
     FragmentParser parser;
-
     @Inject
     @As(CdkEntityResolver.class)
     EntityResolver2 resolver;
-
     @Mock
     @Source(Sources.FACES_CONFIGS)
     private FileManager configSource;
-
     @Mock
     @Source(Sources.RENDERER_TEMPLATES)
     private FileManager templatesSource;
@@ -89,8 +84,7 @@ public class FacesConfigTest extends CdkTestBase {
 
     @Test
     public void testComponentUnmarshal() throws Exception {
-        FacesConfigBean library =
-            jaxbBinding.unmarshal("urn:resource:org/richfaces/cdk/xmlconfig/component.xml",
+        FacesConfigBean library = jaxbBinding.unmarshal("urn:resource:org/richfaces/cdk/xmlconfig/component.xml",
                 ComponentLibrary.FACES_CONFIG_SCHEMA_LOCATION, FacesConfigBean.class);
 
         assertEquals(1, library.getComponents().size());
@@ -119,8 +113,7 @@ public class FacesConfigTest extends CdkTestBase {
     @Test
     public void testRenderKitUnmarshall() throws Exception {
 
-        FacesConfigBean library =
-            jaxbBinding.unmarshal("urn:resource:org/richfaces/cdk/xmlconfig/renderkit.xml",
+        FacesConfigBean library = jaxbBinding.unmarshal("urn:resource:org/richfaces/cdk/xmlconfig/renderkit.xml",
                 ComponentLibrary.FACES_CONFIG_SCHEMA_LOCATION, FacesConfigBean.class);
         List<RenderKitModel> renderKits = library.getRenderKits();
         assertEquals(2, renderKits.size());

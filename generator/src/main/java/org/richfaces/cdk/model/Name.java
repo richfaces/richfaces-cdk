@@ -20,45 +20,38 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.model;
 
 import java.util.regex.Pattern;
 
 /**
  * <p class="changed_added_4_0">
- * Represents parts of component type/family/classname according to CDK naming
- * conventions.
+ * Represents parts of component type/family/classname according to CDK naming conventions.
  * </p>
  *
  * @author asmirnov@exadel.com
  */
 public class Name {
     private static final Pattern NAME_PATTERN = Pattern.compile("^(?:(.+)\\.)?(?:(" + Classifier.component + "|"
-        + Classifier.renderkit + "|" + Classifier.event + "|"
-        + Classifier.taglib + ")\\.(?:([^\\.]+)\\.)?)?([^\\.]+)$");
-
+            + Classifier.renderkit + "|" + Classifier.event + "|" + Classifier.taglib + ")\\.(?:([^\\.]+)\\.)?)?([^\\.]+)$");
     /**
      * <p class="changed_added_4_0">
      * Element type classifier - "component","event","renderkit","taglib"
      * </p>
      */
     private Classifier classifier;
-
     /**
      * <p class="changed_added_4_0">
      * Markup-specific part of name ( "html","xhtml","wml" ... )
      * </p>
      */
     private String markup;
-
     /**
      * <p class="changed_added_4_0">
      * represents library part prefix of name.
      * </p>
      */
     private String prefix;
-
     /**
      * <p class="changed_added_4_0">
      * Simple name ( last word after a period ).
@@ -76,25 +69,25 @@ public class Name {
     public enum Classifier {
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          */
         component,
-
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          */
         renderkit,
-
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          */
         event,
-
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          */
         taglib,
-        
         behavior;
     }
 
@@ -141,11 +134,13 @@ public class Name {
     }
 
     /**
-     * <p class="changed_added_4_0">Utility method that composes library prefix from first elements of array</p>
+     * <p class="changed_added_4_0">
+     * Utility method that composes library prefix from first elements of array
+     * </p>
      *
      * @param prefix buffer that collects prefix.
-     * @param parts  package name parts
-     * @param size   size of prefix part of array.
+     * @param parts package name parts
+     * @param size size of prefix part of array.
      */
     private static void fillPrefix(StringBuilder prefix, String[] parts, int size) {
         for (int i = 0; i < size; i++) {

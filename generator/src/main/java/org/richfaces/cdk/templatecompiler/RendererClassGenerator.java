@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler;
 
 import java.io.IOException;
@@ -50,7 +49,7 @@ import freemarker.template.TemplateException;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
  */
 public class RendererClassGenerator implements CdkWriter {
@@ -62,7 +61,7 @@ public class RendererClassGenerator implements CdkWriter {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @param library
      * @param output
      * @param log
@@ -70,7 +69,7 @@ public class RendererClassGenerator implements CdkWriter {
      */
     @Inject
     public RendererClassGenerator(@Output(Outputs.JAVA_CLASSES) FileManager output, Logger log,
-        TemplateVisitorFactory<RendererClassVisitor> visitorFactory, @TemplateModel FreeMarkerRenderer renderer) {
+            TemplateVisitorFactory<RendererClassVisitor> visitorFactory, @TemplateModel FreeMarkerRenderer renderer) {
         this.output = output;
         this.log = log;
         this.visitorFactory = visitorFactory;
@@ -83,7 +82,7 @@ public class RendererClassGenerator implements CdkWriter {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.CdkWriter#render(org.richfaces.cdk.model.ComponentLibrary )
      */
     @Override
@@ -92,7 +91,7 @@ public class RendererClassGenerator implements CdkWriter {
             for (RendererModel renderer : renderKit.getRenderers()) {
                 Template template = renderer.getTemplate();
                 if (null != template) {
-                    Collection<PropertyBase> attributes = ModelSet.<PropertyBase> create();
+                    Collection<PropertyBase> attributes = ModelSet.<PropertyBase>create();
 
                     ComponentModel component = findComponentByRenderer(renderer, library);
                     if (component != null) {
@@ -108,8 +107,7 @@ public class RendererClassGenerator implements CdkWriter {
                     JavaClass javaClass = visitor.getGeneratedClass();
                     String fullName = javaClass.getName();
                     try {
-                        Writer outFile =
-                            output.createOutput(fullName.replace('.', '/') + ".java", library.lastModified());
+                        Writer outFile = output.createOutput(fullName.replace('.', '/') + ".java", library.lastModified());
 
                         if (null != outFile) {
                             this.renderer.writeTemplate("class.ftl", javaClass, outFile);
@@ -121,7 +119,6 @@ public class RendererClassGenerator implements CdkWriter {
                         throw new CdkException(e);
                     }
                 }
-
             }
         }
     }

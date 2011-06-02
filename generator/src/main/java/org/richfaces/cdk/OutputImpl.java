@@ -2,15 +2,13 @@ package org.richfaces.cdk;
 
 import java.lang.annotation.Annotation;
 
-
 public class OutputImpl implements Output {
-
     private final Outputs value;
-    
+
     public OutputImpl(Output value) {
         this.value = value.value();
     }
-    
+
     public OutputImpl(Outputs value) {
         this.value = value;
     }

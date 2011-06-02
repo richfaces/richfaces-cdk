@@ -41,9 +41,6 @@
  * file under either the MPL or the GPL.
  *
  * ***** END LICENSE BLOCK ***** */
-
-
-
 package org.mozilla.javascript;
 
 import java.io.*;
@@ -60,16 +57,14 @@ import java.io.*;
  * @author Brendan Eich
  */
 class TokenStream {
-
     /*
-     * For chars - because we need something out-of-range
-     * to check.  (And checking EOF by exception is annoying.)
-     * Note distinction from EOF token type!
-     */
+    * For chars - because we need something out-of-range
+    * to check.  (And checking EOF by exception is annoying.)
+    * Note distinction from EOF token type!
+    */
     private final static int EOF_CHAR = -1;
     private int lineEndChar = -1;
     private int lineStart = 0;
-
     // Set this to an inital non-null value so that the Parser has
     // something to retrieve even if an error has occured and no
     // string is found.  Fosters one class of error, but saves lots of
@@ -77,11 +72,9 @@ class TokenStream {
     private String string = "";
     private char[] stringBuffer = new char[128];
     private ObjToIntMap allStrings = new ObjToIntMap(50);
-
     // Room to backtrace from to < on failed match of the last - in <!--
     private final int[] ungetBuffer = new int[3];
     private boolean hitEOF = false;
-
     // stuff other than whitespace since start of line
     private boolean dirtyLine;
     private int lineno;
@@ -95,7 +88,6 @@ class TokenStream {
     private String sourceString;
     private int stringBufferTop;
     private int ungetCursor;
-
     // for xml tokenizer
     private boolean xmlIsAttribute;
     private boolean xmlIsTagContent;
@@ -135,12 +127,12 @@ class TokenStream {
             String name = Token.name(token);
 
             switch (token) {
-                case Token.STRING :
-                case Token.REGEXP :
-                case Token.NAME :
+                case Token.STRING:
+                case Token.REGEXP:
+                case Token.NAME:
                     return name + " `" + this.string + "'";
 
-                case Token.NUMBER :
+                case Token.NUMBER:
                     return "NUMBER " + this.number;
             }
 
@@ -159,38 +151,40 @@ class TokenStream {
 //      #string_id_map#
 //      The following assumes that Token.EOF == 0
         final int Id_break = Token.BREAK, Id_case = Token.CASE, Id_continue = Token.CONTINUE,
-                  Id_default = Token.DEFAULT, Id_delete = Token.DELPROP, Id_do = Token.DO, Id_else = Token.ELSE,
-                  Id_export = Token.EXPORT, Id_false = Token.FALSE, Id_for = Token.FOR, Id_function = Token.FUNCTION,
-                  Id_if = Token.IF, Id_in = Token.IN, Id_new = Token.NEW, Id_null = Token.NULL,
-                  Id_return = Token.RETURN, Id_switch = Token.SWITCH, Id_this = Token.THIS, Id_true = Token.TRUE,
-                  Id_typeof = Token.TYPEOF, Id_var = Token.VAR, Id_void = Token.VOID, Id_while = Token.WHILE,
-                  Id_with = Token.WITH,
+                Id_default = Token.DEFAULT, Id_delete = Token.DELPROP, Id_do = Token.DO, Id_else = Token.ELSE,
+                Id_export = Token.EXPORT, Id_false = Token.FALSE, Id_for = Token.FOR, Id_function = Token.FUNCTION,
+                Id_if = Token.IF, Id_in = Token.IN, Id_new = Token.NEW, Id_null = Token.NULL,
+                Id_return = Token.RETURN, Id_switch = Token.SWITCH, Id_this = Token.THIS, Id_true = Token.TRUE,
+                Id_typeof = Token.TYPEOF, Id_var = Token.VAR, Id_void = Token.VOID, Id_while = Token.WHILE,
+                Id_with = Token.WITH,
 
-        // the following are #ifdef RESERVE_JAVA_KEYWORDS in jsscan.c
-        Id_abstract = Token.RESERVED, Id_boolean = Token.RESERVED, Id_byte = Token.RESERVED, Id_catch = Token.CATCH,
-                  Id_char = Token.RESERVED, Id_class = Token.RESERVED, Id_const = Token.CONST,
-                  Id_debugger = Token.RESERVED, Id_double = Token.RESERVED, Id_enum = Token.RESERVED,
-                  Id_extends = Token.RESERVED, Id_final = Token.RESERVED, Id_finally = Token.FINALLY,
-                  Id_float = Token.RESERVED, Id_goto = Token.RESERVED, Id_implements = Token.RESERVED,
-                  Id_import = Token.IMPORT, Id_instanceof = Token.INSTANCEOF, Id_int = Token.RESERVED,
-                  Id_interface = Token.RESERVED, Id_long = Token.RESERVED, Id_native = Token.RESERVED,
-                  Id_package = Token.RESERVED, Id_private = Token.RESERVED, Id_protected = Token.RESERVED,
-                  Id_public = Token.RESERVED, Id_short = Token.RESERVED, Id_static = Token.RESERVED,
-                  Id_super = Token.RESERVED, Id_synchronized = Token.RESERVED, Id_throw = Token.THROW,
-                  Id_throws = Token.RESERVED, Id_transient = Token.RESERVED, Id_try = Token.TRY,
-                  Id_volatile = Token.RESERVED;
+                // the following are #ifdef RESERVE_JAVA_KEYWORDS in jsscan.c
+                Id_abstract = Token.RESERVED, Id_boolean = Token.RESERVED, Id_byte = Token.RESERVED, Id_catch = Token.CATCH,
+                Id_char = Token.RESERVED, Id_class = Token.RESERVED, Id_const = Token.CONST,
+                Id_debugger = Token.RESERVED, Id_double = Token.RESERVED, Id_enum = Token.RESERVED,
+                Id_extends = Token.RESERVED, Id_final = Token.RESERVED, Id_finally = Token.FINALLY,
+                Id_float = Token.RESERVED, Id_goto = Token.RESERVED, Id_implements = Token.RESERVED,
+                Id_import = Token.IMPORT, Id_instanceof = Token.INSTANCEOF, Id_int = Token.RESERVED,
+                Id_interface = Token.RESERVED, Id_long = Token.RESERVED, Id_native = Token.RESERVED,
+                Id_package = Token.RESERVED, Id_private = Token.RESERVED, Id_protected = Token.RESERVED,
+                Id_public = Token.RESERVED, Id_short = Token.RESERVED, Id_static = Token.RESERVED,
+                Id_super = Token.RESERVED, Id_synchronized = Token.RESERVED, Id_throw = Token.THROW,
+                Id_throws = Token.RESERVED, Id_transient = Token.RESERVED, Id_try = Token.TRY,
+                Id_volatile = Token.RESERVED;
         int id;
         String s = name;
 
 //      #generated# Last update: 2001-06-01 17:45:01 CEST
-        L0:{
+        L0:
+        {
             id = 0;
 
             String X = null;
             int c;
 
-            L:switch (s.length()) {
-                case 2 :
+            L:
+            switch (s.length()) {
+                case 2:
                     c = s.charAt(1);
 
                     if (c == 'f') {
@@ -215,9 +209,9 @@ class TokenStream {
 
                     break L;
 
-                case 3 :
+                case 3:
                     switch (s.charAt(0)) {
-                        case 'f' :
+                        case 'f':
                             if (s.charAt(2) == 'r' && s.charAt(1) == 'o') {
                                 id = Id_for;
 
@@ -226,7 +220,7 @@ class TokenStream {
 
                             break L;
 
-                        case 'i' :
+                        case 'i':
                             if (s.charAt(2) == 't' && s.charAt(1) == 'n') {
                                 id = Id_int;
 
@@ -235,7 +229,7 @@ class TokenStream {
 
                             break L;
 
-                        case 'n' :
+                        case 'n':
                             if (s.charAt(2) == 'w' && s.charAt(1) == 'e') {
                                 id = Id_new;
 
@@ -244,7 +238,7 @@ class TokenStream {
 
                             break L;
 
-                        case 't' :
+                        case 't':
                             if (s.charAt(2) == 'y' && s.charAt(1) == 'r') {
                                 id = Id_try;
 
@@ -253,7 +247,7 @@ class TokenStream {
 
                             break L;
 
-                        case 'v' :
+                        case 'v':
                             if (s.charAt(2) == 'r' && s.charAt(1) == 'a') {
                                 id = Id_var;
 
@@ -265,15 +259,15 @@ class TokenStream {
 
                     break L;
 
-                case 4 :
+                case 4:
                     switch (s.charAt(0)) {
-                        case 'b' :
+                        case 'b':
                             X = "byte";
                             id = Id_byte;
 
                             break L;
 
-                        case 'c' :
+                        case 'c':
                             c = s.charAt(3);
 
                             if (c == 'e') {
@@ -292,7 +286,7 @@ class TokenStream {
 
                             break L;
 
-                        case 'e' :
+                        case 'e':
                             c = s.charAt(3);
 
                             if (c == 'e') {
@@ -311,25 +305,25 @@ class TokenStream {
 
                             break L;
 
-                        case 'g' :
+                        case 'g':
                             X = "goto";
                             id = Id_goto;
 
                             break L;
 
-                        case 'l' :
+                        case 'l':
                             X = "long";
                             id = Id_long;
 
                             break L;
 
-                        case 'n' :
+                        case 'n':
                             X = "null";
                             id = Id_null;
 
                             break L;
 
-                        case 't' :
+                        case 't':
                             c = s.charAt(3);
 
                             if (c == 'e') {
@@ -348,13 +342,13 @@ class TokenStream {
 
                             break L;
 
-                        case 'v' :
+                        case 'v':
                             X = "void";
                             id = Id_void;
 
                             break L;
 
-                        case 'w' :
+                        case 'w':
                             X = "with";
                             id = Id_with;
 
@@ -363,33 +357,33 @@ class TokenStream {
 
                     break L;
 
-                case 5 :
+                case 5:
                     switch (s.charAt(2)) {
-                        case 'a' :
+                        case 'a':
                             X = "class";
                             id = Id_class;
 
                             break L;
 
-                        case 'e' :
+                        case 'e':
                             X = "break";
                             id = Id_break;
 
                             break L;
 
-                        case 'i' :
+                        case 'i':
                             X = "while";
                             id = Id_while;
 
                             break L;
 
-                        case 'l' :
+                        case 'l':
                             X = "false";
                             id = Id_false;
 
                             break L;
 
-                        case 'n' :
+                        case 'n':
                             c = s.charAt(0);
 
                             if (c == 'c') {
@@ -402,7 +396,7 @@ class TokenStream {
 
                             break L;
 
-                        case 'o' :
+                        case 'o':
                             c = s.charAt(0);
 
                             if (c == 'f') {
@@ -415,19 +409,19 @@ class TokenStream {
 
                             break L;
 
-                        case 'p' :
+                        case 'p':
                             X = "super";
                             id = Id_super;
 
                             break L;
 
-                        case 'r' :
+                        case 'r':
                             X = "throw";
                             id = Id_throw;
 
                             break L;
 
-                        case 't' :
+                        case 't':
                             X = "catch";
                             id = Id_catch;
 
@@ -436,15 +430,15 @@ class TokenStream {
 
                     break L;
 
-                case 6 :
+                case 6:
                     switch (s.charAt(1)) {
-                        case 'a' :
+                        case 'a':
                             X = "native";
                             id = Id_native;
 
                             break L;
 
-                        case 'e' :
+                        case 'e':
                             c = s.charAt(0);
 
                             if (c == 'd') {
@@ -457,49 +451,49 @@ class TokenStream {
 
                             break L;
 
-                        case 'h' :
+                        case 'h':
                             X = "throws";
                             id = Id_throws;
 
                             break L;
 
-                        case 'm' :
+                        case 'm':
                             X = "import";
                             id = Id_import;
 
                             break L;
 
-                        case 'o' :
+                        case 'o':
                             X = "double";
                             id = Id_double;
 
                             break L;
 
-                        case 't' :
+                        case 't':
                             X = "static";
                             id = Id_static;
 
                             break L;
 
-                        case 'u' :
+                        case 'u':
                             X = "public";
                             id = Id_public;
 
                             break L;
 
-                        case 'w' :
+                        case 'w':
                             X = "switch";
                             id = Id_switch;
 
                             break L;
 
-                        case 'x' :
+                        case 'x':
                             X = "export";
                             id = Id_export;
 
                             break L;
 
-                        case 'y' :
+                        case 'y':
                             X = "typeof";
                             id = Id_typeof;
 
@@ -508,39 +502,39 @@ class TokenStream {
 
                     break L;
 
-                case 7 :
+                case 7:
                     switch (s.charAt(1)) {
-                        case 'a' :
+                        case 'a':
                             X = "package";
                             id = Id_package;
 
                             break L;
 
-                        case 'e' :
+                        case 'e':
                             X = "default";
                             id = Id_default;
 
                             break L;
 
-                        case 'i' :
+                        case 'i':
                             X = "finally";
                             id = Id_finally;
 
                             break L;
 
-                        case 'o' :
+                        case 'o':
                             X = "boolean";
                             id = Id_boolean;
 
                             break L;
 
-                        case 'r' :
+                        case 'r':
                             X = "private";
                             id = Id_private;
 
                             break L;
 
-                        case 'x' :
+                        case 'x':
                             X = "extends";
                             id = Id_extends;
 
@@ -549,33 +543,33 @@ class TokenStream {
 
                     break L;
 
-                case 8 :
+                case 8:
                     switch (s.charAt(0)) {
-                        case 'a' :
+                        case 'a':
                             X = "abstract";
                             id = Id_abstract;
 
                             break L;
 
-                        case 'c' :
+                        case 'c':
                             X = "continue";
                             id = Id_continue;
 
                             break L;
 
-                        case 'd' :
+                        case 'd':
                             X = "debugger";
                             id = Id_debugger;
 
                             break L;
 
-                        case 'f' :
+                        case 'f':
                             X = "function";
                             id = Id_function;
 
                             break L;
 
-                        case 'v' :
+                        case 'v':
                             X = "volatile";
                             id = Id_volatile;
 
@@ -584,7 +578,7 @@ class TokenStream {
 
                     break L;
 
-                case 9 :
+                case 9:
                     c = s.charAt(0);
 
                     if (c == 'i') {
@@ -600,7 +594,7 @@ class TokenStream {
 
                     break L;
 
-                case 10 :
+                case 10:
                     c = s.charAt(1);
 
                     if (c == 'm') {
@@ -613,7 +607,7 @@ class TokenStream {
 
                     break L;
 
-                case 12 :
+                case 12:
                     X = "synchronized";
                     id = Id_synchronized;
 
@@ -653,10 +647,11 @@ class TokenStream {
     final int getToken() throws IOException {
         int c;
 
-        retry:for (;;) {
+        retry:
+        for (; ; ) {
 
             // Eat whitespace, possibly sensitive to newlines.
-            for (;;) {
+            for (; ; ) {
                 c = getChar();
 
                 if (c == EOF_CHAR) {
@@ -707,7 +702,7 @@ class TokenStream {
             if (identifierStart) {
                 boolean containsEscape = isUnicodeEscapeStart;
 
-                for (;;) {
+                for (; ; ) {
                     if (isUnicodeEscapeStart) {
 
                         // strictly speaking we should probably push-back
@@ -918,16 +913,16 @@ class TokenStream {
                         c = getChar();
 
                         switch (c) {
-                            case '\\' : // backslash
-                            case 'b' : // backspace
-                            case 'f' : // form feed
-                            case 'n' : // line feed
-                            case 'r' : // carriage return
-                            case 't' : // horizontal tab
-                            case 'v' : // vertical tab
-                            case 'd' : // octal sequence
-                            case 'u' : // unicode sequence
-                            case 'x' : // hexadecimal sequence
+                            case '\\': // backslash
+                            case 'b': // backspace
+                            case 'f': // form feed
+                            case 'n': // line feed
+                            case 'r': // carriage return
+                            case 't': // horizontal tab
+                            case 'v': // vertical tab
+                            case 'd': // octal sequence
+                            case 'u': // unicode sequence
+                            case 'x': // hexadecimal sequence
 
                                 // Only keep the '\' character for those
                                 // characters that need to be escaped...
@@ -936,7 +931,7 @@ class TokenStream {
 
                                 break;
 
-                            case '\n' :
+                            case '\n':
 
                                 // Remove line terminator after escape
                                 c = getChar();
@@ -957,40 +952,40 @@ class TokenStream {
             }
 
             switch (c) {
-                case ';' :
+                case ';':
                     return Token.SEMI;
 
-                case '[' :
+                case '[':
                     return Token.LB;
 
-                case ']' :
+                case ']':
                     return Token.RB;
 
-                case '{' :
+                case '{':
                     return Token.LC;
 
-                case '}' :
+                case '}':
                     return Token.RC;
 
-                case '(' :
+                case '(':
                     return Token.LP;
 
-                case ')' :
+                case ')':
                     return Token.RP;
 
-                case ',' :
+                case ',':
                     return Token.COMMA;
 
-                case '?' :
+                case '?':
                     return Token.HOOK;
 
-                case ':' :
+                case ':':
                     if (matchChar(':')) {
                         return Token.COLONCOLON;
                     } else {
                         return Token.COLON;
                     }
-                case '.' :
+                case '.':
                     if (matchChar('.')) {
                         return Token.DOTDOT;
                     } else if (matchChar('(')) {
@@ -998,7 +993,7 @@ class TokenStream {
                     } else {
                         return Token.DOT;
                     }
-                case '|' :
+                case '|':
                     if (matchChar('|')) {
                         return Token.OR;
                     } else if (matchChar('=')) {
@@ -1006,13 +1001,13 @@ class TokenStream {
                     } else {
                         return Token.BITOR;
                     }
-                case '^' :
+                case '^':
                     if (matchChar('=')) {
                         return Token.ASSIGN_BITXOR;
                     } else {
                         return Token.BITXOR;
                     }
-                case '&' :
+                case '&':
                     if (matchChar('&')) {
                         return Token.AND;
                     } else if (matchChar('=')) {
@@ -1020,7 +1015,7 @@ class TokenStream {
                     } else {
                         return Token.BITAND;
                     }
-                case '=' :
+                case '=':
                     if (matchChar('=')) {
                         if (matchChar('=')) {
                             return Token.SHEQ;
@@ -1030,7 +1025,7 @@ class TokenStream {
                     } else {
                         return Token.ASSIGN;
                     }
-                case '!' :
+                case '!':
                     if (matchChar('=')) {
                         if (matchChar('=')) {
                             return Token.SHNE;
@@ -1040,7 +1035,7 @@ class TokenStream {
                     } else {
                         return Token.NOT;
                     }
-                case '<' :
+                case '<':
 
                     /* NB:treat HTML begin-comment as comment-till-eol */
                     if (matchChar('!')) {
@@ -1070,7 +1065,7 @@ class TokenStream {
                             return Token.LT;
                         }
                     }
-                case '>' :
+                case '>':
                     if (matchChar('>')) {
                         if (matchChar('>')) {
                             if (matchChar('=')) {
@@ -1092,13 +1087,13 @@ class TokenStream {
                             return Token.GT;
                         }
                     }
-                case '*' :
+                case '*':
                     if (matchChar('=')) {
                         return Token.ASSIGN_MUL;
                     } else {
                         return Token.MUL;
                     }
-                case '/' :
+                case '/':
 
                     // is it a // comment?
                     if (matchChar('/')) {
@@ -1111,7 +1106,7 @@ class TokenStream {
                         boolean lookForSlash = false;
                         StringBuffer sb = new StringBuffer();
 
-                        for (;;) {
+                        for (; ; ) {
                             c = getChar();
 
                             if (c == EOF_CHAR) {
@@ -1150,16 +1145,16 @@ class TokenStream {
                     } else {
                         return Token.DIV;
                     }
-                case '%' :
+                case '%':
                     if (matchChar('=')) {
                         return Token.ASSIGN_MOD;
                     } else {
                         return Token.MOD;
                     }
-                case '~' :
+                case '~':
                     return Token.BITNOT;
 
-                case '+' :
+                case '+':
                     if (matchChar('=')) {
                         return Token.ASSIGN_ADD;
                     } else if (matchChar('+')) {
@@ -1167,7 +1162,7 @@ class TokenStream {
                     } else {
                         return Token.ADD;
                     }
-                case '-' :
+                case '-':
                     if (matchChar('=')) {
                         c = Token.ASSIGN_SUB;
                     } else if (matchChar('-')) {
@@ -1191,7 +1186,7 @@ class TokenStream {
 
                     return c;
 
-                default :
+                default:
                     parser.addError("msg.illegal.character");
 
                     return Token.ERROR;
@@ -1304,14 +1299,14 @@ class TokenStream {
         for (int c = getChar(); c != EOF_CHAR; c = getChar()) {
             if (xmlIsTagContent) {
                 switch (c) {
-                    case '>' :
+                    case '>':
                         addToString(c);
                         xmlIsTagContent = false;
                         xmlIsAttribute = false;
 
                         break;
 
-                    case '/' :
+                    case '/':
                         addToString(c);
 
                         if (peekChar() == '>') {
@@ -1323,14 +1318,14 @@ class TokenStream {
 
                         break;
 
-                    case '{' :
+                    case '{':
                         ungetChar(c);
                         this.string = getStringFromBuffer();
 
                         return Token.XML;
 
-                    case '\'' :
-                    case '"' :
+                    case '\'':
+                    case '"':
                         addToString(c);
 
                         if (!readQuotedString(c)) {
@@ -1339,21 +1334,21 @@ class TokenStream {
 
                         break;
 
-                    case '=' :
+                    case '=':
                         addToString(c);
                         xmlIsAttribute = true;
 
                         break;
 
-                    case ' ' :
-                    case '\t' :
-                    case '\r' :
-                    case '\n' :
+                    case ' ':
+                    case '\t':
+                    case '\r':
+                    case '\n':
                         addToString(c);
 
                         break;
 
-                    default :
+                    default:
                         addToString(c);
                         xmlIsAttribute = false;
 
@@ -1367,18 +1362,18 @@ class TokenStream {
                 }
             } else {
                 switch (c) {
-                    case '<' :
+                    case '<':
                         addToString(c);
                         c = peekChar();
 
                         switch (c) {
-                            case '!' :
+                            case '!':
                                 c = getChar(); // Skip !
                                 addToString(c);
                                 c = peekChar();
 
                                 switch (c) {
-                                    case '-' :
+                                    case '-':
                                         c = getChar(); // Skip -
                                         addToString(c);
                                         c = getChar();
@@ -1401,7 +1396,7 @@ class TokenStream {
 
                                         break;
 
-                                    case '[' :
+                                    case '[':
                                         c = getChar(); // Skip [
                                         addToString(c);
 
@@ -1429,7 +1424,7 @@ class TokenStream {
 
                                         break;
 
-                                    default :
+                                    default:
                                         if (!readEntity()) {
                                             return Token.ERROR;
                                         }
@@ -1439,7 +1434,7 @@ class TokenStream {
 
                                 break;
 
-                            case '?' :
+                            case '?':
                                 c = getChar(); // Skip ?
                                 addToString(c);
 
@@ -1449,7 +1444,7 @@ class TokenStream {
 
                                 break;
 
-                            case '/' :
+                            case '/':
 
                                 // End tag
                                 c = getChar(); // Skip /
@@ -1470,7 +1465,7 @@ class TokenStream {
 
                                 break;
 
-                            default :
+                            default:
 
                                 // Start tag
                                 xmlIsTagContent = true;
@@ -1481,13 +1476,13 @@ class TokenStream {
 
                         break;
 
-                    case '{' :
+                    case '{':
                         ungetChar(c);
                         this.string = getStringFromBuffer();
 
                         return Token.XML;
 
-                    default :
+                    default:
                         addToString(c);
 
                         break;
@@ -1593,12 +1588,12 @@ class TokenStream {
             addToString(c);
 
             switch (c) {
-                case '<' :
+                case '<':
                     declTags++;
 
                     break;
 
-                case '>' :
+                case '>':
                     declTags--;
 
                     if (declTags == 0) {
@@ -1691,7 +1686,7 @@ class TokenStream {
             return ungetBuffer[--ungetCursor];
         }
 
-        for (;;) {
+        for (; ; ) {
             int c;
 
             if (sourceString != null) {
@@ -1751,7 +1746,8 @@ class TokenStream {
         // skip to end of line
         int c;
 
-        while ((c = getChar()) != EOF_CHAR && c != '\n') {}
+        while ((c = getChar()) != EOF_CHAR && c != '\n') {
+        }
 
         ungetChar(c);
     }

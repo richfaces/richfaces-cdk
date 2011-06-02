@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.annotations;
 
 import java.lang.annotation.ElementType;
@@ -28,68 +27,88 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation defines taglib for which all tags for JSF components from that packages belong to.
- * Current limitation - there sould be only one taglib package in the project, otherwise the last processed package will
- * override others.
- * 
+ * This annotation defines taglib for which all tags for JSF components from that packages belong to. Current limitation - there
+ * sould be only one taglib package in the project, otherwise the last processed package will override others.
+ *
  * @author asmirnov
  * @version $Id$
- * 
+ *
  */
 @Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.PACKAGE)
 public @interface TagLibrary {
-    
     /**
-     * <p class="changed_added_4_0">Library URI, the same used for JSP and Facelets.</p>
+     * <p class="changed_added_4_0">
+     * Library URI, the same used for JSP and Facelets.
+     * </p>
+     *
      * @return
      */
-    public String uri();
+    String uri();
 
     /**
-     * <p class="changed_added_4_0">Library short name ( default prefix ). The same same also used for faces-config &lt;name&gt; element.</p>
+     * <p class="changed_added_4_0">
+     * Library short name ( default prefix ). The same same also used for faces-config &lt;name&gt; element.
+     * </p>
+     *
      * @return
      */
-    public String shortName();
-    
-    
-    /**
-     * <p class="changed_added_4_0">Default preffix for package names and JSF ids in the library</p>
-     * @return
-     */
-    public String prefix() default "";
+    String shortName();
 
     /**
-     * <p class="changed_added_4_0">Implementation version of the generated taglib.</p>
+     * <p class="changed_added_4_0">
+     * Default preffix for package names and JSF ids in the library
+     * </p>
+     *
      * @return
      */
-    public String tlibVersion() default "";
+    String prefix() default "";
 
     /**
-     * <p class="changed_added_4_0">JSP taglib validator.  TODO - ? extends Validator  ?</p>
+     * <p class="changed_added_4_0">
+     * Implementation version of the generated taglib.
+     * </p>
+     *
      * @return
      */
-    public Class<?> validatorClass() default NONE.class;
+    String tlibVersion() default "";
 
     /**
-     * <p class="changed_added_4_0">Servlet ... listener used by JSP library. TODO - ? extends {@link EventListener} ?</p>
+     * <p class="changed_added_4_0">
+     * JSP taglib validator. TODO - ? extends Validator ?
+     * </p>
+     *
      * @return
      */
-    public Class<?> listenerClass()  default NONE.class;
+    Class<?> validatorClass() default NONE.class;
 
     /**
-     * <p class="changed_added_4_0">Library description, included into generated taglib and faces-config.E</p>
+     * <p class="changed_added_4_0">
+     * Servlet ... listener used by JSP library. TODO - ? extends {@link EventListener} ?
+     * </p>
+     *
      * @return
      */
-    public String displayName() default "";
+    Class<?> listenerClass() default NONE.class;
 
     /**
-     * <p class="changed_added_4_0">Java Server Pages version for generated tld, for JSP taglib only.</p>
+     * <p class="changed_added_4_0">
+     * Library description, included into generated taglib and faces-config.E
+     * </p>
+     *
      * @return
      */
-    public String jspVersion() default "2.0";
+    String displayName() default "";
 
+    /**
+     * <p class="changed_added_4_0">
+     * Java Server Pages version for generated tld, for JSP taglib only.
+     * </p>
+     *
+     * @return
+     */
+    String jspVersion() default "2.0";
 
-    public static final class NONE {}
-
+    public static final class NONE {
+    }
 }

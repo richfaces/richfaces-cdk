@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.builder.model;
 
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ import org.richfaces.cdk.model.ClassName;
 
 /**
  * Java Class model. Intended for building java classes.
- * 
+ *
  * @author Maksim Kaszynski
  */
 public class JavaClass extends JavaLanguageElement {
@@ -41,9 +40,7 @@ public class JavaClass extends JavaLanguageElement {
     private List<JavaMethod> methods = new ArrayList<JavaMethod>();
     private Set<JavaImport> imports = new TreeSet<JavaImport>(JavaImport.COMPARATOR);
     private ClassName superClass = DEFAULT_SUPERCLASS;
-
     private final JavaPackage pakg;
-
     private final String simpleName;
 
     public JavaClass(String simpleName, JavaPackage pakg) {
@@ -69,7 +66,6 @@ public class JavaClass extends JavaLanguageElement {
         return fullName.toString();
     }
 
-
     public void addImport(String name) {
         addImport(new JavaImportImpl(name));
     }
@@ -81,7 +77,7 @@ public class JavaClass extends JavaLanguageElement {
     public void addImport(Class<?> claz) {
         addImport(claz.getName());
     }
-    
+
     public void addImport(JavaImport javaImport) {
         imports.add(javaImport);
     }
@@ -106,7 +102,6 @@ public class JavaClass extends JavaLanguageElement {
     public void addMethod(JavaMethod method) {
         methods.add(method);
         addImports(method.getRequiredImports());
-
     }
 
     public JavaPackage getPakg() {
@@ -121,7 +116,6 @@ public class JavaClass extends JavaLanguageElement {
         this.superClass = superClass;
         addImport(superClass.getName());
     }
-
 
     public JavaPackage getPackage() {
         return pakg;
@@ -142,5 +136,4 @@ public class JavaClass extends JavaLanguageElement {
     public String getSimpleName() {
         return simpleName;
     }
-
 }

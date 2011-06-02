@@ -20,34 +20,36 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.cdk;
 
 /**
- * <p class="changed_added_4_0">That exception indicates recoverable CDK error, that it is, means
- * errors in source code or configuration files that makes project build failed, so no result shulde be generated,
- * but does not stop further processing of other classes or files. CDK should collect such errors but do not stop
- * processing that let developer to know about all errors in the project.</p>
+ * <p class="changed_added_4_0">
+ * That exception indicates recoverable CDK error, that it is, means errors in source code or configuration files that makes
+ * project build failed, so no result shulde be generated, but does not stop further processing of other classes or files. CDK
+ * should collect such errors but do not stop processing that let developer to know about all errors in the project.
+ * </p>
  *
  * @author asmirnov@exadel.com
  *
  */
 public class CdkProcessingException extends Exception {
-
     /**
-     *  <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      */
     private static final long serialVersionUID = -3696046213271071968L;
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      */
-    public CdkProcessingException() { }
+    public CdkProcessingException() {
+    }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param message
      */
     public CdkProcessingException(String message) {
@@ -55,7 +57,9 @@ public class CdkProcessingException extends Exception {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param cause
      */
     public CdkProcessingException(Throwable cause) {
@@ -63,7 +67,9 @@ public class CdkProcessingException extends Exception {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param message
      * @param cause
      */

@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk;
 
 import java.util.logging.Level;
@@ -30,17 +29,13 @@ import java.util.logging.LogRecord;
  * <p class="changed_added_4_0">
  * That logger delegates all calls to the JDK {@link java.util.logging.Logger}
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
  */
 public class JavaLogger implements Logger {
-
     public static final String CDK_LOG = "org.richfaces.cdk";
-
     private static final String CLASS_NAME = JavaLogger.class.getName();
-
     private int errorCount = 0;
-
     private java.util.logging.Logger jdkLogger = java.util.logging.Logger.getLogger(CDK_LOG);
 
     private void fillCallerData(String fqn, LogRecord record) {
@@ -82,7 +77,7 @@ public class JavaLogger implements Logger {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.Logger#debug(java.lang.CharSequence)
      */
     @Override
@@ -94,7 +89,7 @@ public class JavaLogger implements Logger {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.Logger#debug(java.lang.CharSequence, java.lang.Throwable)
      */
     @Override
@@ -106,7 +101,7 @@ public class JavaLogger implements Logger {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.Logger#debug(java.lang.Throwable)
      */
     @Override
@@ -118,7 +113,7 @@ public class JavaLogger implements Logger {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.Logger#error(java.lang.CharSequence)
      */
     @Override
@@ -132,7 +127,7 @@ public class JavaLogger implements Logger {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.Logger#error(java.lang.CharSequence, java.lang.Throwable)
      */
     @Override
@@ -146,7 +141,7 @@ public class JavaLogger implements Logger {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.Logger#error(java.lang.Throwable)
      */
     @Override
@@ -165,7 +160,7 @@ public class JavaLogger implements Logger {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.Logger#info(java.lang.CharSequence)
      */
     @Override
@@ -177,7 +172,7 @@ public class JavaLogger implements Logger {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.Logger#info(java.lang.CharSequence, java.lang.Throwable)
      */
     @Override
@@ -189,7 +184,7 @@ public class JavaLogger implements Logger {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.Logger#info(java.lang.Throwable)
      */
     @Override
@@ -201,7 +196,7 @@ public class JavaLogger implements Logger {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.Logger#isDebugEnabled()
      */
     @Override
@@ -211,7 +206,7 @@ public class JavaLogger implements Logger {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.Logger#isErrorEnabled()
      */
     @Override
@@ -221,7 +216,7 @@ public class JavaLogger implements Logger {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.Logger#isInfoEnabled()
      */
     @Override
@@ -231,7 +226,7 @@ public class JavaLogger implements Logger {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.Logger#isWarnEnabled()
      */
     @Override
@@ -241,7 +236,7 @@ public class JavaLogger implements Logger {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.Logger#warn(java.lang.CharSequence)
      */
     @Override
@@ -253,7 +248,7 @@ public class JavaLogger implements Logger {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.Logger#warn(java.lang.CharSequence, java.lang.Throwable)
      */
     @Override
@@ -265,7 +260,7 @@ public class JavaLogger implements Logger {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.Logger#warn(java.lang.Throwable)
      */
     @Override

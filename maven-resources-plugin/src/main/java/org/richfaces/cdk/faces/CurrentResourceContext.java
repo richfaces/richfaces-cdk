@@ -28,15 +28,13 @@ import javax.faces.context.FacesContext;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
-//TODO nested resources?
+// TODO nested resources?
 public final class CurrentResourceContext {
-
     private static final Class<CurrentResourceContext> CONTEXT_ATTRIBUTE_KEY = CurrentResourceContext.class;
-
     private Resource resource = null;
-    
+
     private CurrentResourceContext() {
     }
 
@@ -47,14 +45,14 @@ public final class CurrentResourceContext {
             stack = new CurrentResourceContext();
             attributes.put(CONTEXT_ATTRIBUTE_KEY, stack);
         }
-        
+
         return stack;
     }
 
     public void setResource(Resource resource) {
         this.resource = resource;
     }
-    
+
     public Resource getResource() {
         return resource;
     }

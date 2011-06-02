@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt.processors;
 
 import javax.lang.model.element.AnnotationMirror;
@@ -35,11 +34,10 @@ import com.google.inject.Provider;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
  */
 public class DescriptionProcessorImpl implements DescriptionProcessor {
-
     private final Provider<SourceUtils> utilsProvider;
 
     @Inject
@@ -56,25 +54,23 @@ public class DescriptionProcessorImpl implements DescriptionProcessor {
             SourceUtils utils = utilsProvider.get();
             setIcon(model, description);
             utils.setModelProperty(model, description, "displayName");
-            utils.setModelProperty(model, description, "description","value");
+            utils.setModelProperty(model, description, "description", "value");
         }
     }
 
     @Override
     public void processDescription(DescriptionGroup model, AnnotationMirror description) {
         processDescription(model, description, null);
-
     }
 
     protected void setIcon(DescriptionGroup component, AnnotationMirror description) {
         SourceUtils utils = utilsProvider.get();
         if (null != description
-            && (!utils.isDefaultValue(description, "smallIcon") || !utils.isDefaultValue(description, "largeIcon"))) {
+                && (!utils.isDefaultValue(description, "smallIcon") || !utils.isDefaultValue(description, "largeIcon"))) {
             DescriptionGroup.Icon iconValue = new DescriptionGroup.Icon();
             utils.setModelProperty(iconValue, description, "smallIcon");
             utils.setModelProperty(iconValue, description, "largeIcon");
             component.setIcon(iconValue);
         }
     }
-
 }

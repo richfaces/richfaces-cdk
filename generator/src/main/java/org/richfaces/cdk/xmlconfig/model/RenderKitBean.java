@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import java.util.List;
@@ -40,21 +39,18 @@ import org.richfaces.cdk.model.RendererModel;
 import com.google.common.collect.Lists;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
-@XmlType(
-        name = "faces-config-render-kitType",
-        namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE,
-        propOrder = {"id", "targetClass", "renderers", "behaviorRenderers", "extension"})
-public class RenderKitBean extends ExtensibleBean<RenderKitBean.RenderKitExtension>  {
-
+@XmlType(name = "faces-config-render-kitType", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE, propOrder = { "id",
+        "targetClass", "renderers", "behaviorRenderers", "extension" })
+public class RenderKitBean extends ExtensibleBean<RenderKitBean.RenderKitExtension> {
     private List<RendererModel> renderers = Lists.newArrayList();
     private List<BehaviorRendererModel> behaviorRenderers = Lists.newArrayList();
     private ClassName targetClass;
     private FacesId key = new FacesId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
-
 
     @XmlElement(name = "render-kit-id", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE)
     @XmlJavaTypeAdapter(FacesIdAdapter.class)
@@ -67,7 +63,8 @@ public class RenderKitBean extends ExtensibleBean<RenderKitBean.RenderKitExtensi
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the targetClass
      */
@@ -78,7 +75,8 @@ public class RenderKitBean extends ExtensibleBean<RenderKitBean.RenderKitExtensi
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param targetClass the targetClass to set
      */
@@ -87,7 +85,8 @@ public class RenderKitBean extends ExtensibleBean<RenderKitBean.RenderKitExtensi
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the renderers
      */
@@ -98,7 +97,8 @@ public class RenderKitBean extends ExtensibleBean<RenderKitBean.RenderKitExtensi
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param renderers the renderers to set
      */
@@ -107,7 +107,9 @@ public class RenderKitBean extends ExtensibleBean<RenderKitBean.RenderKitExtensi
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the behaviorRenderers
      */
     @XmlElement(name = "client-behavior-renderer", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE)
@@ -117,7 +119,9 @@ public class RenderKitBean extends ExtensibleBean<RenderKitBean.RenderKitExtensi
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param behaviorRenderers the behaviorRenderers to set
      */
     public void setBehaviorRenderers(List<BehaviorRendererModel> behaviorRenderers) {
@@ -125,7 +129,8 @@ public class RenderKitBean extends ExtensibleBean<RenderKitBean.RenderKitExtensi
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the extension
      */
@@ -135,7 +140,8 @@ public class RenderKitBean extends ExtensibleBean<RenderKitBean.RenderKitExtensi
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param extension the extension to set
      */
@@ -144,7 +150,8 @@ public class RenderKitBean extends ExtensibleBean<RenderKitBean.RenderKitExtensi
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @author asmirnov@exadel.com
      */

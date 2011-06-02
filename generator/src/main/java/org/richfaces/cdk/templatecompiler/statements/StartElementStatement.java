@@ -31,10 +31,8 @@ import com.google.inject.Inject;
  * @since 4.0
  */
 public class StartElementStatement extends ElementStatement {
-
     @Inject
     public StartElementStatement(@TemplateModel FreeMarkerRenderer renderer) {
-        super(renderer,"start-element");
+        super(renderer, "start-element");
     }
-
 }

@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.xmlconfig;
 
 import java.util.Set;
@@ -39,7 +38,6 @@ import org.richfaces.cdk.model.ValidatorModel;
  * @since Feb 3, 2010
  */
 public class TaglibGeneratorVisitorTest extends XmlTest {
-
     @Test
     public void generationTest() throws Exception {
         ValidatorModel validator = new ValidatorModel(FacesId.parseId("foo.bar"));

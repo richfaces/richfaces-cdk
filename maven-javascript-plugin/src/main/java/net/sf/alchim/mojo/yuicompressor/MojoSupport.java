@@ -18,13 +18,9 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package net.sf.alchim.mojo.yuicompressor;
 
 import java.io.File;
-
 import java.util.List;
 
 import org.apache.maven.model.Resource;
@@ -32,7 +28,6 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
-
 import org.codehaus.plexus.util.DirectoryScanner;
 
 /**
@@ -44,15 +39,13 @@ import org.codehaus.plexus.util.DirectoryScanner;
 
 //@SuppressWarnings("unchecked")
 public abstract class MojoSupport extends AbstractMojo {
-    private static final String[] EMPTY_STRING_ARRAY = {};
-
+    private static final String[] EMPTY_STRING_ARRAY = { };
     /**
      * list of additionnal excludes
      *
      * @parameter
      */
     private List<String> excludes;
-
     /**
      * define if plugin must stop/fail on warnings.
      *
@@ -60,7 +53,6 @@ public abstract class MojoSupport extends AbstractMojo {
      *            default-value="false"
      */
     protected boolean failOnWarning;
-
     /**
      * list of additionnal includes
      *
@@ -68,7 +60,6 @@ public abstract class MojoSupport extends AbstractMojo {
      */
     private List<String> includes;
     protected ErrorReporter4Mojo jsErrorReporter_;
-
     /**
      * [js only] Display possible errors in the code
      *
@@ -76,28 +67,24 @@ public abstract class MojoSupport extends AbstractMojo {
      *            default-value="true"
      */
     protected boolean jswarn;
-
     /**
      * The output directory into which to copy the resources.
      *
      * @parameter default-value="${project.build.outputDirectory}"
      */
     protected File outputDirectory;
-
     /**
      * @parameter expression="${project}"
      * @readonly
      * @required
      */
     protected MavenProject project;
-
     /**
      * The list of resources we want to transfer.
      *
      * @parameter default-value="${project.resources}"
      */
     private List<Resource> resources;
-
     /**
      * Javascript source directory. (result will be put to outputDirectory).
      * This allow project with "src/main/js" structure.
@@ -105,14 +92,12 @@ public abstract class MojoSupport extends AbstractMojo {
      * @parameter default-value="${project.build.sourceDirectory}/../js"
      */
     private File sourceDirectory;
-
     /**
      * Single directory for extra files to include in the WAR.
      *
      * @parameter default-value="${basedir}/src/main/webapp"
      */
     private File warSourceDirectory;
-
     /**
      * The directory where the webapp is built.
      *
@@ -139,17 +124,17 @@ public abstract class MojoSupport extends AbstractMojo {
                 }
 
                 processDir(new File(resource.getDirectory()), destRoot, resource.getIncludes(), resource.getExcludes(),
-                           true);
+                        true);
             }
 
             processDir(warSourceDirectory, webappDirectory, null, null, false);
             afterProcess();
             getLog().info(String.format("nb warnings: %d, nb errors: %d", jsErrorReporter_.getWarningCnt(),
-                                        jsErrorReporter_.getErrorCnt()));
+                    jsErrorReporter_.getErrorCnt()));
 
             if (failOnWarning && (jsErrorReporter_.getWarningCnt() > 0)) {
                 throw new MojoFailureException("warnings on " + this.getClass().getSimpleName()
-                                               + "=> failure ! (see log)");
+                        + "=> failure ! (see log)");
             }
         } catch (RuntimeException exc) {
             throw exc;
@@ -169,7 +154,7 @@ public abstract class MojoSupport extends AbstractMojo {
     protected abstract void afterProcess() throws Exception;
 
     protected void processDir(File srcRoot, File destRoot, List<String> srcIncludes, List<String> srcExcludes,
-                              boolean destAsSource)
+            boolean destAsSource)
             throws Exception {
         if ((srcRoot == null) || (!srcRoot.exists())) {
             return;

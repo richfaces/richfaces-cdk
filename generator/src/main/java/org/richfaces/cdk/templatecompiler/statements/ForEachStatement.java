@@ -37,20 +37,15 @@ import com.google.inject.Inject;
  * @author Nick Belaevski
  */
 public class ForEachStatement extends FreeMarkerTemplateStatementBase {
-
     private TypedTemplateStatement itemsStatement;
-
     private String var;
-
     private ELType varType;
-
     private final ELParser parser;
-
     private final Logger log;
 
     @Inject
-    public ForEachStatement(@TemplateModel FreeMarkerRenderer renderer,ELParser parser,Logger log) {
-        super(renderer,"for-each");
+    public ForEachStatement(@TemplateModel FreeMarkerRenderer renderer, ELParser parser, Logger log) {
+        super(renderer, "for-each");
         this.parser = parser;
         this.log = log;
     }
@@ -77,34 +72,36 @@ public class ForEachStatement extends FreeMarkerTemplateStatementBase {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param itemsExpression the itemsExpression to set
-     * @param var 
+     * @param var
      */
     public void setItemsExpression(String itemsExpression, String var) {
         try {
             this.itemsStatement = parser.parse(itemsExpression, this, Iterable.class.getName());
             this.itemsStatement.setParent(this);
             this.varType = this.itemsStatement.getType().getContainerType();
-            this.var=var;
+            this.var = var;
             setVariable(var, this.varType);
         } catch (ParsingException e) {
-            log.error("Error parsing expression for iteration in <foreach> statement",e);
+            log.error("Error parsing expression for iteration in <foreach> statement", e);
         }
     }
+
     @Override
     public Iterable<JavaImport> getRequiredImports() {
-        return Iterables.concat(super.getRequiredImports(),itemsStatement.getRequiredImports());
-    }
-    
-    @Override
-    public Iterable<HelperMethod> getRequiredMethods() {
-        return Iterables.concat(super.getRequiredMethods(),itemsStatement.getRequiredMethods());
-    }
-    
-    @Override
-    public Iterable<JavaField> getRequiredFields() {
-        return Iterables.concat(super.getRequiredFields(),itemsStatement.getRequiredFields());
+        return Iterables.concat(super.getRequiredImports(), itemsStatement.getRequiredImports());
     }
 
+    @Override
+    public Iterable<HelperMethod> getRequiredMethods() {
+        return Iterables.concat(super.getRequiredMethods(), itemsStatement.getRequiredMethods());
+    }
+
+    @Override
+    public Iterable<JavaField> getRequiredFields() {
+        return Iterables.concat(super.getRequiredFields(), itemsStatement.getRequiredFields());
+    }
 }

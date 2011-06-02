@@ -18,19 +18,18 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package test;
 
 import javax.faces.component.UIInput;
 
 /**
- * 
+ *
  * @author shura (latest modification by $Author$)
- * 
+ *
  * @version $Revision$ $Date$
- * 
- * 
- * 
+ *
+ *
+ *
  */
 public abstract class TestComponent extends UIInput {
     public abstract String getMyProperty();

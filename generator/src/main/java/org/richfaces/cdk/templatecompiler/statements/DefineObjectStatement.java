@@ -39,24 +39,17 @@ import com.google.inject.Inject;
  * @author Nick Belaevski
  */
 public class DefineObjectStatement extends FreeMarkerTemplateStatementBase {
-
     private ELType type;
-
     private String name;
-
     private boolean cast;
-    
     private final ELParser parser;
-
     private final Logger log;
-
     private final TypesFactory typesFactory;
-
     private TypedTemplateStatement initializationStatement;
 
     @Inject
     public DefineObjectStatement(Logger log, @TemplateModel FreeMarkerRenderer renderer, ELParser parser,
-        TypesFactory typesFactory) {
+            TypesFactory typesFactory) {
         super(renderer, "define-object");
         this.log = log;
         this.parser = parser;
@@ -66,9 +59,8 @@ public class DefineObjectStatement extends FreeMarkerTemplateStatementBase {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param initializationExpression
-     *            the initializationExpression to set
+     *
+     * @param initializationExpression the initializationExpression to set
      * @throws ParsingException
      */
     public void setObject(String name, String type, String initializationExpression, boolean cast) {
@@ -108,7 +100,7 @@ public class DefineObjectStatement extends FreeMarkerTemplateStatementBase {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the initializationStatement
      */
     public TypedTemplateStatement getInitializationStatement() {
@@ -117,8 +109,8 @@ public class DefineObjectStatement extends FreeMarkerTemplateStatementBase {
 
     @Override
     public List<TemplateStatement> getStatements() {
-        return null != initializationStatement ? Collections.<TemplateStatement> singletonList(initializationStatement)
-            : Collections.<TemplateStatement> emptyList();
+        return null != initializationStatement ? Collections.<TemplateStatement>singletonList(initializationStatement)
+                : Collections.<TemplateStatement>emptyList();
     }
 
     public boolean isCast() {

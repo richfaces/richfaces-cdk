@@ -4,11 +4,9 @@ import org.richfaces.cdk.templatecompiler.el.ParsingException;
 import org.richfaces.cdk.templatecompiler.el.types.ELType;
 
 public interface Variables {
-    
-    public ELType getVariable(String name) throws ParsingException;
+    ELType getVariable(String name) throws ParsingException;
 
-    public boolean isDefined(String name) throws ParsingException;
+    boolean isDefined(String name) throws ParsingException;
 
-    public ELType setVariable(String name, ELType type) throws ParsingException;
-
+    ELType setVariable(String name, ELType type) throws ParsingException;
 }

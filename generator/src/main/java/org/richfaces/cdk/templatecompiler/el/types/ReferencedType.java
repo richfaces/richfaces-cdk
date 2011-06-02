@@ -28,47 +28,54 @@ import org.richfaces.cdk.templatecompiler.builder.model.JavaImport;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class ReferencedType implements ELType {
-
     private String classCodeString;
 
     public ReferencedType(String classCodeString) {
         super();
-        
+
         this.classCodeString = classCodeString;
     }
-    
+
     String getClassCodeString() {
         return classCodeString;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#getCode()
      */
     @Override
     public String getCode() {
         return classCodeString;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#getImportsList()
      */
     @Override
     public Iterable<JavaImport> getRequiredImports() {
         return Collections.emptyList();
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#getRawType()
      */
     @Override
     public ELType getRawType() {
         return TypesFactory.OBJECT_TYPE;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#isNullType()
      */
     @Override
@@ -76,15 +83,19 @@ public class ReferencedType implements ELType {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#getTypeArguments()
      */
     @Override
     public ELType[] getTypeArguments() {
         return PlainClassType.NO_TYPES;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -95,7 +106,9 @@ public class ReferencedType implements ELType {
         return result;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -120,7 +133,9 @@ public class ReferencedType implements ELType {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#toString()
      */
     @Override
@@ -128,23 +143,29 @@ public class ReferencedType implements ELType {
         return MessageFormat.format("{0}: {1}", getClass().getName(), getCode());
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#getCompositeType()
      */
     @Override
     public ELType getContainerType() {
         return null;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#isArray()
      */
     @Override
     public boolean isArray() {
         return false;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#isAssignableFrom(org.richfaces.cdk.templatecompiler.el.ELType)
      */
     @Override
@@ -154,7 +175,7 @@ public class ReferencedType implements ELType {
 
             return getClassCodeString().equals(anotherReferencedType.getClassCodeString());
         }
-        
+
         return false;
     }
 

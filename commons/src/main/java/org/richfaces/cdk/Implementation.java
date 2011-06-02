@@ -20,30 +20,28 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk;
 
-import static java.lang.annotation.ElementType.*;
-import static java.lang.annotation.RetentionPolicy.*;
+import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-
 /**
  * <p class="changed_added_4_0">
- * This annotation can be applied to any injection classifier annotation to define implementation class that should be
- * used to call {@link com.google.inject.binder.AnnotatedBindingBuilder#annotatedWith(Annotation)}
+ * This annotation can be applied to any injection classifier annotation to define implementation class that should be used to
+ * call {@link com.google.inject.binder.AnnotatedBindingBuilder#annotatedWith(Annotation)}
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 @Target(ANNOTATION_TYPE)
 @Retention(RUNTIME)
 @Documented
 public @interface Implementation {
-    public Class<? extends Annotation> value();
+    Class<? extends Annotation> value();
 }

@@ -38,32 +38,27 @@ import org.richfaces.cdk.templatecompiler.el.types.TypesFactory;
 
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
+
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class ScriptOptionStatement extends FreeMarkerTemplateStatementBase {
-
     private String name;
-    
     private String defaultValue;
-    
     private TypedTemplateStatement value;
-    
     private String wrapper;
-
     private ELParser parser;
-
     private Logger logger;
-    
+
     @Inject
     public ScriptOptionStatement(@TemplateModel FreeMarkerRenderer renderer, ELParser parser, Logger logger) {
         super(renderer, "script-option");
-        
+
         this.parser = parser;
         this.logger = logger;
     }
-    
+
     /**
      * @param defaultValue the defaultValue to set
      */
@@ -77,10 +72,9 @@ public class ScriptOptionStatement extends FreeMarkerTemplateStatementBase {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     /**
-     * @param value
-     *            the value to set
+     * @param value the value to set
      */
     public void setValueExpression(String valueExpression) {
         try {
@@ -89,58 +83,57 @@ public class ScriptOptionStatement extends FreeMarkerTemplateStatementBase {
             logger.error("Error parse scriptOption value expression: " + valueExpression, e);
         }
     }
-    
+
     /**
      * @param wrapper the wrapper to set
      */
     public void setWrapper(String wrapper) {
         this.wrapper = wrapper;
     }
-    
+
     @Override
     public List<TemplateStatement> getStatements() {
-        return value != null ? Collections.<TemplateStatement>singletonList(value) : 
-            Collections.<TemplateStatement>emptyList();
+        return value != null ? Collections.<TemplateStatement>singletonList(value) : Collections.<TemplateStatement>emptyList();
     }
-    
+
     /**
      * @return the name
      */
     public String getName() {
         return name;
     }
-    
+
     /**
      * @return the value
      */
     public TypedTemplateStatement getValue() {
         return value;
     }
-    
+
     /**
      * @return the defaultValue
      */
     public String getDefaultValue() {
         return defaultValue;
     }
-    
+
     /**
      * @return the wrapper
      */
     public String getWrapper() {
         return wrapper;
     }
-    
+
     @Override
     public Iterable<JavaField> getRequiredFields() {
         return Iterables.concat(super.getRequiredFields(), FIELDS_TRANSFORM.apply(value));
     }
-    
+
     @Override
     public Iterable<JavaImport> getRequiredImports() {
         return Iterables.concat(super.getRequiredImports(), IMPORTS_TRANSFORM.apply(value));
     }
-    
+
     @Override
     public Iterable<HelperMethod> getRequiredMethods() {
         return Iterables.concat(super.getRequiredMethods(), METHODS_TRANSFORM.apply(value));

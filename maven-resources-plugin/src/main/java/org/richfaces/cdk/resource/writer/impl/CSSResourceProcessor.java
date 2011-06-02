@@ -39,12 +39,11 @@ import com.yahoo.platform.yui.compressor.CssCompressor;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class CSSResourceProcessor implements ResourceProcessor {
-
     private Charset charset;
-    
+
     public CSSResourceProcessor(Charset charset) {
         this.charset = charset;
     }
@@ -55,21 +54,20 @@ public class CSSResourceProcessor implements ResourceProcessor {
     }
 
     @Override
-    public void process(String resourceName, InputSupplier<? extends InputStream> in,
-        OutputSupplier<? extends OutputStream> out) throws IOException {
-        
+    public void process(String resourceName, InputSupplier<? extends InputStream> in, OutputSupplier<? extends OutputStream> out)
+            throws IOException {
+
         Reader reader = null;
         Writer writer = null;
-        
+
         try {
             reader = new InputStreamReader(in.getInput(), charset);
             writer = new OutputStreamWriter(out.getOutput(), charset);
-            
+
             new CssCompressor(reader).compress(writer, 0);
         } finally {
             Closeables.closeQuietly(reader);
             Closeables.closeQuietly(writer);
         }
     }
-    
 }

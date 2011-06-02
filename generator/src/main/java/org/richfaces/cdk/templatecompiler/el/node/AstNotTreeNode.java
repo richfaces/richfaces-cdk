@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.el.node;
 
 import org.jboss.el.parser.Node;
@@ -44,7 +43,6 @@ public class AstNotTreeNode extends AbstractTreeNode {
         sb.append(childOutput);
         sb.append(ELNodeConstants.RIGHT_BRACKET);
 
-        //variable type has been already set by getChildOuput()
+        // variable type has been already set by getChildOuput()
     }
-
 }

@@ -25,14 +25,11 @@ import java.util.regex.Pattern;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class JavaImportImpl implements JavaImport {
-
     private static final Pattern JAVA_LANG_PATTERN = Pattern.compile("^java\\.lang\\.[^\\.]+$");
-
     private String name;
-
     private boolean staticImport;
 
     public JavaImportImpl(String name) {

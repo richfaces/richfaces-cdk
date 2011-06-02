@@ -31,22 +31,22 @@ import org.richfaces.cdk.templatecompiler.el.types.TypesFactory;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
-
 public final class IfStatement extends StatementsContainer {
-
     private TypedTemplateStatement testStatement;
     private final ELParser parser;
     private final Logger log;
 
     @Inject
-    public IfStatement(ELParser parser,Logger log) {
+    public IfStatement(ELParser parser, Logger log) {
         super();
         this.parser = parser;
         this.log = log;
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param test the test to set
      */
     public void setTest(String test) {
@@ -54,7 +54,7 @@ public final class IfStatement extends StatementsContainer {
             testStatement = parser.parse(test, this, TypesFactory.BOOLEAN_TYPE);
             testStatement.setParent(this);
         } catch (ParsingException e) {
-            log.error("Error parsing if statement condition",e);
+            log.error("Error parsing if statement condition", e);
         }
     }
 
@@ -64,16 +64,16 @@ public final class IfStatement extends StatementsContainer {
 
     @Override
     public Iterable<JavaImport> getRequiredImports() {
-        return Iterables.concat(super.getRequiredImports(),testStatement.getRequiredImports());
+        return Iterables.concat(super.getRequiredImports(), testStatement.getRequiredImports());
     }
-    
+
     @Override
     public Iterable<HelperMethod> getRequiredMethods() {
-        return Iterables.concat(super.getRequiredMethods(),testStatement.getRequiredMethods());
+        return Iterables.concat(super.getRequiredMethods(), testStatement.getRequiredMethods());
     }
-    
+
     @Override
     public Iterable<JavaField> getRequiredFields() {
-        return Iterables.concat(super.getRequiredFields(),testStatement.getRequiredFields());
+        return Iterables.concat(super.getRequiredFields(), testStatement.getRequiredFields());
     }
 }

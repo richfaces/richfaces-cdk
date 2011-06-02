@@ -30,7 +30,6 @@ import org.richfaces.cdk.generate.freemarker.FreeMarkerRenderer;
  * @since 4.0
  */
 public class ElementStatement extends FreeMarkerTemplateStatementBase {
-
     private QName elementName;
 
     public ElementStatement(FreeMarkerRenderer renderer, String template) {
@@ -47,12 +46,10 @@ public class ElementStatement extends FreeMarkerTemplateStatementBase {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param elementName
-     *            the elementName to set
+     *
+     * @param elementName the elementName to set
      */
     public void setElementName(QName elementName) {
         this.elementName = elementName;
     }
-
 }

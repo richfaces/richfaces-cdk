@@ -1,6 +1,10 @@
 package org.richfaces.cdk;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
@@ -9,7 +13,6 @@ import org.junit.Test;
 import com.google.common.collect.Lists;
 
 public class CdkClassLoaderTest extends CdkTestBase {
-
     @Test
     public void resourcePath() throws Exception {
         File libraryFile = getLibraryFile("test.source.properties");
@@ -35,8 +38,7 @@ public class CdkClassLoaderTest extends CdkTestBase {
 
     @Test
     public void testClassLoader() throws Exception {
-        Iterable<File> paths =
-            Lists.newArrayList(getLibraryFile("test.source.properties"),
+        Iterable<File> paths = Lists.newArrayList(getLibraryFile("test.source.properties"),
                 getLibraryFile("javax/faces/component/UIComponent.class"));
         CdkClassLoader loader = new CdkClassLoader(paths, null);
         Class<?> class1 = loader.loadClass("javax.faces.application.Application");
@@ -44,5 +46,4 @@ public class CdkClassLoaderTest extends CdkTestBase {
         assertNotNull(loader.getResource("org/richfaces/cdk/apt/test.html"));
         assertNull(loader.getResource("javax/el/ELContext.class"));
     }
-
 }

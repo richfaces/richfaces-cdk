@@ -18,9 +18,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.el.node;
-
 
 import org.jboss.el.parser.Node;
 import org.richfaces.cdk.templatecompiler.el.ELVisitor;
@@ -32,7 +30,6 @@ import org.richfaces.cdk.templatecompiler.el.ParsingException;
  * @author amarkhel
  */
 public interface ITreeNode {
-
     /**
      * Return node of current wrapper.
      *
@@ -42,7 +39,8 @@ public interface ITreeNode {
 
     /**
      * Visit current node. Generate Java code, that represent current node.
-     * @param visitor       - ELVisitor
+     *
+     * @param visitor - ELVisitor
      * @param stringBuilder instance to collect information.
      *
      * @return instance of org.jboss.el.parser.Node
@@ -62,8 +60,8 @@ public interface ITreeNode {
 
     /**
      * Returns count of children for this node
+     *
      * @return children count
      */
     int getChildrenCount();
-
 }

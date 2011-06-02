@@ -37,15 +37,14 @@ import com.google.inject.Inject;
  * @author Nick Belaevski
  */
 public class SwitchStatement extends FreeMarkerTemplateStatementBase {
-
     private String keyExpression;
     private final ELParser parser;
     private final Logger log;
     private TypedTemplateStatement statement;
 
     @Inject
-    public SwitchStatement(@TemplateModel FreeMarkerRenderer renderer,ELParser parser,Logger log) {
-        super(renderer,"switch");
+    public SwitchStatement(@TemplateModel FreeMarkerRenderer renderer, ELParser parser, Logger log) {
+        super(renderer, "switch");
         this.parser = parser;
         this.log = log;
     }
@@ -58,7 +57,9 @@ public class SwitchStatement extends FreeMarkerTemplateStatementBase {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param keyExpression the keyExpression to set
      */
     public void setKeyExpression(String keyExpression) {
@@ -70,18 +71,19 @@ public class SwitchStatement extends FreeMarkerTemplateStatementBase {
             log.error("Error parse switch statement expression", e);
         }
     }
+
     @Override
     public Iterable<JavaImport> getRequiredImports() {
-        return Iterables.concat(super.getRequiredImports(),statement.getRequiredImports());
+        return Iterables.concat(super.getRequiredImports(), statement.getRequiredImports());
     }
-    
+
     @Override
     public Iterable<HelperMethod> getRequiredMethods() {
-        return Iterables.concat(super.getRequiredMethods(),statement.getRequiredMethods());
+        return Iterables.concat(super.getRequiredMethods(), statement.getRequiredMethods());
     }
-    
+
     @Override
     public Iterable<JavaField> getRequiredFields() {
-        return Iterables.concat(super.getRequiredFields(),statement.getRequiredFields());
+        return Iterables.concat(super.getRequiredFields(), statement.getRequiredFields());
     }
 }

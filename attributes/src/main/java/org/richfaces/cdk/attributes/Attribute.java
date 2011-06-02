@@ -31,25 +31,25 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class Attribute implements KeyedType {
-
     public enum Kind {
-        GENERIC, BOOLEAN, URI 
+        GENERIC,
+        BOOLEAN,
+        URI
     }
-    
+
     @XmlRootElement(name = "attributes")
     @XmlType(name = "AttributesType")
     public static final class Type implements ContainerType<Attribute> {
-
         private Collection<Attribute> children = new HashSet<Attribute>();
 
         @XmlElement(name = "attribute")
         public Collection<Attribute> getChildren() {
             return children;
         }
-        
+
         @Override
         public void setChildren(Collection<Attribute> values) {
             this.children = values;
@@ -57,19 +57,15 @@ public class Attribute implements KeyedType {
     }
 
     private String name;
-    
     private boolean required;
-
     private String defaultValue;
-    
     private String componentAttributeName;
-    
     private Kind kind = Kind.GENERIC;
-    
+
     public Attribute() {
         super();
     }
-    
+
     public Attribute(String name) {
         super();
         this.name = name;
@@ -95,7 +91,7 @@ public class Attribute implements KeyedType {
     public String getKey() {
         return getName();
     }
-    
+
     /**
      * @return the required
      */
@@ -134,7 +130,7 @@ public class Attribute implements KeyedType {
     public Kind getKind() {
         return kind;
     }
-    
+
     /**
      * @param kind the kind to set
      */
@@ -150,15 +146,17 @@ public class Attribute implements KeyedType {
     public String getComponentAttributeName() {
         return componentAttributeName != null ? componentAttributeName : name;
     }
-    
+
     /**
      * @param componentAttributeName the componentAttributeName to set
      */
     public void setComponentAttributeName(String componentAttributeName) {
         this.componentAttributeName = componentAttributeName;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -169,7 +167,9 @@ public class Attribute implements KeyedType {
         return result;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -194,7 +194,9 @@ public class Attribute implements KeyedType {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#toString()
      */
     @Override

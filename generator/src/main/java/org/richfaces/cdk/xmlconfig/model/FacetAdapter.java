@@ -20,18 +20,17 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import org.richfaces.cdk.model.FacetModel;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 public class FacetAdapter extends AdapterBase<FacetBean, FacetModel> {
-
     @Override
     protected Class<? extends FacetBean> getBeanClass(FacetModel model) {
         return FacetBean.class;

@@ -2,15 +2,13 @@ package org.richfaces.cdk;
 
 import java.lang.annotation.Annotation;
 
-
 public class SourceImpl implements Source {
-
     private final Sources value;
-    
+
     public SourceImpl(Source value) {
         this.value = value.value();
     }
-    
+
     public SourceImpl(Sources value) {
         this.value = value;
     }

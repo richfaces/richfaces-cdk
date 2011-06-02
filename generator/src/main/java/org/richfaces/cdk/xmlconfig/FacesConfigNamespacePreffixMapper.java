@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig;
 
 import org.richfaces.cdk.model.ComponentLibrary;
@@ -28,15 +27,17 @@ import org.richfaces.cdk.model.ComponentLibrary;
 import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
-public class FacesConfigNamespacePreffixMapper  extends NamespacePrefixMapper  {
-
+public class FacesConfigNamespacePreffixMapper extends NamespacePrefixMapper {
     /*
-     *  (non-Javadoc)
-     * @see com.sun.xml.internal.bind.marshaller.NamespacePrefixMapper#getPreferredPrefix(java.lang.String, java.lang.String, boolean)
+     * (non-Javadoc)
+     *
+     * @see com.sun.xml.internal.bind.marshaller.NamespacePrefixMapper#getPreferredPrefix(java.lang.String, java.lang.String,
+     * boolean)
      */
     public String getPreferredPrefix(String namespaceUri, String suggestion, boolean required) {
         if (ComponentLibrary.FACES_CONFIG_NAMESPACE.equals(namespaceUri)) {

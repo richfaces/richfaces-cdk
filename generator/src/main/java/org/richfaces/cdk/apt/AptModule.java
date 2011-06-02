@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt;
 
 import org.richfaces.cdk.LibraryBuilder;
@@ -44,13 +43,16 @@ import com.google.inject.Singleton;
 import com.google.inject.multibindings.Multibinder;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 public class AptModule extends AbstractModule {
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.google.inject.AbstractModule#configure()
      */
 
@@ -75,5 +77,4 @@ public class AptModule extends AbstractModule {
         bind(SourceUtilsProvider.class).in(Singleton.class);
         bind(SourceUtils.class).toProvider(SourceUtilsProvider.class);
     }
-
 }

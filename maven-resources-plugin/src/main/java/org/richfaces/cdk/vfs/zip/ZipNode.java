@@ -27,72 +27,67 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 
 final class ZipNode {
-    
-    private Map<String, ZipNode> children; 
-
+    private Map<String, ZipNode> children;
     private String name;
-
     private ZipEntry zipEntry;
-    
     private boolean directory;
-    
+
     public ZipNode(String name) {
         super();
         this.name = name;
     }
-    
+
     public ZipNode getOrCreateChild(String name) {
         setDirectory(true);
-        
+
         if (children == null) {
             children = new LinkedHashMap<String, ZipNode>();
         }
-        
+
         String lcName = name.toLowerCase();
-        
+
         ZipNode node = children.get(lcName);
         if (node == null) {
             node = new ZipNode(name);
             children.put(lcName, node);
         }
-        
+
         return node;
     }
-    
+
     public ZipNode getChild(String name) {
         if (children == null) {
             return null;
         }
-        
+
         return children.get(name.toLowerCase());
     }
-    
+
     public String getName() {
         return name;
     }
-    
+
     public Iterable<ZipNode> listChildren() {
         if (children == null) {
             return Collections.emptySet();
         }
         return children.values();
     }
-    
+
     private void setDirectory(boolean directory) {
         this.directory = directory;
     }
-    
+
     public boolean isDirectory() {
         return directory;
     }
-    
+
     public void setZipEntry(ZipEntry zipEntry) {
         this.zipEntry = zipEntry;
         setDirectory(zipEntry.isDirectory());
     }
-    
+
     public ZipEntry getZipEntry() {
         return zipEntry;
     }
-    
 }

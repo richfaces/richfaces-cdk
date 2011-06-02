@@ -34,11 +34,10 @@ import org.richfaces.cdk.templatecompiler.el.types.ELType;
  * <p>
  * For operands <code>A</code> and <code>B</code> and operator <code>x</code> output is <code>(A x B)</code>
  * </p>
- * 
+ *
  * @author Nick Belaevski
  */
 public abstract class AbstractBinaryOperationTreeNode extends AbstractTreeNode {
-
     private final String operatorString;
 
     public AbstractBinaryOperationTreeNode(Node node, String operatorString) {
@@ -49,12 +48,11 @@ public abstract class AbstractBinaryOperationTreeNode extends AbstractTreeNode {
 
     protected abstract ELType getOperationType(ELType firstArgumentType, ELType secondArgumentType);
 
-    protected abstract String getCoercedChildOutput(int childIndex, ELVisitor visitor)
-        throws ParsingException;
+    protected abstract String getCoercedChildOutput(int childIndex, ELVisitor visitor) throws ParsingException;
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.el.node.AbstractTreeNode#visit(java.lang.StringBuilder, java.util.Map,
      * org.richfaces.cdk.templatecompiler.el.ELVisitor)
      */

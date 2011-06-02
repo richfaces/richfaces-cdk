@@ -26,21 +26,15 @@ import com.google.common.base.Splitter;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public final class Constants {
-
     public static final Joiner SLASH_JOINER = Joiner.on('/').skipNulls();
-
     public static final Splitter SLASH_SPLITTER = Splitter.on('/').omitEmptyStrings();
-    
     public static final Joiner DOT_JOINER = Joiner.on('.').skipNulls();
-
     public static final Joiner DASH_JOINER = Joiner.on('-').skipNulls();
-
     public static final Joiner COLON_JOINER = Joiner.on(':').skipNulls();
 
     private Constants() {
     }
-
 }

@@ -18,9 +18,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.el.node;
-
 
 import org.jboss.el.parser.Node;
 import org.richfaces.cdk.templatecompiler.el.ELVisitor;
@@ -33,7 +31,6 @@ import org.richfaces.cdk.templatecompiler.el.types.ELType;
  * @author amarkhel
  */
 public class AstIdentifierTreeNode extends AbstractTreeNode {
-
     public AstIdentifierTreeNode(Node node) {
         super(node);
     }
@@ -44,7 +41,7 @@ public class AstIdentifierTreeNode extends AbstractTreeNode {
 
         ELType identifierType = visitor.getVariable(identifierName);
 
-        //TODO: implement variable mapper like "utils" -> "this.getUtils()"
+        // TODO: implement variable mapper like "utils" -> "this.getUtils()"
         visitor.setExpressionType(identifierType);
         sb.append(identifierName);
         visitor.setLiteral(false);

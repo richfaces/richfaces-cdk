@@ -20,11 +20,14 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.generate.java;
 
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import static org.easymock.EasyMock.anyInt;
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertTrue;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -51,13 +54,12 @@ import com.google.inject.Inject;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 @RunWith(CdkTestRunner.class)
 public class ComponentClassGeneratorTest extends AbstractClassGeneratorTest {
-
     @Inject
     private ComponentClassGenerator generator;
 
@@ -132,7 +134,7 @@ public class ComponentClassGeneratorTest extends AbstractClassGeneratorTest {
 
         library.getComponents().add(component);
 
-        generator.generate(library,component);
+        generator.generate(library, component);
         log.debug(outputWriter.toString());
 
         verify(output);

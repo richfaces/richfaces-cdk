@@ -41,10 +41,9 @@ import com.google.common.collect.Lists;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class ResourceELResolver extends ELResolver {
-
     private void checkBaseAndProperty(Object base, Object property) {
         if (base == null && property == null) {
             throw new PropertyNotFoundException("base & property are null");
@@ -63,10 +62,10 @@ public class ResourceELResolver extends ELResolver {
 
             return pathSeg;
         }
-        
+
         return null;
     }
-    
+
     private String relativize(String path, String basePath) {
         Iterator<String> pathItr = SLASH_SPLITTER.split(path).iterator();
         Iterator<String> basePathItr = SLASH_SPLITTER.split(basePath).iterator();
@@ -77,15 +76,15 @@ public class ResourceELResolver extends ELResolver {
             basePathItr.next();
             resultPathSegments.add("..");
         }
-        
+
         if (firstNonMatchedSegment != null) {
             resultPathSegments.add(firstNonMatchedSegment);
         }
-        
+
         while (pathItr.hasNext()) {
             resultPathSegments.add(pathItr.next());
         }
-        
+
         return SLASH_JOINER.join(resultPathSegments);
     }
 
@@ -101,7 +100,8 @@ public class ResourceELResolver extends ELResolver {
             } else {
                 String[] parts = prop.split(":");
                 if (parts.length != 2) {
-                    throw new ELException(MessageFormat.format("Invalid resource format. Property {0} contains more than one colon (:)", prop));
+                    throw new ELException(MessageFormat.format(
+                            "Invalid resource format. Property {0} contains more than one colon (:)", prop));
                 }
                 resource = handler.createResource(parts[1], parts[0]);
             }
@@ -146,5 +146,4 @@ public class ResourceELResolver extends ELResolver {
     public Class<?> getCommonPropertyType(ELContext context, Object base) {
         return String.class;
     }
-
 }

@@ -20,25 +20,26 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.model;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class ModelModule extends AbstractModule {
-
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.google.inject.AbstractModule#configure()
      */
     @Override
     protected void configure() {
         bind(ComponentLibrary.class).in(Singleton.class);
     }
-
 }

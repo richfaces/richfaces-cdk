@@ -20,26 +20,24 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.cdk.model;
 
 import org.richfaces.cdk.util.ComparatorUtils;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class FacetModel extends DescriptionGroupBase implements ModelElement<FacetModel>, Named {
-
     private static final long serialVersionUID = 7723771279129598243L;
-    
     private String name;
-
     /**
-     *  <p class="changed_added_4_0">Is that bean property generate in the class or should be generated ?</p>
+     * <p class="changed_added_4_0">
+     * Is that bean property generate in the class or should be generated ?
+     * </p>
      */
     private Boolean generate = Boolean.FALSE; // TODO - check in model validator.
 
@@ -47,7 +45,9 @@ public class FacetModel extends DescriptionGroupBase implements ModelElement<Fac
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the name
      */
     public String getName() {
@@ -55,7 +55,9 @@ public class FacetModel extends DescriptionGroupBase implements ModelElement<Fac
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param name the name to set
      */
     public void setName(String name) {
@@ -67,8 +69,8 @@ public class FacetModel extends DescriptionGroupBase implements ModelElement<Fac
         ComponentLibrary.merge(this, other);
     }
 
-    public <R,D> R accept(Visitor<R,D> visitor, D data) {
-        return visitor.visitFacet(this,data);
+    public <R, D> R accept(Visitor<R, D> visitor, D data) {
+        return visitor.visitFacet(this, data);
     }
 
     @Override

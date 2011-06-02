@@ -11,8 +11,6 @@ import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 
 public class JavaClassModelWrapper extends BeansWrapper implements ObjectWrapper {
-
-
     public JavaClassModelWrapper() {
     }
 
@@ -23,16 +21,14 @@ public class JavaClassModelWrapper extends BeansWrapper implements ObjectWrapper
 
         if (obj instanceof JavaStatement) {
             templateModel = new MethodBodyTemplateModel((JavaStatement) obj, this);
-        } else if (obj instanceof ELType){
-            templateModel = new ELTypeTemplateModel((ELType)obj, this);
-        } else if (obj instanceof QName){
-            templateModel = new QNameTemplateModel((QName)obj, this);
+        } else if (obj instanceof ELType) {
+            templateModel = new ELTypeTemplateModel((ELType) obj, this);
+        } else if (obj instanceof QName) {
+            templateModel = new QNameTemplateModel((QName) obj, this);
         } else {
             templateModel = super.wrap(obj);
         }
 
         return templateModel;
     }
-
-
 }

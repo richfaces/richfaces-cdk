@@ -38,9 +38,6 @@
  * file under either the MPL or the GPL.
  *
  * ***** END LICENSE BLOCK ***** */
-
-
-
 package org.mozilla.javascript;
 
 /**
@@ -77,42 +74,34 @@ package org.mozilla.javascript;
  * time.
  */
 public class Decompiler {
-
     /**
      * Decompilation property to specify identation offset for case labels.
      */
     public static final int CASE_GAP_PROP = 3;
-
     /**
      * Decompilation property to specify default identation offset.
      */
     public static final int INDENT_GAP_PROP = 2;
-
     /**
      * Decompilation property to specify initial ident value.
      */
     public static final int INITIAL_INDENT_PROP = 1;
-
     /**
      * Flag to indicate that the decompilation should omit the
      * function header and trailing brace.
      */
     public static final int ONLY_BODY_FLAG = 1 << 0;
-
     /**
      * Flag to indicate that the decompilation generates toSource result.
      */
     public static final int TO_SOURCE_FLAG = 1 << 1;
-
     // Marker to denote the last RC of function so it can be distinguished from
     // the last RC of object literals in case of function expressions
     private static final int FUNCTION_END = Token.LAST_TOKEN + 1;
-
-//  whether to do a debug print of the source information, when decompiling.
+    //  whether to do a debug print of the source information, when decompiling.
     private static final boolean printSource = false;
     private char[] sourceBuffer = new char[128];
-
-//  Per script/function source buffer top: parent source does not include a
+    //  Per script/function source buffer top: parent source does not include a
 //  nested functions source and uses function index as a reference instead.
     private int sourceTop;
 
@@ -364,7 +353,7 @@ public class Decompiler {
                 String pad = tokenname.length() > 7 ? "\t" : "\t\t";
 
                 System.err.println(tokenname + pad + (int) source.charAt(i) + "\t'"
-                                   + ScriptRuntime.escapeString(source.substring(i, i + 1)) + "'");
+                        + ScriptRuntime.escapeString(source.substring(i, i + 1)) + "'");
             }
 
             System.err.println();
@@ -398,8 +387,8 @@ public class Decompiler {
 
         while (i < length) {
             switch (source.charAt(i)) {
-                case Token.GET :
-                case Token.SET :
+                case Token.GET:
+                case Token.SET:
                     result.append(source.charAt(i) == Token.GET ? "get " : "set ");
                     ++i;
                     i = printSourceString(source, i + 1, false, result);
@@ -409,56 +398,56 @@ public class Decompiler {
 
                     break;
 
-                case Token.NAME :
-                case Token.REGEXP : // re-wrapped in '/'s in parser...
+                case Token.NAME:
+                case Token.REGEXP: // re-wrapped in '/'s in parser...
                     i = printSourceString(source, i + 1, false, result);
 
                     continue;
-                case Token.STRING :
+                case Token.STRING:
                     i = printSourceString(source, i + 1, true, result);
 
                     continue;
-                case Token.NUMBER :
+                case Token.NUMBER:
                     i = printSourceNumber(source, i + 1, result);
 
                     continue;
-                case Token.TRUE :
+                case Token.TRUE:
                     result.append("true");
 
                     break;
 
-                case Token.FALSE :
+                case Token.FALSE:
                     result.append("false");
 
                     break;
 
-                case Token.NULL :
+                case Token.NULL:
                     result.append("null");
 
                     break;
 
-                case Token.THIS :
+                case Token.THIS:
                     result.append("this");
 
                     break;
 
-                case Token.FUNCTION :
+                case Token.FUNCTION:
                     ++i; // skip function type
                     result.append("function ");
 
                     break;
 
-                case FUNCTION_END :
+                case FUNCTION_END:
 
                     // Do nothing
                     break;
 
-                case Token.COMMA :
+                case Token.COMMA:
                     result.append(", ");
 
                     break;
 
-                case Token.LC :
+                case Token.LC:
                     ++braceNesting;
 
                     if (Token.EOL == getNext(source, length, i)) {
@@ -469,7 +458,7 @@ public class Decompiler {
 
                     break;
 
-                case Token.RC : {
+                case Token.RC: {
                     --braceNesting;
 
                     /*
@@ -484,14 +473,14 @@ public class Decompiler {
                     result.append('}');
 
                     switch (getNext(source, length, i)) {
-                        case Token.EOL :
-                        case FUNCTION_END :
+                        case Token.EOL:
+                        case FUNCTION_END:
                             indent -= indentGap;
 
                             break;
 
-                        case Token.WHILE :
-                        case Token.ELSE :
+                        case Token.WHILE:
+                        case Token.ELSE:
                             indent -= indentGap;
                             result.append(' ');
 
@@ -501,12 +490,12 @@ public class Decompiler {
                     break;
                 }
 
-                case Token.LP :
+                case Token.LP:
                     result.append('(');
 
                     break;
 
-                case Token.RP :
+                case Token.RP:
                     result.append(')');
 
                     if (Token.LC == getNext(source, length, i)) {
@@ -515,17 +504,17 @@ public class Decompiler {
 
                     break;
 
-                case Token.LB :
+                case Token.LB:
                     result.append('[');
 
                     break;
 
-                case Token.RB :
+                case Token.RB:
                     result.append(']');
 
                     break;
 
-                case Token.EOL : {
+                case Token.EOL: {
                     if (toSource) {
                         break;
                     }
@@ -586,82 +575,82 @@ public class Decompiler {
                     break;
                 }
 
-                case Token.DOT :
+                case Token.DOT:
                     result.append('.');
 
                     break;
 
-                case Token.NEW :
+                case Token.NEW:
                     result.append("new ");
 
                     break;
 
-                case Token.DELPROP :
+                case Token.DELPROP:
                     result.append("delete ");
 
                     break;
 
-                case Token.IF :
+                case Token.IF:
                     result.append("if ");
 
                     break;
 
-                case Token.ELSE :
+                case Token.ELSE:
                     result.append("else ");
 
                     break;
 
-                case Token.FOR :
+                case Token.FOR:
                     result.append("for ");
 
                     break;
 
-                case Token.IN :
+                case Token.IN:
                     result.append(" in ");
 
                     break;
 
-                case Token.WITH :
+                case Token.WITH:
                     result.append("with ");
 
                     break;
 
-                case Token.WHILE :
+                case Token.WHILE:
                     result.append("while ");
 
                     break;
 
-                case Token.DO :
+                case Token.DO:
                     result.append("do ");
 
                     break;
 
-                case Token.TRY :
+                case Token.TRY:
                     result.append("try ");
 
                     break;
 
-                case Token.CATCH :
+                case Token.CATCH:
                     result.append("catch ");
 
                     break;
 
-                case Token.FINALLY :
+                case Token.FINALLY:
                     result.append("finally ");
 
                     break;
 
-                case Token.THROW :
+                case Token.THROW:
                     result.append("throw ");
 
                     break;
 
-                case Token.SWITCH :
+                case Token.SWITCH:
                     result.append("switch ");
 
                     break;
 
-                case Token.BREAK :
+                case Token.BREAK:
                     result.append("break");
 
                     if (Token.NAME == getNext(source, length, i)) {
@@ -670,7 +659,7 @@ public class Decompiler {
 
                     break;
 
-                case Token.CONTINUE :
+                case Token.CONTINUE:
                     result.append("continue");
 
                     if (Token.NAME == getNext(source, length, i)) {
@@ -679,17 +668,17 @@ public class Decompiler {
 
                     break;
 
-                case Token.CASE :
+                case Token.CASE:
                     result.append("case ");
 
                     break;
 
-                case Token.DEFAULT :
+                case Token.DEFAULT:
                     result.append("default");
 
                     break;
 
-                case Token.RETURN :
+                case Token.RETURN:
                     result.append("return");
 
                     if (Token.SEMI != getNext(source, length, i)) {
@@ -698,12 +687,12 @@ public class Decompiler {
 
                     break;
 
-                case Token.VAR :
+                case Token.VAR:
                     result.append("var ");
 
                     break;
 
-                case Token.SEMI :
+                case Token.SEMI:
                     result.append(';');
 
                     if (Token.EOL != getNext(source, length, i)) {
@@ -714,72 +703,72 @@ public class Decompiler {
 
                     break;
 
-                case Token.ASSIGN :
+                case Token.ASSIGN:
                     result.append(" = ");
 
                     break;
 
-                case Token.ASSIGN_ADD :
+                case Token.ASSIGN_ADD:
                     result.append(" += ");
 
                     break;
 
-                case Token.ASSIGN_SUB :
+                case Token.ASSIGN_SUB:
                     result.append(" -= ");
 
                     break;
 
-                case Token.ASSIGN_MUL :
+                case Token.ASSIGN_MUL:
                     result.append(" *= ");
 
                     break;
 
-                case Token.ASSIGN_DIV :
+                case Token.ASSIGN_DIV:
                     result.append(" /= ");
 
                     break;
 
-                case Token.ASSIGN_MOD :
+                case Token.ASSIGN_MOD:
                     result.append(" %= ");
 
                     break;
 
-                case Token.ASSIGN_BITOR :
+                case Token.ASSIGN_BITOR:
                     result.append(" |= ");
 
                     break;
 
-                case Token.ASSIGN_BITXOR :
+                case Token.ASSIGN_BITXOR:
                     result.append(" ^= ");
 
                     break;
 
-                case Token.ASSIGN_BITAND :
+                case Token.ASSIGN_BITAND:
                     result.append(" &= ");
 
                     break;
 
-                case Token.ASSIGN_LSH :
+                case Token.ASSIGN_LSH:
                     result.append(" <<= ");
 
                     break;
 
-                case Token.ASSIGN_RSH :
+                case Token.ASSIGN_RSH:
                     result.append(" >>= ");
 
                     break;
 
-                case Token.ASSIGN_URSH :
+                case Token.ASSIGN_URSH:
                     result.append(" >>>= ");
 
                     break;
 
-                case Token.HOOK :
+                case Token.HOOK:
                     result.append(" ? ");
 
                     break;
 
-                case Token.OBJECTLIT :
+                case Token.OBJECTLIT:
 
                     // pun OBJECTLIT to mean colon in objlit property
                     // initialization.
@@ -790,7 +779,7 @@ public class Decompiler {
 
                     break;
 
-                case Token.COLON :
+                case Token.COLON:
                     if (Token.EOL == getNext(source, length, i)) {
 
                         // it's the end of a label
@@ -803,182 +792,182 @@ public class Decompiler {
 
                     break;
 
-                case Token.OR :
+                case Token.OR:
                     result.append(" || ");
 
                     break;
 
-                case Token.AND :
+                case Token.AND:
                     result.append(" && ");
 
                     break;
 
-                case Token.BITOR :
+                case Token.BITOR:
                     result.append(" | ");
 
                     break;
 
-                case Token.BITXOR :
+                case Token.BITXOR:
                     result.append(" ^ ");
 
                     break;
 
-                case Token.BITAND :
+                case Token.BITAND:
                     result.append(" & ");
 
                     break;
 
-                case Token.SHEQ :
+                case Token.SHEQ:
                     result.append(" === ");
 
                     break;
 
-                case Token.SHNE :
+                case Token.SHNE:
                     result.append(" !== ");
 
                     break;
 
-                case Token.EQ :
+                case Token.EQ:
                     result.append(" == ");
 
                     break;
 
-                case Token.NE :
+                case Token.NE:
                     result.append(" != ");
 
                     break;
 
-                case Token.LE :
+                case Token.LE:
                     result.append(" <= ");
 
                     break;
 
-                case Token.LT :
+                case Token.LT:
                     result.append(" < ");
 
                     break;
 
-                case Token.GE :
+                case Token.GE:
                     result.append(" >= ");
 
                     break;
 
-                case Token.GT :
+                case Token.GT:
                     result.append(" > ");
 
                     break;
 
-                case Token.INSTANCEOF :
+                case Token.INSTANCEOF:
                     result.append(" instanceof ");
 
                     break;
 
-                case Token.LSH :
+                case Token.LSH:
                     result.append(" << ");
 
                     break;
 
-                case Token.RSH :
+                case Token.RSH:
                     result.append(" >> ");
 
                     break;
 
-                case Token.URSH :
+                case Token.URSH:
                     result.append(" >>> ");
 
                     break;
 
-                case Token.TYPEOF :
+                case Token.TYPEOF:
                     result.append("typeof ");
 
                     break;
 
-                case Token.VOID :
+                case Token.VOID:
                     result.append("void ");
 
                     break;
 
-                case Token.CONST :
+                case Token.CONST:
                     result.append("const ");
 
                     break;
 
-                case Token.NOT :
+                case Token.NOT:
                     result.append('!');
 
                     break;
 
-                case Token.BITNOT :
+                case Token.BITNOT:
                     result.append('~');
 
                     break;
 
-                case Token.POS :
+                case Token.POS:
                     result.append('+');
 
                     break;
 
-                case Token.NEG :
+                case Token.NEG:
                     result.append('-');
 
                     break;
 
-                case Token.INC :
+                case Token.INC:
                     result.append("++");
 
                     break;
 
-                case Token.DEC :
+                case Token.DEC:
                     result.append("--");
 
                     break;
 
-                case Token.ADD :
+                case Token.ADD:
                     result.append(" + ");
 
                     break;
 
-                case Token.SUB :
+                case Token.SUB:
                     result.append(" - ");
 
                     break;
 
-                case Token.MUL :
+                case Token.MUL:
                     result.append(" * ");
 
                     break;
 
-                case Token.DIV :
+                case Token.DIV:
                     result.append(" / ");
 
                     break;
 
-                case Token.MOD :
+                case Token.MOD:
                     result.append(" % ");
 
                     break;
 
-                case Token.COLONCOLON :
+                case Token.COLONCOLON:
                     result.append("::");
 
                     break;
 
-                case Token.DOTDOT :
+                case Token.DOTDOT:
                     result.append("..");
 
                     break;
 
-                case Token.DOTQUERY :
+                case Token.DOTQUERY:
                     result.append(".(");
 
                     break;
 
-                case Token.XMLATTR :
+                case Token.XMLATTR:
                     result.append('@');
 
                     break;
 
-                default :
+                default:
 
                     // If we don't know how to decompile it, raise an exception.
                     throw new RuntimeException("Token: " + Token.name(source.charAt(i)));

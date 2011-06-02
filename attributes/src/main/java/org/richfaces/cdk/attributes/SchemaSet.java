@@ -30,26 +30,21 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 @XmlRootElement(name = "schema-set")
-@XmlSeeAlso({
-    Schema.class,
-    Element.class,
-    Attribute.class
-})
+@XmlSeeAlso({ Schema.class, Element.class, Attribute.class })
 public class SchemaSet {
-
     private Map<String, Schema> schemas = new TreeMap<String, Schema>();
-    
+
     public SchemaSet() {
         super();
     }
-    
+
     public void addSchema(Schema schema) {
         schemas.put(schema.getNamespace(), schema);
     }
-    
+
     /**
      * @return the schemas
      */
@@ -57,12 +52,11 @@ public class SchemaSet {
     public Map<String, Schema> getSchemas() {
         return schemas;
     }
-    
+
     /**
      * @param schemas the schemas to set
      */
     public void setSchemas(Map<String, Schema> schemas) {
         this.schemas = schemas;
     }
-    
 }

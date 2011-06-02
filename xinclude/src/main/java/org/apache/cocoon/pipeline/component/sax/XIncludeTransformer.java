@@ -1,21 +1,21 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package org.apache.cocoon.pipeline.component.sax;
 
 import java.io.IOException;
@@ -55,36 +55,30 @@ public final class XIncludeTransformer implements SAXConsumer {
     private static final String XINCLUDE_PARSE_TEXT = "text";
     private static final String XINCLUDE_PARSE_XML = "xml";
     private static final String XINCLUDE_XPOINTER = "xpointer";
-
     private final Logger log;
-
     /**
      * The nesting level of fallback that should be used
      */
     private int useFallbackLevel = 0;
-
     /**
      * The nesting level of xi:include elements that have been encountered.
      */
     private int xIncludeElementLevel = 0;
-
     /**
-     * Keep a map of namespaces prefix in the source document to pass it
-     * to the XPointerContext for correct namespace identification.
+     * Keep a map of namespaces prefix in the source document to pass it to the XPointerContext for correct namespace
+     * identification.
      */
     private final Map<String, String> namespaces = new HashMap<String, String>();
     private URI baseUri;
     private ContentHandler contentHandler;
-
     /**
      * The nesting level of xi:fallback elements that have been encountered.
      */
     private int fallbackElementLevel;
     private LexicalHandler lexicalHandler;
-
     /**
-     * Locator of the current stream, stored here so that it can be restored after
-     * another document send its content to the consumer.
+     * Locator of the current stream, stored here so that it can be restored after another document send its content to the
+     * consumer.
      */
     private Locator locator;
     private EntityResolver2 resolver;
@@ -99,7 +93,8 @@ public final class XIncludeTransformer implements SAXConsumer {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the resolver
      */
@@ -108,7 +103,8 @@ public final class XIncludeTransformer implements SAXConsumer {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param resolver the resolver to set
      */
@@ -117,7 +113,8 @@ public final class XIncludeTransformer implements SAXConsumer {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the contentHandler
      */
@@ -126,7 +123,8 @@ public final class XIncludeTransformer implements SAXConsumer {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the lexicalHandler
      */
@@ -143,8 +141,8 @@ public final class XIncludeTransformer implements SAXConsumer {
     }
 
     /**
-     * Eventually previous errors don't reset local variables status, so
-     * every time a new consumer is set, local variables should be re-initialized
+     * Eventually previous errors don't reset local variables status, so every time a new consumer is set, local variables
+     * should be re-initialized
      */
     public void setContentHandler(ContentHandler delegateHandler) {
         this.contentHandler = delegateHandler;
@@ -159,12 +157,10 @@ public final class XIncludeTransformer implements SAXConsumer {
     }
 
     /**
-     * Determine whether the pipe is currently in a state where contents
-     * should be evaluated, i.e. xi:include elements should be resolved
-     * and elements in other namespaces should be copied through. Will
-     * return false for fallback contents within a successful xi:include,
-     * and true for contents outside any xi:include or within an xi:fallback
-     * for an unsuccessful xi:include.
+     * Determine whether the pipe is currently in a state where contents should be evaluated, i.e. xi:include elements should be
+     * resolved and elements in other namespaces should be copied through. Will return false for fallback contents within a
+     * successful xi:include, and true for contents outside any xi:include or within an xi:fallback for an unsuccessful
+     * xi:include.
      */
     private boolean isEvaluatingContent() {
         return xIncludeElementLevel == 0 || (fallbackElementLevel > 0 && fallbackElementLevel == useFallbackLevel);
@@ -232,21 +228,21 @@ public final class XIncludeTransformer implements SAXConsumer {
     }
 
     private void processXIncludeElement(String href, String parse, String xpointer, String encoding, String accept,
-                                        String acceptLanguage) throws SAXException {
+            String acceptLanguage) throws SAXException {
 
         if (log.isDebugEnabled()) {
             log.debug("Processing XInclude element: href=" + href + ", parse=" + parse + ", xpointer=" + xpointer
-                + ", encoding=" + encoding + ", accept=" + accept + ", acceptLanguage=" + acceptLanguage);
+                    + ", encoding=" + encoding + ", accept=" + accept + ", acceptLanguage=" + acceptLanguage);
         }
 
         int fragmentIdentifierPos = href.indexOf('#');
 
         if (fragmentIdentifierPos != -1) {
             log.warn("Fragment identifer found in 'href' attribute: " + href
-                + "\nFragment identifiers are forbidden by the XInclude specification. "
-                + "They are still handled by XIncludeTransformer for backward "
-                + "compatibility, but their use is deprecated and will be prohibited "
-                + "in a future release.  Use the 'xpointer' attribute instead.");
+                    + "\nFragment identifiers are forbidden by the XInclude specification. "
+                    + "They are still handled by XIncludeTransformer for backward "
+                    + "compatibility, but their use is deprecated and will be prohibited "
+                    + "in a future release.  Use the 'xpointer' attribute instead.");
 
             if (xpointer == null) {
                 xpointer = href.substring(fragmentIdentifierPos + 1);
@@ -257,8 +253,7 @@ public final class XIncludeTransformer implements SAXConsumer {
 
         // An empty or absent href is a reference to the current document -- this can be different than the current base
         if (href == null || href.length() == 0) {
-            throw new SAXException(
-                "XIncludeTransformer: encountered empty href (= href pointing to the current document).");
+            throw new SAXException("XIncludeTransformer: encountered empty href (= href pointing to the current document).");
         }
 
         InputSource source = createSource(href);
@@ -400,7 +395,7 @@ public final class XIncludeTransformer implements SAXConsumer {
     public void endPrefixMapping(String prefix) throws SAXException {
         if (isEvaluatingContent()) {
             String uri = namespaces.remove(prefix);
-            
+
             if (!XINCLUDE_NAMESPACE_URI.equals(uri)) {
                 getContentHandler().endPrefixMapping(prefix);
             }
@@ -480,18 +475,25 @@ public final class XIncludeTransformer implements SAXConsumer {
     }
 
     private static final class DummyLexicalHandler implements LexicalHandler {
-        public void startEntity(String name) throws SAXException { }
+        public void startEntity(String name) throws SAXException {
+        }
 
-        public void startDTD(String name, String publicId, String systemId) throws SAXException { }
+        public void startDTD(String name, String publicId, String systemId) throws SAXException {
+        }
 
-        public void startCDATA() throws SAXException { }
+        public void startCDATA() throws SAXException {
+        }
 
-        public void endEntity(String name) throws SAXException { }
+        public void endEntity(String name) throws SAXException {
+        }
 
-        public void endDTD() throws SAXException { }
+        public void endDTD() throws SAXException {
+        }
 
-        public void endCDATA() throws SAXException { }
+        public void endCDATA() throws SAXException {
+        }
 
-        public void comment(char[] ch, int start, int length) throws SAXException { }
+        public void comment(char[] ch, int start, int length) throws SAXException {
+        }
     }
 }

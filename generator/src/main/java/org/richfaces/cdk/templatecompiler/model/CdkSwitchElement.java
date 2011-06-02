@@ -28,27 +28,26 @@ import org.richfaces.cdk.CdkException;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 @XmlRootElement(name = "switch", namespace = Template.CDK_NAMESPACE)
 public class CdkSwitchElement extends ModelFragment {
-
     @XmlAttribute
     private String key;
-    
+
     public String getKey() {
         return key;
     }
-    
+
     public void setKey(String key) {
         this.key = key;
     }
-    
+
     @Override
     public void beforeVisit(TemplateVisitor visitor) throws CdkException {
         visitor.startElement(this);
     }
-    
+
     @Override
     public void afterVisit(TemplateVisitor visitor) throws CdkException {
         visitor.endElement(this);

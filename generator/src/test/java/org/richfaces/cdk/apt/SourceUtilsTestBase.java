@@ -20,10 +20,9 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertTrue;
 
 import java.util.Set;
 
@@ -50,40 +49,36 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 @RunWith(CdkTestRunner.class)
 public abstract class SourceUtilsTestBase extends AnnotationProcessorTestBase {
-
     @Inject
     protected CdkProcessor processor;
-
     @Inject
     protected TaskFactoryImpl factory;
-
     @Stub
     @Output(Outputs.JAVA_CLASSES)
     protected FileManager output;
-    
 
     @Override
     public void configure(Binder binder) {
         super.configure(binder);
         binder.bind(CdkProcessor.class).to(TestProcessor.class).in(Singleton.class);
     }
-    
-    
-    protected void execute(SourceUtilsCallback callback){
-        ((TestProcessor)processor).callback = callback;
-        assertTrue("Compilation error",factory.get().call());
+
+    protected void execute(SourceUtilsCallback callback) {
+        ((TestProcessor) processor).callback = callback;
+        assertTrue("Compilation error", factory.get().call());
     }
-    
+
     protected Element findElement(RoundEnvironment roundEnvironment, final String name) {
         Set<? extends Element> elements = roundEnvironment.getRootElements();
         return Iterables.find(elements, new Predicate<Element>() {
-    
             @Override
             public boolean apply(Element input) {
                 return name.equals(input.getSimpleName().toString());
@@ -92,7 +87,10 @@ public abstract class SourceUtilsTestBase extends AnnotationProcessorTestBase {
     }
 
     /**
-     * <p class="changed_added_4_0">Interface to call back test method from APT</p>
+     * <p class="changed_added_4_0">
+     * Interface to call back test method from APT
+     * </p>
+     *
      * @author asmirnov@exadel.com
      *
      */
@@ -100,19 +98,18 @@ public abstract class SourceUtilsTestBase extends AnnotationProcessorTestBase {
         void process(SourceUtils utils, RoundEnvironment roundEnv);
     }
 
-
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @author asmirnov@exadel.com
      *
      */
     @SupportedSourceVersion(SourceVersion.RELEASE_6)
     @SupportedAnnotationTypes("*")
     public static class TestProcessor extends AbstractProcessor implements CdkProcessor {
-
         @Inject
         protected SourceUtilsProvider sourceUtilsProvider;
-        
         SourceUtilsCallback callback;
 
         @Override
@@ -123,7 +120,7 @@ public abstract class SourceUtilsTestBase extends AnnotationProcessorTestBase {
 
         @Override
         public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-            if(!roundEnv.processingOver()){
+            if (!roundEnv.processingOver()) {
                 callback.process(sourceUtilsProvider.get(), roundEnv);
             }
             return false;
@@ -131,8 +128,7 @@ public abstract class SourceUtilsTestBase extends AnnotationProcessorTestBase {
 
         @Override
         public void processNonJavaSources() {
-            // do nothing            
+            // do nothing
         }
-        
     }
 }
