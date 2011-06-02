@@ -33,10 +33,9 @@ import org.richfaces.cdk.templatecompiler.el.types.TypesFactory;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public abstract class AbstractMethodTreeNode extends AbstractTreeNode {
-
     private static final ELType[] EMPTY_TYPES_ARRAY = new ELType[0];
 
     /**
@@ -46,8 +45,7 @@ public abstract class AbstractMethodTreeNode extends AbstractTreeNode {
         super(node);
     }
 
-    protected void visitMethod(StringBuilder sb, ELVisitor visitor, String methodName)
-        throws ParsingException {
+    protected void visitMethod(StringBuilder sb, ELVisitor visitor, String methodName) throws ParsingException {
         ELType currentExpressionType = visitor.getType();
         List<ELType> argumentTypes = new ArrayList<ELType>();
 
@@ -73,8 +71,7 @@ public abstract class AbstractMethodTreeNode extends AbstractTreeNode {
         ELType returnType = null;
         visitor.setExpressionType(currentExpressionType);
         try {
-            returnType = visitor.getMatchingVisibleMethodReturnType( methodName, argumentTypes
-                .toArray(EMPTY_TYPES_ARRAY));
+            returnType = visitor.getMatchingVisibleMethodReturnType(methodName, argumentTypes.toArray(EMPTY_TYPES_ARRAY));
         } catch (ParsingException e) {
             // TODO: handle exception
             returnType = TypesFactory.OBJECT_TYPE;

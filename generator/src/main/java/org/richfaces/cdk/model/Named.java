@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.model;
 
 import org.richfaces.cdk.util.ComparatorUtils;
@@ -28,25 +27,29 @@ import org.richfaces.cdk.util.ComparatorUtils;
 import com.google.common.base.Predicate;
 
 /**
- * <p class="changed_added_4_0">This interface represents all models for "named" JSF objects ( attributes, properties, facets )</p>
+ * <p class="changed_added_4_0">
+ * This interface represents all models for "named" JSF objects ( attributes, properties, facets )
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public interface Named {
-    
     /**
-     * <p class="changed_added_4_0">Predicate used to lookup named element in the {@link ModelCollection}</p>
+     * <p class="changed_added_4_0">
+     * Predicate used to lookup named element in the {@link ModelCollection}
+     * </p>
+     *
      * @author asmirnov@exadel.com
      *
      */
     public static final class NamePredicate implements Predicate<Named> {
-        
         private final String name;
 
         public NamePredicate(String name) {
             this.name = name;
         }
-    
+
         @Override
         public boolean apply(Named input) {
             return ComparatorUtils.nullSafeEquals(input.getName(), this.name);
@@ -54,16 +57,19 @@ public interface Named {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
-        // TODO - change to class corresponding with Java identifier type from faces-config.xsd
+     * <p class="changed_added_4_0">
+     * </p>
+     * // TODO - change to class corresponding with Java identifier type from faces-config.xsd
+     *
      * @return the name
      */
-    public String getName();
+    String getName();
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param name the name to set
      */
-    public void setName(String name);
-
+    void setName(String name);
 }

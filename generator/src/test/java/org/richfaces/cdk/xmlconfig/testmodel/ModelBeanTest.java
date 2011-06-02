@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.testmodel;
 
 import java.io.IOException;
@@ -61,19 +60,15 @@ import com.google.inject.Inject;
  */
 @RunWith(CdkTestRunner.class)
 public abstract class ModelBeanTest extends JaxbTestBase {
-
     @Inject
     @As(JAXBBinding.class)
     JAXB binding;
-
     @Mock
     @Source(Sources.FACES_CONFIGS)
     FileManager configSource;
-
     @Inject
     @As(CdkEntityResolver.class)
     EntityResolver2 resolver;
-
     @Mock
     @Source(Sources.RENDERER_TEMPLATES)
     FileManager templatesSource;

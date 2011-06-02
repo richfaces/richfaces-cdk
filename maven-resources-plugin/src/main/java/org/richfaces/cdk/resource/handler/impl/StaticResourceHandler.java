@@ -34,12 +34,11 @@ import com.google.common.base.Strings;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class StaticResourceHandler extends AbstractResourceHandler {
-
     private Collection<VirtualFile> roots;
-    
+
     public StaticResourceHandler(Collection<VirtualFile> roots) {
         super();
         this.roots = roots;
@@ -51,13 +50,13 @@ public class StaticResourceHandler extends AbstractResourceHandler {
             if (child == null) {
                 continue;
             }
-            
+
             VirtualFile libraryDir = ResourceUtil.getLatestVersion(child, true);
             if (libraryDir != null) {
                 return libraryDir;
             }
         }
-        
+
         return null;
     }
 
@@ -71,10 +70,10 @@ public class StaticResourceHandler extends AbstractResourceHandler {
                 }
             }
         }
-        
+
         return null;
     }
-    
+
     @Override
     public Resource createResource(String resourceName, String libraryName, String contentType) {
         Collection<VirtualFile> libraryDirs = Collections.emptyList();
@@ -86,25 +85,23 @@ public class StaticResourceHandler extends AbstractResourceHandler {
         } else {
             libraryDirs = roots;
         }
-        
+
         VirtualFile resource = findResource(libraryDirs, resourceName);
         if (resource != null) {
             Resource result = new VFSResource(resource, resource.getRelativePath());
-            
+
             result.setResourceName(resourceName);
             result.setLibraryName(libraryName);
-            
+
             if (Strings.isNullOrEmpty(contentType)) {
                 result.setContentType(MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(resourceName));
             } else {
                 result.setContentType(contentType);
             }
-            
-            
+
             return result;
         }
-        
+
         return null;
     }
-
 }

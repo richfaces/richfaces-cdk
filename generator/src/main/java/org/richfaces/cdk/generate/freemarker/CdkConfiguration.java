@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.generate.freemarker;
 
 import java.io.IOException;
@@ -40,15 +39,12 @@ import freemarker.template.TemplateModelException;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
  */
 public class CdkConfiguration extends Configuration implements FreeMarkerRenderer {
-
     private static final String TEMPLATES = "/META-INF/templates";
-    
-    private String templatesFolder=TEMPLATES;
-
+    private String templatesFolder = TEMPLATES;
     private Logger log;
 
     @Inject
@@ -65,20 +61,20 @@ public class CdkConfiguration extends Configuration implements FreeMarkerRendere
         // this.setSharedVariable("context", new BeanModel(context, new BeansWrapper()));
     }
 
-    @Inject(optional=true)
-    public void setSharedVariables(@ContextVariables Map<String,Object> variables) {
+    @Inject(optional = true)
+    public void setSharedVariables(@ContextVariables Map<String, Object> variables) {
         // template method for subclasses.
-        for (Map.Entry<String,Object> entry : variables.entrySet()) {
+        for (Map.Entry<String, Object> entry : variables.entrySet()) {
             try {
                 setSharedVariable(entry.getKey(), entry.getValue());
             } catch (TemplateModelException e) {
-                log.error("Error to set shared variable "+entry.getKey(), e);
+                log.error("Error to set shared variable " + entry.getKey(), e);
             }
         }
     }
-    
-    @Inject(optional=true)
-    public synchronized void setImports(@DefaultImports Map<String,String> map) {
+
+    @Inject(optional = true)
+    public synchronized void setImports(@DefaultImports Map<String, String> map) {
         super.setAutoImports(map);
     }
 
@@ -89,7 +85,7 @@ public class CdkConfiguration extends Configuration implements FreeMarkerRendere
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.FreeMarkerRenderer#renderSnippet(java.lang.String, java.lang.Object)
      */
     @Override
@@ -108,17 +104,21 @@ public class CdkConfiguration extends Configuration implements FreeMarkerRendere
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param templatesFolder the templatesFolder to set
      */
-    @Inject(optional=true)
+    @Inject(optional = true)
     public void setTemplatesFolder(@TemplatesFolder String templatesFolder) {
         setClassForTemplateLoading(this.getClass(), templatesFolder);
         this.templatesFolder = templatesFolder;
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the templates
      */
     public String getTemplatesFolder() {

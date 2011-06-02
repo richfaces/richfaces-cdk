@@ -20,28 +20,30 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.model;
 
 import org.richfaces.cdk.CdkException;
 
 /**
- * <p class="changed_added_4_0">That exception indicates what some name does not meet CDK naming conventions.</p>
+ * <p class="changed_added_4_0">
+ * That exception indicates what some name does not meet CDK naming conventions.
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 @SuppressWarnings("serial")
 public class InvalidNameException extends CdkException {
-
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      */
     public InvalidNameException() {
         super();
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param message
      */
@@ -50,7 +52,8 @@ public class InvalidNameException extends CdkException {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param cause
      */
@@ -59,7 +62,8 @@ public class InvalidNameException extends CdkException {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param message
      * @param cause

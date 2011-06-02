@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.builder.model;
 
 import java.util.Comparator;
@@ -27,17 +26,15 @@ import java.util.Comparator;
  * @author Maksim Kaszynski
  */
 public interface JavaImport {
-    
-    public Comparator<? super JavaImport> COMPARATOR = new Comparator<JavaImport>() {
+    Comparator<? super JavaImport> COMPARATOR = new Comparator<JavaImport>() {
         public int compare(JavaImport o1, JavaImport o2) {
             return o1.getName().compareTo(o2.getName());
         }
     };
 
-    public String getName();
+    String getName();
 
-    public boolean isStatic();
+    boolean isStatic();
 
-    public boolean isDefault();
-
+    boolean isDefault();
 }

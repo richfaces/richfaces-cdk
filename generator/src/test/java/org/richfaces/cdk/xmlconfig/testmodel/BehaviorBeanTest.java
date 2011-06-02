@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.xmlconfig.testmodel;
 
 import java.io.StringWriter;
@@ -38,7 +37,6 @@ import org.richfaces.cdk.xmlconfig.XmlTest;
  * @since Jan 21, 2010
  */
 public class BehaviorBeanTest extends XmlTest {
-
     @Test
     public void testMarshal() throws Exception {
         ComponentLibrary library = new ComponentLibrary();

@@ -20,18 +20,18 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import org.richfaces.cdk.model.FunctionModel;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class FunctionAdapter extends AdapterBase<FunctionBean, FunctionModel> {
-
     @Override
     protected Class<? extends FunctionBean> getBeanClass(FunctionModel prop) {
         return FunctionBean.class;
@@ -41,5 +41,4 @@ public class FunctionAdapter extends AdapterBase<FunctionBean, FunctionModel> {
     protected Class<? extends FunctionModel> getModelClass(FunctionBean bean) {
         return FunctionModel.class;
     }
-
 }

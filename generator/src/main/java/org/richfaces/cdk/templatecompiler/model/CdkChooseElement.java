@@ -31,10 +31,12 @@ import org.richfaces.cdk.CdkException;
  */
 @XmlRootElement(name = "choose", namespace = Template.JSTL_CORE_NAMESPACE)
 public class CdkChooseElement extends ModelFragment {
-
-    /* (non-Javadoc)
-      * @see org.richfaces.cdk.templatecompiler.model.ModelFragment#visit(org.richfaces.cdk.templatecompiler.model.TemplateVisitor)
-      */
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * org.richfaces.cdk.templatecompiler.model.ModelFragment#visit(org.richfaces.cdk.templatecompiler.model.TemplateVisitor)
+     */
     @Override
     public void beforeVisit(TemplateVisitor visitor) throws CdkException {
         visitor.startElement(this);

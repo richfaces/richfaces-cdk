@@ -26,11 +26,10 @@ package org.richfaces.cdk.util;
  * @since 4.0
  */
 public final class ArrayUtils {
-
     private ArrayUtils() {
-        //utility class ctor
+        // utility class ctor
     }
-    
+
     public static boolean isEmpty(Object[] array) {
         return array == null || array.length == 0;
     }

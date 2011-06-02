@@ -5,9 +5,6 @@
  * Code licensed under the BSD License:
  *     http://developer.yahoo.net/yui/license.txt
  */
-
-
-
 package com.yahoo.platform.yui.compressor;
 
 import org.mozilla.javascript.*;
@@ -15,7 +12,6 @@ import org.mozilla.javascript.*;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-
 import java.util.*;
 
 public class JavaScriptCompressor {
@@ -296,24 +292,24 @@ public class JavaScriptCompressor {
             int tt = source.charAt(offset++);
 
             switch (tt) {
-                case Token.IECC :
-                case Token.NAME :
-                case Token.REGEXP :
-                case Token.STRING :
+                case Token.IECC:
+                case Token.NAME:
+                case Token.REGEXP:
+                case Token.STRING:
                     sb.setLength(0);
                     offset = printSourceString(source, offset, sb);
                     tokens.add(new JavaScriptToken(tt, sb.toString()));
 
                     break;
 
-                case Token.NUMBER :
+                case Token.NUMBER:
                     sb.setLength(0);
                     offset = printSourceNumber(source, offset, sb);
                     tokens.add(new JavaScriptToken(tt, sb.toString()));
 
                     break;
 
-                default :
+                default:
                     String literal = (String) literals.get(new Integer(tt));
 
                     if (literal != null) {
@@ -340,7 +336,7 @@ public class JavaScriptCompressor {
             token = (JavaScriptToken) tokens.get(i);
 
             switch (token.getType()) {
-                case Token.ADD :
+                case Token.ADD:
                     if (merge) {
                         if (i > 0 && i < length) {
                             prevToken = (JavaScriptToken) result.get(result.size() - 1);
@@ -348,10 +344,10 @@ public class JavaScriptCompressor {
 
                             if (prevToken.getType() == Token.STRING && nextToken.getType() == Token.STRING
                                     && (i == length - 1
-                                        || ((JavaScriptToken) tokens.get(i + 2)).getType() != Token.DOT)) {
+                                    || ((JavaScriptToken) tokens.get(i + 2)).getType() != Token.DOT)) {
                                 result.set(result.size() - 1,
-                                           new JavaScriptToken(Token.STRING,
-                                                               prevToken.getValue() + nextToken.getValue()));
+                                        new JavaScriptToken(Token.STRING,
+                                                prevToken.getValue() + nextToken.getValue()));
                                 i++; // not a good practice, but oh well...
 
                                 break;
@@ -359,8 +355,8 @@ public class JavaScriptCompressor {
                         }
                     }
 
-                /* FALLSTHROUGH */
-                default :
+                    /* FALLSTHROUGH */
+                default:
                     result.add(token);
 
                     break;
@@ -431,7 +427,7 @@ public class JavaScriptCompressor {
     }
 
     public void compress(Writer out, int linebreak, boolean munge, boolean warn, boolean preserveAllSemiColons,
-                         boolean preserveStringLiterals)
+            boolean preserveStringLiterals)
             throws IOException {
         this.munge = munge;
         this.warn = warn;
@@ -708,74 +704,74 @@ public class JavaScriptCompressor {
             currentScope = getCurrentScope();
 
             switch (token.getType()) {
-                case Token.SEMI :
-                case Token.COMMA :
+                case Token.SEMI:
+                case Token.COMMA:
                     if (braceNesting == expressionBraceNesting && bracketNesting == 0 && parensNesting == 0) {
                         return;
                     }
 
                     break;
 
-                case Token.FUNCTION :
+                case Token.FUNCTION:
                     parseFunctionDeclaration();
 
                     break;
 
-                case Token.LC :
+                case Token.LC:
                     braceNesting++;
 
                     break;
 
-                case Token.RC :
+                case Token.RC:
                     braceNesting--;
                     assert braceNesting >= expressionBraceNesting;
 
                     break;
 
-                case Token.LB :
+                case Token.LB:
                     bracketNesting++;
 
                     break;
 
-                case Token.RB :
+                case Token.RB:
                     bracketNesting--;
 
                     break;
 
-                case Token.LP :
+                case Token.LP:
                     parensNesting++;
 
                     break;
 
-                case Token.RP :
+                case Token.RP:
                     parensNesting--;
 
                     break;
 
-                case Token.IECC :
+                case Token.IECC:
                     if (mode == BUILDING_SYMBOL_TREE) {
                         protectScopeFromObfuscation(currentScope);
                         warn("[WARNING] Using JScript conditional comments is not recommended..."
-                             + (munge
+                                + (munge
                                 ? "\n[INFO] Using JSCript conditional comments reduces the level of compression!"
                                 : ""), true);
                     }
 
                     break;
 
-                case Token.NAME :
+                case Token.NAME:
                     symbol = token.getValue();
 
                     if (mode == BUILDING_SYMBOL_TREE) {
                         if (symbol.equals("eval")) {
                             protectScopeFromObfuscation(currentScope);
                             warn("[WARNING] Using 'eval' is not recommended..."
-                                 + (munge ? "\n[INFO] Using 'eval' reduces the level of compression!" : ""), true);
+                                    + (munge ? "\n[INFO] Using 'eval' reduces the level of compression!" : ""), true);
                         }
                     } else if (mode == CHECKING_SYMBOL_TREE) {
                         if ((offset < 2 || (getToken(-2).getType() != Token.DOT && getToken(
                                 -2).getType() != Token.GET && getToken(-2).getType() != Token.SET)) && getToken(
-                                    0).getType() != Token.OBJECTLIT) {
+                                0).getType() != Token.OBJECTLIT) {
                             identifier = getIdentifier(symbol, currentScope);
 
                             if (identifier == null) {
@@ -811,12 +807,12 @@ public class JavaScriptCompressor {
             token = consumeToken();
 
             switch (token.getType()) {
-                case Token.VAR :
-                case Token.CONST :
+                case Token.VAR:
+                case Token.CONST:
 
                     // The var keyword is followed by at least one symbol name.
                     // If several symbols follow, they are comma separated.
-                    for (;;) {
+                    for (; ; ) {
                         token = consumeToken();
                         assert token.getType() == Token.NAME;
 
@@ -827,13 +823,13 @@ public class JavaScriptCompressor {
                                 scope.declareIdentifier(symbol);
                             } else {
                                 warn("[WARNING] The variable " + symbol
-                                     + " has already been declared in the same scope...", true);
+                                        + " has already been declared in the same scope...", true);
                             }
                         }
 
                         token = getToken(0);
                         assert token.getType() == Token.SEMI || token.getType() == Token.ASSIGN
-                               || token.getType() == Token.COMMA || token.getType() == Token.IN;
+                                || token.getType() == Token.COMMA || token.getType() == Token.IN;
 
                         if (token.getType() == Token.IN) {
                             break;
@@ -849,17 +845,17 @@ public class JavaScriptCompressor {
 
                     break;
 
-                case Token.FUNCTION :
+                case Token.FUNCTION:
                     parseFunctionDeclaration();
 
                     break;
 
-                case Token.LC :
+                case Token.LC:
                     braceNesting++;
 
                     break;
 
-                case Token.RC :
+                case Token.RC:
                     braceNesting--;
                     assert braceNesting >= scope.getBraceNesting();
 
@@ -871,7 +867,7 @@ public class JavaScriptCompressor {
 
                     break;
 
-                case Token.WITH :
+                case Token.WITH:
                     if (mode == BUILDING_SYMBOL_TREE) {
 
                         // Inside a 'with' block, it is impossible to figure out
@@ -881,35 +877,35 @@ public class JavaScriptCompressor {
                         // containing the 'with' block.
                         protectScopeFromObfuscation(scope);
                         warn("[WARNING] Using 'with' is not recommended"
-                             + (munge ? "(and it reduces the level of compression)" : ""), true);
+                                + (munge ? "(and it reduces the level of compression)" : ""), true);
                     }
 
                     break;
 
-                case Token.CATCH :
+                case Token.CATCH:
                     parseCatch();
 
                     break;
 
-                case Token.IECC :
+                case Token.IECC:
                     if (mode == BUILDING_SYMBOL_TREE) {
                         protectScopeFromObfuscation(scope);
                         warn("[WARNING] Using JScript conditional comments is not recommended..."
-                             + (munge
+                                + (munge
                                 ? "\n[INFO] Using JSCript conditional comments reduces the level of compression!"
                                 : ""), true);
                     }
 
                     break;
 
-                case Token.NAME :
+                case Token.NAME:
                     symbol = token.getValue();
 
                     if (mode == BUILDING_SYMBOL_TREE) {
                         if (symbol.equals("eval")) {
                             protectScopeFromObfuscation(scope);
                             warn("[WARNING] Using 'eval' is not recommended..."
-                                 + (munge ? "\n[INFO] Using 'eval' reduces the level of compression!" : ""), true);
+                                    + (munge ? "\n[INFO] Using 'eval' reduces the level of compression!" : ""), true);
                         }
                     } else if (mode == CHECKING_SYMBOL_TREE) {
                         if ((offset < 2 || getToken(-2).getType() != Token.DOT)
@@ -1001,7 +997,7 @@ public class JavaScriptCompressor {
             currentScope = getCurrentScope();
 
             switch (token.getType()) {
-                case Token.NAME :
+                case Token.NAME:
                     if (offset >= 2 && getToken(-2).getType() == Token.DOT
                             || getToken(0).getType() == Token.OBJECTLIT) {
                         result.append(symbol);
@@ -1017,7 +1013,7 @@ public class JavaScriptCompressor {
 
                             if (currentScope != globalScope && identifier.getRefcount() == 0) {
                                 warn("[WARNING] The symbol " + symbol
-                                     + " is declared but is apparently never used.\nThis code can probably be written in a more efficient way.", true);
+                                        + " is declared but is apparently never used.\nThis code can probably be written in a more efficient way.", true);
                             }
                         } else {
                             result.append(symbol);
@@ -1026,15 +1022,15 @@ public class JavaScriptCompressor {
 
                     break;
 
-                case Token.REGEXP :
-                case Token.NUMBER :
-                case Token.STRING :
+                case Token.REGEXP:
+                case Token.NUMBER:
+                case Token.STRING:
                     result.append(symbol);
 
                     break;
 
-                case Token.ADD :
-                case Token.SUB :
+                case Token.ADD:
+                case Token.SUB:
                     result.append((String) literals.get(new Integer(token.getType())));
 
                     if (offset < length) {
@@ -1049,7 +1045,7 @@ public class JavaScriptCompressor {
                             // to the implicit assignment being done on the wrong variable)
                             result.append(" ");
                         } else if (token.getType() == Token.POS && getToken(-1).getType() == Token.ADD
-                                   || token.getType() == Token.NEG && getToken(-1).getType() == Token.SUB) {
+                                || token.getType() == Token.NEG && getToken(-1).getType() == Token.SUB) {
 
                             // Handle the case x + + y and x - - y
                             result.append(" ");
@@ -1058,7 +1054,7 @@ public class JavaScriptCompressor {
 
                     break;
 
-                case Token.FUNCTION :
+                case Token.FUNCTION:
                     result.append("function");
                     token = consumeToken();
 
@@ -1076,7 +1072,7 @@ public class JavaScriptCompressor {
 
                         if (currentScope != globalScope && identifier.getRefcount() == 0) {
                             warn("[WARNING] The symbol " + symbol
-                                 + " is declared but is apparently never used.\nThis code can probably be written in a more efficient way.", true);
+                                    + " is declared but is apparently never used.\nThis code can probably be written in a more efficient way.", true);
                         }
 
                         token = consumeToken();
@@ -1123,7 +1119,7 @@ public class JavaScriptCompressor {
 
                     break;
 
-                case Token.RETURN :
+                case Token.RETURN:
                     result.append("return");
 
                     // No space needed after 'return' when followed
@@ -1139,7 +1135,7 @@ public class JavaScriptCompressor {
 
                     break;
 
-                case Token.CASE :
+                case Token.CASE:
                     result.append("case");
 
                     // White-space needed after 'case' when not followed by a string.
@@ -1149,7 +1145,7 @@ public class JavaScriptCompressor {
 
                     break;
 
-                case Token.THROW :
+                case Token.THROW:
 
                     // White-space needed after 'throw' when not followed by a string.
                     result.append("throw");
@@ -1160,7 +1156,7 @@ public class JavaScriptCompressor {
 
                     break;
 
-                case Token.BREAK :
+                case Token.BREAK:
                     result.append("break");
 
                     if (offset < length && getToken(0).getType() != Token.SEMI) {
@@ -1172,7 +1168,7 @@ public class JavaScriptCompressor {
 
                     break;
 
-                case Token.CONTINUE :
+                case Token.CONTINUE:
                     result.append("continue");
 
                     if (offset < length && getToken(0).getType() != Token.SEMI) {
@@ -1184,13 +1180,13 @@ public class JavaScriptCompressor {
 
                     break;
 
-                case Token.LC :
+                case Token.LC:
                     result.append("{");
                     braceNesting++;
 
                     break;
 
-                case Token.RC :
+                case Token.RC:
                     result.append("}");
                     braceNesting--;
                     assert braceNesting >= currentScope.getBraceNesting();
@@ -1201,7 +1197,7 @@ public class JavaScriptCompressor {
 
                     break;
 
-                case Token.SEMI :
+                case Token.SEMI:
 
                     // No need to output a semi-colon if the next character is a right-curly...
                     if (preserveAllSemiColons || offset < length && getToken(0).getType() != Token.RC) {
@@ -1219,14 +1215,14 @@ public class JavaScriptCompressor {
 
                     break;
 
-                case Token.IECC :
+                case Token.IECC:
                     result.append("/*");
                     result.append(symbol);
                     result.append("*/");
 
                     break;
 
-                default :
+                default:
                     String literal = (String) literals.get(new Integer(token.getType()));
 
                     if (literal != null) {

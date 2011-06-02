@@ -20,11 +20,18 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt;
 
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.capture;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Collections;
 import java.util.Set;
@@ -53,30 +60,26 @@ import com.google.inject.Inject;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 @RunWith(CdkTestRunner.class)
 public class TaskFactoryTest extends AnnotationProcessorTestBase {
-
     private static final String CLASS_JAVA = "org/richfaces/cdk/apt/TestClass.java";
     private static final String INTERFACE_JAVA = "org/richfaces/cdk/apt/TestInterface.java";
     private static final String SUB_CLASS_JAVA = "org/richfaces/cdk/apt/TestSubClass.java";
-
     @Mock
     CdkProcessor processor;
-
     @Inject
     private TaskFactoryImpl factory;
-
     @Stub
     @Output(Outputs.JAVA_CLASSES)
     private FileManager output;
 
     /**
      * Test method for {@link org.richfaces.cdk.apt.TaskFactoryImpl#get()}.
-     * 
+     *
      * @throws Exception
      * @throws AptException
      */
@@ -98,12 +101,11 @@ public class TaskFactoryTest extends AnnotationProcessorTestBase {
         expectLastCall();
         expect(processor.getSupportedSourceVersion()).andReturn(SourceVersion.RELEASE_6);
         expect(processor.getSupportedAnnotationTypes()).andReturn(Collections.singleton("*"));
-        expect(processor.getSupportedOptions()).andReturn(Collections.<String> emptySet());
+        expect(processor.getSupportedOptions()).andReturn(Collections.<String>emptySet());
         // processor.process(null,null);
         Capture<Set<? extends TypeElement>> capturedTypes = new Capture<Set<? extends TypeElement>>(CaptureType.FIRST);
 
-        expect(processor.process(capture(capturedTypes), EasyMock.<RoundEnvironment> anyObject())).andReturn(true)
-            .times(2);
+        expect(processor.process(capture(capturedTypes), EasyMock.<RoundEnvironment>anyObject())).andReturn(true).times(2);
         replay(processor, output);
         CompilationTask task = factory.get();
         assertTrue(task.call());

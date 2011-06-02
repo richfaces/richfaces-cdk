@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk;
 
 import java.io.File;
@@ -45,14 +44,12 @@ import com.google.inject.Module;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public abstract class CdkTestBase implements Module {
-
     protected File tempDir;
-
     protected Iterable<File> testSourceDirectory;
 
     @Override
@@ -94,7 +91,7 @@ public abstract class CdkTestBase implements Module {
     protected CdkClassLoader createClassLoader() {
         try {
             return new CdkClassLoader(ImmutableList.of(getLibraryFile("test.source.properties"),
-                getLibraryFile(JsfComponent.class)), null);
+                    getLibraryFile(JsfComponent.class)), null);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -21,13 +21,10 @@
  */
 package org.richfaces.cdk;
 
-
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public interface FileNameMapper {
-
-    public String createName(String resourcePath);
-    
+    String createName(String resourcePath);
 }

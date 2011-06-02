@@ -18,10 +18,10 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt.processors;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -84,8 +84,8 @@ public class ValidatorProcessorTest extends AnnotationProcessorTestBase {
             return toString;
         }
     }
-    private static final String VALIDATOR_CLASS_JAVA = "org/richfaces/cdk/test/component/MyValidator.java";
 
+    private static final String VALIDATOR_CLASS_JAVA = "org/richfaces/cdk/test/component/MyValidator.java";
     @Inject
     private ComponentLibrary library;
 
@@ -165,7 +165,7 @@ public class ValidatorProcessorTest extends AnnotationProcessorTestBase {
     }
 
     private ValidatorModel getValidatorModelForSetNames(boolean isAnnotationDefined, String validatorClass,
-        final String baseClass, boolean isAbstractPresent) {
+            final String baseClass, boolean isAbstractPresent) {
         Name name = new MyName(baseClass);
 
         TypeElement element = EasyMock.createMock(TypeElement.class);

@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.generate.java.taghandler;
 
 import org.richfaces.cdk.annotations.TagType;
@@ -37,8 +36,7 @@ import com.google.inject.Inject;
  * @author akolonitsky
  * @since Feb 22, 2010
  */
-public class TagHandlerGeneratorVisitor extends SimpleVisitor<Boolean,Boolean> {
-
+public class TagHandlerGeneratorVisitor extends SimpleVisitor<Boolean, Boolean> {
     private final TagHandlerClassGenerator tagGenerator;
 
     @Inject
@@ -47,36 +45,34 @@ public class TagHandlerGeneratorVisitor extends SimpleVisitor<Boolean,Boolean> {
     }
 
     @Override
-    public Boolean visitComponent(ComponentModel model,Boolean data) {
+    public Boolean visitComponent(ComponentModel model, Boolean data) {
         generateTagHandler(model);
         return null;
     }
 
     @Override
-    public Boolean visitConverter(ConverterModel model,Boolean data) {
+    public Boolean visitConverter(ConverterModel model, Boolean data) {
         generateTagHandler(model);
         return null;
     }
 
     @Override
-    public Boolean visitValidator(ValidatorModel model,Boolean data) {
+    public Boolean visitValidator(ValidatorModel model, Boolean data) {
         generateTagHandler(model);
         return null;
     }
 
     @Override
-    public Boolean visitBehavior(BehaviorModel model,Boolean data) {
+    public Boolean visitBehavior(BehaviorModel model, Boolean data) {
         generateTagHandler(model);
         return null;
     }
-    
 
     private void generateTagHandler(ModelElementBase model) {
         for (TagModel tag : model.getTags()) {
             if ((TagType.All.equals(tag.getType()) || TagType.Facelets.equals(tag.getType())) && tag.isGenerate()) {
-                tagGenerator.process(model,tag);
+                tagGenerator.process(model, tag);
             }
         }
     }
-
 }

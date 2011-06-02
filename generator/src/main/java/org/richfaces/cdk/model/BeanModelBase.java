@@ -19,37 +19,34 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.model;
 
 import java.util.Comparator;
 
 /**
  * This is the base class for all Java Bean-like JSF objects in the model.
- * 
+ *
  * @author akolonitsky
  * @since Jan 22, 2010
- * 
+ *
  */
 public class BeanModelBase extends DescriptionGroupBase {
-
-    private final ModelCollection<PropertyBase> attributes =
-        ModelSet.<PropertyBase> create(new Comparator<PropertyBase>() {
-
-            @Override
-            public int compare(PropertyBase o1, PropertyBase o2) {
-                if (o1 != null && o2 != null && null != o1.getName() && null != o2.getName()) {
-                    return o1.getName().compareTo(o2.getName());
-                } else {
-                    return 0;
-                }
+    private final ModelCollection<PropertyBase> attributes = ModelSet.<PropertyBase>create(new Comparator<PropertyBase>() {
+        @Override
+        public int compare(PropertyBase o1, PropertyBase o2) {
+            if (o1 != null && o2 != null && null != o1.getName() && null != o2.getName()) {
+                return o1.getName().compareTo(o2.getName());
+            } else {
+                return 0;
             }
-        });
+        }
+    });
+
     /**
      * <p class="changed_added_4_0">
      * Represents JSF component attributes and properties.
      * </p>
-     * 
+     *
      * @return the attributes
      */
     public ModelCollection<PropertyBase> getAttributes() {
@@ -60,7 +57,7 @@ public class BeanModelBase extends DescriptionGroupBase {
      * <p class="changed_added_4_0">
      * Return bean attribute for given name.
      * </p>
-     * 
+     *
      * @param name
      * @return
      */

@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt.processors;
 
 import java.lang.annotation.Annotation;
@@ -37,9 +36,8 @@ import org.richfaces.cdk.model.ConverterModel;
  * @author akolonitsky
  * @since Jan 4, 2010
  */
-@SupportedAnnotationTypes({"javax.faces.component.FacesComponent", JsfConverter.NAME})
+@SupportedAnnotationTypes({ "javax.faces.component.FacesComponent", JsfConverter.NAME })
 public class ConverterProcessor extends ProcessorBase implements CdkAnnotationProcessor {
-
     @Override
     public void process(Element element, ComponentLibrary library) throws CdkProcessingException {
         SourceUtils sourceUtils = getSourceUtils();
@@ -47,7 +45,7 @@ public class ConverterProcessor extends ProcessorBase implements CdkAnnotationPr
 
         ConverterModel converterModel = new ConverterModel();
         sourceUtils.setModelProperty(converterModel, converter, "id");
-        sourceUtils.setModelProperty(converterModel, converter, "converterForClass","forClass");
+        sourceUtils.setModelProperty(converterModel, converter, "converterForClass", "forClass");
 
         setDescription(converterModel, converter, getDocComment(element));
         processAttributes(element, converterModel, converter);

@@ -20,24 +20,25 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk;
 
 import org.richfaces.cdk.model.ComponentLibrary;
 
-
 /**
- * <p class="changed_added_4_0">Interface for CDK library model verifier.</p>
+ * <p class="changed_added_4_0">
+ * Interface for CDK library model verifier.
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 public interface ModelValidator {
-
     /**
-     * <p class="changed_added_4_0">Perform verify procedure on the library model.</p>
+     * <p class="changed_added_4_0">
+     * Perform verify procedure on the library model.
+     * </p>
      *
      * @param library
      * @throws CdkException
      */
-    public void verify(ComponentLibrary library) throws CdkException;
+    void verify(ComponentLibrary library) throws CdkException;
 }

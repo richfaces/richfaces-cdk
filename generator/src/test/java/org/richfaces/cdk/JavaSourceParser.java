@@ -20,10 +20,9 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 import japa.parser.JavaParser;
 import japa.parser.ParseException;
 import japa.parser.ast.CompilationUnit;
@@ -42,16 +41,14 @@ import com.google.common.collect.Lists;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public final class JavaSourceParser {
-
     final class MethodNameVisitor extends VoidVisitorAdapter<String> {
-    
         boolean found = false;
-    
+
         @Override
         public void visit(MethodDeclaration n, String arg) {
             if (arg.equals(n.getName())) {
@@ -61,9 +58,8 @@ public final class JavaSourceParser {
     }
 
     final class ImportVisitor extends VoidVisitorAdapter<String> {
-        
         boolean found = false;
-    
+
         @Override
         public void visit(ImportDeclaration n, String arg) {
             if (arg.equals(n.getName().getName())) {
@@ -73,11 +69,10 @@ public final class JavaSourceParser {
     }
 
     final class FieldVisitor extends VoidVisitorAdapter<String> {
-        
         boolean found = false;
-    
+
         @Override
-        public void visit( FieldDeclaration n, String arg) {
+        public void visit(FieldDeclaration n, String arg) {
             for (VariableDeclarator declarator : n.getVariables()) {
                 if (arg.equals(declarator.getId().getName())) {
                     this.found = true;
@@ -104,7 +99,7 @@ public final class JavaSourceParser {
         this.compiledSource.accept(visitorAdapterExtension, methodName);
         return visitorAdapterExtension.found;
     }
-    
+
     public boolean containsImport(String packageName) {
         ImportVisitor visitorAdapterExtension = new ImportVisitor();
         this.compiledSource.accept(visitorAdapterExtension, packageName);
@@ -117,10 +112,10 @@ public final class JavaSourceParser {
         return visitorAdapterExtension.found;
     }
 
-    public String getPackageName(){
+    public String getPackageName() {
         return this.compiledSource.getPakage().getName().getName();
     }
-    
+
     public Iterable<String> getClassNames() {
         List<String> classNames = Lists.newArrayList();
         List<TypeDeclaration> types = compiledSource.getTypes();

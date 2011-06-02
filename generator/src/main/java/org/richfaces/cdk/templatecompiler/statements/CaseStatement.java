@@ -30,21 +30,21 @@ import com.google.inject.Inject;
  * @author Nick Belaevski
  */
 public class CaseStatement extends FreeMarkerTemplateStatementBase {
-
     private String[] values;
 
-    
     @Inject
     public CaseStatement(@TemplateModel FreeMarkerRenderer renderer) {
-        super(renderer,"case");
+        super(renderer, "case");
     }
 
     public String[] getValues() {
         return values;
     }
-    
+
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param values the values to set
      */
     public void setValues(String[] values) {

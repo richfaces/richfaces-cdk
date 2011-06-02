@@ -38,39 +38,31 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
-
 /**
  * @author Nick Belaevski
- * 
+ *
  */
-//TODO - configure initial map size
+// TODO - configure initial map size
 public class ScriptObjectStatement extends FreeMarkerTemplateStatementBase {
-
     private String name;
-    
     private ELParser parser;
-
     private TypedTemplateStatement base;
-
     private Logger logger;
-
     private TypesFactory typesFactory;
-    
     private ELType mapType;
-
     private ELType mapImplementationType;
-    
+
     @Inject
-    public ScriptObjectStatement(@TemplateModel FreeMarkerRenderer renderer, ELParser parser, Logger logger, 
-        TypesFactory typesFactory) {
-        
+    public ScriptObjectStatement(@TemplateModel FreeMarkerRenderer renderer, ELParser parser, Logger logger,
+            TypesFactory typesFactory) {
+
         super(renderer, "script-object");
-        
+
         this.parser = parser;
         this.logger = logger;
         this.typesFactory = typesFactory;
     }
-    
+
     /**
      * @return the keyExpression
      */
@@ -88,16 +80,16 @@ public class ScriptObjectStatement extends FreeMarkerTemplateStatementBase {
     public ELType getType() {
         return mapType;
     }
-    
+
     public ELType getImplementationType() {
         return mapImplementationType;
     }
-    
+
     public void setObject(String name, String baseExpression) {
         this.mapType = typesFactory.getType("Map<String, Object>");
         this.mapImplementationType = typesFactory.getType("LinkedHashMap<String, Object>");
         this.name = name;
-        
+
         if (!Strings.isNullOrEmpty(baseExpression)) {
             try {
                 this.base = parser.parse(baseExpression, this, getType());
@@ -106,26 +98,23 @@ public class ScriptObjectStatement extends FreeMarkerTemplateStatementBase {
                 logger.error("Error parse scriptObject statement expression", e);
             }
         }
-        
+
         setVariable(name, getType());
     }
-    
+
     @Override
     public Iterable<JavaImport> getRequiredImports() {
-        return Iterables.concat(super.getRequiredImports(), mapImplementationType.getRequiredImports(), 
-            mapType.getRequiredImports(), 
-            IMPORTS_TRANSFORM.apply(base));
+        return Iterables.concat(super.getRequiredImports(), mapImplementationType.getRequiredImports(),
+                mapType.getRequiredImports(), IMPORTS_TRANSFORM.apply(base));
     }
-    
+
     @Override
     public Iterable<HelperMethod> getRequiredMethods() {
-        return Iterables.concat(super.getRequiredMethods(), 
-            METHODS_TRANSFORM.apply(base));
+        return Iterables.concat(super.getRequiredMethods(), METHODS_TRANSFORM.apply(base));
     }
-    
+
     @Override
     public Iterable<JavaField> getRequiredFields() {
-        return Iterables.concat(super.getRequiredFields(), 
-            FIELDS_TRANSFORM.apply(base));
+        return Iterables.concat(super.getRequiredFields(), FIELDS_TRANSFORM.apply(base));
     }
 }

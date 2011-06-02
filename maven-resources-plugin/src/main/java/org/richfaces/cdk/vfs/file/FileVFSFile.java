@@ -37,20 +37,18 @@ import com.google.common.collect.Lists;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class FileVFSFile implements VirtualFile {
-
     private File file;
-
     private String relativePath;
-    
+
     public FileVFSFile(File file, String relativePath) {
         super();
         this.file = file;
         this.relativePath = relativePath;
     }
-    
+
     @Override
     public boolean isFile() {
         return file.isFile();
@@ -79,7 +77,7 @@ public class FileVFSFile implements VirtualFile {
     @Override
     public Collection<VirtualFile> getChildren() {
         List<VirtualFile> result = Lists.newArrayList();
-        
+
         String[] list = file.list();
         if (list != null) {
             for (String childName : list) {
@@ -95,23 +93,23 @@ public class FileVFSFile implements VirtualFile {
     public VirtualFile getChild(String path) {
         return getChild(path, false);
     }
-    
+
     @Override
     public VirtualFile getChild(String path, boolean chrooted) {
         Iterable<String> split = SLASH_SPLITTER.split(path);
         File result = file;
         for (String pathSeg : split) {
             result = new File(result, pathSeg);
-            
+
             if (!result.exists()) {
                 break;
             }
         }
-        
+
         if (result.exists()) {
             return new FileVFSFile(result, chrooted ? null : SLASH_JOINER.join(relativePath, result.getName()));
         }
-        
+
         return null;
     }
 

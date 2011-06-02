@@ -20,28 +20,29 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt;
 
 import java.util.Locale;
 
 import javax.tools.Diagnostic;
+import javax.tools.Diagnostic.Kind;
 import javax.tools.DiagnosticListener;
 import javax.tools.JavaFileObject;
-import javax.tools.Diagnostic.Kind;
 
 import org.richfaces.cdk.Logger;
 
 final class DiagnosticListenerImplementation implements DiagnosticListener<JavaFileObject> {
-
     /**
-      * <p class="changed_added_4_0"></p>
-      */
+     * <p class="changed_added_4_0">
+     * </p>
+     */
     private final Logger log;
     private Locale locale;
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param locale TODO
      * @param taskFactoryImpl
      */
@@ -54,8 +55,8 @@ final class DiagnosticListenerImplementation implements DiagnosticListener<JavaF
         StringBuilder message = new StringBuilder(diagnostic.getMessage(this.locale));
         JavaFileObject source = diagnostic.getSource();
         if (null != source) {
-            message.append(", in the file:").append(source.getName()).append(" at line ").append(
-                diagnostic.getLineNumber()).append(" in column ").append(diagnostic.getColumnNumber());
+            message.append(", in the file:").append(source.getName()).append(" at line ").append(diagnostic.getLineNumber())
+                    .append(" in column ").append(diagnostic.getColumnNumber());
         }
         Kind kind = diagnostic.getKind();
         if (Kind.ERROR.equals(kind)) {

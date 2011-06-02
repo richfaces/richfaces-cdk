@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler;
 
 import java.util.Map;
@@ -56,15 +55,14 @@ import freemarker.template.ObjectWrapper;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class TemplateModule extends AbstractModule {
-
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.google.inject.AbstractModule#configure()
      */
     @Override
@@ -77,8 +75,8 @@ public class TemplateModule extends AbstractModule {
         bind(TypesFactory.class).to(TypesFactoryImpl.class);
         bind(ELParser.class).to(ELParserImpl.class);
         bind(HelperMethodFactory.class).to(HelperMethodFactoryImpl.class).in(Singleton.class);
-        bind(Schema.class).annotatedWith(Names.named(Template.XHTML_EL_NAMESPACE))
-            .toProvider(XhtmlElSchemaProvider.class).in(Singleton.class);
+        bind(Schema.class).annotatedWith(Names.named(Template.XHTML_EL_NAMESPACE)).toProvider(XhtmlElSchemaProvider.class)
+                .in(Singleton.class);
         // Private bindings.
         PrivateBinder privateBinder = binder().newPrivateBinder();
         privateBinder.bind(FreeMarkerRenderer.class).annotatedWith(TemplateModel.class).to(CdkConfiguration.class);
@@ -88,15 +86,15 @@ public class TemplateModule extends AbstractModule {
         privateBinder.bind(new TypeLiteral<Map<String, Object>>() {
         }).annotatedWith(ContextVariables.class).toInstance(buildVariables());
         privateBinder.bind(String.class).annotatedWith(TemplatesFolder.class).toInstance("/META-INF/templates/java");
-        privateBinder.bind(new TypeLiteral<Map<String,String>>(){}).annotatedWith(DefaultImports.class).toInstance(ImmutableMap.of("util","util.ftl"));
+        privateBinder.bind(new TypeLiteral<Map<String, String>>() {
+        }).annotatedWith(DefaultImports.class).toInstance(ImmutableMap.of("util", "util.ftl"));
     }
 
     public static Map<String, Object> buildVariables() {
         Map<String, Object> variables = Maps.newHashMap(RendererClassVisitor.ENCODE_METHOD_VARIABLES);
         for (Map.Entry<HelperMethod, String> entry : HelperMethod.METHOD_NAMES.entrySet()) {
-            variables.put(entry.getKey().toString(),entry.getValue());
+            variables.put(entry.getKey().toString(), entry.getValue());
         }
         return variables;
     }
-
 }

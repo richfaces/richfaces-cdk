@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.builder.model;
 
 import java.util.ArrayList;
@@ -32,9 +31,7 @@ import com.google.common.collect.Iterables;
  * @author Maksim Kaszynski
  */
 public class JavaLanguageElement implements RequireImports {
-    
     private boolean hidden = false;
-    
     private Set<JavaModifier> modifiers = new TreeSet<JavaModifier>();
     private List<JavaComment> comments = new ArrayList<JavaComment>();
     private List<JavaAnnotation> annotations = new ArrayList<JavaAnnotation>();
@@ -50,7 +47,9 @@ public class JavaLanguageElement implements RequireImports {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the hidden
      */
     public boolean isHidden() {
@@ -58,7 +57,9 @@ public class JavaLanguageElement implements RequireImports {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param hidden the hidden to set
      */
     public void setHidden(boolean hidden) {
@@ -96,13 +97,16 @@ public class JavaLanguageElement implements RequireImports {
     public void addComment(JavaComment comment) {
         comments.add(comment);
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.builder.model.RequireImports#getRequiredImports()
      */
     @Override
-    public Iterable<JavaImport> getRequiredImports(){
-        Iterable<JavaImport> imports = Iterables.concat(Iterables.transform(getAnnotations(), RequireImports.IMPORTS_TRANSFORM));
+    public Iterable<JavaImport> getRequiredImports() {
+        Iterable<JavaImport> imports = Iterables
+                .concat(Iterables.transform(getAnnotations(), RequireImports.IMPORTS_TRANSFORM));
         return imports;
     }
 }

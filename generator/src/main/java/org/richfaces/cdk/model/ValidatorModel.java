@@ -20,11 +20,12 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.model;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
@@ -33,13 +34,13 @@ public class ValidatorModel extends ModelElementBase implements ModelElement<Val
 
     public ValidatorModel() {
     }
-    
+
     public ValidatorModel(FacesId validatorId) {
         setId(validatorId);
     }
 
-    public <R,D> R accept(Visitor<R,D> visitor, D data) {
-        return visitor.visitValidator(this,data);
+    public <R, D> R accept(Visitor<R, D> visitor, D data) {
+        return visitor.visitValidator(this, data);
     }
 
     @Override
@@ -47,7 +48,7 @@ public class ValidatorModel extends ModelElementBase implements ModelElement<Val
         ComponentLibrary.merge(getAttributes(), other.getAttributes());
         ComponentLibrary.merge(this, other);
     }
-    
+
     @Override
     public boolean same(ValidatorModel other) {
         return null != getId() && getId().equals(other.getId());

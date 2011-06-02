@@ -20,22 +20,14 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.apt;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import javax.annotation.processing.RoundEnvironment;
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementVisitor;
-import javax.lang.model.element.ExecutableElement;
-import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.element.TypeParameterElement;
-import javax.lang.model.element.VariableElement;
-import javax.lang.model.util.AbstractElementVisitor6;
-import javax.lang.model.util.ElementKindVisitor6;
-import javax.lang.model.util.ElementScanner6;
 
 import org.junit.Test;
 import org.richfaces.cdk.apt.SourceUtils.BeanProperty;
@@ -45,12 +37,11 @@ import com.google.common.collect.ImmutableList;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class AptSourceUtilsPropertiesTest extends SourceUtilsTestBase {
-
     private static final String TEST_SUB_CLASS = "PropertyTestClass";
     private static final String TEST_CLASS = "TestClass";
     private static final String TEST_INTERFACE = "TestInterface";
@@ -64,7 +55,6 @@ public class AptSourceUtilsPropertiesTest extends SourceUtilsTestBase {
     @Test
     public void testGetConcreteProperty() throws Exception {
         execute(new SourceUtilsCallback() {
-
             @Override
             public void process(SourceUtils utils, RoundEnvironment roundEnv) {
                 TypeElement subClassType = (TypeElement) findElement(roundEnv, TEST_SUB_CLASS);
@@ -77,7 +67,6 @@ public class AptSourceUtilsPropertiesTest extends SourceUtilsTestBase {
     @Test
     public void testGetAbstractProperty() throws Exception {
         execute(new SourceUtilsCallback() {
-
             @Override
             public void process(SourceUtils utils, RoundEnvironment roundEnv) {
                 TypeElement subClassType = (TypeElement) findElement(roundEnv, TEST_SUB_CLASS);
@@ -90,7 +79,6 @@ public class AptSourceUtilsPropertiesTest extends SourceUtilsTestBase {
     @Test
     public void testGetNotExistedProperty() throws Exception {
         execute(new SourceUtilsCallback() {
-
             @Override
             public void process(SourceUtils utils, RoundEnvironment roundEnv) {
                 TypeElement subClassType = (TypeElement) findElement(roundEnv, TEST_SUB_CLASS);
@@ -103,7 +91,6 @@ public class AptSourceUtilsPropertiesTest extends SourceUtilsTestBase {
     @Test
     public void testGetInheritedProperty() throws Exception {
         execute(new SourceUtilsCallback() {
-
             @Override
             public void process(SourceUtils utils, RoundEnvironment roundEnv) {
                 TypeElement subClassType = (TypeElement) findElement(roundEnv, TEST_SUB_CLASS);
@@ -116,7 +103,6 @@ public class AptSourceUtilsPropertiesTest extends SourceUtilsTestBase {
     @Test
     public void testGetReadOnlyProperty() throws Exception {
         execute(new SourceUtilsCallback() {
-
             @Override
             public void process(SourceUtils utils, RoundEnvironment roundEnv) {
                 TypeElement subClassType = (TypeElement) findElement(roundEnv, TEST_SUB_CLASS);
@@ -129,7 +115,6 @@ public class AptSourceUtilsPropertiesTest extends SourceUtilsTestBase {
     @Test
     public void testGetWriteOnlyProperty() throws Exception {
         execute(new SourceUtilsCallback() {
-
             @Override
             public void process(SourceUtils utils, RoundEnvironment roundEnv) {
                 TypeElement subClassType = (TypeElement) findElement(roundEnv, TEST_SUB_CLASS);
@@ -142,7 +127,6 @@ public class AptSourceUtilsPropertiesTest extends SourceUtilsTestBase {
     @Test
     public void testGetWrongProperty() throws Exception {
         execute(new SourceUtilsCallback() {
-
             @Override
             public void process(SourceUtils utils, RoundEnvironment roundEnv) {
                 TypeElement subClassType = (TypeElement) findElement(roundEnv, TEST_SUB_CLASS);
@@ -151,11 +135,10 @@ public class AptSourceUtilsPropertiesTest extends SourceUtilsTestBase {
             }
         });
     }
-    
+
     @Test
     public void testGetBeanProperties() throws Exception {
         execute(new SourceUtilsCallback() {
-
             @Override
             public void process(SourceUtils utils, RoundEnvironment roundEnv) {
                 AptSourceUtils aptUtils = (AptSourceUtils) utils;
@@ -167,12 +150,11 @@ public class AptSourceUtilsPropertiesTest extends SourceUtilsTestBase {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.apt.AnnotationProcessorTestBase#sources()
      */
     @Override
     protected Iterable<String> sources() {
-        return ImmutableList.of(CLASS_JAVA, SUB_CLASS_JAVA, INTERFACE_JAVA,PROPERTY_INTERFACE_JAVA);
+        return ImmutableList.of(CLASS_JAVA, SUB_CLASS_JAVA, INTERFACE_JAVA, PROPERTY_INTERFACE_JAVA);
     }
-
 }

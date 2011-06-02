@@ -20,26 +20,23 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk;
 
 /**
  * <p class="changed_added_4_0">
  * Interface for {@link org.richfaces.cdk.model.ComponentLibrary.ComponentLibrary} model builder.
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public interface ModelBuilder {
-
-
     /**
      * <p class="changed_added_4_0">
      * Build library model.
      * </p>
-     * 
+     *
      * @throws CdkException
      */
-    public void build() throws CdkException;
+    void build() throws CdkException;
 }

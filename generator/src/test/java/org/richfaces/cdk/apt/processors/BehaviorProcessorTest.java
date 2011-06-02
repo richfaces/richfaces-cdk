@@ -19,11 +19,15 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.apt.processors;
 
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.eq;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -61,36 +65,25 @@ import com.google.inject.Inject;
 @RunWith(CdkTestRunner.class)
 public class BehaviorProcessorTest extends AnnotationProcessorTestBase {
     private static final String BEHAVIOR_CLASS_JAVA = "org/richfaces/cdk/test/component/MyBehavior.java";
-
     private static final String MY_BEHAVIOR = "my_behavior";
-
     @Mock
     private JsfBehavior behaviorAnnotation;
-
     @Mock
     private TypeElement componentElement;
-
     @Mock
     private NamingConventions conventions;
-
     @Mock
     private Description description;
-
     @Mock
     private JAXB jaxb;
-
     @Inject
     private ComponentLibrary library;
-
     @Stub
     private Name name;
-
     @Inject
     private BehaviorProcessor processor;
-
     @Stub
     private Tag tag;
-
     @Mock
     private SourceUtils utils;
 
@@ -104,14 +97,14 @@ public class BehaviorProcessorTest extends AnnotationProcessorTestBase {
         expect(componentElement.getModifiers()).andReturn(Collections.singleton(Modifier.ABSTRACT));
         expect(componentElement.getQualifiedName()).andReturn(name).atLeastOnce();
         expect(behaviorAnnotation.generate()).andReturn("foo.Bar");
-        expect(behaviorAnnotation.tag()).andReturn(new Tag[]{tag});
+        expect(behaviorAnnotation.tag()).andReturn(new Tag[] { tag });
         expect(behaviorAnnotation.attributes()).andReturn(new String[] {});
         expect(behaviorAnnotation.description()).andReturn(this.description);
         expect(tag.handler()).andStubReturn("");
         utils.visitSupertypes((TypeElement) anyObject(), (SuperTypeVisitor) anyObject());
         expectLastCall();
         expect(utils.getBeanPropertiesAnnotatedWith(eq(Attribute.class), (TypeElement) anyObject())).andReturn(
-            Collections.<BeanProperty> emptySet());
+                Collections.<BeanProperty>emptySet());
         expect(utils.getDocComment((TypeElement) anyObject())).andStubReturn(null);
         replay(log, utils, componentElement, jaxb, conventions, behaviorAnnotation, tag, name);
         processor.process(componentElement, library);
@@ -132,5 +125,4 @@ public class BehaviorProcessorTest extends AnnotationProcessorTestBase {
     protected Iterable<String> sources() {
         return Collections.singleton(BEHAVIOR_CLASS_JAVA);
     }
-
 }

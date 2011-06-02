@@ -19,19 +19,19 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.model;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author akolonitsky
  * @since Jan 23, 2010
  *
  * @param <R> type of result returned by visitXXX method.
  * @param <D> type of parameter for visit methods.
  */
-public interface Visitor<R,D> {
-    
+public interface Visitor<R, D> {
     R visitComponentLibrary(ComponentLibrary model, D param);
 
     R visitComponent(ComponentModel model, D param);
@@ -55,7 +55,7 @@ public interface Visitor<R,D> {
     R visitRender(RendererModel model, D param);
 
     R visitListener(ListenerModel model, D param);
-    
+
     R visitFunction(FunctionModel model, D param);
 
     R visit(ModelElement model, D param);

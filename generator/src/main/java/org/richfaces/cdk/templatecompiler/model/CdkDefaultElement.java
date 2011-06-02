@@ -27,16 +27,15 @@ import org.richfaces.cdk.CdkException;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 @XmlRootElement(name = "default", namespace = Template.CDK_NAMESPACE)
 public class CdkDefaultElement extends ModelFragment {
-
     @Override
     public void beforeVisit(TemplateVisitor visitor) throws CdkException {
         visitor.startElement(this);
     }
-    
+
     @Override
     public void afterVisit(TemplateVisitor visitor) throws CdkException {
         visitor.endElement(this);

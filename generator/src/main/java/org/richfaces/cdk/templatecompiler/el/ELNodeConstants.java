@@ -18,12 +18,10 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.el;
 
 public final class ELNodeConstants {
-
-    //operators
+    // operators
     public static final String AND_OPERATOR = " && ";
     public static final String DIV_OPERATOR = " / ";
     public static final String EQUALITY_OPERATOR = " == ";
@@ -38,13 +36,11 @@ public final class ELNodeConstants {
     public static final String OR_OPERATOR = " || ";
     public static final String PLUS_OPERATOR = " + ";
     //
-
-    //constant values
+    // constant values
     public static final String FALSE_VALUE = "false";
     public static final String NULL_VALUE = "null";
     public static final String TRUE_VALUE = "true";
     //
-
     public static final String COLON = " : ";
     public static final String COMMA = ",";
     public static final String IS_EQUAL_FUNCTION = "isEqual";
@@ -64,7 +60,7 @@ public final class ELNodeConstants {
     public static final String SUPER_PREFIX = "super";
     public static final String GETTER_PREFIX = "get";
     public static final String IS_EMPTY_FUNCTION = "isEmpty";
-    
+
     private ELNodeConstants() {
     }
 }

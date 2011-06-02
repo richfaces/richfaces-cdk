@@ -18,10 +18,9 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt.processors;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -45,7 +44,6 @@ import com.google.inject.Inject;
 @RunWith(CdkTestRunner.class)
 public class ConverterProcessorTest extends AnnotationProcessorTestBase {
     private static final String COMPONENT_CLASS_JAVA = "org/richfaces/cdk/test/component/MyConverter.java";
-
     @Inject
     private ComponentLibrary library;
 

@@ -81,34 +81,36 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Constraints;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+
 /**
  * @goal process
  * @requiresDependencyResolution compile
  * @phase process-classes
  */
 public class ProcessMojo extends AbstractMojo {
-
     private static final URL[] EMPTY_URL_ARRAY = new URL[0];
-
     private static final Function<String, Predicate<CharSequence>> REGEX_CONTAINS_BUILDER_FUNCTION = new Function<String, Predicate<CharSequence>>() {
         public Predicate<CharSequence> apply(String from) {
             Predicate<CharSequence> containsPredicate = Predicates.containsPattern(from);
             return Predicates.and(Predicates.notNull(), containsPredicate);
-        };
-    };
+        }
 
+        ;
+    };
     private static final Function<Resource, String> CONTENT_TYPE_FUNCTION = new Function<Resource, String>() {
         public String apply(Resource from) {
             return from.getContentType();
-        };
-    };
+        }
 
+        ;
+    };
     private static final Function<Resource, String> RESOURCE_QUALIFIER_FUNCTION = new Function<Resource, String>() {
         public String apply(Resource from) {
             return ResourceUtil.getResourceQualifier(from);
-        };
-    };
+        }
 
+        ;
+    };
     private final Function<String, URL> filePathToURL = new Function<String, URL>() {
         public URL apply(String from) {
             try {
@@ -121,72 +123,61 @@ public class ProcessMojo extends AbstractMojo {
             }
 
             return null;
-        };
-    };
+        }
 
+        ;
+    };
     /**
      * @parameter
      * @required
      */
     private String outputDir;
-
     /**
      * @parameter
      * @required
      */
     // TODO handle base skins
     private String[] skins;
-
     /**
      * @parameter expression="${project}"
      * @readonly
      */
     private MavenProject project;
-
     /**
      * @parameter
      */
     private List<String> includedContentTypes;
-
     /**
      * @parameter
      */
     private List<String> excludedContentTypes;
-
     /**
      * @parameter
      */
     private List<String> includedFiles;
-    
     /**
      * @parameter
      */
     private List<String> excludedFiles;
-    
     /**
      * @parameter
      */
     // TODO review usage of properties?
     private FileNameMapping[] fileNameMappings = new FileNameMapping[0];
-
     /**
      * @parameter
      */
     private ProcessMode processMode = ProcessMode.embedded;
-
     /**
      * @parameter expression="${basedir}/src/main/webapp"
      */
     private String webRoot;
-
     /**
      * @parameter expression="${encoding}" default-value="${project.build.sourceEncoding}"
      */
     private String encoding;
-    
-    //TODO handle resource locales
+    // TODO handle resource locales
     private Locale resourceLocales;
-
     private Collection<ResourceKey> foundResources = Sets.newHashSet();
 
     // TODO executor parameters
@@ -199,22 +190,22 @@ public class ProcessMojo extends AbstractMojo {
         if (!Strings.isNullOrEmpty(encoding)) {
             charset = Charset.forName(encoding);
         } else {
-            getLog().warn("Encoding is not set explicitly, CDK resources plugin will use default platform encoding for processing char-based resources");
+            getLog().warn(
+                    "Encoding is not set explicitly, CDK resources plugin will use default platform encoding for processing char-based resources");
         }
-        
-        return Arrays.<ResourceProcessor>asList(
-            new JavaScriptResourceProcessor(charset, getLog()), 
-            new CSSResourceProcessor(charset));
+
+        return Arrays.<ResourceProcessor>asList(new JavaScriptResourceProcessor(charset, getLog()), new CSSResourceProcessor(
+                charset));
     }
-    
+
     private Predicate<Resource> createResourcesFilter() {
-        Predicate<CharSequence> qualifierPredicate = MorePredicates.compose(includedFiles,
-            excludedFiles, REGEX_CONTAINS_BUILDER_FUNCTION);
+        Predicate<CharSequence> qualifierPredicate = MorePredicates.compose(includedFiles, excludedFiles,
+                REGEX_CONTAINS_BUILDER_FUNCTION);
 
         Predicate<Resource> qualifierResourcePredicate = Predicates.compose(qualifierPredicate, RESOURCE_QUALIFIER_FUNCTION);
 
-        Predicate<CharSequence> contentTypePredicate = MorePredicates.compose(includedContentTypes,
-            excludedContentTypes, REGEX_CONTAINS_BUILDER_FUNCTION);
+        Predicate<CharSequence> contentTypePredicate = MorePredicates.compose(includedContentTypes, excludedContentTypes,
+                REGEX_CONTAINS_BUILDER_FUNCTION);
         Predicate<Resource> contentTypeResourcePredicate = Predicates.compose(contentTypePredicate, CONTENT_TYPE_FUNCTION);
 
         return Predicates.and(qualifierResourcePredicate, contentTypeResourcePredicate);
@@ -270,11 +261,12 @@ public class ProcessMojo extends AbstractMojo {
 
     protected URL[] getProjectClassPath() {
         try {
-            List<String> classpath = Constraints.constrainedList(Lists.<String>newArrayList(), MoreConstraints.cast(String.class));
+            List<String> classpath = Constraints.constrainedList(Lists.<String>newArrayList(),
+                    MoreConstraints.cast(String.class));
             classpath.addAll((List<String>) project.getCompileClasspathElements());
             classpath.add(project.getBuild().getOutputDirectory());
 
-            URL[] urlClasspath = filter(transform(classpath, filePathToURL), notNull()).toArray(EMPTY_URL_ARRAY);            
+            URL[] urlClasspath = filter(transform(classpath, filePathToURL), notNull()).toArray(EMPTY_URL_ARRAY);
             return urlClasspath;
         } catch (DependencyResolutionRequiredException e) {
             getLog().error("Dependencies not resolved ", e);
@@ -310,7 +302,7 @@ public class ProcessMojo extends AbstractMojo {
             scanStaticResources(resourceRoots);
             StaticResourceHandler staticResourceHandler = new StaticResourceHandler(resourceRoots);
             ResourceFactory resourceFactory = new ResourceFactoryImpl(staticResourceHandler);
-            
+
             scanDynamicResources(cpResources, resourceFactory);
 
             File resourceOutputDir = new File(outputDir);
@@ -326,7 +318,8 @@ public class ProcessMojo extends AbstractMojo {
             faces = new FacesImpl(null, new FileNameMapperImpl(fileNameMappings), resourceHandler);
             faces.start();
 
-            ResourceWriterImpl resourceWriter = new ResourceWriterImpl(resourceOutputDir, resourceMappingDir, getDefaultResourceProcessors(), getLog());
+            ResourceWriterImpl resourceWriter = new ResourceWriterImpl(resourceOutputDir, resourceMappingDir,
+                    getDefaultResourceProcessors(), getLog());
             ResourceTaskFactoryImpl taskFactory = new ResourceTaskFactoryImpl(faces);
             taskFactory.setResourceWriter(resourceWriter);
 

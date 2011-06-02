@@ -31,18 +31,16 @@ import com.google.common.base.Predicate;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public interface ResourceTaskFactory {
+    void setSkins(String[] skins);
 
-    public void setSkins(String[] skins);
+    void setCompletionService(CompletionService<Object> completionService);
 
-    public void setCompletionService(CompletionService<Object> completionService);
-    
-    public void setResourceWriter(ResourceWriter resourceWriter);
+    void setResourceWriter(ResourceWriter resourceWriter);
 
-    public void setFilter(Predicate<Resource> filter);
-    
-    public void submit(Iterable<ResourceKey> keys);
+    void setFilter(Predicate<Resource> filter);
 
+    void submit(Iterable<ResourceKey> keys);
 }

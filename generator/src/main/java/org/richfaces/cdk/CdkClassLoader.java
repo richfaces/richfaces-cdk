@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk;
 
 import java.io.File;
@@ -39,9 +38,7 @@ import com.google.common.collect.Sets;
  * @author asmirnov@exadel.com
  */
 public class CdkClassLoader extends URLClassLoader {
-
     private static final URL[] EMPTY_URLS = {};
-
     private Iterable<File> files;
 
     public CdkClassLoader(Iterable<File> files) throws MalformedURLException {
@@ -59,7 +56,8 @@ public class CdkClassLoader extends URLClassLoader {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the files
      */

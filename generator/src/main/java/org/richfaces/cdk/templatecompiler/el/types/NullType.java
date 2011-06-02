@@ -27,20 +27,21 @@ import org.richfaces.cdk.templatecompiler.builder.model.JavaImport;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public final class NullType implements ELType {
-
     /**
      * Singleton instance of {@link NullType}
      */
     public static final ELType INSTANCE = new NullType();
-    
+
     private NullType() {
-        //this class is a singleton, thus has private ctor
+        // this class is a singleton, thus has private ctor
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#getCode()
      */
     @Override
@@ -48,7 +49,9 @@ public final class NullType implements ELType {
         throw new UnsupportedOperationException();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#getImportsIterator()
      */
     @Override
@@ -56,15 +59,19 @@ public final class NullType implements ELType {
         return Collections.emptyList();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#isNullType()
      */
     @Override
     public boolean isNullType() {
         return true;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#getRawType()
      */
     @Override
@@ -72,7 +79,9 @@ public final class NullType implements ELType {
         return TypesFactory.OBJECT_TYPE;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#getTypeArguments()
      */
     @Override
@@ -80,7 +89,9 @@ public final class NullType implements ELType {
         return PlainClassType.NO_TYPES;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#toString()
      */
     @Override
@@ -88,15 +99,19 @@ public final class NullType implements ELType {
         return "null";
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#getContainerType()
      */
     @Override
     public ELType getContainerType() {
         return this;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#isArray()
      */
     @Override
@@ -104,7 +119,9 @@ public final class NullType implements ELType {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#isAssignableFrom(org.richfaces.cdk.templatecompiler.el.ELType)
      */
     @Override

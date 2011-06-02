@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.model.validator;
 
 import java.util.Collection;
@@ -73,12 +72,11 @@ import com.google.inject.Provider;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class ValidatorImpl implements ModelValidator {
-
     private final class ComponentTypeCallback implements NamingConventionsCallback {
         @Override
         public FacesId inferType(ClassName targetClass) {
@@ -140,7 +138,6 @@ public class ValidatorImpl implements ModelValidator {
     }
 
     private final class ConverterTypeCallback implements NamingConventionsCallback {
-
         private final ConverterModel converter;
 
         public ConverterTypeCallback(ConverterModel converter) {
@@ -172,11 +169,9 @@ public class ValidatorImpl implements ModelValidator {
         public ClassName getDefaultClass() throws CallbackException {
             return ClassName.get(Object.class);
         }
-
     }
 
     private final class ValidatorTypeCallback implements NamingConventionsCallback {
-
         private final ValidatorModel validator;
 
         public ValidatorTypeCallback(ValidatorModel validator) {
@@ -208,7 +203,6 @@ public class ValidatorImpl implements ModelValidator {
         public ClassName getDefaultClass() throws CallbackException {
             return ClassName.get(Object.class);
         }
-
     }
 
     private final class RendererTypeCallback implements NamingConventionsCallback {
@@ -235,7 +229,7 @@ public class ValidatorImpl implements ModelValidator {
             if (null != this.renderer.getTemplate()) {
                 for (ComponentModel component : this.library.getComponents()) {
                     if (null != component.getRendererTemplate()
-                        && this.renderer.getTemplate().getTemplatePath().endsWith(component.getRendererTemplate())) {
+                            && this.renderer.getTemplate().getTemplatePath().endsWith(component.getRendererTemplate())) {
                         if (null != component.getRendererType()) {
                             return component.getRendererType();
                         } else {
@@ -276,13 +270,10 @@ public class ValidatorImpl implements ModelValidator {
     public static final ClassName DEFAULT_CONVERTER_HANDLER = new ClassName(ConverterHandler.class);
     public static final ClassName DEFAULT_BEHAVIOR_HANDLER = new ClassName(BehaviorHandler.class);
     public static final ImmutableSet<String> SPECIAL_PROPERTIES = ImmutableSet.of("eventNames", "defaultEventName",
-        "clientBehaviors", "family");
-
+            "clientBehaviors", "family");
     @Inject
     private Logger log;
-
     private final NamingConventions namingConventions;
-
     private final Provider<SourceUtils> sourceUtilsProvider;
 
     @Inject
@@ -293,7 +284,7 @@ public class ValidatorImpl implements ModelValidator {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.ValidatorModel#verify(org.richfaces.cdk.model.ComponentLibrary)
      */
     @Override
@@ -311,7 +302,6 @@ public class ValidatorImpl implements ModelValidator {
         for (ValidatorModel validator : library.getValidators()) {
             verifyTypes(validator, new ValidatorTypeCallback(validator));
         }
-
     }
 
     protected void verifyConverters(ComponentLibrary library) {
@@ -376,14 +366,13 @@ public class ValidatorImpl implements ModelValidator {
                 component.getTags().add(tag);
             }
         }
-
     }
 
     /**
      * <p class="changed_added_4_0">
      * Verify all behaviors in the library.
      * </p>
-     * 
+     *
      * @param library
      */
     protected void verifyBehaviors(ComponentLibrary library) {
@@ -392,7 +381,6 @@ public class ValidatorImpl implements ModelValidator {
             for (TagModel tag : behavior.getTags()) {
                 verifyTag(tag, behavior.getId(), DEFAULT_BEHAVIOR_HANDLER);
             }
-
         }
     }
 
@@ -444,7 +432,7 @@ public class ValidatorImpl implements ModelValidator {
             if (componentTemplatePath.equals(renderer.getTemplatePath())) {
                 return true;
             } else if (null != renderer.getTemplate()
-                && renderer.getTemplate().getTemplatePath().endsWith(componentTemplatePath)) {
+                    && renderer.getTemplate().getTemplatePath().endsWith(componentTemplatePath)) {
                 return true;
             }
         }
@@ -460,7 +448,7 @@ public class ValidatorImpl implements ModelValidator {
         HashSet<ComponentModel> verified = Sets.newHashSet();
         for (ComponentModel component : library.getComponents()) {
             verifyComponentAttributes(library, component, verified);
-            if(null == component.getFamily()){
+            if (null == component.getFamily()) {
                 component.setFamily(namingConventions.inferUIComponentFamily(component.getId()));
             }
         }
@@ -469,13 +457,13 @@ public class ValidatorImpl implements ModelValidator {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @param library
      * @param component
      * @param verified
      */
     protected void verifyComponentAttributes(ComponentLibrary library, final ComponentModel component,
-        Collection<ComponentModel> verified) {
+            Collection<ComponentModel> verified) {
         // There is potential StackOverflow, so we process only components which have not been
         // verified before.
         if (!verified.contains(component)) {
@@ -486,7 +474,7 @@ public class ValidatorImpl implements ModelValidator {
                     // Step one, lookup for parent.
                     ComponentModel parentComponent = findParent(library.getComponents(), component);
                     component.setParent(parentComponent);
-                    if(null == component.getFamily()){
+                    if (null == component.getFamily()) {
                         component.setFamily(parentComponent.getFamily());
                     }
                     // To be sure what all properties for parent component were propagated.
@@ -500,7 +488,6 @@ public class ValidatorImpl implements ModelValidator {
                 } catch (NoSuchElementException e) {
                     // No parent component in the library
                 }
-
             } // Check attributes.
             for (PropertyBase attribute : component.getAttributes()) {
                 verifyAttribute(attribute, component);
@@ -519,9 +506,8 @@ public class ValidatorImpl implements ModelValidator {
     }
 
     private <T extends GeneratedFacesComponent> T findParent(Iterable<T> components, final T component)
-        throws NoSuchElementException {
+            throws NoSuchElementException {
         return Iterables.find(components, new Predicate<T>() {
-
             @Override
             public boolean apply(T input) {
                 return component.getBaseClass().equals(input.getTargetClass()) && component != input;
@@ -552,25 +538,22 @@ public class ValidatorImpl implements ModelValidator {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @param component
      * @throws InvalidNameException
      */
     protected void verifyComponentType(ComponentModel component) throws InvalidNameException {
         // Check JsfComponent type.
-        verifyTypes(component, new ComponentTypeCallback()) ; 
+        verifyTypes(component, new ComponentTypeCallback());
     }
 
     /**
      * <p class="changed_added_4_0">
-     * This method virifies type/family attributes for JSF objects ( components, renderers, validators, converters,
-     * behaviors )
+     * This method virifies type/family attributes for JSF objects ( components, renderers, validators, converters, behaviors )
      * </p>
-     * 
-     * @param component
-     *            object to verify.
-     * @param callback
-     *            callback to corresponding naming conventions.
+     *
+     * @param component object to verify.
+     * @param callback callback to corresponding naming conventions.
      * @return
      */
     protected boolean verifyTypes(GeneratedFacesComponent component, NamingConventionsCallback callback) {
@@ -608,7 +591,7 @@ public class ValidatorImpl implements ModelValidator {
     }
 
     private void verifyGeneratedClasses(GeneratedFacesComponent component, NamingConventionsCallback callback)
-        throws CallbackException {
+            throws CallbackException {
         if (null == component.getBaseClass()) {
             component.setBaseClass(callback.getDefaultBaseClass());
             // return;
@@ -625,7 +608,7 @@ public class ValidatorImpl implements ModelValidator {
             return;
         }
         if (attribute.getName().contains(".") || Character.isDigit(attribute.getName().charAt(0))
-            || attribute.getName().contains(" ")) {
+                || attribute.getName().contains(" ")) {
             log.error("Invalid attribute name [" + attribute.getName() + "]");
             return;
         }

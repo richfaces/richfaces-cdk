@@ -28,16 +28,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class ClassImport {
-
     private String packageName;
-
     private boolean staticImport;
-    
     private List<String> names;
-    
+
     /**
      * @return the package_
      */
@@ -46,14 +43,14 @@ public class ClassImport {
     public String getPackage() {
         return packageName;
     }
-    
+
     /**
      * @param packageName the package_ to set
      */
     public void setPackage(String packageName) {
         this.packageName = packageName;
     }
-    
+
     /**
      * @return the static_
      */
@@ -61,14 +58,14 @@ public class ClassImport {
     public boolean isStatic() {
         return staticImport;
     }
-    
+
     /**
      * @param static_ the static_ to set
      */
     public void setStatic(boolean staticImport) {
         this.staticImport = staticImport;
     }
-    
+
     /**
      * @return the classes
      */
@@ -76,12 +73,11 @@ public class ClassImport {
     public List<String> getNames() {
         return names;
     }
-    
+
     /**
      * @param classes the classes to set
      */
     public void setNames(List<String> classes) {
         this.names = classes;
     }
- 
 }

@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import java.util.List;
@@ -46,7 +45,8 @@ import org.richfaces.cdk.model.ValidatorModel;
 import com.google.common.collect.Lists;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
@@ -56,34 +56,28 @@ public class FacesConfigBean implements Extensible<FacesConfigBean.FacesConfigEx
     @XmlElement(name = "component", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE)
     @XmlJavaTypeAdapter(ComponentAdapter.class)
     private List<ComponentModel> components = Lists.newArrayList();
-
     @XmlElement(name = "render-kit", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE)
     @XmlJavaTypeAdapter(RenderKitAdapter.class)
     private List<RenderKitModel> renderKits = Lists.newArrayList();
-
     @XmlElement(name = "converter", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE)
     @XmlJavaTypeAdapter(ConverterAdapter.class)
     private List<ConverterModel> converters = Lists.newArrayList();
-
     @XmlElement(name = "validator", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE)
     @XmlJavaTypeAdapter(ValidatorAdapter.class)
     private List<ValidatorModel> validators = Lists.newArrayList();
-
     @XmlElement(name = "behavior", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE)
     @XmlJavaTypeAdapter(BehaviorAdapter.class)
     private List<BehaviorModel> behaviors = Lists.newArrayList();
-
     @XmlAttribute
     private String version = "2.0";
-
     @XmlAttribute(name = "metadata-complete")
     private Boolean metadataComplete;
-
     @XmlElement(name = "faces-config-extension", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE)
     private FacesConfigExtension extension;
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the version
      */
@@ -92,7 +86,8 @@ public class FacesConfigBean implements Extensible<FacesConfigBean.FacesConfigEx
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param version the version to set
      */
@@ -101,7 +96,9 @@ public class FacesConfigBean implements Extensible<FacesConfigBean.FacesConfigEx
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the metadataComplete
      */
     public Boolean getMetadataComplete() {
@@ -109,7 +106,9 @@ public class FacesConfigBean implements Extensible<FacesConfigBean.FacesConfigEx
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param metadataComplete the metadataComplete to set
      */
     public void setMetadataComplete(Boolean metadataComplete) {
@@ -117,7 +116,8 @@ public class FacesConfigBean implements Extensible<FacesConfigBean.FacesConfigEx
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the components
      */
@@ -126,7 +126,8 @@ public class FacesConfigBean implements Extensible<FacesConfigBean.FacesConfigEx
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param components the components to set
      */
@@ -135,7 +136,8 @@ public class FacesConfigBean implements Extensible<FacesConfigBean.FacesConfigEx
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the renderKits
      */
@@ -144,7 +146,8 @@ public class FacesConfigBean implements Extensible<FacesConfigBean.FacesConfigEx
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param renderKits the renderKits to set
      */
@@ -177,7 +180,8 @@ public class FacesConfigBean implements Extensible<FacesConfigBean.FacesConfigEx
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the extension
      */
@@ -186,7 +190,8 @@ public class FacesConfigBean implements Extensible<FacesConfigBean.FacesConfigEx
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param extension the extension to set
      */
@@ -195,13 +200,9 @@ public class FacesConfigBean implements Extensible<FacesConfigBean.FacesConfigEx
     }
 
     public static final class FacesConfigExtension extends ConfigExtension {
-        
         private String prefix;
-        
         private Taglib taglib;
-
         private List<EventModel> events = Lists.newArrayList();
-        
         private List<FunctionModel> functions = Lists.newArrayList();
 
         @XmlElement(name = "faces-event", namespace = ComponentLibrary.CDK_EXTENSIONS_NAMESPACE)
@@ -211,7 +212,8 @@ public class FacesConfigBean implements Extensible<FacesConfigBean.FacesConfigEx
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
          *
          * @param events the events to set
          */
@@ -238,7 +240,9 @@ public class FacesConfigBean implements Extensible<FacesConfigBean.FacesConfigEx
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
+         *
          * @return the functions
          */
         @XmlElement(name = "function", namespace = ComponentLibrary.CDK_EXTENSIONS_NAMESPACE)
@@ -248,7 +252,9 @@ public class FacesConfigBean implements Extensible<FacesConfigBean.FacesConfigEx
         }
 
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
+         *
          * @param functions the functions to set
          */
         public void setFunctions(List<FunctionModel> functions) {

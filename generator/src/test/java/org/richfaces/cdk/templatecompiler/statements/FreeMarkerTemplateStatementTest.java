@@ -24,22 +24,16 @@ import com.google.inject.name.Named;
 
 @RunWith(CdkTestRunner.class)
 public class FreeMarkerTemplateStatementTest {
-
     private static final String FOO_CODE = "private static final String foo;";
-
     @Mock
     private FreeMarkerRenderer renderer;
-
     @Stub
     private TemplateStatement statement;
-
     @Stub
     @Named("second")
     private TemplateStatement statement1;
-
     @Inject
     private MockController controller;
-
     private FreeMarkerTemplateStatementBase freeMarkerStatement;
 
     @Before
@@ -63,8 +57,7 @@ public class FreeMarkerTemplateStatementTest {
     @Test
     public void testGetRequiredImports() {
         freeMarkerStatement.addImport("foo.Bar");
-        expect(statement.getRequiredImports()).andStubReturn(
-            Collections.<JavaImport> singleton(new JavaImportImpl("foo.baz")));
+        expect(statement.getRequiredImports()).andStubReturn(Collections.<JavaImport>singleton(new JavaImportImpl("foo.baz")));
         expect(renderer.renderTemplate("foo.ftl", freeMarkerStatement)).andReturn(FOO_CODE);
         controller.replay();
         freeMarkerStatement.addStatement(statement);
@@ -77,7 +70,7 @@ public class FreeMarkerTemplateStatementTest {
     public void testGetRequiredFields() {
         freeMarkerStatement.addConstant("boolean", "foo", FOO_CODE);
         expect(statement.getRequiredFields()).andStubReturn(
-            Collections.<JavaField> singleton(new JavaField(TypesFactory.INT_TYPE, "bar")));
+                Collections.<JavaField>singleton(new JavaField(TypesFactory.INT_TYPE, "bar")));
         expect(renderer.renderTemplate("foo.ftl", freeMarkerStatement)).andReturn(FOO_CODE);
         controller.replay();
         freeMarkerStatement.addStatement(statement);
@@ -90,8 +83,7 @@ public class FreeMarkerTemplateStatementTest {
     public void testGetRequiredMethods() {
         freeMarkerStatement.addRequiredMethod(HelperMethod.EMPTINESS_CHECK.toString());
         expect(renderer.renderTemplate("foo.ftl", freeMarkerStatement)).andReturn(FOO_CODE);
-        expect(statement.getRequiredMethods()).andStubReturn(
-            Collections.<HelperMethod> singleton(HelperMethod.EQUALS_CHECK));
+        expect(statement.getRequiredMethods()).andStubReturn(Collections.<HelperMethod>singleton(HelperMethod.EQUALS_CHECK));
         controller.replay();
         freeMarkerStatement.addStatement(statement);
         Iterable<HelperMethod> requiredMethods = freeMarkerStatement.getRequiredMethods();
@@ -112,7 +104,7 @@ public class FreeMarkerTemplateStatementTest {
     public void testAddImport() {
         freeMarkerStatement.addImport("java.util.List");
         JavaImport javaImport = Iterables.getOnlyElement(freeMarkerStatement.getRequiredImports());
-        assertEquals("java.util.List",javaImport.getName());
+        assertEquals("java.util.List", javaImport.getName());
     }
 
     @Test
@@ -121,5 +113,4 @@ public class FreeMarkerTemplateStatementTest {
         HelperMethod helperMethod = Iterables.getOnlyElement(freeMarkerStatement.getRequiredMethods());
         assertEquals(HelperMethod.EMPTINESS_CHECK, helperMethod);
     }
-
 }

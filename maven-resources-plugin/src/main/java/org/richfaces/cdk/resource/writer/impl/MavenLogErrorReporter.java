@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.resource.writer.impl;
 
 import java.text.MessageFormat;
@@ -31,28 +30,25 @@ import com.google.common.base.Strings;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 final class MavenLogErrorReporter implements ErrorReporter {
-    
     private String resourceName;
-    
     private StringBuilder errorMessages = new StringBuilder();
-    
     private StringBuilder warningMessages = new StringBuilder();
-    
+
     public MavenLogErrorReporter(String resourceName) {
         super();
         this.resourceName = resourceName;
     }
 
     private String formatMessage(String message, String sourceName, int line, String lineSource, int lineOffset) {
-        String location = MessageFormat.format("{0} (line {1}, col {2})", 
-            Strings.isNullOrEmpty(sourceName) ? resourceName : sourceName, lineSource, lineOffset);
-        
+        String location = MessageFormat.format("{0} (line {1}, col {2})", Strings.isNullOrEmpty(sourceName) ? resourceName
+                : sourceName, lineSource, lineOffset);
+
         return MessageFormat.format("{0}: {1}\n{2}", location, message, lineSource);
     }
-    
+
     @Override
     public void warning(String message, String sourceName, int line, String lineSource, int lineOffset) {
         warningMessages.append(formatMessage(message, sourceName, line, lineSource, lineOffset));
@@ -61,7 +57,7 @@ final class MavenLogErrorReporter implements ErrorReporter {
 
     @Override
     public EvaluatorException runtimeError(String message, String sourceName, int line, String lineSource, int lineOffset) {
-        return new EvaluatorException(message, sourceName, line, lineSource, lineOffset); 
+        return new EvaluatorException(message, sourceName, line, lineSource, lineOffset);
     }
 
     @Override
@@ -69,19 +65,19 @@ final class MavenLogErrorReporter implements ErrorReporter {
         errorMessages.append(formatMessage(message, sourceName, line, lineSource, lineOffset));
         errorMessages.append('\n');
     }
-    
+
     public boolean hasErrors() {
         return errorMessages.length() > 0;
     }
-    
+
     public String getErrorsLog() {
         return errorMessages.toString();
     }
-    
+
     public boolean hasWarnings() {
         return warningMessages.length() > 0;
     }
-    
+
     public String getWarningsLog() {
         return warningMessages.toString();
     }

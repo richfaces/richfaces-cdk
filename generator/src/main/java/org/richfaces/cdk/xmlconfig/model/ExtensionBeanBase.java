@@ -8,7 +8,6 @@ import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.ConfigExtension;
 
 public class ExtensionBeanBase extends ConfigExtension {
-
     private ClassName baseClass;
     private Boolean generate;
 
@@ -17,7 +16,8 @@ public class ExtensionBeanBase extends ConfigExtension {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the baseClass
      */
@@ -28,7 +28,8 @@ public class ExtensionBeanBase extends ConfigExtension {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param baseClass the baseClass to set
      */
@@ -37,7 +38,8 @@ public class ExtensionBeanBase extends ConfigExtension {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the generate
      */
@@ -47,12 +49,12 @@ public class ExtensionBeanBase extends ConfigExtension {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param generate the generate to set
      */
     public void setGenerate(Boolean generate) {
         this.generate = generate;
     }
-
 }

@@ -32,13 +32,12 @@ import org.richfaces.cdk.vfs.VFSType;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class FileVFSRoot extends FileVFSFile implements VFSRoot {
-
     public FileVFSRoot(File dir) {
         super(dir, null);
-        
+
         assert dir.isDirectory() && dir.exists();
     }
 
@@ -46,10 +45,10 @@ public class FileVFSRoot extends FileVFSFile implements VFSRoot {
     public VFSType getType() {
         return VFSType.file;
     }
-    
+
     @Override
     public void close() throws IOException {
-        //nothing to close
+        // nothing to close
     }
 
     @Override
@@ -64,12 +63,11 @@ public class FileVFSRoot extends FileVFSFile implements VFSRoot {
 
     @Override
     public void initialize() throws IOException {
-        //do nothing
+        // do nothing
     }
 
     @Override
     public URL toURL() throws MalformedURLException {
         return getFile().toURI().toURL();
     }
-
 }

@@ -18,13 +18,11 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.builder.model;
 
 import org.richfaces.cdk.templatecompiler.el.types.ELType;
 
 import com.google.common.collect.Iterables;
-
 
 /**
  * Class field abstraction
@@ -32,16 +30,13 @@ import com.google.common.collect.Iterables;
  * @author Maksim Kaszynski
  */
 public class JavaField extends JavaLanguageElement {
-
     private ELType type;
-
     private JavaStatement value;
 
     public JavaField(ELType type, String name) {
         this(type, name, null);
     }
 
-    
     public JavaField(ELType type, String name, JavaStatement value) {
         super(name);
         this.type = type;
@@ -59,11 +54,10 @@ public class JavaField extends JavaLanguageElement {
     public void setValue(JavaStatement value) {
         this.value = value;
     }
-    
+
     @Override
     public Iterable<JavaImport> getRequiredImports() {
         Iterable<JavaImport> imports = super.getRequiredImports();
-        return Iterables.concat(getType().getRequiredImports(),imports);
+        return Iterables.concat(getType().getRequiredImports(), imports);
     }
-    
 }

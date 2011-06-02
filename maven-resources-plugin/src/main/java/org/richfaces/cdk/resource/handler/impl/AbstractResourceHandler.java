@@ -29,10 +29,9 @@ import javax.faces.context.FacesContext;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public abstract class AbstractResourceHandler extends ResourceHandler {
-
     @Override
     public Resource createResource(String resourceName) {
         return createResource(resourceName, null);
@@ -65,5 +64,4 @@ public abstract class AbstractResourceHandler extends ResourceHandler {
     public String getRendererTypeForResourceName(String resourceName) {
         throw new UnsupportedOperationException();
     }
-
 }

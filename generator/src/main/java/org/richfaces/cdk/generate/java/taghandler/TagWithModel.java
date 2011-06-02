@@ -20,24 +20,25 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.generate.java.taghandler;
 
 import org.richfaces.cdk.model.TagModel;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class TagWithModel<M> {
-    
     private final TagModel tag;
-    
     private final M model;
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param tag
      * @param model
      */
@@ -47,7 +48,9 @@ public class TagWithModel<M> {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the tag
      */
     public TagModel getTag() {
@@ -55,11 +58,12 @@ public class TagWithModel<M> {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the model
      */
     public M getModel() {
         return this.model;
     }
-
 }

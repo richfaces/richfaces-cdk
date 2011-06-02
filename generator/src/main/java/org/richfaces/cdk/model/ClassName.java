@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.model;
 
 import java.io.Serializable;
@@ -33,35 +32,29 @@ import com.google.common.collect.ImmutableMap;
  * <p class="changed_added_4_0">
  * Tthat class represents information about Jsf object class.
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
  */
 public class ClassName implements Serializable, Comparable<ClassName> {
-
     private static final long serialVersionUID = -846623207703750456L;
-
-    private static final ImmutableMap<String, String> PRIMITIVE_TYPES = ImmutableMap.<String, String> builder()
-        .put(boolean.class.getName(), Boolean.class.getName()).put(byte.class.getName(), Byte.class.getName())
-        .put(char.class.getName(), Character.class.getName()).put(short.class.getName(), Short.class.getName())
-        .put(int.class.getName(), Integer.class.getName()).put(long.class.getName(), Long.class.getName())
-        .put(float.class.getName(), Float.class.getName()).put(double.class.getName(), Double.class.getName()).build();
-
-    private static final ImmutableMap<String, String> DEFAULT_VALUES = ImmutableMap.<String, String> builder()
-        .put(boolean.class.getName(), "Boolean.FALSE").put(byte.class.getName(), "Byte.MIN_VALUE")
-        .put(char.class.getName(), "Character.MIN_VALUE").put(short.class.getName(), "Short.MIN_VALUE")
-        .put(int.class.getName(), "Integer.MIN_VALUE").put(long.class.getName(), "Long.MIN_VALUE")
-        .put(float.class.getName(), "Float.MIN_VALUE").put(double.class.getName(), "Double.MIN_VALUE").build();
-
+    private static final ImmutableMap<String, String> PRIMITIVE_TYPES = ImmutableMap.<String, String>builder()
+            .put(boolean.class.getName(), Boolean.class.getName()).put(byte.class.getName(), Byte.class.getName())
+            .put(char.class.getName(), Character.class.getName()).put(short.class.getName(), Short.class.getName())
+            .put(int.class.getName(), Integer.class.getName()).put(long.class.getName(), Long.class.getName())
+            .put(float.class.getName(), Float.class.getName()).put(double.class.getName(), Double.class.getName()).build();
+    private static final ImmutableMap<String, String> DEFAULT_VALUES = ImmutableMap.<String, String>builder()
+            .put(boolean.class.getName(), "Boolean.FALSE").put(byte.class.getName(), "Byte.MIN_VALUE")
+            .put(char.class.getName(), "Character.MIN_VALUE").put(short.class.getName(), "Short.MIN_VALUE")
+            .put(int.class.getName(), "Integer.MIN_VALUE").put(long.class.getName(), "Long.MIN_VALUE")
+            .put(float.class.getName(), "Float.MIN_VALUE").put(double.class.getName(), "Double.MIN_VALUE").build();
     private final String boxingClassName;
     private final String fullName;
-
     /**
      * <p class="changed_added_4_0">
      * </p>
      */
     private final String name;
     private final boolean primitive;
-
     /**
      * <p class="changed_added_4_0">
      * Id parameters for that class
@@ -73,7 +66,7 @@ public class ClassName implements Serializable, Comparable<ClassName> {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @param cl
      */
     public ClassName(Class<?> cl) {
@@ -83,7 +76,7 @@ public class ClassName implements Serializable, Comparable<ClassName> {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @param name
      */
     public ClassName(String name) {
@@ -98,12 +91,12 @@ public class ClassName implements Serializable, Comparable<ClassName> {
 
             if (i > 0) {
                 int closeBracket = name.lastIndexOf('>');
-                if (closeBracket < 0 || closeBracket==name.length()-1) {
+                if (closeBracket < 0 || closeBracket == name.length() - 1) {
                     this.name = name.substring(0, i);
                     this.typeParameters = name.substring(i);
                 } else {
-                    this.name = name.substring(0, i)+name.substring(closeBracket+1);
-                    this.typeParameters = name.substring(i,closeBracket+1);                    
+                    this.name = name.substring(0, i) + name.substring(closeBracket + 1);
+                    this.typeParameters = name.substring(i, closeBracket + 1);
                 }
             } else {
                 this.name = name;
@@ -118,9 +111,8 @@ public class ClassName implements Serializable, Comparable<ClassName> {
      * <p class="changed_added_4_0">
      * Factory method to create class names. For empty or null name, returns null
      * </p>
-     * 
-     * @param name
-     *            fully-cvalified class name
+     *
+     * @param name fully-cvalified class name
      * @return new class name instance or null.
      */
     public static ClassName parseName(String name) {
@@ -146,7 +138,7 @@ public class ClassName implements Serializable, Comparable<ClassName> {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the typeParameters
      */
     public String getTypeParameters() {
@@ -156,9 +148,8 @@ public class ClassName implements Serializable, Comparable<ClassName> {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param typeParameters
-     *            the typeParameters to set
+     *
+     * @param typeParameters the typeParameters to set
      */
     public void setTypeParameters(String typeParameters) {
         this.typeParameters = typeParameters;
@@ -167,7 +158,7 @@ public class ClassName implements Serializable, Comparable<ClassName> {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the name
      */
     public String getName() {
@@ -177,7 +168,7 @@ public class ClassName implements Serializable, Comparable<ClassName> {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return package name.
      */
     public String getPackage() {
@@ -201,11 +192,14 @@ public class ClassName implements Serializable, Comparable<ClassName> {
     }
 
     /**
-     * <p class="changed_added_4_0">Return simple name for boxing class: Booilean,Integer etc.</p>
+     * <p class="changed_added_4_0">
+     * Return simple name for boxing class: Booilean,Integer etc.
+     * </p>
+     *
      * @return
      */
     public String getSimpleBoxingName() {
-        if(isPrimitive()){
+        if (isPrimitive()) {
             int indexOfPeriod;
             indexOfPeriod = boxingClassName.lastIndexOf('.');
             if (indexOfPeriod > 0) {
@@ -221,7 +215,7 @@ public class ClassName implements Serializable, Comparable<ClassName> {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the primitive
      */
     public boolean isPrimitive() {
@@ -235,7 +229,7 @@ public class ClassName implements Serializable, Comparable<ClassName> {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the boxingClassName
      */
     public String getBoxingName() {
@@ -253,7 +247,7 @@ public class ClassName implements Serializable, Comparable<ClassName> {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -268,7 +262,7 @@ public class ClassName implements Serializable, Comparable<ClassName> {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override

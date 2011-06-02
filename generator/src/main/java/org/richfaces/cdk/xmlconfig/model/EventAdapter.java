@@ -20,18 +20,17 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import org.richfaces.cdk.model.EventModel;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 public class EventAdapter extends AdapterBase<EventBean, EventModel> {
-
     @Override
     protected Class<? extends EventBean> getBeanClass(EventModel model) {
         return EventBean.class;
@@ -41,5 +40,4 @@ public class EventAdapter extends AdapterBase<EventBean, EventModel> {
     protected Class<? extends EventModel> getModelClass(EventBean bean) {
         return EventModel.class;
     }
-
 }

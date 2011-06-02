@@ -22,17 +22,16 @@ You should have received a copy of the GNU Lesser General Public
 License along with this software; if not, write to the Free
 Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
---> 
+-->
 
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://jboss.org/schema/richfaces/cdk/jstl/core" xmlns="http://jboss.org/schema/richfaces/cdk/jstl/core"
-	elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://jboss.org/schema/richfaces/cdk/jstl/core"
+    xmlns="http://jboss.org/schema/richfaces/cdk/jstl/core" elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-	<xs:annotation>
-		<xs:documentation>
-			Subset of JSTL 1.2 core library supported by RichFaces CDK.
-		</xs:documentation>
-	</xs:annotation>
+    <xs:annotation>
+        <xs:documentation>
+            Subset of JSTL 1.2 core library supported by RichFaces CDK.
+        </xs:documentation>
+    </xs:annotation>
 
     <xs:simpleType name="elStrictExpression">
         <xs:restriction base="xs:string">
@@ -57,105 +56,122 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         <xs:restriction base="xs:string" />
     </xs:simpleType>
 
-	<xs:complexType name="arbitraryContent" mixed="true">
-		<xs:choice>
-			<xs:any minOccurs="0" maxOccurs="unbounded" />
-		</xs:choice>
-	</xs:complexType>
+    <xs:complexType name="arbitraryContent" mixed="true">
+        <xs:choice>
+            <xs:any minOccurs="0" maxOccurs="unbounded" />
+        </xs:choice>
+    </xs:complexType>
 
-	<xs:complexType name="arbitraryConditionalContent">
-		<xs:complexContent>
-			<xs:extension base="arbitraryContent">
-				<xs:attribute name="test" form="unqualified" use="required"
-					type="elStrictExpression">
-					<xs:annotation>
-						<xs:documentation>
-							<p>The test condition that determines whether or not the body content should be processed.</p>
-						</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
+    <xs:complexType name="arbitraryConditionalContent">
+        <xs:complexContent>
+            <xs:extension base="arbitraryContent">
+                <xs:attribute name="test" form="unqualified" use="required" type="elStrictExpression">
+                    <xs:annotation>
+                        <xs:documentation>
+                            <p>The test condition that determines whether or not the body content should be processed.</p>
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
 
-	<xs:element name="if" type="arbitraryConditionalContent">
-		<xs:annotation>
-			<xs:documentation>
-				<p>Simple conditional tag, which evalutes its body if the supplied condition is true 
-				and optionally exposes a Boolean scripting variable representing the evaluation of 
-				this condition</p>
-			</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="choose">
-		<xs:annotation>
-			<xs:documentation>
-				<p>Simple conditional tag that establishes a context for mutually exclusive conditional 
-				operations, marked by <code><![CDATA[<c:when>]]></code> and <code><![CDATA[<c:otherwise>]]></code>
-				tags.</p>			
-			</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element maxOccurs="unbounded" name="when"
-					type="arbitraryConditionalContent">
-					<xs:annotation>
-						<xs:documentation>
-							<p>Subtag of <code><![CDATA[<c:choose>]]></code> that includes its body if its condition 
-							evaluates to 'true'.</p>
-						</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element minOccurs="0" name="otherwise" type="arbitraryContent">
-					<xs:annotation>
-						<xs:documentation>
-							<p>Subtag of <code><![CDATA[<c:choose>]]></code> that follows tags and runs only if 
-							all of the prior conditions evaluated to 'false'.</p>
-						</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="forEach">
-		<xs:annotation>
-			<xs:documentation>
-				<p>The basic iteration tag, accepting many different collection types and supporting subsetting 
-				and other functionality.</p>
-				<p>
-					<span class="warning">Support for this tag is not currently implemented.</span>
-				</p>
-			</xs:documentation>
-		</xs:annotation>
-	
-		<xs:complexType>
-			<xs:complexContent>
-				<xs:extension base="arbitraryContent">
-					<xs:attribute name="items" type="elStrictExpression">
-						<xs:annotation>
-							<xs:documentation>
-								<p>Collection of items to iterate over.</p>
-							</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-					<xs:attribute name="var" type="literalExpression">
-						<xs:annotation>
-							<xs:documentation>
-								<p>Name of the exported scoped variable for the current item of the iteration. 
-								This scoped variable has nested visibility. Its type depends on the object 
-								of the underlying collection.</p>
-							</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
+    <xs:element name="if" type="arbitraryConditionalContent">
+        <xs:annotation>
+            <xs:documentation>
+                <p>Simple conditional tag, which evalutes its body if the supplied condition is true
+                    and optionally exposes a
+                    Boolean scripting variable representing the evaluation of
+                    this condition
+                </p>
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="choose">
+        <xs:annotation>
+            <xs:documentation>
+                <p>
+                    Simple conditional tag that establishes a context for mutually exclusive conditional
+                    operations, marked by
+                    <code><![CDATA[<c:when>]]></code>
+                    and
+                    <code><![CDATA[<c:otherwise>]]></code>
+                    tags.
+                </p>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="when" type="arbitraryConditionalContent">
+                    <xs:annotation>
+                        <xs:documentation>
+                            <p>
+                                Subtag of
+                                <code><![CDATA[<c:choose>]]></code>
+                                that includes its body if its condition
+                                evaluates to 'true'.
+                            </p>
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="otherwise" type="arbitraryContent">
+                    <xs:annotation>
+                        <xs:documentation>
+                            <p>
+                                Subtag of
+                                <code><![CDATA[<c:choose>]]></code>
+                                that follows tags and runs only if
+                                all of the prior conditions evaluated to 'false'.
+                            </p>
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="forEach">
+        <xs:annotation>
+            <xs:documentation>
+                <p>The basic iteration tag, accepting many different collection types and supporting subsetting
+                    and other
+                    functionality.
+                </p>
+                <p>
+                    <span class="warning">Support for this tag is not currently implemented.</span>
+                </p>
+            </xs:documentation>
+        </xs:annotation>
 
-					<!--
-					<xs:attribute name="begin" type="cdk:elFreeformExpression" default="0" />
-					<xs:attribute name="end" type="cdk:elFreeformExpression" />
-					<xs:attribute name="step" type="cdk:elFreeformExpression" default="1" />
-					<xs:attribute name="varStatus" type="cdk:literalExpression" />
-					-->
-				</xs:extension>
-			</xs:complexContent>
-		</xs:complexType>
-	</xs:element>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="arbitraryContent">
+                    <xs:attribute name="items" type="elStrictExpression">
+                        <xs:annotation>
+                            <xs:documentation>
+                                <p>Collection of items to iterate over.</p>
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+                    <xs:attribute name="var" type="literalExpression">
+                        <xs:annotation>
+                            <xs:documentation>
+                                <p>Name of the exported scoped variable for the current item of the iteration.
+                                    This scoped
+                                    variable has nested visibility. Its type depends on the object
+                                    of the underlying collection.
+                                </p>
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+
+                    <!--
+                         <xs:attribute name="begin" type="cdk:elFreeformExpression" default="0" />
+                         <xs:attribute name="end" type="cdk:elFreeformExpression" />
+                         <xs:attribute name="step" type="cdk:elFreeformExpression" default="1" />
+                         <xs:attribute name="varStatus" type="cdk:literalExpression" />
+                         -->
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>

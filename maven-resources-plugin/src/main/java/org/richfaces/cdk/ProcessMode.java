@@ -23,10 +23,11 @@ package org.richfaces.cdk;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public enum ProcessMode {
 
-    external, embedded
-    
+    external,
+    embedded
+
 }

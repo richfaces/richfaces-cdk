@@ -20,18 +20,18 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.el.types;
 
 import org.richfaces.cdk.util.Strings;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class DummyPropertyDescriptor implements ELPropertyDescriptor {
-
     private final String propertyName;
     private final String getterName;
     private final String setterName;
@@ -39,11 +39,13 @@ public class DummyPropertyDescriptor implements ELPropertyDescriptor {
     public DummyPropertyDescriptor(String propertyName) {
         this.propertyName = propertyName;
         String firstToUpperCase = Strings.firstToUpperCase(propertyName);
-        this.getterName = "get"+firstToUpperCase;
-        this.setterName = "set"+firstToUpperCase;
+        this.getterName = "get" + firstToUpperCase;
+        this.setterName = "set" + firstToUpperCase;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.types.ELPropertyDescriptor#getName()
      */
     @Override
@@ -51,7 +53,9 @@ public class DummyPropertyDescriptor implements ELPropertyDescriptor {
         return propertyName;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.types.ELPropertyDescriptor#getType()
      */
     @Override
@@ -59,7 +63,9 @@ public class DummyPropertyDescriptor implements ELPropertyDescriptor {
         return TypesFactory.OBJECT_TYPE;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.types.ELPropertyDescriptor#isReadable()
      */
     @Override
@@ -67,7 +73,9 @@ public class DummyPropertyDescriptor implements ELPropertyDescriptor {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.types.ELPropertyDescriptor#isWritable()
      */
     @Override
@@ -75,7 +83,9 @@ public class DummyPropertyDescriptor implements ELPropertyDescriptor {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.types.ELPropertyDescriptor#getReadMethodName()
      */
     @Override
@@ -83,12 +93,13 @@ public class DummyPropertyDescriptor implements ELPropertyDescriptor {
         return getterName;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.types.ELPropertyDescriptor#getWriteMethosName()
      */
     @Override
     public String getWriteMethosName() {
         return setterName;
     }
-
 }

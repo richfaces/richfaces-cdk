@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.generate.taglib;
 
 import org.richfaces.cdk.CdkWriter;
@@ -29,12 +28,13 @@ import com.google.inject.AbstractModule;
 import com.google.inject.multibindings.Multibinder;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class TaglibModule extends AbstractModule {
-
     @Override
     protected void configure() {
         Multibinder<CdkWriter> setBinder = Multibinder.newSetBinder(binder(), CdkWriter.class);

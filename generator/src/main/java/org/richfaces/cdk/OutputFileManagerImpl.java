@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk;
 
 import java.io.File;
@@ -33,12 +32,11 @@ import java.util.Collections;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class OutputFileManagerImpl implements OutputFileManager {
-
     private final Iterable<File> folders;
     private final File folder;
 
@@ -49,7 +47,7 @@ public class OutputFileManagerImpl implements OutputFileManager {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.FileManager#createFile(java.lang.String)
      */
     @Override
@@ -90,7 +88,7 @@ public class OutputFileManagerImpl implements OutputFileManager {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.FileManager#getFile(java.lang.String)
      */
     @Override
@@ -104,7 +102,7 @@ public class OutputFileManagerImpl implements OutputFileManager {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.FileManager#getFiles()
      */
     @Override
@@ -116,12 +114,11 @@ public class OutputFileManagerImpl implements OutputFileManager {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the folders
      */
     @Override
     public Iterable<File> getFolders() {
         return this.folders;
     }
-
 }

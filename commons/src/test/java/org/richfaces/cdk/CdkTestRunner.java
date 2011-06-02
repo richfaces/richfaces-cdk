@@ -20,12 +20,10 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -52,16 +50,15 @@ import com.google.inject.binder.AnnotatedBindingBuilder;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class CdkTestRunner extends BlockJUnit4ClassRunner {
-
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @param klass
      * @throws InitializationError
      * @throws InitializationError
@@ -100,7 +97,7 @@ public class CdkTestRunner extends BlockJUnit4ClassRunner {
         // if ( unitField.getAnnotation(Mock.class) != null ) {
         // throw new IncompatibleAnnotationException(Unit.class, Mock.class);
         // }
-        //        
+        //
         final Map<Field, Binding> fieldValues = getMockValues(testFields);
         // if ( fieldValues.containsKey(unitField)) {
         // throw new IncompatibleAnnotationException(Unit.class, unitField.getType());
@@ -155,10 +152,10 @@ public class CdkTestRunner extends BlockJUnit4ClassRunner {
                 for (Annotation annotation : fieldAnnotations) {
                     Class<? extends Annotation> annotationType = annotation.annotationType();
                     if (/* annotationType.isAnnotationPresent(Qualifier.class)|| */annotationType
-                        .isAnnotationPresent(BindingAnnotation.class)) {
-                            builder.annotatedWith(annotation);
+                            .isAnnotationPresent(BindingAnnotation.class)) {
+                        builder.annotatedWith(annotation);
                     }
-                    if (annotationType.isAnnotationPresent(ScopeAnnotation.class)){
+                    if (annotationType.isAnnotationPresent(ScopeAnnotation.class)) {
                         builder.in(annotationType);
                     }
                 }
@@ -176,7 +173,7 @@ public class CdkTestRunner extends BlockJUnit4ClassRunner {
         @Override
         public void replay() {
             for (Binding field : fields.values()) {
-                if(null != field.getValue()){
+                if (null != field.getValue()) {
                     EasyMock.replay(field.getValue());
                 }
             }
@@ -185,7 +182,7 @@ public class CdkTestRunner extends BlockJUnit4ClassRunner {
         @Override
         public void verify() {
             for (Binding field : fields.values()) {
-                if(null != field.getValue()){
+                if (null != field.getValue()) {
                     EasyMock.verify(field.getValue());
                 }
             }
@@ -193,7 +190,10 @@ public class CdkTestRunner extends BlockJUnit4ClassRunner {
     }
 
     /**
-     * <p class="changed_added_4_0">Binding definition storage</p>
+     * <p class="changed_added_4_0">
+     * Binding definition storage
+     * </p>
+     *
      * @author asmirnov@exadel.com
      *
      */
@@ -201,45 +201,64 @@ public class CdkTestRunner extends BlockJUnit4ClassRunner {
         private Object value;
         private Class<?> implementation;
         private Class<? extends Provider<?>> provider;
+
         protected Binding() {
         }
+
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
+         *
          * @param value the value to set
          */
         void setValue(Object value) {
             this.value = value;
         }
+
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
+         *
          * @return the value
          */
         Object getValue() {
             return value;
         }
+
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
+         *
          * @param implementation the implementation to set
          */
         void setImplementation(Class<?> implementation) {
             this.implementation = implementation;
         }
+
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
+         *
          * @return the implementation
          */
         Class<?> getImplementation() {
             return implementation;
         }
+
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
+         *
          * @param provider the provider to set
          */
         void setProvider(Class<? extends Provider<?>> provider) {
             this.provider = provider;
         }
+
         /**
-         * <p class="changed_added_4_0"></p>
+         * <p class="changed_added_4_0">
+         * </p>
+         *
          * @return the provider
          */
         Class<? extends Provider<?>> getProvider() {
@@ -272,5 +291,4 @@ public class CdkTestRunner extends BlockJUnit4ClassRunner {
 
         return mocksAndStubs;
     }
-
 }

@@ -31,10 +31,8 @@ import com.google.inject.Inject;
  * @since 4.0
  */
 public class IfElseStatement extends FreeMarkerTemplateStatementBase {
-
     @Inject
     public IfElseStatement(@TemplateModel FreeMarkerRenderer renderer) {
-        super(renderer,"if-else");
+        super(renderer, "if-else");
     }
-
 }

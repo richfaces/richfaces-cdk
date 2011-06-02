@@ -20,9 +20,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.model;
-
 
 import java.util.List;
 
@@ -33,16 +31,18 @@ import org.w3c.dom.Element;
 import com.google.common.collect.Lists;
 
 /**
- * <p class="changed_added_4_0">That class represents all faces-config "extension" fields.</p>
+ * <p class="changed_added_4_0">
+ * That class represents all faces-config "extension" fields.
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 public class ConfigExtension {
-    
     private List<Element> extensions = Lists.newArrayList();
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the extensions
      */
@@ -52,7 +52,8 @@ public class ConfigExtension {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param extensions the extensions to set
      */

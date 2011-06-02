@@ -18,9 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.builder.mojo;
 
 /**
@@ -36,7 +33,6 @@ public class Library {
     private String prefix;
     private Renderkit[] renderkits;
     private Taglib taglib;
-
     /**
      * @parameter
      */
@@ -50,8 +46,7 @@ public class Library {
     }
 
     /**
-     * @param prefix
-     *            the prefix to set
+     * @param prefix the prefix to set
      */
     public void setPrefix(String prefix) {
         this.prefix = prefix;
@@ -65,8 +60,7 @@ public class Library {
     }
 
     /**
-     * @param renderkits
-     *            the renderkits to set
+     * @param renderkits the renderkits to set
      */
     public void setRenderkits(Renderkit[] renderkits) {
         this.renderkits = renderkits;
@@ -80,8 +74,7 @@ public class Library {
     }
 
     /**
-     * @param taglib
-     *            the taglib to set
+     * @param taglib the taglib to set
      */
     public void setTaglib(Taglib taglib) {
         this.taglib = taglib;
@@ -95,8 +88,7 @@ public class Library {
     }
 
     /**
-     * @param description
-     *            the description to set
+     * @param description the description to set
      */
     public void setDescription(String description) {
         this.description = description;
@@ -110,8 +102,7 @@ public class Library {
     }
 
     /**
-     * @param jsfVersion
-     *            the jsfVersion to set
+     * @param jsfVersion the jsfVersion to set
      */
     public void setJsfVersion(String jsfVersion) {
         if (JSF10.equals(jsfVersion) || JSF11.equals(jsfVersion) || JSF12.equals(jsfVersion)) {
@@ -138,6 +129,6 @@ public class Library {
     @Override
     public String toString() {
         return "JSF library " + getPrefix() + ", desc: " + getDescription()
-               + (null != getTaglibs() ? ", libs: " + getTaglibs() : "");
+                + (null != getTaglibs() ? ", libs: " + getTaglibs() : "");
     }
 }

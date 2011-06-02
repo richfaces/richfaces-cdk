@@ -20,12 +20,12 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.statements;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.junit.matchers.JUnitMatchers.*;
+import static org.hamcrest.CoreMatchers.not;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.matchers.JUnitMatchers.containsString;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -58,12 +58,11 @@ import freemarker.template.ObjectWrapper;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class FreeMarkerTestBase extends CdkTestBase {
-
     protected static final String HTTP_EXAMPLE_COM = "http://example.com/";
     @Inject
     @TemplateModel
@@ -94,7 +93,6 @@ public class FreeMarkerTestBase extends CdkTestBase {
         for (final String expectedImport : expected) {
             try {
                 Iterables.find(requiredImports, new Predicate<JavaImport>() {
-
                     @Override
                     public boolean apply(JavaImport input) {
                         return input.getName().equals(expectedImport);
@@ -111,7 +109,6 @@ public class FreeMarkerTestBase extends CdkTestBase {
         for (final HelperMethod expectedHelper : expected) {
             try {
                 Iterables.find(requiredHelpers, new Predicate<HelperMethod>() {
-
                     @Override
                     public boolean apply(HelperMethod input) {
                         return input.equals(expectedHelper);
@@ -125,8 +122,8 @@ public class FreeMarkerTestBase extends CdkTestBase {
 
     protected void verifyCode(String code, String... expected) {
         for (String string : expected) {
-            if(string.startsWith("!")){
-                assertThat(code, not(containsString(string.substring(1))));                
+            if (string.startsWith("!")) {
+                assertThat(code, not(containsString(string.substring(1))));
             } else {
                 assertThat(code, containsString(string));
             }

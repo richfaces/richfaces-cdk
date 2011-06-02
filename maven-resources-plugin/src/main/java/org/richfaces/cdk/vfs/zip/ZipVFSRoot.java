@@ -37,12 +37,11 @@ import org.richfaces.cdk.vfs.VFSType;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class ZipVFSRoot extends ZipVFSFile implements VFSRoot {
-
     private File file;
-    
+
     public ZipVFSRoot(File file) throws IOException {
         super(new ZipFile(file), new ZipNode(null), null);
 
@@ -55,7 +54,7 @@ public class ZipVFSRoot extends ZipVFSFile implements VFSRoot {
         Enumeration<? extends ZipEntry> entries = getZipFile().entries();
         while (entries.hasMoreElements()) {
             ZipEntry entry = entries.nextElement();
-            
+
             String entryName = entry.getName();
             Iterable<String> split = SLASH_SPLITTER.split(entryName);
             ZipNode node = getZipNode();
@@ -63,14 +62,14 @@ public class ZipVFSRoot extends ZipVFSFile implements VFSRoot {
                 if (".".equals(pathSeg) || "..".equals(pathSeg)) {
                     continue;
                 }
-                
+
                 node = node.getOrCreateChild(pathSeg);
             }
-            
+
             node.setZipEntry(entry);
         }
     }
-    
+
     @Override
     public void close() throws IOException {
         getZipFile().close();
@@ -83,11 +82,12 @@ public class ZipVFSRoot extends ZipVFSFile implements VFSRoot {
 
     public URL toURL() throws MalformedURLException {
         return file.toURI().toURL();
-    };
-    
+    }
+
+    ;
+
     @Override
     public InputStream getInputStream() throws IOException {
         throw new IOException("Stream is not available");
     }
-
 }

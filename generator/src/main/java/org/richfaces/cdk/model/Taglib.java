@@ -18,9 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.cdk.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -32,6 +29,7 @@ import org.richfaces.cdk.xmlconfig.model.ClassAdapter;
 
 /**
  * This class contains information about tag library.
+ *
  * @author asmirnov
  *
  */

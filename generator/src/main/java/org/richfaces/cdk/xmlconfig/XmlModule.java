@@ -18,8 +18,7 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- */ 
-
+ */
 package org.richfaces.cdk.xmlconfig;
 
 import org.richfaces.cdk.CdkWriter;
@@ -36,8 +35,9 @@ import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
  *
  */
 public class XmlModule extends AbstractModule {
-
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see com.google.inject.AbstractModule#configure()
      */
     @Override
@@ -45,10 +45,7 @@ public class XmlModule extends AbstractModule {
         bind(EntityResolver2.class).to(CdkEntityResolver.class);
         bind(JAXB.class).to(JAXBBinding.class);
         bind(NamespacePrefixMapper.class).to(FacesConfigNamespacePreffixMapper.class);
-        Multibinder.newSetBinder(binder(), ModelBuilder.class)
-                .addBinding().to(FacesConfigParser.class);
-        Multibinder.newSetBinder(binder(), CdkWriter.class)
-                .addBinding().to(FacesConfigGenerator.class);
+        Multibinder.newSetBinder(binder(), ModelBuilder.class).addBinding().to(FacesConfigParser.class);
+        Multibinder.newSetBinder(binder(), CdkWriter.class).addBinding().to(FacesConfigGenerator.class);
     }
-
 }

@@ -20,32 +20,33 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.util;
 
 import java.util.NoSuchElementException;
 
 import com.google.common.base.Joiner;
 
-
 /**
- * <p class="changed_added_4_0">String manipulation utils.</p>
+ * <p class="changed_added_4_0">
+ * String manipulation utils.
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 public final class Strings {
-    
     public static final Joiner DOT_JOINER = Joiner.on('.');
-    
+
     private Strings() {
 
         // this is utility class with static methods only.
     }
 
     /**
-     * <p class="changed_added_4_0">Remove characters from string end</p>
+     * <p class="changed_added_4_0">
+     * Remove characters from string end
+     * </p>
      *
-     * @param in   input string
+     * @param in input string
      * @param size number of characters to remove.
      * @return
      */
@@ -58,8 +59,13 @@ public final class Strings {
     }
 
     /**
-     * <p class="changed_added_4_0">Change case of the first character to lower, as it required by the Java Beans property and setter/getter method name conventions:</p>
-     * <p>"PropertyFoo" will be changed to "propertyFoo"</p>
+     * <p class="changed_added_4_0">
+     * Change case of the first character to lower, as it required by the Java Beans property and setter/getter method name
+     * conventions:
+     * </p>
+     * <p>
+     * "PropertyFoo" will be changed to "propertyFoo"
+     * </p>
      *
      * @param in
      * @return {@code in} with first character changed to lower case.
@@ -73,8 +79,13 @@ public final class Strings {
     }
 
     /**
-     * <p class="changed_added_4_0">Change case of the first character to upper, as it required by the Java Beans property and setter/getter method name conventions:</p>
-     * <p>"propertyFoo" will be changed to "PropertyFoo"</p>
+     * <p class="changed_added_4_0">
+     * Change case of the first character to upper, as it required by the Java Beans property and setter/getter method name
+     * conventions:
+     * </p>
+     * <p>
+     * "propertyFoo" will be changed to "PropertyFoo"
+     * </p>
      *
      * @param in
      * @return {@code in} with first character changed to lower case.
@@ -88,7 +99,9 @@ public final class Strings {
     }
 
     /**
-     * <p class="changed_added_4_0">Check string for null or empty value</p>
+     * <p class="changed_added_4_0">
+     * Check string for null or empty value
+     * </p>
      *
      * @param type
      * @return true if {@code type} is null or zero-length string.
@@ -96,14 +109,14 @@ public final class Strings {
     public static boolean isEmpty(String type) {
         return type == null || type.length() == 0;
     }
-    
+
     public static String firstNonEmpty(String... strings) {
         for (String s : strings) {
             if (!isEmpty(s)) {
                 return s;
             }
         }
-        
+
         throw new NoSuchElementException();
     }
 }

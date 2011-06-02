@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.generate.java.taghandler;
 
 import org.richfaces.cdk.CdkException;
@@ -36,20 +35,17 @@ import com.google.inject.Inject;
  * @since Feb 22, 2010
  */
 public class TagHandlerWriter implements CdkWriter {
-
     @Inject
     private ComponentLibrary library;
-
     @Inject
     @Output(Outputs.JAVA_CLASSES)
     private FileManager output;
-
     @Inject
     private TagHandlerGeneratorVisitor tagHandlerGeneratorVisitor;
 
     @Override
     public void render(ComponentLibrary library) throws CdkException {
-        library.accept(tagHandlerGeneratorVisitor,null);
+        library.accept(tagHandlerGeneratorVisitor, null);
     }
 
     public ComponentLibrary getLibrary() {

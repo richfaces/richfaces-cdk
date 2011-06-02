@@ -37,14 +37,13 @@ import com.google.inject.Inject;
  * @author Nick Belaevski
  */
 public class WriteTextStatement extends FreeMarkerTemplateStatementBase {
-
     private TemplateStatement textStatement;
     private final ELParser parser;
     private final Logger log;
 
     @Inject
-    public WriteTextStatement(@TemplateModel FreeMarkerRenderer renderer,ELParser parser, Logger log) {
-        super(renderer,"write-text");
+    public WriteTextStatement(@TemplateModel FreeMarkerRenderer renderer, ELParser parser, Logger log) {
+        super(renderer, "write-text");
         this.parser = parser;
         this.log = log;
     }
@@ -57,18 +56,20 @@ public class WriteTextStatement extends FreeMarkerTemplateStatementBase {
     public List<TemplateStatement> getStatements() {
         return Collections.singletonList(textStatement);
     }
+
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param textExpression the textExpression to set
-     * @throws ParsingException 
+     * @throws ParsingException
      */
-    public void setExpression(String textExpression)  {
+    public void setExpression(String textExpression) {
         try {
-            textStatement = parser.parse(textExpression,this,TypesFactory.OBJECT_TYPE);
+            textStatement = parser.parse(textExpression, this, TypesFactory.OBJECT_TYPE);
             textStatement.setParent(this);
         } catch (ParsingException e) {
             log.error("Error parsing EL expression", e);
         }
     }
-
 }

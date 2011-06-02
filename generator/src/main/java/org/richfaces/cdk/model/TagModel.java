@@ -20,9 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.cdk.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -36,27 +33,27 @@ import org.richfaces.cdk.util.ComparatorUtils;
 import org.richfaces.cdk.xmlconfig.model.ClassAdapter;
 
 /**
- * <p class="changed_added_4_0">That bean represents VDL tag</p>
+ * <p class="changed_added_4_0">
+ * That bean represents VDL tag
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 @XmlType(name = "tag-configType", namespace = ComponentLibrary.CDK_EXTENSIONS_NAMESPACE)
 @XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
-public class TagModel implements Named , ModelElement<TagModel> {
-
+public class TagModel implements Named, ModelElement<TagModel> {
     private static final long serialVersionUID = 3875718626199223087L;
-
     private ClassName targetClass;
-    
     private ClassName baseClass;
-    
     private TagType type;
-    
     private boolean generate = false;
     /**
-     *  <p class="changed_added_4_0">Tag name</p>
+     * <p class="changed_added_4_0">
+     * Tag name
+     * </p>
      */
-    private  String name;
+    private String name;
 
     @XmlElement(name = "tag-name", namespace = ComponentLibrary.CDK_EXTENSIONS_NAMESPACE)
     public String getName() {
@@ -64,16 +61,19 @@ public class TagModel implements Named , ModelElement<TagModel> {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param name the name to set
      */
     public void setName(String name) {
         this.name = name;
     }
 
-
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the type
      */
     @XmlElement(name = "tag-type", namespace = ComponentLibrary.CDK_EXTENSIONS_NAMESPACE)
@@ -82,7 +82,9 @@ public class TagModel implements Named , ModelElement<TagModel> {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param type the type to set
      */
     public void setType(TagType type) {
@@ -90,7 +92,9 @@ public class TagModel implements Named , ModelElement<TagModel> {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the targetClass
      */
     @Merge
@@ -100,18 +104,20 @@ public class TagModel implements Named , ModelElement<TagModel> {
         return this.targetClass;
     }
 
-
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param targetClass the targetClass to set
      */
     public void setTargetClass(ClassName targetClass) {
         this.targetClass = targetClass;
     }
 
-
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the baseClass
      */
     @Merge
@@ -121,27 +127,30 @@ public class TagModel implements Named , ModelElement<TagModel> {
         return this.baseClass;
     }
 
-
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param baseClass the baseClass to set
      */
     public void setBaseClass(ClassName baseClass) {
         this.baseClass = baseClass;
     }
 
-
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the generate
      */
     public boolean isGenerate() {
         return this.generate;
     }
 
-
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param generate the generate to set
      */
     public void setGenerate(boolean generate) {
@@ -150,17 +159,17 @@ public class TagModel implements Named , ModelElement<TagModel> {
 
     @Override
     public void merge(TagModel other) {
-        ComponentLibrary.merge(this, other);        
+        ComponentLibrary.merge(this, other);
     }
 
     @Override
     public boolean same(TagModel other) {
-        return ComparatorUtils.nullSafeEquals(this.getName(), other.getName()) && ComparatorUtils.nullSafeEquals(this.getType(), other.getType());
+        return ComparatorUtils.nullSafeEquals(this.getName(), other.getName())
+                && ComparatorUtils.nullSafeEquals(this.getType(), other.getType());
     }
 
     @Override
-    public <R,D> R accept(Visitor<R,D> visitor, D data) {
-        return visitor.visit(this,data);        
+    public <R, D> R accept(Visitor<R, D> visitor, D data) {
+        return visitor.visit(this, data);
     }
-    
 }

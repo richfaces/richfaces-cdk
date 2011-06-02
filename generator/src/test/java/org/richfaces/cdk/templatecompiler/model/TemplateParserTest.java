@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.model;
 
 import static org.junit.Assert.assertEquals;
@@ -43,37 +42,34 @@ import com.google.common.collect.Iterables;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class TemplateParserTest extends JaxbTestBase {
-
-    public static final String TEMPLATE_PROLOG =
-        "<cdk:root xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:cdk=\"http://jboss.org/schema/richfaces/cdk/core\" xmlns:c=\"http://jboss.org/schema/richfaces/cdk/jstl/core\" xmlns:cc=\"http://jboss.org/schema/richfaces/cdk/jsf/composite\"><cc:interface>";
+    public static final String TEMPLATE_PROLOG = "<cdk:root xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:cdk=\"http://jboss.org/schema/richfaces/cdk/core\" xmlns:c=\"http://jboss.org/schema/richfaces/cdk/jstl/core\" xmlns:cc=\"http://jboss.org/schema/richfaces/cdk/jsf/composite\"><cc:interface>";
     private static final Object DEFAULT_ATTRIBUTE_TYPE = new ClassName(Object.class);
     private static final String TEMPLATE_EPILOG = "</cc:implementation></cdk:root>";
     private static final String TEMPLATE_MIDDLE = "</cc:interface><cc:implementation>";
 
     @Test
     public void testAttributes() throws Exception {
-        Template template =
-            unmarshal(
+        Template template = unmarshal(
                 Template.class,
                 TEMPLATE_PROLOG
-                    + "<cdk:renders-children>true</cdk:renders-children>"
-                    + "<cc:attribute name=\"onclick\" />"
-                    + "<cc:attribute name=\"mode\" default=\"ajax\" />"
-                    + "<cc:attribute name=\"action\" method-signature=\"void action()\" />"
-                    + "<cc:attribute name=\"changeListener\" method-signature=\"void changeListener(ValueChangeEvent)\" targets=\"changes changes1\" />"
-                    + "<cc:attribute name=\"disabled\" type=\"boolean\" />"
-                    + "<cc:attribute name=\"delay\" type=\"java.lang.Integer\" />"
-                    + "<cc:attribute name=\"id\" required=\"true\" />"
-                    + "<cc:attribute name=\"experts\" shortDescription=\"For use by experts\" displayName=\"Expert attribute\" expert=\"true\" />"
-                    + "<cc:attribute name=\"preferred\" shortDescription=\"It's a preferred attribute\" displayName=\"Preferred attribute\" preferred=\"true\" />"
-                    + "<cc:attribute name=\"onchange\">" + "<cc:clientBehavior event=\"change\" />"
-                    + "<cc:clientBehavior event=\"valueChange\" default=\"true\" />" + "</cc:attribute>"
-                    + TEMPLATE_MIDDLE + TEMPLATE_EPILOG);
+                        + "<cdk:renders-children>true</cdk:renders-children>"
+                        + "<cc:attribute name=\"onclick\" />"
+                        + "<cc:attribute name=\"mode\" default=\"ajax\" />"
+                        + "<cc:attribute name=\"action\" method-signature=\"void action()\" />"
+                        + "<cc:attribute name=\"changeListener\" method-signature=\"void changeListener(ValueChangeEvent)\" targets=\"changes changes1\" />"
+                        + "<cc:attribute name=\"disabled\" type=\"boolean\" />"
+                        + "<cc:attribute name=\"delay\" type=\"java.lang.Integer\" />"
+                        + "<cc:attribute name=\"id\" required=\"true\" />"
+                        + "<cc:attribute name=\"experts\" shortDescription=\"For use by experts\" displayName=\"Expert attribute\" expert=\"true\" />"
+                        + "<cc:attribute name=\"preferred\" shortDescription=\"It's a preferred attribute\" displayName=\"Preferred attribute\" preferred=\"true\" />"
+                        + "<cc:attribute name=\"onchange\">" + "<cc:clientBehavior event=\"change\" />"
+                        + "<cc:clientBehavior event=\"valueChange\" default=\"true\" />" + "</cc:attribute>" + TEMPLATE_MIDDLE
+                        + TEMPLATE_EPILOG);
 
         CompositeInterface interfaceSection = template.getInterface();
         assertNotNull(interfaceSection);
@@ -211,13 +207,12 @@ public class TemplateParserTest extends JaxbTestBase {
 
     @Test
     public void testImpl() throws Exception {
-        Template template =
-            unmarshal(
+        Template template = unmarshal(
                 Template.class,
                 TEMPLATE_PROLOG
-                    + TEMPLATE_MIDDLE
-                    + "<cdk:call expression=\"#{cc.clientId}\"/><table width=\"200\"><tbody><cdk:call expression=\"#{cc.fooMethod(clientId)}\"/></tbody></table>Header<div class='bar'>foo</div>"
-                    + TEMPLATE_EPILOG);
+                        + TEMPLATE_MIDDLE
+                        + "<cdk:call expression=\"#{cc.clientId}\"/><table width=\"200\"><tbody><cdk:call expression=\"#{cc.fooMethod(clientId)}\"/></tbody></table>Header<div class='bar'>foo</div>"
+                        + TEMPLATE_EPILOG);
 
         CompositeImplementation implementation = template.getImplementation();
         assertNotNull(implementation);
@@ -231,18 +226,15 @@ public class TemplateParserTest extends JaxbTestBase {
 
     @Test
     public void testInterface() throws Exception {
-        Template template =
-            unmarshal(Template.class, TEMPLATE_PROLOG
+        Template template = unmarshal(Template.class, TEMPLATE_PROLOG
                 + "<cdk:class>org.richfaces.renderkit.html.TreeRenderer</cdk:class>"
                 + "<cdk:superclass>org.richfaces.renderkit.TreeRendererBase</cdk:superclass>"
                 + "<cdk:component-family>org.richfaces.TreeFamily</cdk:component-family>"
                 + "<cdk:renderer-type>org.richfaces.TreeRenderer</cdk:renderer-type>"
-                + "<cdk:renderkit-id>RF4_XHTML</cdk:renderkit-id>"
-                + "<cdk:renders-children>false</cdk:renders-children>" 
+                + "<cdk:renderkit-id>RF4_XHTML</cdk:renderkit-id>" + "<cdk:renders-children>false</cdk:renders-children>"
                 + "<cdk:import package=\"com.foo\" names=\"Bar Fooz\" />"
                 + "<cdk:import package=\"net.foo\" names=\"Field\" static=\"true\" />"
-                + "<cdk:import package=\"org.foo\" names=\"*\" />"
-                + TEMPLATE_MIDDLE + TEMPLATE_EPILOG);
+                + "<cdk:import package=\"org.foo\" names=\"*\" />" + TEMPLATE_MIDDLE + TEMPLATE_EPILOG);
 
         CompositeInterface interfaceSection = template.getInterface();
         assertNotNull(interfaceSection);
@@ -255,11 +247,11 @@ public class TemplateParserTest extends JaxbTestBase {
         assertEquals(Boolean.FALSE, interfaceSection.getRendersChildren());
 
         List<ClassImport> classImports = interfaceSection.getClassImports();
-        
+
         ClassImport importElement;
-        
+
         Iterator<ClassImport> children = classImports.iterator();
-        
+
         importElement = children.next();
         assertEquals("com.foo", importElement.getPackage());
         assertEquals(Arrays.asList("Bar", "Fooz"), importElement.getNames());
@@ -269,19 +261,18 @@ public class TemplateParserTest extends JaxbTestBase {
         assertEquals("net.foo", importElement.getPackage());
         assertEquals(Arrays.asList("Field"), importElement.getNames());
         assertTrue(importElement.isStatic());
-        
+
         importElement = children.next();
         assertEquals("org.foo", importElement.getPackage());
         assertEquals(Arrays.asList("*"), importElement.getNames());
         assertFalse(importElement.isStatic());
-        
+
         assertFalse(children.hasNext());
     }
 
     @Test
     public void testJstlCoreElements() throws Exception {
-        Template template =
-            unmarshal(Template.class, TEMPLATE_PROLOG + TEMPLATE_MIDDLE + "start"
+        Template template = unmarshal(Template.class, TEMPLATE_PROLOG + TEMPLATE_MIDDLE + "start"
                 + "<c:if test=\"#{someTest}\">if content</c:if>" + "<c:choose>"
                 + "<c:when test=\"#{anotherTest}\">when content</c:when>" + "<c:when test=\"#{coolTest}\">"
                 + "<c:if test=\"#{nestedIfTest}\">nested if content</c:if>" + "</c:when>"
@@ -356,11 +347,10 @@ public class TemplateParserTest extends JaxbTestBase {
 
     @Test
     public void testObject() throws Exception {
-        Template template =
-            unmarshal(Template.class, TEMPLATE_PROLOG + TEMPLATE_MIDDLE
+        Template template = unmarshal(Template.class, TEMPLATE_PROLOG + TEMPLATE_MIDDLE
                 + "<cdk:object name=\"rowCount\" type=\"int\" value=\"#{getRowCount(context)}\" />"
-                + "<cdk:object name=\"bodyExpression\" type=\"java.lang.String\">"
-                + "\"test expression\" +\n\"second line\"" + "</cdk:object>" +
+                + "<cdk:object name=\"bodyExpression\" type=\"java.lang.String\">" + "\"test expression\" +\n\"second line\""
+                + "</cdk:object>" +
 
                 TEMPLATE_EPILOG);
 
@@ -388,8 +378,7 @@ public class TemplateParserTest extends JaxbTestBase {
 
     @Test
     public void testResourceDependencies() throws Exception {
-        Template template =
-            unmarshal(Template.class, TEMPLATE_PROLOG + "<cdk:resource-dependency name=\"jquery.js\" />"
+        Template template = unmarshal(Template.class, TEMPLATE_PROLOG + "<cdk:resource-dependency name=\"jquery.js\" />"
                 + "<cdk:resource-dependency name=\"richfaces.css\" library=\"org.richfaces\" />"
                 + "<cdk:resource-dependency name=\"richfaces.js\" library=\"org.richfaces\" target=\"body\" /> "
 
@@ -409,7 +398,7 @@ public class TemplateParserTest extends JaxbTestBase {
         resourceDependency = resourceDependencies.get(0);
         assertNotNull(resourceDependency);
         assertEquals("jquery.js", resourceDependency.getName());
-        assertEquals("",resourceDependency.getLibrary());
+        assertEquals("", resourceDependency.getLibrary());
         assertEquals("", resourceDependency.getTarget());
 
         resourceDependency = resourceDependencies.get(1);
@@ -431,17 +420,15 @@ public class TemplateParserTest extends JaxbTestBase {
         assertNotNull(template.getInterface());
         assertNotNull(template.getImplementation());
     }
-    
+
     @Test
     public void testScriptObject() throws Exception {
-        Template template =
-            unmarshal(Template.class, TEMPLATE_PROLOG + TEMPLATE_MIDDLE
+        Template template = unmarshal(Template.class, TEMPLATE_PROLOG + TEMPLATE_MIDDLE
                 + "<cdk:scriptObject name=\"hash\" base=\"#{getBaseOptions(context)}\">"
-                +   "<cdk:scriptOption name=\"name\" value=\"#{value}\" />"
-                +   "<cdk:scriptOption name=\"delay\" value=\"#{delay}\" defaultValue=\"100\" />"
-                +   "<cdk:scriptOption name=\"rowClasses\" value=\"#{rowClasses}\" wrapper=\"asArray\" />"
-                +   "<cdk:scriptOption attributes=\"min max\" />"
-                +   "<cdk:scriptOption variables=\"allowHeader allowFooter\" />"
+                + "<cdk:scriptOption name=\"name\" value=\"#{value}\" />"
+                + "<cdk:scriptOption name=\"delay\" value=\"#{delay}\" defaultValue=\"100\" />"
+                + "<cdk:scriptOption name=\"rowClasses\" value=\"#{rowClasses}\" wrapper=\"asArray\" />"
+                + "<cdk:scriptOption attributes=\"min max\" />" + "<cdk:scriptOption variables=\"allowHeader allowFooter\" />"
                 + "</cdk:scriptObject>" +
 
                 TEMPLATE_EPILOG);
@@ -452,19 +439,19 @@ public class TemplateParserTest extends JaxbTestBase {
         CdkScriptObjectElement scriptObject = (CdkScriptObjectElement) Iterables.getOnlyElement(implementation.getChildren());
         assertEquals("hash", scriptObject.getName());
         assertEquals("#{getBaseOptions(context)}", scriptObject.getBase());
-        
+
         CdkScriptOptionElement scriptOption;
         Iterator<Object> children = scriptObject.getChildren().iterator();
-        
+
         scriptOption = (CdkScriptOptionElement) children.next();
         assertEquals("name", scriptOption.getName());
         assertEquals("#{value}", scriptOption.getValue());
-        
+
         scriptOption = (CdkScriptOptionElement) children.next();
         assertEquals("delay", scriptOption.getName());
         assertEquals("#{delay}", scriptOption.getValue());
         assertEquals("100", scriptOption.getDefaultValue());
-        
+
         scriptOption = (CdkScriptOptionElement) children.next();
         assertEquals("rowClasses", scriptOption.getName());
         assertEquals("#{rowClasses}", scriptOption.getValue());
@@ -472,7 +459,7 @@ public class TemplateParserTest extends JaxbTestBase {
 
         scriptOption = (CdkScriptOptionElement) children.next();
         assertEquals(Arrays.asList("min", "max"), scriptOption.getAttributes());
-        
+
         scriptOption = (CdkScriptOptionElement) children.next();
         assertEquals(Arrays.asList("allowHeader", "allowFooter"), scriptOption.getVariables());
 

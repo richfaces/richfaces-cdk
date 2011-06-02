@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.model;
 
 import java.io.Serializable;
@@ -36,53 +35,43 @@ import org.richfaces.cdk.xmlconfig.model.ClassAdapter;
 import com.google.common.collect.Lists;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 public class Attribute implements Serializable {
-
     private static final long serialVersionUID = -8183353368681247171L;
-    
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     @XmlAttribute(required = true)
     private String name;
-
     @XmlAttribute
     private String displayName;
-
     @XmlAttribute
     private String shortDescription;
-
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     @XmlAttribute(name = "default")
     private String defaultValue;
-
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     @XmlAttribute(name = "method-signature")
     private String methodSignature;
-
     @XmlAttribute
     private String targets;
-
     @XmlAttribute
     private Boolean required;
-
     @XmlAttribute
     private Boolean preferred;
-
     @XmlAttribute
     private Boolean expert;
-
     @XmlAttribute
     @XmlJavaTypeAdapter(ClassAdapter.class)
     private ClassName type = new ClassName(Object.class);
-
     @XmlElement(name = "clientBehavior", namespace = Template.COMPOSITE_NAMESPACE)
-    private List<ClientBehavior> clientBehaviors=Lists.newArrayList();
-    
+    private List<ClientBehavior> clientBehaviors = Lists.newArrayList();
+
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the name
      */
@@ -91,7 +80,8 @@ public class Attribute implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param name the name to set
      */
@@ -100,7 +90,8 @@ public class Attribute implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the displayName
      */
@@ -109,7 +100,8 @@ public class Attribute implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param displayName the displayName to set
      */
@@ -118,7 +110,8 @@ public class Attribute implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the shortDescription
      */
@@ -127,7 +120,8 @@ public class Attribute implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param shortDescription the shortDescription to set
      */
@@ -136,7 +130,8 @@ public class Attribute implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the defaultValue
      */
@@ -145,7 +140,8 @@ public class Attribute implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param defaultValue the defaultValue to set
      */
@@ -154,7 +150,8 @@ public class Attribute implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the methodSignature
      */
@@ -163,7 +160,8 @@ public class Attribute implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param methodSignature the methodSignature to set
      */
@@ -172,7 +170,8 @@ public class Attribute implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the targets
      */
@@ -181,7 +180,8 @@ public class Attribute implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param applyTo the targets to set
      */
@@ -190,7 +190,8 @@ public class Attribute implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the required
      */
@@ -199,7 +200,8 @@ public class Attribute implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param required the required to set
      */
@@ -208,7 +210,8 @@ public class Attribute implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the preffered
      */
@@ -217,7 +220,8 @@ public class Attribute implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param preffered the preffered to set
      */
@@ -226,7 +230,8 @@ public class Attribute implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the expert
      */
@@ -235,7 +240,8 @@ public class Attribute implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param expert the expert to set
      */
@@ -244,7 +250,8 @@ public class Attribute implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the type
      */
@@ -253,26 +260,29 @@ public class Attribute implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param type the type to set
      */
     public void setType(ClassName type) {
         this.type = type;
     }
-    
+
     /**
-     * <p class="changed_added_4_0"></p>
-     * 
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the clientBehaviors
      */
     public List<ClientBehavior> getClientBehaviors() {
         return clientBehaviors;
     }
-    
+
     /**
-     * <p class="changed_added_4_0"></p>
-     * 
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param clientBehaviors the clientBehaviors to set
      */
     public void setClientBehaviors(List<ClientBehavior> clientBehaviors) {

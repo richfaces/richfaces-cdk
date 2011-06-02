@@ -52,10 +52,9 @@ import com.sun.el.ExpressionFactoryImpl;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class ApplicationImpl extends Application {
-
     private ExpressionFactory expressionFactory = createExpressionFactory();
 
     private ExpressionFactory createExpressionFactory() {
@@ -64,7 +63,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#getActionListener()
      */
     @Override
@@ -75,7 +74,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#setActionListener(javax.faces.event.ActionListener)
      */
     @Override
@@ -86,7 +85,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#getDefaultLocale()
      */
     @Override
@@ -97,7 +96,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#setDefaultLocale(java.util.Locale)
      */
     @Override
@@ -108,7 +107,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#getDefaultRenderKitId()
      */
     @Override
@@ -119,7 +118,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#setDefaultRenderKitId(java.lang.String)
      */
     @Override
@@ -130,7 +129,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#getMessageBundle()
      */
     @Override
@@ -141,7 +140,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#setMessageBundle(java.lang.String)
      */
     @Override
@@ -152,7 +151,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#getNavigationHandler()
      */
     @Override
@@ -163,7 +162,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#setNavigationHandler(javax.faces.application.NavigationHandler)
      */
     @Override
@@ -174,7 +173,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#getPropertyResolver()
      */
     @Override
@@ -185,7 +184,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#setPropertyResolver(javax.faces.el.PropertyResolver)
      */
     @Override
@@ -196,7 +195,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#getVariableResolver()
      */
     @Override
@@ -207,7 +206,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#setVariableResolver(javax.faces.el.VariableResolver)
      */
     @Override
@@ -218,7 +217,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#getViewHandler()
      */
     @Override
@@ -229,7 +228,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#setViewHandler(javax.faces.application.ViewHandler)
      */
     @Override
@@ -240,7 +239,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#getStateManager()
      */
     @Override
@@ -251,7 +250,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#setStateManager(javax.faces.application.StateManager)
      */
     @Override
@@ -262,7 +261,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#addComponent(java.lang.String, java.lang.String)
      */
     @Override
@@ -273,7 +272,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#createComponent(java.lang.String)
      */
     @Override
@@ -284,20 +283,20 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see javax.faces.application.Application#createComponent(javax.faces.el.ValueBinding,
-     * javax.faces.context.FacesContext, java.lang.String)
+     *
+     * @see javax.faces.application.Application#createComponent(javax.faces.el.ValueBinding, javax.faces.context.FacesContext,
+     * java.lang.String)
      */
     @Override
     public UIComponent createComponent(ValueBinding componentBinding, FacesContext context, String componentType)
-        throws FacesException {
+            throws FacesException {
         // TODO Auto-generated method stub
         return null;
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#getComponentTypes()
      */
     @Override
@@ -308,7 +307,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#addConverter(java.lang.String, java.lang.String)
      */
     @Override
@@ -319,7 +318,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#addConverter(java.lang.Class, java.lang.String)
      */
     @Override
@@ -330,7 +329,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#createConverter(java.lang.String)
      */
     @Override
@@ -341,7 +340,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#createConverter(java.lang.Class)
      */
     @Override
@@ -352,7 +351,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#getConverterIds()
      */
     @Override
@@ -363,7 +362,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#getConverterTypes()
      */
     @Override
@@ -374,7 +373,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#createMethodBinding(java.lang.String, java.lang.Class<?>[])
      */
     @Override
@@ -385,7 +384,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#getSupportedLocales()
      */
     @Override
@@ -396,7 +395,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#setSupportedLocales(java.util.Collection)
      */
     @Override
@@ -407,7 +406,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#addValidator(java.lang.String, java.lang.String)
      */
     @Override
@@ -418,7 +417,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#createValidator(java.lang.String)
      */
     @Override
@@ -429,7 +428,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#getValidatorIds()
      */
     @Override
@@ -440,7 +439,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#createValueBinding(java.lang.String)
      */
     @Override
@@ -456,7 +455,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#getExpressionFactory()
      */
     @Override
@@ -466,7 +465,7 @@ public class ApplicationImpl extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see javax.faces.application.Application#getResourceHandler()
      */
     @Override
@@ -476,9 +475,8 @@ public class ApplicationImpl extends Application {
 
     @Override
     public <T> T evaluateExpressionGet(FacesContext context, String expression, Class<? extends T> expectedType)
-        throws ELException {
-        ValueExpression ve = getExpressionFactory().createValueExpression(context.getELContext(), expression,
-            expectedType);
+            throws ELException {
+        ValueExpression ve = getExpressionFactory().createValueExpression(context.getELContext(), expression, expectedType);
         return (T) (ve.getValue(context.getELContext()));
     }
 }

@@ -20,11 +20,12 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.generate.freemarker;
 
-import static java.lang.annotation.ElementType.*;
-import static java.lang.annotation.RetentionPolicy.*;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -33,16 +34,15 @@ import com.google.inject.BindingAnnotation;
 
 /**
  * <p class="changed_added_4_0">
- * Marks {@link org.richfaces.cdk.generate.freemarker.FreeMarkerRenderer} instance that is targeted to work with JSF
- * library model
+ * Marks {@link org.richfaces.cdk.generate.freemarker.FreeMarkerRenderer} instance that is targeted to work with JSF library
+ * model
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 @Retention(RUNTIME)
 @Target({ FIELD, PARAMETER, METHOD })
 @BindingAnnotation
 public @interface ContextVariables {
-
 }

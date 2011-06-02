@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.generate.freemarker;
 
 import org.richfaces.cdk.model.ClassName;
@@ -35,18 +34,16 @@ import freemarker.template.TemplateModelException;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class ClassNameModel extends StringModel {
-
     static final ModelFactory FACTORY = new ModelFactory() {
         public TemplateModel create(Object object, ObjectWrapper wrapper) {
             return new ClassNameModel((ClassName) object, (BeansWrapper) wrapper);
         }
     };
-
     private final ClassName className;
 
     public ClassNameModel(ClassName object, BeansWrapper wrapper) {
@@ -68,5 +65,4 @@ public class ClassNameModel extends StringModel {
     public boolean isFromJavaLang() {
         return "java.lang".equals(className.getPackage());
     }
-
 }

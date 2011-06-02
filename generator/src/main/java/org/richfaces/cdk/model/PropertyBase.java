@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.model;
 
 import java.util.Set;
@@ -33,47 +32,43 @@ import com.google.common.collect.Sets;
  * @since Mar 19, 2010
  */
 public abstract class PropertyBase extends DescriptionGroupBase implements ModelElement<PropertyBase>, Named {
-
     private static final long serialVersionUID = 3483864006602184580L;
-
     /**
-     * <p class="changed_added_4_0">The name of bean property</p>
+     * <p class="changed_added_4_0">
+     * The name of bean property
+     * </p>
      */
     private String name;
-
     private boolean hidden = false;
     private boolean literal = false;
     private boolean required = false;
     private boolean readOnly = false;
     private boolean passThrough = false;
-
     private Set<EventName> eventNames = Sets.newLinkedHashSet();
-    private MethodSignature signature ;
-    
+    private MethodSignature signature;
     private String defaultValue;
-
     private String suggestedValue;
-
     private ClassName type;
-
     private boolean bindingAttribute;
-
     private boolean binding;
-
     private String aliasFor;
-
     /**
-     *  <p class="changed_added_4_0">Is that bean property generate in the class or should be generated ?</p>
+     * <p class="changed_added_4_0">
+     * Is that bean property generate in the class or should be generated ?
+     * </p>
      */
     private Boolean generate;
+
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      */
     public PropertyBase() {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the name
      */
@@ -82,7 +77,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param name the name to set
      */
@@ -91,7 +87,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the type
      */
@@ -101,7 +98,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param type the type to set
      */
@@ -110,7 +108,9 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the aliasFor
      */
     @Merge
@@ -119,7 +119,9 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param aliasFor the aliasFor to set
      */
     public void setAliasFor(String aliasFor) {
@@ -127,7 +129,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the defaultValue
      */
@@ -137,7 +140,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param dafaultValue - the defaultValue to set
      */
@@ -146,7 +150,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the suggestedValue
      */
@@ -156,7 +161,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param suggestedValue the suggestedValue to set
      */
@@ -165,7 +171,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the eventNames
      */
@@ -175,7 +182,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param eventNames the eventNames to set
      */
@@ -184,7 +192,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the hidden
      */
@@ -193,7 +202,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param hidden the hidden to set
      */
@@ -202,7 +212,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the literal
      */
@@ -211,7 +222,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param literal the literal to set
      */
@@ -220,7 +232,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the required
      */
@@ -229,7 +242,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param required the required to set
      */
@@ -238,7 +252,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param readOnly the readOnly to set
      */
@@ -247,7 +262,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the readOnly
      */
@@ -256,7 +272,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the passThrough
      */
@@ -265,7 +282,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param passThrough the passThrough to set
      */
@@ -274,7 +292,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the signature
      */
@@ -284,7 +303,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param signature the signature to set
      */
@@ -301,8 +321,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
         ComponentLibrary.merge(this, other);
     }
 
-    public <R,D> R accept(Visitor<R,D> visitor, D data) {
-        return visitor.visitProperty(this,data);
+    public <R, D> R accept(Visitor<R, D> visitor, D data) {
+        return visitor.visitProperty(this, data);
     }
 
     @Override
@@ -315,7 +335,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param bindingAttribute the bindingAttribute to set
      */
@@ -328,7 +349,8 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param binding the binding to set
      */

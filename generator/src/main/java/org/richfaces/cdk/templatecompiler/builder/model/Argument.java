@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.builder.model;
 
 import org.richfaces.cdk.templatecompiler.el.types.ELType;
@@ -29,9 +28,7 @@ import org.richfaces.cdk.templatecompiler.el.types.ELType;
  * @author Maksim Kaszynski
  */
 public class Argument implements RequireImports {
-
     private String name;
-    
     private ELType type;
 
     public Argument(String name, ELType type) {
@@ -40,7 +37,6 @@ public class Argument implements RequireImports {
         this.type = type;
     }
 
-    
     public static Argument arg(String name, ELType type) {
         return new Argument(name, type);
     }
@@ -52,7 +48,6 @@ public class Argument implements RequireImports {
     public String getName() {
         return name;
     }
-
 
     @Override
     public Iterable<JavaImport> getRequiredImports() {

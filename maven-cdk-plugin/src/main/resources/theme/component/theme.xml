@@ -2,9 +2,9 @@
 <!DOCTYPE components PUBLIC "-//AJAX4JSF//CDK Generator config/EN"  "http://labs.jboss.com/jbossrichfaces/component-config.dtd">
 
 <components>
-	<renderer generate="true" override="true">
-		<name>${rendererType}</name>
-		<family>org.richfaces.Page</family>
-		<template>${packagePath}/${name}.jspx</template>
-	</renderer>
+    <renderer generate="true" override="true">
+        <name>${rendererType}</name>
+        <family>org.richfaces.Page</family>
+        <template>${packagePath}/${name}.jspx</template>
+    </renderer>
 </components>

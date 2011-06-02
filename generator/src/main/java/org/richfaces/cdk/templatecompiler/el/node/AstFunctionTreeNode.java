@@ -18,9 +18,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.el.node;
-
 
 import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.COMMA;
 import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.LEFT_BRACKET;
@@ -38,12 +36,11 @@ import org.richfaces.cdk.util.Strings;
 
 /**
  * This class extend AbstractTreeNode and wrap AstFunction node.
- * 
+ *
  * @author amarkhel
- * 
+ *
  */
 public class AstFunctionTreeNode extends AbstractMethodTreeNode {
-
     public AstFunctionTreeNode(Node node) {
         super(node);
     }
@@ -51,7 +48,7 @@ public class AstFunctionTreeNode extends AbstractMethodTreeNode {
     @Override
     public void visit(StringBuilder sb, ELVisitor visitor) throws ParsingException {
         AstFunction functionNode = (AstFunction) getNode();
-        
+
         HelperMethod helperMethod = findMatchingHelperMethod(functionNode);
         if (helperMethod != null) {
             visitHelperMethod(sb, visitor, helperMethod, functionNode);
@@ -65,15 +62,15 @@ public class AstFunctionTreeNode extends AbstractMethodTreeNode {
      * @param visitor
      * @param helperMethod
      * @param functionNode
-     * @throws ParsingException 
+     * @throws ParsingException
      */
-    private void visitHelperMethod(StringBuilder sb, ELVisitor visitor, HelperMethod helperMethod,
-        AstFunction functionNode) throws ParsingException {
+    private void visitHelperMethod(StringBuilder sb, ELVisitor visitor, HelperMethod helperMethod, AstFunction functionNode)
+            throws ParsingException {
         visitor.addHelperMethods(helperMethod);
-        
+
         visitor.setLiteral(false);
-        
-        //TODO - helper method doesn't provide this info
+
+        // TODO - helper method doesn't provide this info
         visitor.setExpressionType(TypesFactory.OBJECT_TYPE);
 
         sb.append(helperMethod.getName());
@@ -83,29 +80,28 @@ public class AstFunctionTreeNode extends AbstractMethodTreeNode {
             if (i != 0) {
                 sb.append(COMMA);
             }
-            
+
             String childOutput = getChildOutput(i, visitor);
             sb.append(childOutput);
         }
-        
+
         sb.append(RIGHT_BRACKET);
     }
 
     private HelperMethod findMatchingHelperMethod(AstFunction functionNode) {
         if (Strings.isEmpty(functionNode.getPrefix())) {
-            for (HelperMethod helperMethod: HelperMethod.values()) {
+            for (HelperMethod helperMethod : HelperMethod.values()) {
                 if (helperMethod.getName().equals(functionNode.getLocalName())) {
                     return helperMethod;
                 }
             }
         }
-         
+
         return null;
     }
-    
-    private void visitObjectMethod(StringBuilder sb, ELVisitor visitor, AstFunction functionNode)
-        throws ParsingException {
-        
+
+    private void visitObjectMethod(StringBuilder sb, ELVisitor visitor, AstFunction functionNode) throws ParsingException {
+
         String identifierName = Strings.firstNonEmpty(functionNode.getPrefix(), THIS_PREFIX);
         sb.append(identifierName);
 

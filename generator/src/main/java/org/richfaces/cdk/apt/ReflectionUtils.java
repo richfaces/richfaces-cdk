@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt;
 
 import java.lang.annotation.Annotation;
@@ -33,14 +32,14 @@ import javax.lang.model.type.TypeMirror;
 
 import org.richfaces.cdk.model.ClassName;
 
-
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class ReflectionUtils implements SourceUtils {
-
     @Override
     public TypeElement asTypeElement(TypeMirror mirror) {
         // TODO Auto-generated method stub
@@ -90,7 +89,7 @@ public class ReflectionUtils implements SourceUtils {
     @Override
     public void visitSupertypes(TypeElement type, SuperTypeVisitor visitor) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
@@ -132,6 +131,4 @@ public class ReflectionUtils implements SourceUtils {
 
     public void setModelProperty(Object model, AnnotationMirror annotation, String modelProperty) {
     }
-
-
 }

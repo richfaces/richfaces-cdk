@@ -12,21 +12,17 @@ import com.google.inject.Inject;
 
 @RunWith(CdkTestRunner.class)
 public class StartElementTest extends FreeMarkerTestBase {
-
     @Mock
     private TypesFactory typesFactory;
-    
     @Inject
     private StartElementStatement statement;
-    
-    
+
     @Test
     public void testStartElement() throws Exception {
         controller.replay();
         statement.setElementName(QName.valueOf("div"));
         String code = statement.getCode();
-        verifyCode(code, "startElement","div");
+        verifyCode(code, "startElement", "div");
         controller.verify();
     }
-
 }

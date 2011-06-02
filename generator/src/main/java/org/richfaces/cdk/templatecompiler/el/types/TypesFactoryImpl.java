@@ -70,23 +70,19 @@ import com.google.inject.Inject;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public final class TypesFactoryImpl implements TypesFactory {
-
     static final PropertyDescriptor[] EMPTY_PROPERTY_DESCRIPTORS = new PropertyDescriptor[0];
-
-    static final ImmutableMap<Class<?>, Class<?>> PRIMITIVE_TO_WRAPPER_CLASSES_MAP = ImmutableMap
-        .<Class<?>, Class<?>> builder().put(Boolean.TYPE, Boolean.class).put(Float.TYPE, Float.class)
-        .put(Long.TYPE, Long.class).put(Integer.TYPE, Integer.class).put(Short.TYPE, Short.class)
-        .put(Byte.TYPE, Byte.class).put(Double.TYPE, Double.class).put(Character.TYPE, Character.class)
-        .put(Void.TYPE, Void.class).build();
-
+    static final ImmutableMap<Class<?>, Class<?>> PRIMITIVE_TO_WRAPPER_CLASSES_MAP = ImmutableMap.<Class<?>, Class<?>>builder()
+            .put(Boolean.TYPE, Boolean.class).put(Float.TYPE, Float.class).put(Long.TYPE, Long.class)
+            .put(Integer.TYPE, Integer.class).put(Short.TYPE, Short.class).put(Byte.TYPE, Byte.class)
+            .put(Double.TYPE, Double.class).put(Character.TYPE, Character.class).put(Void.TYPE, Void.class).build();
     static final ImmutableMap<String, Class<?>> PRIMITIVE_CLASSES_MAP;
 
     static {
 
-        Builder<String, Class<?>> builder = ImmutableMap.<String, Class<?>> builder();
+        Builder<String, Class<?>> builder = ImmutableMap.<String, Class<?>>builder();
         for (Class<?> primitiveClass : PRIMITIVE_TO_WRAPPER_CLASSES_MAP.keySet()) {
             builder.put(primitiveClass.getName(), primitiveClass);
         }
@@ -94,40 +90,27 @@ public final class TypesFactoryImpl implements TypesFactory {
     }
 
     private static final Pattern CLASS_SIGNATURE_PATTERN = Pattern.compile("^" + "\\s*([^\\[<]+)\\s*" + // class name
-        "(?:<\\s*(.*)\\s*>)?\\s*" + // generic signature
-        "((?:\\[\\s*\\]\\s*)+)?\\s*" + // array signature
-        "$");
-
+            "(?:<\\s*(.*)\\s*>)?\\s*" + // generic signature
+            "((?:\\[\\s*\\]\\s*)+)?\\s*" + // array signature
+            "$");
     private static final int CLASS_NAME_GROUP_IDX = 1;
-
     private static final int TYPE_ARGUMENTS_GROUP_IDX = 2;
-
     private static final int ARRAY_SIGNATURE_GROUP_IDX = 3;
-
     private static final int ARRAY_SIGNATURE_LENGTH = "[]".length();
-
     private static final Function<Class<?>, String> PACKAGE_NAME_FUNCTION = new Function<Class<?>, String>() {
-
         @Override
         public String apply(Class<?> from) {
             return from.getPackage().getName();
         }
     };
-
-    private static final ImmutableCollection<String> GUESS_PACKAGES = ImmutableSet.<String> copyOf(Iterables.transform(
-        ImmutableSet.<Class<?>> of(UIComponent.class, Behavior.class, Converter.class, Validator.class,
-            FacesContext.class, Application.class, FacesEvent.class, DataModel.class, Renderer.class, Collection.class,
-            Object.class), PACKAGE_NAME_FUNCTION));
-
+    private static final ImmutableCollection<String> GUESS_PACKAGES = ImmutableSet.<String>copyOf(Iterables.transform(
+            ImmutableSet.<Class<?>>of(UIComponent.class, Behavior.class, Converter.class, Validator.class, FacesContext.class,
+                    Application.class, FacesEvent.class, DataModel.class, Renderer.class, Collection.class, Object.class),
+            PACKAGE_NAME_FUNCTION));
     private final ClassLoader classLoader;
-
     private final Logger log;
-
-    private final Map<java.lang.reflect.Type, ELType> reflectionTypesCache =
-        new ConcurrentHashMap<java.lang.reflect.Type, ELType>();
-
+    private final Map<java.lang.reflect.Type, ELType> reflectionTypesCache = new ConcurrentHashMap<java.lang.reflect.Type, ELType>();
     private final Map<String, ELType> refferencedTypesCache = new ConcurrentHashMap<String, ELType>();
-
     private final Map<Class<?>, ClassDataHolder> classDataCache = Maps.newHashMap();
 
     @Inject
@@ -173,7 +156,7 @@ public final class TypesFactoryImpl implements TypesFactory {
                 } catch (LinkageError e) {
                     if (log.isInfoEnabled()) {
                         log.info(MessageFormat.format("Class {0} couldn''t be loaded because of: {1}", guessTypeName,
-                            e.getMessage()));
+                                e.getMessage()));
                     }
                 }
             }
@@ -185,8 +168,8 @@ public final class TypesFactoryImpl implements TypesFactory {
                 // initialize = false here for the same reason as already mentioned for the previous load block
                 result = Class.forName(className, false, classLoader);
             } catch (LinkageError e) {
-                String errorMessage =
-                    MessageFormat.format("Class {0} couldn''t be loaded because of: {1}", className, e.getMessage());
+                String errorMessage = MessageFormat.format("Class {0} couldn''t be loaded because of: {1}", className,
+                        e.getMessage());
                 if (log.isInfoEnabled()) {
                     log.info(errorMessage);
                 }
@@ -214,7 +197,7 @@ public final class TypesFactoryImpl implements TypesFactory {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.el.types.TypesFactory#getType(java.lang.String)
      */
     @Override
@@ -302,7 +285,7 @@ public final class TypesFactoryImpl implements TypesFactory {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.el.types.TypesFactory#getType(java.lang.reflect.Type)
      */
     @Override
@@ -326,9 +309,9 @@ public final class TypesFactoryImpl implements TypesFactory {
     }
 
     /**
-     * Returns wrapper classes for passed-in class. If type is primitive, then corresponding wrapper class is returned
-     * (e.g. boolean -> Boolean), otherwise does nothing and returns passed-in class.
-     * 
+     * Returns wrapper classes for passed-in class. If type is primitive, then corresponding wrapper class is returned (e.g.
+     * boolean -> Boolean), otherwise does nothing and returns passed-in class.
+     *
      * @return wrapper for primitive types, or passed-in class
      */
     static Class<?> getWrapperClass(Class<?> inClazz) {
@@ -340,7 +323,6 @@ public final class TypesFactoryImpl implements TypesFactory {
     }
 
     private static final class JavaELPropertyDescriptor implements ELPropertyDescriptor {
-
         private final PropertyDescriptor descriptor;
         private final String descriptorName;
         private final ELType propertyType;
@@ -348,7 +330,7 @@ public final class TypesFactoryImpl implements TypesFactory {
         /**
          * <p class="changed_added_4_0">
          * </p>
-         * 
+         *
          * @param descriptor
          * @param propertyType
          * @param descriptorName
@@ -391,11 +373,8 @@ public final class TypesFactoryImpl implements TypesFactory {
     }
 
     private static final class ClassDataHolder implements ClassVisitor {
-
         private Map<String, ELPropertyDescriptor> resolvedProperties;
-
         private List<Method> resolvedMethods;
-
         private final TypesFactory typesFactory;
 
         public ClassDataHolder(TypesFactory typesFactory) {
@@ -429,9 +408,9 @@ public final class TypesFactoryImpl implements TypesFactory {
             for (PropertyDescriptor descriptor : pds) {
                 String descriptorName = descriptor.getName();
                 if (resolvedProperties.get(descriptorName) == null) {
-                    
+
                     Type reflectionType;
-                    if(null != descriptor.getReadMethod()){
+                    if (null != descriptor.getReadMethod()) {
                         reflectionType = descriptor.getReadMethod().getGenericReturnType();
                     } else if (null != descriptor.getWriteMethod()) {
                         reflectionType = descriptor.getWriteMethod().getGenericParameterTypes()[0];
@@ -453,9 +432,7 @@ public final class TypesFactoryImpl implements TypesFactory {
     }
 
     static class ClassWalkingLogic {
-
         private Queue<Class<?>> classesList = new LinkedList<Class<?>>();
-
         private Set<Class<?>> visitedClasses = new HashSet<Class<?>>();
 
         public ClassWalkingLogic(Class<?> clazz) {
@@ -514,14 +491,11 @@ public final class TypesFactoryImpl implements TypesFactory {
 
     /**
      * This method return PropertyDescriptor by specified propertyName and clazz.
-     * 
-     * @param elType
-     *            - class to search
-     * @param propertyName
-     *            - propertyName to search
+     *
+     * @param elType - class to search
+     * @param propertyName - propertyName to search
      * @return property descriptor if found.
-     * @throws ParsingException
-     *             if error occured.
+     * @throws ParsingException if error occured.
      */
     public ELPropertyDescriptor getPropertyDescriptor(ELType elType, String propertyName) throws ParsingException {
         ELPropertyDescriptor propertyDescriptor;
@@ -542,22 +516,19 @@ public final class TypesFactoryImpl implements TypesFactory {
 
     /**
      * <p>
-     * Retrieve the property descriptors for the specified class, introspecting and caching them the first time a
-     * particular bean class is encountered.
+     * Retrieve the property descriptors for the specified class, introspecting and caching them the first time a particular
+     * bean class is encountered.
      * </p>
-     * 
+     *
      * <p>
      * <strong>FIXME</strong> - Does not work with DynaBeans.
      * </p>
-     * 
-     * @param beanClass
-     *            Bean class for which property descriptors are requested
+     *
+     * @param beanClass Bean class for which property descriptors are requested
      * @return the property descriptors
-     * @throws ParsingException
-     *             if error occured.
-     * 
-     * @exception IllegalArgumentException
-     *                if <code>beanClass</code> is null
+     * @throws ParsingException if error occured.
+     *
+     * @exception IllegalArgumentException if <code>beanClass</code> is null
      */
     private static PropertyDescriptor[] getPropertyDescriptors(Class<?> beanClass) throws ParsingException {
         if (beanClass == null) {
@@ -602,34 +573,30 @@ public final class TypesFactoryImpl implements TypesFactory {
 
     /**
      * <p>
-     * Find an accessible method that matches the given name and has compatible parameters. Compatible parameters mean
-     * that every method parameter is assignable from the given parameters. In other words, it finds a method with the
-     * given name that will take the parameters given.
+     * Find an accessible method that matches the given name and has compatible parameters. Compatible parameters mean that
+     * every method parameter is assignable from the given parameters. In other words, it finds a method with the given name
+     * that will take the parameters given.
      * <p>
-     * 
+     *
      * <p>
      * This method is slightly undeterminstic since it loops through methods names and return the first matching method.
      * </p>
-     * 
+     *
      * <p>
-     * This method is used by {@link #invokeMethod(Object object,String methodName,Object [] args,Class[] parameterTypes)}.
-     * 
+     * This method is used by {@link #invokeMethod(Object object, String methodName, Object [] args, Class[] parameterTypes)}.
+     *
      * <p>
-     * This method can match primitive parameter by passing in wrapper classes. For example, a <code>Boolean</code> will
-     * match a primitive <code>boolean</code> parameter.
-     * 
-     * @param elType
-     *            find method in this class
-     * @param methodName
-     *            find method with this name
-     * @param parameterTypes
-     *            find method with compatible parameters
+     * This method can match primitive parameter by passing in wrapper classes. For example, a <code>Boolean</code> will match a
+     * primitive <code>boolean</code> parameter.
+     *
+     * @param elType find method in this class
+     * @param methodName find method with this name
+     * @param parameterTypes find method with compatible parameters
      * @return The accessible method
-     * @throws ParsingException
-     *             if error occured.
+     * @throws ParsingException if error occured.
      */
     public ELType getMatchingVisibleMethodReturnType(ELType elType, final String methodName, ELType... parameterTypes)
-        throws ParsingException {
+            throws ParsingException {
 
         ClassDataHolder classDataHolder = resolveClassPropertiesAndMethods(getClassFromType(elType));
         List<Method> resolvedMethods = classDataHolder.getResolvedMethods();
@@ -664,5 +631,4 @@ public final class TypesFactoryImpl implements TypesFactory {
             return TypesFactory.OBJECT_TYPE;
         }
     }
-
 }

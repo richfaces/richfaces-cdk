@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.annotations;
 
 import java.lang.annotation.ElementType;
@@ -32,42 +31,49 @@ import java.lang.annotation.Target;
 import javax.faces.component.UIComponent;
 
 /**
- * <p class="changed_added_4_0">Describes facet of {@link UIComponent}.
+ * <p class="changed_added_4_0">
+ * Describes facet of {@link UIComponent}.
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
  */
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.METHOD)
 @Inherited
 public @interface Facet {
-
-    public static final String NAME = "org.richfaces.cdk.annotations.Facet";
+    String NAME = "org.richfaces.cdk.annotations.Facet";
 
     /**
      * <p class="changed_added_4_0">
      * The name of that facet.
      * </p>
-     * 
+     *
      * @return
      */
     /**
-     * <p class="changed_added_4_0">Facet name</p>
+     * <p class="changed_added_4_0">
+     * Facet name
+     * </p>
+     *
      * @return
      */
     String name() default "";
-    
+
     /**
-     * <p class="changed_added_4_0">If true, getter and setter methods for this facet will be generated.</p>
+     * <p class="changed_added_4_0">
+     * If true, getter and setter methods for this facet will be generated.
+     * </p>
+     *
      * @return
      */
     boolean generate() default true;
-    
+
     /**
-     * <p class="changed_added_4_0">Facet description.</p>
+     * <p class="changed_added_4_0">
+     * Facet description.
+     * </p>
+     *
      * @return
      */
     Description description() default @Description;
-    
-
 }

@@ -21,7 +21,11 @@
  */
 package org.richfaces.cdk.templatecompiler.parser.el.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import java.io.Writer;
 import java.util.List;
@@ -43,11 +47,10 @@ import com.google.inject.Inject;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 @RunWith(CdkTestRunner.class)
 public class TypesFactoryTest extends CdkTestBase {
-
     @Inject
     TypesFactoryImpl typesFactory;
 
@@ -58,7 +61,6 @@ public class TypesFactoryTest extends CdkTestBase {
     }
 
     private static final class ParameterizedTypesHolder {
-
         @SuppressWarnings("unused")
         public List<String>[] getArray() {
             return null;
@@ -105,7 +107,6 @@ public class TypesFactoryTest extends CdkTestBase {
         assertNotNull(objectType2);
 
         assertSame(objectType, objectType2);
-
     }
 
     @Test
@@ -251,17 +252,17 @@ public class TypesFactoryTest extends CdkTestBase {
         assertEquals(String.class.getName(), genericTypeArgument.getRawName());
     }
 
-    public ELPropertyDescriptor getAndCheckPropertyDescriptor(Class<?> clazz, String propertyName,
-        String getMethodName, Class<?> expectedType, boolean readable, boolean writable) throws Exception {
-        ELPropertyDescriptor checkPropertyDescriptor =
-            getAndCheckPropertyDescriptor(clazz, propertyName, getMethodName, expectedType);
+    public ELPropertyDescriptor getAndCheckPropertyDescriptor(Class<?> clazz, String propertyName, String getMethodName,
+            Class<?> expectedType, boolean readable, boolean writable) throws Exception {
+        ELPropertyDescriptor checkPropertyDescriptor = getAndCheckPropertyDescriptor(clazz, propertyName, getMethodName,
+                expectedType);
         assertEquals(writable, checkPropertyDescriptor.isWritable());
         assertEquals(readable, checkPropertyDescriptor.isReadable());
         return checkPropertyDescriptor;
     }
 
-    public ELPropertyDescriptor getAndCheckPropertyDescriptor(Class<?> clazz, String propertyName,
-        String getMethodName, Class<?> expectedType) throws Exception {
+    public ELPropertyDescriptor getAndCheckPropertyDescriptor(Class<?> clazz, String propertyName, String getMethodName,
+            Class<?> expectedType) throws Exception {
         ELType beanType = typesFactory.getType(clazz);
         ELPropertyDescriptor propertyDescriptor = typesFactory.getPropertyDescriptor(beanType, propertyName);
         assertNotNull(propertyDescriptor);
@@ -272,37 +273,36 @@ public class TypesFactoryTest extends CdkTestBase {
 
     @Test
     public void testGetStringProperty() throws Exception {
-        ELPropertyDescriptor propertyDescriptor =
-            getAndCheckPropertyDescriptor(Bean2.class, "string", "getString", String.class, true, true);
+        ELPropertyDescriptor propertyDescriptor = getAndCheckPropertyDescriptor(Bean2.class, "string", "getString",
+                String.class, true, true);
     }
 
     @Test
     public void testGetRawMapProperty() throws Exception {
-        ELPropertyDescriptor propertyDescriptor =
-            getAndCheckPropertyDescriptor(Bean.class, "rawMap", "getRawMap", Map.class, true, true);
+        ELPropertyDescriptor propertyDescriptor = getAndCheckPropertyDescriptor(Bean.class, "rawMap", "getRawMap", Map.class,
+                true, true);
     }
 
     @Test
     public void testGetBooleanProperty() throws Exception {
-        ELPropertyDescriptor propertyDescriptor =
-            getAndCheckPropertyDescriptor(Bean.class, "readOnly", "isReadOnly", Boolean.TYPE, true, true);
+        ELPropertyDescriptor propertyDescriptor = getAndCheckPropertyDescriptor(Bean.class, "readOnly", "isReadOnly",
+                Boolean.TYPE, true, true);
     }
 
     @Test
     public void testGetContextProperty() throws Exception {
-        ELPropertyDescriptor propertyDescriptor =
-            getAndCheckPropertyDescriptor(Bean.class, "context", "getContext", FacesContext.class, true, false);
+        ELPropertyDescriptor propertyDescriptor = getAndCheckPropertyDescriptor(Bean.class, "context", "getContext",
+                FacesContext.class, true, false);
     }
 
     @Test
     public void testGetDummyProperty() throws Exception {
-        ELPropertyDescriptor propertyDescriptor =
-            getAndCheckPropertyDescriptor(Bean.class, "nonExistedProperty", "getNonExistedProperty", Object.class,
-                false, false);
+        ELPropertyDescriptor propertyDescriptor = getAndCheckPropertyDescriptor(Bean.class, "nonExistedProperty",
+                "getNonExistedProperty", Object.class, false, false);
     }
 
     public ELType findAndCheckMethod(Class<?> clazz, String methodName, Class<?> expectedType, Class<?>... arguments)
-        throws Exception {
+            throws Exception {
         ELType beanType = typesFactory.getType(clazz);
         ELType[] parameters = new ELType[arguments.length];
         for (int i = 0; i < arguments.length; i++) {
@@ -318,11 +318,12 @@ public class TypesFactoryTest extends CdkTestBase {
     public void testFindCountMethod() throws Exception {
         findAndCheckMethod(Bean.class, "count", Integer.class, Integer.TYPE);
     }
+
     @Test
     public void testFindCountMethodWithWrongParameter() throws Exception {
         findAndCheckMethod(Bean.class, "count", Object.class, String.class);
     }
-    
+
     @Test
     public void testFindToStringMethod() throws Exception {
         findAndCheckMethod(Bean.class, "toString", String.class);

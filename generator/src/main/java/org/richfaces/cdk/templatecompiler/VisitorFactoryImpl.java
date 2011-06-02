@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler;
 
 import java.util.Collection;
@@ -35,37 +34,42 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class VisitorFactoryImpl implements TemplateVisitorFactory<RendererClassVisitor> {
-
     final TypesFactory typesFactory;
     final Logger log;
     final Injector injector;
     private final HelperMethodFactory helpersFactory;
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param classLoader
      * @param jaxbBinding
      * @param log
      */
     @Inject
-    public VisitorFactoryImpl(TypesFactory typesFactory, Logger log, Injector injector,HelperMethodFactory helpersFactory) {
+    public VisitorFactoryImpl(TypesFactory typesFactory, Logger log, Injector injector, HelperMethodFactory helpersFactory) {
         this.typesFactory = typesFactory;
         this.log = log;
         this.injector = injector;
         this.helpersFactory = helpersFactory;
     }
 
-    /* (non-Javadoc)
-     * @see org.richfaces.cdk.templatecompiler.TemplateVisitorFactory#createVisitor(org.richfaces.cdk.templatecompiler.model.CompositeInterface)
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.richfaces.cdk.templatecompiler.TemplateVisitorFactory#createVisitor(org.richfaces.cdk.templatecompiler.model.
+     * CompositeInterface)
      */
     @Override
     public RendererClassVisitor createVisitor(CompositeInterface composite, Collection<PropertyBase> attributes) {
-        return new RendererClassVisitor(composite, attributes, log,injector,typesFactory,helpersFactory);
+        return new RendererClassVisitor(composite, attributes, log, injector, typesFactory, helpersFactory);
     }
-
 }

@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.model;
 
 import javax.xml.XMLConstants;
@@ -41,24 +40,22 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 public class ElementsHandler implements DomHandler<ModelElement, DOMResult> {
-
     private DocumentBuilder builder;
 
     /**
      * Default constructor.
      * <p/>
-     * It is up to a JAXB provider to decide which DOM implementation
-     * to use or how that is configured.
+     * It is up to a JAXB provider to decide which DOM implementation to use or how that is configured.
      */
     public ElementsHandler() {
-        DocumentBuilderFactory docFactory = DocumentBuilderFactory
-            .newInstance();
-// Create Document Builder
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        // Create Document Builder
         try {
             this.builder = docFactory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
@@ -67,11 +64,9 @@ public class ElementsHandler implements DomHandler<ModelElement, DOMResult> {
     }
 
     /**
-     * Constructor that allows applications to specify which DOM implementation
-     * to be used.
+     * Constructor that allows applications to specify which DOM implementation to be used.
      *
-     * @param builder must not be null. JAXB uses this {@link DocumentBuilder} to create
-     *                a new element.
+     * @param builder must not be null. JAXB uses this {@link DocumentBuilder} to create a new element.
      */
     public ElementsHandler(DocumentBuilder builder) {
         if (builder == null) {
@@ -104,8 +99,8 @@ public class ElementsHandler implements DomHandler<ModelElement, DOMResult> {
         Element domElement = getDomElement(rt);
         AnyElement element = JAXB.unmarshal(new DOMSource(domElement), AnyElement.class);
         String prefix = domElement.getPrefix();
-        QName name = new QName(domElement.getNamespaceURI(), domElement.getLocalName(),
-            null != prefix ? prefix : XMLConstants.DEFAULT_NS_PREFIX);
+        QName name = new QName(domElement.getNamespaceURI(), domElement.getLocalName(), null != prefix ? prefix
+                : XMLConstants.DEFAULT_NS_PREFIX);
         element.setName(name);
         return element;
     }
@@ -137,5 +132,4 @@ public class ElementsHandler implements DomHandler<ModelElement, DOMResult> {
         // Parsed template are newer written out back.
         return null;
     }
-
 }

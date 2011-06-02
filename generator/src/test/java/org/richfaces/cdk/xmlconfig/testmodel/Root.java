@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.testmodel;
 
 import java.util.Set;
@@ -33,9 +32,9 @@ import com.google.common.collect.Sets;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 @XmlRootElement(name = "root-config", namespace = Root.HTTP_FOO_BAR_SCHEMA)
 public class Root {
@@ -47,7 +46,7 @@ public class Root {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the children
      */
     @XmlElement(namespace = HTTP_FOO_BAR_SCHEMA)
@@ -58,7 +57,7 @@ public class Root {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the name
      */
     @XmlElement(namespace = HTTP_FOO_BAR_SCHEMA)
@@ -69,9 +68,8 @@ public class Root {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param children
-     *            the children to set
+     *
+     * @param children the children to set
      */
     public void setChildren(Set<Child> children) {
         this.children = children;
@@ -80,9 +78,8 @@ public class Root {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param name
-     *            the name to set
+     *
+     * @param name the name to set
      */
     public void setName(String name) {
         this.name = name;

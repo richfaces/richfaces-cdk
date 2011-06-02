@@ -18,19 +18,13 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.builder.mojo;
 
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-
 import java.io.File;
-
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
-
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -43,7 +37,6 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectBuilder;
 import org.apache.maven.project.ProjectBuildingException;
-
 import org.codehaus.plexus.PlexusConstants;
 import org.codehaus.plexus.PlexusContainer;
 import org.codehaus.plexus.archiver.manager.ArchiverManager;
@@ -53,8 +46,8 @@ import org.codehaus.plexus.context.ContextException;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.Contextualizable;
 
 /**
- * Compile all xml templates, matched given pattern to Java classes. Sources
- * will be created in {@link AbstractCDKMojo#outputJavaDirectory}
+ * Compile all xml templates, matched given pattern to Java classes. Sources will be created in
+ * {@link AbstractCDKMojo#outputJavaDirectory}
  *
  * @goal compile
  * @requiresDependencyResolution compile
@@ -63,7 +56,6 @@ import org.codehaus.plexus.personality.plexus.lifecycle.phase.Contextualizable;
  *
  */
 public class CompileMojo extends AbstractCDKMojo implements Contextualizable {
-
     /**
      * To look up Archiver/UnArchiver implementations
      *
@@ -71,19 +63,16 @@ public class CompileMojo extends AbstractCDKMojo implements Contextualizable {
      */
     private ArchiverManager archiverManager;
     private PlexusContainer container;
-
     /**
      * @parameter default-value=${project.groupId}
      */
     private String defaultPackage;
-
     /**
      * A list of exclusion filters for the compiler. None by default.
      *
      * @parameter
      */
     private String[] excludes;
-
     /**
      * Project executed by first compile lifecycle.
      *
@@ -91,29 +80,24 @@ public class CompileMojo extends AbstractCDKMojo implements Contextualizable {
      * @readonly
      */
     private MavenProject executedProject;
-
     /**
-     * A list of inclusion filters for the compiler. By default, include all
-     * files in templates directory.
+     * A list of inclusion filters for the compiler. By default, include all files in templates directory.
      *
      * @parameter
      */
     private String[] includes;
-
     /**
      * The local repository.
      *
      * @parameter expression="${localRepository}"
      */
     private ArtifactRepository localRepository;
-
     /**
      * Project builder
      *
      * @component
      */
     private MavenProjectBuilder mavenProjectBuilder;
-
     /**
      * The reactor projects.
      *
@@ -133,7 +117,7 @@ public class CompileMojo extends AbstractCDKMojo implements Contextualizable {
         try {
             List components = container.lookupList("org.richfaces.templatecompiler.elements.ElementsFactory");
 
-            for (Iterator iter = components.iterator(); iter.hasNext(); ) {
+            for (Iterator iter = components.iterator(); iter.hasNext();) {
                 Object element = iter.next();
 
                 System.out.println(element.getClass().getName());
@@ -143,7 +127,7 @@ public class CompileMojo extends AbstractCDKMojo implements Contextualizable {
 
             Map componentsMap = container.lookupMap("org.richfaces.templatecompiler.elements.ElementsFactory");
 
-            for (Iterator iter = componentsMap.entrySet().iterator(); iter.hasNext(); ) {
+            for (Iterator iter = componentsMap.entrySet().iterator(); iter.hasNext();) {
                 Map.Entry element = (Map.Entry) iter.next();
 
                 System.out.println(element.getKey() + ":" + element.getValue().getClass().getName());
@@ -170,7 +154,7 @@ public class CompileMojo extends AbstractCDKMojo implements Contextualizable {
                 }
             } else {
                 throw new MojoFailureException("Parent project pom file " + parentPom.getAbsolutePath()
-                                               + " is not found for a components library");
+                        + " is not found for a components library");
             }
         } else {
             throw new MojoFailureException("Components library project must have parent pom with components modules");
@@ -186,7 +170,9 @@ public class CompileMojo extends AbstractCDKMojo implements Contextualizable {
     /*
      * (non-Javadoc)
      *
-     * @see org.codehaus.plexus.personality.plexus.lifecycle.phase.Contextualizable#contextualize(org.codehaus.plexus.context.Context)
+     * @see
+     * org.codehaus.plexus.personality.plexus.lifecycle.phase.Contextualizable#contextualize(org.codehaus.plexus.context.Context
+     * )
      */
     public void contextualize(Context context) throws ContextException {
         this.container = (PlexusContainer) context.get(PlexusConstants.PLEXUS_KEY);
@@ -229,7 +215,7 @@ public class CompileMojo extends AbstractCDKMojo implements Contextualizable {
             StringBuffer ret = new StringBuffer("[");
             boolean first = true;
 
-            for (Iterator iter = collection.iterator(); iter.hasNext(); ) {
+            for (Iterator iter = collection.iterator(); iter.hasNext();) {
                 Object element = iter.next();
 
                 if (!first) {
@@ -248,7 +234,7 @@ public class CompileMojo extends AbstractCDKMojo implements Contextualizable {
             StringBuffer ret = new StringBuffer("{");
             boolean first = true;
 
-            for (Iterator iter = map.keySet().iterator(); iter.hasNext(); ) {
+            for (Iterator iter = map.keySet().iterator(); iter.hasNext();) {
                 Object key = (Object) iter.next();
 
                 if (!first) {
@@ -279,8 +265,7 @@ public class CompileMojo extends AbstractCDKMojo implements Contextualizable {
         // All other objects threaded as Java Beans.
         try {
             StringBuffer ret = new StringBuffer("{");
-            PropertyDescriptor[] propertyDescriptors =
-                Introspector.getBeanInfo(obj.getClass()).getPropertyDescriptors();
+            PropertyDescriptor[] propertyDescriptors = Introspector.getBeanInfo(obj.getClass()).getPropertyDescriptors();
             boolean first = true;
 
             for (int i = 0; i < propertyDescriptors.length; i++) {

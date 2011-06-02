@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import java.util.Collection;
@@ -42,11 +41,9 @@ import org.richfaces.cdk.model.TagModel;
  *
  * @author asmirnov@exadel.com
  */
-@XmlType(name = "faces-config-rendererType", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE,
-    propOrder = {"family", "id", "rendererClass", /*"facet",*/"facesAttributes", "extension"})
-public class RendererBean extends
-    ElementBeanBase<RendererBean.RendererExtension> {
-
+@XmlType(name = "faces-config-rendererType", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE, propOrder = { "family", "id",
+        "rendererClass", /* "facet", */"facesAttributes", "extension" })
+public class RendererBean extends ElementBeanBase<RendererBean.RendererExtension> {
     private FacesId family;
     private ClassName rendererClass;
     private String id;
@@ -127,7 +124,6 @@ public class RendererBean extends
         return super.getFacesAttributes();
     }
 
-
     /**
      * <p class="changed_added_4_0">
      * </p>
@@ -152,7 +148,6 @@ public class RendererBean extends
      */
     public static class RendererExtension extends ConfigExtension {
         private TagModel tag;
-
         private Boolean rendersChildren;
 
         /**
@@ -163,7 +158,7 @@ public class RendererBean extends
          *
          * @return the tag
          */
-//        @XmlElement(name = "tag", namespace = ComponentLibrary.CDK_EXTENSIONS_NAMESPACE)
+        // @XmlElement(name = "tag", namespace = ComponentLibrary.CDK_EXTENSIONS_NAMESPACE)
         public TagModel getTag() {
             return this.tag;
         }

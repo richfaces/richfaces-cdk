@@ -32,14 +32,11 @@ import org.richfaces.util.Util;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
-public class DynamicResourceHandler extends AbstractResourceHandler  {
-
+public class DynamicResourceHandler extends AbstractResourceHandler {
     private static final class ResourceRequestDataImpl implements ResourceRequestData {
-        
         private ResourceKey resourceKey;
-        
         private Object resourceData;
 
         public ResourceRequestDataImpl(ResourceKey resourceKey, Object resourceData) {
@@ -47,17 +44,17 @@ public class DynamicResourceHandler extends AbstractResourceHandler  {
             this.resourceKey = resourceKey;
             this.resourceData = resourceData;
         }
-        
+
         @Override
         public String getResourceName() {
             return resourceKey.getResourceName();
         }
-        
+
         @Override
         public String getLibraryName() {
             return resourceKey.getLibraryName();
         }
-        
+
         @Override
         public Object getData() {
             return resourceData;
@@ -67,27 +64,26 @@ public class DynamicResourceHandler extends AbstractResourceHandler  {
         public String getResourceKey() {
             return resourceKey.toString();
         }
-        
+
         @Override
         public String getVersion() {
             return null;
         }
     }
-    
+
     private ResourceFactory resourceFactory;
-    
     private ResourceHandler staticResourceHandler;
-    
+
     public DynamicResourceHandler(ResourceHandler staticResourceHandler, ResourceFactory resourceFactory) {
         this.staticResourceHandler = staticResourceHandler;
         this.resourceFactory = resourceFactory;
     }
-    
+
     @Override
     public Resource createResource(String resourceName, String libraryName, String contentType) {
         ResourceKey resourceKey = new ResourceKey(resourceName, libraryName);
         Resource result = resourceFactory.createResource(resourceName, libraryName, contentType);
-        
+
         if (result != null) {
             FacesContext context = FacesContext.getCurrentInstance();
             Object state = Util.saveResourceState(context, result);
@@ -96,8 +92,7 @@ public class DynamicResourceHandler extends AbstractResourceHandler  {
         } else {
             result = staticResourceHandler.createResource(resourceName, libraryName, contentType);
         }
-        
+
         return result;
     }
-
 }

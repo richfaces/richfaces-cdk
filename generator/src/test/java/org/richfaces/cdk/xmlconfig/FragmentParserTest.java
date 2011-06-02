@@ -20,10 +20,10 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 import java.util.List;
@@ -49,28 +49,23 @@ import com.google.inject.Inject;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 @RunWith(CdkTestRunner.class)
 public class FragmentParserTest extends CdkTestBase {
-
     @Inject
     @As(JAXBBinding.class)
     JAXB binder;
-
     @Inject
     FragmentParser parser;
-
     @Inject
     @As(CdkEntityResolver.class)
     EntityResolver2 resolver;
-
     @Mock
     @Source(Sources.FACES_CONFIGS)
     private FileManager configSource;
-
     @Mock
     @Source(Sources.RENDERER_TEMPLATES)
     private FileManager templatesSource;
@@ -84,8 +79,7 @@ public class FragmentParserTest extends CdkTestBase {
     @Test
     public void nestedXincludeTest() throws Exception {
 
-        Collection<PropertyBase> properties =
-            parser.parseProperties("urn:resource:org/richfaces/cdk/xmlconfig/parent2.xml");
+        Collection<PropertyBase> properties = parser.parseProperties("urn:resource:org/richfaces/cdk/xmlconfig/parent2.xml");
 
         assertEquals(2, properties.size());
     }
@@ -93,8 +87,7 @@ public class FragmentParserTest extends CdkTestBase {
     @Test
     public void parserTest() throws Exception {
 
-        Collection<PropertyBase> properties =
-            parser.parseProperties("urn:resource:org/richfaces/cdk/xmlconfig/fragment.xml");
+        Collection<PropertyBase> properties = parser.parseProperties("urn:resource:org/richfaces/cdk/xmlconfig/fragment.xml");
 
         assertEquals(3, properties.size());
     }
@@ -102,8 +95,7 @@ public class FragmentParserTest extends CdkTestBase {
     @Test
     public void propertyTest() throws Exception {
 
-        Collection<PropertyBase> properties =
-            parser.parseProperties("urn:resource:org/richfaces/cdk/xmlconfig/properties.xml");
+        Collection<PropertyBase> properties = parser.parseProperties("urn:resource:org/richfaces/cdk/xmlconfig/properties.xml");
 
         assertEquals(1, properties.size());
 
@@ -136,8 +128,7 @@ public class FragmentParserTest extends CdkTestBase {
     @Test
     public void xincludeTest() throws Exception {
 
-        Collection<PropertyBase> properties =
-            parser.parseProperties("urn:resource:org/richfaces/cdk/xmlconfig/parent.xml");
+        Collection<PropertyBase> properties = parser.parseProperties("urn:resource:org/richfaces/cdk/xmlconfig/parent.xml");
 
         assertEquals(2, properties.size());
     }

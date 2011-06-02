@@ -20,33 +20,31 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.cdk.model;
 
 import org.richfaces.cdk.util.ComparatorUtils;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
-public class RenderKitModel extends DescriptionGroupBase implements ModelElement<RenderKitModel>,FacesComponent {
+public class RenderKitModel extends DescriptionGroupBase implements ModelElement<RenderKitModel>, FacesComponent {
     private static final long serialVersionUID = -7387781530198813352L;
-
     private final ModelSet<RendererModel> renderers = ModelSet.<RendererModel>create();
     private final ModelSet<BehaviorRendererModel> behaviorRenderers = ModelSet.<BehaviorRendererModel>create();
-
     private ClassName targetClass;
-    
     private FacesId id;
-    
+
     public RenderKitModel() {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the id
      */
     public FacesId getId() {
@@ -54,7 +52,9 @@ public class RenderKitModel extends DescriptionGroupBase implements ModelElement
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param id the id to set
      */
     public void setId(FacesId id) {
@@ -62,7 +62,9 @@ public class RenderKitModel extends DescriptionGroupBase implements ModelElement
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the targetClass
      */
     @Merge
@@ -71,7 +73,9 @@ public class RenderKitModel extends DescriptionGroupBase implements ModelElement
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param targetClass the targetClass to set
      */
     public void setTargetClass(ClassName renderKitClass) {
@@ -79,7 +83,9 @@ public class RenderKitModel extends DescriptionGroupBase implements ModelElement
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the renderers
      */
     public ModelCollection<RendererModel> getRenderers() {
@@ -87,18 +93,20 @@ public class RenderKitModel extends DescriptionGroupBase implements ModelElement
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the behaviorRenderers
      */
     public ModelCollection<BehaviorRendererModel> getBehaviorRenderers() {
         return behaviorRenderers;
     }
 
-    public <R,D> R accept(Visitor<R,D> visitor, D data) {
-        R result = visitor.visitRenderKit(this,data);
+    public <R, D> R accept(Visitor<R, D> visitor, D data) {
+        R result = visitor.visitRenderKit(this, data);
 
-        result = renderers.accept(result,visitor,data);
-        result = behaviorRenderers.accept(result,visitor,data);
+        result = renderers.accept(result, visitor, data);
+        result = behaviorRenderers.accept(result, visitor, data);
         return result;
     }
 
@@ -106,14 +114,13 @@ public class RenderKitModel extends DescriptionGroupBase implements ModelElement
     public void merge(RenderKitModel other) {
         ComponentLibrary.merge(renderers, other.renderers);
         ComponentLibrary.merge(behaviorRenderers, other.behaviorRenderers);
-        
+
         ComponentLibrary.merge(this, other);
     }
 
-
     @Override
     public boolean same(RenderKitModel other) {
-        if(null != getId() && null != other.getId()){
+        if (null != getId() && null != other.getId()) {
             return getId().equals(other.getId());
         } else {
             return ComparatorUtils.nullSafeEquals(getTargetClass(), other.getTargetClass());

@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt.processors;
 
 import javax.lang.model.element.AnnotationMirror;
@@ -28,24 +27,33 @@ import javax.lang.model.element.AnnotationMirror;
 import org.richfaces.cdk.model.DescriptionGroup;
 
 /**
- * <p class="changed_added_4_0">Implementation of that interface process {@link Description} annotation and set information from it into model.</p>
+ * <p class="changed_added_4_0">
+ * Implementation of that interface process {@link Description} annotation and set information from it into model.
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public interface DescriptionProcessor {
-    
     /**
-     * <p class="changed_added_4_0">process {@link Description} annotation and set information from it into model. Optional string from the JavaDoc comment has precedence over {@link Desription#value()} attribute.</p>
+     * <p class="changed_added_4_0">
+     * process {@link Description} annotation and set information from it into model. Optional string from the JavaDoc comment
+     * has precedence over {@link Desription#value()} attribute.
+     * </p>
+     *
      * @param model
      * @param annotation
      * @param docComment JavaDoc comment associated with described element.
      */
-    public void processDescription(DescriptionGroup model, AnnotationMirror annotation, String docComment);
+    void processDescription(DescriptionGroup model, AnnotationMirror annotation, String docComment);
 
     /**
-     * <p class="changed_added_4_0">process {@link Description} annotation and set information from it into model.</p>
+     * <p class="changed_added_4_0">
+     * process {@link Description} annotation and set information from it into model.
+     * </p>
+     *
      * @param model
      * @param description
      */
-    public void processDescription(DescriptionGroup model, AnnotationMirror description);
+    void processDescription(DescriptionGroup model, AnnotationMirror description);
 }

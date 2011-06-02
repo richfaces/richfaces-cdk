@@ -21,13 +21,9 @@
  */
 package org.richfaces.cdk.templatecompiler.builder.model;
 
-
-
 /**
  * @author Nick Belaevski
  */
 public interface JavaStatement extends RequireImports {
-
-    public String getCode();
-
+    String getCode();
 }

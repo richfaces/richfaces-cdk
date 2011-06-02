@@ -33,21 +33,19 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class Element implements KeyedType {
-
     @XmlRootElement(name = "elements")
     @XmlType(name = "ElementsType")
     public static final class Type implements ContainerType<Element> {
-
         private Collection<Element> children = new HashSet<Element>();
 
         @XmlElement(name = "element")
         public Collection<Element> getChildren() {
             return children;
         }
-        
+
         @Override
         public void setChildren(Collection<Element> values) {
             this.children = values;
@@ -55,13 +53,12 @@ public class Element implements KeyedType {
     }
 
     private String name;
-    
     private Map<String, Attribute> attributes = new TreeMap<String, Attribute>();
 
     public Element() {
         super();
     }
-    
+
     public Element(String name) {
         super();
         this.name = name;
@@ -75,23 +72,23 @@ public class Element implements KeyedType {
     public String getName() {
         return name;
     }
-    
+
     /**
      * @param name the name to set
      */
     public void setName(String name) {
         this.name = name;
     }
-    
+
     @Override
     public String getKey() {
         return getName();
     }
-    
+
     public void addAttribute(Attribute attribute) {
         attributes.put(attribute.getName(), attribute);
     }
-    
+
     /**
      * @return the attributes
      */
@@ -99,7 +96,7 @@ public class Element implements KeyedType {
     public Map<String, Attribute> getAttributes() {
         return attributes;
     }
-    
+
     /**
      * @param attributes the attributes to set
      */
@@ -107,7 +104,9 @@ public class Element implements KeyedType {
         this.attributes = attributes;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -118,7 +117,9 @@ public class Element implements KeyedType {
         return result;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -142,5 +143,4 @@ public class Element implements KeyedType {
         }
         return true;
     }
-
 }

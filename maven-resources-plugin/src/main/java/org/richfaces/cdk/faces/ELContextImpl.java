@@ -31,14 +31,12 @@ import org.richfaces.skin.SkinPropertiesELResolver;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class ELContextImpl extends ELContext {
-
     private VariableMapper variableMapper = createVariableMapper();
-    
     private ELResolver elResolver = createELResolver();
-    
+
     private VariableMapper createVariableMapper() {
         return new VariableMapperImpl();
     }
@@ -52,7 +50,9 @@ public class ELContextImpl extends ELContext {
         return result;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.el.ELContext#getELResolver()
      */
     @Override
@@ -60,7 +60,9 @@ public class ELContextImpl extends ELContext {
         return elResolver;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.el.ELContext#getFunctionMapper()
      */
     @Override
@@ -73,5 +75,4 @@ public class ELContextImpl extends ELContext {
     public VariableMapper getVariableMapper() {
         return variableMapper;
     }
-
 }

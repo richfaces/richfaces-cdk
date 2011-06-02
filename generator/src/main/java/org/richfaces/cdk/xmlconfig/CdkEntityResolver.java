@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig;
 
 import java.io.File;
@@ -46,7 +45,7 @@ import com.google.inject.Inject;
  * <p class="changed_added_4_0">
  * That class resolves entities used by CDK ( standard JSF schemas, extensions, configuration fragments.)
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
  */
 public class CdkEntityResolver implements EntityResolver2 {
@@ -58,32 +57,25 @@ public class CdkEntityResolver implements EntityResolver2 {
     public static final String URN_RESOURCE = "urn:resource:";
     public static final String URN_TEMPLATES = "urn:templates:";
     public static final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
-
     private static final String RESOURCE_PREFIX = "";
     private static final String ATTRIBUTES_PREFIX = "META-INF/cdk/attributes/";
     private static final String SYSTEM_PREFIX = "/META-INF/schema";
     private static final String URN_SYSTEM = "urn:system:";
-    private static final ImmutableMap<String, String> SYSTEM_ENTITIES =
-        ImmutableMap.<String, String> builder().put("http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd",
-             "/web-facesconfig_2_0.xsd").put(
-            "http://java.sun.com/xml/ns/javaee/web-facesuicomponent_2_0.xsd",
-             "/web-facesuicomponent_2_0.xsd").put(
-            "http://java.sun.com/xml/ns/javaee/web-partialresponse_2_0.xsd",
-             "/web-partialresponse_2_0.xsd").put(
-            "http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd",  "/web-facesconfig_1_2.xsd").put(
-            "http://java.sun.com/xml/ns/javaee/javaee_5.xsd",  "/javaee_5.xsd").put(
-            "http://java.sun.com/xml/ns/javaee/javaee_web_services_1_2.xsd",
-             "/javaee_web_services_1_2.xsd").put(
-            "http://java.sun.com/xml/ns/javaee/javaee_web_services_client_1_2.xsd",
-             "/javaee_web_services_client_1_2.xsd").put("http://www.w3.org/2001/03/XMLSchema.dtd",
-             "/XMLSchema.dtd").put("http://www.w3.org/2001/03/xml.xsd",  "/xml.xsd").put(
-            "http://www.w3.org/2001/xml.xsd",  "/xml.xsd")
-            .put("http://jboss.org/schema/richfaces/cdk/cdk-template.xsd","/cdk-template.xsd")
-            .put("http://jboss.org/schema/richfaces/cdk/cdk-jstl-core.xsd","/cdk-jstl-core.xsd")
-            .put("http://jboss.org/schema/richfaces/cdk/cdk-schemas-aggregation.xsd","/cdk-schemas-aggregation.xsd")
-            .put("http://jboss.org/schema/richfaces/cdk/cdk-composite.xsd","/cdk-composite.xsd")
-            .put("http://jboss.org/schema/richfaces/cdk/xhtml-el.xsd",  "/xhtml-el.xsd").build();
-
+    private static final ImmutableMap<String, String> SYSTEM_ENTITIES = ImmutableMap.<String, String>builder()
+            .put("http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd", "/web-facesconfig_2_0.xsd")
+            .put("http://java.sun.com/xml/ns/javaee/web-facesuicomponent_2_0.xsd", "/web-facesuicomponent_2_0.xsd")
+            .put("http://java.sun.com/xml/ns/javaee/web-partialresponse_2_0.xsd", "/web-partialresponse_2_0.xsd")
+            .put("http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd", "/web-facesconfig_1_2.xsd")
+            .put("http://java.sun.com/xml/ns/javaee/javaee_5.xsd", "/javaee_5.xsd")
+            .put("http://java.sun.com/xml/ns/javaee/javaee_web_services_1_2.xsd", "/javaee_web_services_1_2.xsd")
+            .put("http://java.sun.com/xml/ns/javaee/javaee_web_services_client_1_2.xsd", "/javaee_web_services_client_1_2.xsd")
+            .put("http://www.w3.org/2001/03/XMLSchema.dtd", "/XMLSchema.dtd")
+            .put("http://www.w3.org/2001/03/xml.xsd", "/xml.xsd").put("http://www.w3.org/2001/xml.xsd", "/xml.xsd")
+            .put("http://jboss.org/schema/richfaces/cdk/cdk-template.xsd", "/cdk-template.xsd")
+            .put("http://jboss.org/schema/richfaces/cdk/cdk-jstl-core.xsd", "/cdk-jstl-core.xsd")
+            .put("http://jboss.org/schema/richfaces/cdk/cdk-schemas-aggregation.xsd", "/cdk-schemas-aggregation.xsd")
+            .put("http://jboss.org/schema/richfaces/cdk/cdk-composite.xsd", "/cdk-composite.xsd")
+            .put("http://jboss.org/schema/richfaces/cdk/xhtml-el.xsd", "/xhtml-el.xsd").build();
     @Inject
     private CdkClassLoader loader;
     @Inject
@@ -95,7 +87,7 @@ public class CdkEntityResolver implements EntityResolver2 {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.xml.sax.ext.EntityResolver2#getExternalSubset(java.lang.String, java.lang.String)
      */
     @Override
@@ -107,13 +99,13 @@ public class CdkEntityResolver implements EntityResolver2 {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.xml.sax.ext.EntityResolver2#resolveEntity(java.lang.String, java.lang.String, java.lang.String,
      * java.lang.String)
      */
     @Override
-    public InputSource resolveEntity(String name, String publicId, String baseURI, String systemId)
-        throws SAXException, IOException {
+    public InputSource resolveEntity(String name, String publicId, String baseURI, String systemId) throws SAXException,
+            IOException {
 
         String temSystemId = systemId;
 
@@ -136,7 +128,7 @@ public class CdkEntityResolver implements EntityResolver2 {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.xml.sax.EntityResolver#resolveEntity(java.lang.String, java.lang.String)
      */
     @Override
@@ -242,5 +234,4 @@ public class CdkEntityResolver implements EntityResolver2 {
 
         return entity;
     }
-
 }

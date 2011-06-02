@@ -18,11 +18,10 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.el;
 
-import static org.richfaces.cdk.templatecompiler.statements.HelperMethod.*;
-import static org.richfaces.cdk.util.JavaUtils.*;
+import static org.richfaces.cdk.templatecompiler.statements.HelperMethod.TO_STRING_CONVERSION;
+import static org.richfaces.cdk.util.JavaUtils.getEscapedString;
 
 import java.text.MessageFormat;
 import java.util.Collections;
@@ -96,45 +95,36 @@ import org.richfaces.cdk.templatecompiler.el.types.TypesFactory;
 import org.richfaces.cdk.templatecompiler.statements.HelperMethod;
 import org.richfaces.cdk.templatecompiler.statements.StatementsContainer;
 import org.richfaces.cdk.templatecompiler.statements.TypedTemplateStatement;
+
 /**
  * Entry point for parsing EL expressions. @see parse() method.
  *
  * @author amarkhel
  */
 public final class ELVisitor implements TypedTemplateStatement {
-
     private String parsedExpression = null;
-
     private ELType expressionType = null;
-
     private Variables variables = null;
-    
     private Set<HelperMethod> usedHelperMethods = EnumSet.noneOf(HelperMethod.class);
-
     private final Logger log;
-
     private final TypesFactory typesFactory;
-
     private boolean mixedExpression;
-    
     private boolean literal = true;
-
     private StatementsContainer parent;
-    
-    
+
     public ELVisitor(Logger log, TypesFactory typesFactory) {
         this.log = log;
         this.typesFactory = typesFactory;
     }
 
-
     public boolean isMixedExpression() {
         return mixedExpression;
     }
 
-
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the literal
      */
     @Override
@@ -142,15 +132,15 @@ public final class ELVisitor implements TypedTemplateStatement {
         return this.literal;
     }
 
-
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param literal the literal to set
      */
     public void setLiteral(boolean literal) {
         this.literal = literal;
     }
-
 
     public ELType getType() {
         return expressionType;
@@ -159,20 +149,19 @@ public final class ELVisitor implements TypedTemplateStatement {
     public void setExpressionType(ELType variableType) {
         this.expressionType = variableType;
     }
-    
+
     public ELType getVariable(String name) throws ParsingException {
         ELType variableType;
-        if(variables.isDefined(name)){
+        if (variables.isDefined(name)) {
             variableType = variables.getVariable(name);
         } else {
-            log.warn(MessageFormat.format(
-                "No type found in context for identifier ''{0}'', handling as generic Object", name));
+            log.warn(MessageFormat.format("No type found in context for identifier ''{0}'', handling as generic Object", name));
             variableType = TypesFactory.OBJECT_TYPE;
         }
 
         return variableType;
     }
-    
+
     /**
      * Parse specified EL expression and return Java code, that represent this expression
      *
@@ -188,7 +177,7 @@ public final class ELVisitor implements TypedTemplateStatement {
         variables = contextVariables;
 
         if (ret instanceof AstCompositeExpression && ret.jjtGetNumChildren() >= 2) {
-            //AstCompositeExpression with 2+ children is a mixed expression
+            // AstCompositeExpression with 2+ children is a mixed expression
             usedHelperMethods.add(TO_STRING_CONVERSION);
             this.mixedExpression = true;
             this.literal = false;
@@ -200,10 +189,9 @@ public final class ELVisitor implements TypedTemplateStatement {
             parsedExpression = getEscapedString("");
             expressionType = TypesFactory.STRING_TYPE;
         }
-        
+
         parsedExpression = coerceToType(parsedExpression, expectedType);
     }
-    
 
     public String coerceToType(String valueString, ELType expectedType) {
         if (!expectedType.isAssignableFrom(getType())) {
@@ -217,7 +205,7 @@ public final class ELVisitor implements TypedTemplateStatement {
             }
             setLiteral(false);
         }
-        
+
         return valueString;
     }
 
@@ -267,36 +255,30 @@ public final class ELVisitor implements TypedTemplateStatement {
         return usedHelperMethods;
     }
 
-
     public ELType getMatchingVisibleMethodReturnType(String methodName, ELType[] parameterTypes) throws ParsingException {
 
         return typesFactory.getMatchingVisibleMethodReturnType(getType(), methodName, parameterTypes);
     }
 
-
     public ELPropertyDescriptor getPropertyDescriptor(String propertyName) throws ParsingException {
         return typesFactory.getPropertyDescriptor(getType(), propertyName);
     }
-
 
     public void addHelperMethods(HelperMethod helper) {
         usedHelperMethods.add(helper);
     }
 
-
     /**
-     * This method determine type of parsed node and create wrapper for them, that extends AbstractTreeNode. If node
-     * type is not recognized - throws ParsingException.
-     * 
-     * @param child
-     *            - parsed node
-     * @throws ParsingException
-     *             - if node type is not recognized.
+     * This method determine type of parsed node and create wrapper for them, that extends AbstractTreeNode. If node type is not
+     * recognized - throws ParsingException.
+     *
+     * @param child - parsed node
+     * @throws ParsingException - if node type is not recognized.
      * @return wrapper for parsed node(if node type is recognized), that implement ITreeNode interface.
      */
-    public  ITreeNode determineNodeType(Node child) throws ParsingException {
+    public ITreeNode determineNodeType(Node child) throws ParsingException {
         ITreeNode treeNode = null;
-    
+
         if (child instanceof AstIdentifier) {
             treeNode = new AstIdentifierTreeNode(child);
         } else if (child instanceof AstValue) {
@@ -361,16 +343,14 @@ public final class ELVisitor implements TypedTemplateStatement {
             treeNode = new AstPropertySuffixTreeNode(child);
         } else {
             throw new ParsingException("Node " + child.getClass().getSimpleName() + "[" + child.getImage()
-                + "] is not recognized;");
+                    + "] is not recognized;");
         }
-    
+
         return treeNode;
     }
-
 
     @Override
     public void setParent(StatementsContainer parent) {
         this.parent = parent;
     }
-
 }

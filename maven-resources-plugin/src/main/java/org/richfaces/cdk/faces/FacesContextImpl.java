@@ -37,34 +37,32 @@ import javax.faces.render.RenderKit;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class FacesContextImpl extends FacesContext {
-
     private Map<Object, Object> attributes = new HashMap<Object, Object>();
-    
-    private ELContext elContext = createELContext(); 
-
+    private ELContext elContext = createELContext();
     private ExternalContextImpl externalContext = new ExternalContextImpl();
-    
     private ApplicationImpl application = new ApplicationImpl();
-    
+
     public FacesContextImpl() {
         setCurrentInstance(this);
     }
-    
+
     private ELContext createELContext() {
-        ELContext result =  new ELContextImpl();
+        ELContext result = new ELContextImpl();
         result.putContext(FacesContext.class, this);
         return result;
     }
-    
+
     @Override
     public Application getApplication() {
         return application;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.FacesContext#getClientIdsWithMessages()
      */
     @Override
@@ -73,7 +71,9 @@ public class FacesContextImpl extends FacesContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.FacesContext#getExternalContext()
      */
     @Override
@@ -82,7 +82,9 @@ public class FacesContextImpl extends FacesContext {
         return externalContext;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.FacesContext#getMaximumSeverity()
      */
     @Override
@@ -91,7 +93,9 @@ public class FacesContextImpl extends FacesContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.FacesContext#getMessages()
      */
     @Override
@@ -100,7 +104,9 @@ public class FacesContextImpl extends FacesContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.FacesContext#getMessages(java.lang.String)
      */
     @Override
@@ -109,7 +115,9 @@ public class FacesContextImpl extends FacesContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.FacesContext#getRenderKit()
      */
     @Override
@@ -118,7 +126,9 @@ public class FacesContextImpl extends FacesContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.FacesContext#getRenderResponse()
      */
     @Override
@@ -127,7 +137,9 @@ public class FacesContextImpl extends FacesContext {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.FacesContext#getResponseComplete()
      */
     @Override
@@ -136,7 +148,9 @@ public class FacesContextImpl extends FacesContext {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.FacesContext#getResponseStream()
      */
     @Override
@@ -145,16 +159,20 @@ public class FacesContextImpl extends FacesContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.FacesContext#setResponseStream(javax.faces.context.ResponseStream)
      */
     @Override
     public void setResponseStream(ResponseStream responseStream) {
         // TODO Auto-generated method stub
-        
+
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.FacesContext#getResponseWriter()
      */
     @Override
@@ -163,16 +181,20 @@ public class FacesContextImpl extends FacesContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.FacesContext#setResponseWriter(javax.faces.context.ResponseWriter)
      */
     @Override
     public void setResponseWriter(ResponseWriter responseWriter) {
         // TODO Auto-generated method stub
-        
+
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.FacesContext#getViewRoot()
      */
     @Override
@@ -181,53 +203,65 @@ public class FacesContextImpl extends FacesContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.FacesContext#setViewRoot(javax.faces.component.UIViewRoot)
      */
     @Override
     public void setViewRoot(UIViewRoot root) {
         // TODO Auto-generated method stub
-        
+
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.FacesContext#addMessage(java.lang.String, javax.faces.application.FacesMessage)
      */
     @Override
     public void addMessage(String clientId, FacesMessage message) {
         // TODO Auto-generated method stub
-        
+
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.FacesContext#release()
      */
     @Override
     public void release() {
         setCurrentInstance(null);
         // TODO Auto-generated method stub
-        
+
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.FacesContext#renderResponse()
      */
     @Override
     public void renderResponse() {
         // TODO Auto-generated method stub
-        
+
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.FacesContext#responseComplete()
      */
     @Override
     public void responseComplete() {
         // TODO Auto-generated method stub
-        
+
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.FacesContext#getAttributes()
      */
     @Override

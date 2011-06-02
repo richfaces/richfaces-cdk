@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import org.richfaces.cdk.model.ConverterModel;
@@ -27,8 +26,7 @@ import org.richfaces.cdk.model.ConverterModel;
  * @author akolonitsky
  * @since Jan 10, 2010
  */
-public class ConverterAdapter extends ElementAdapterBase<ConverterBean, ConverterModel>{
-
+public class ConverterAdapter extends ElementAdapterBase<ConverterBean, ConverterModel> {
     @Override
     protected Class<? extends ConverterBean> getBeanClass(ConverterModel model) {
         return ConverterBean.class;
