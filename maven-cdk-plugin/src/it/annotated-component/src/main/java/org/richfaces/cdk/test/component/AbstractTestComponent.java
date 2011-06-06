@@ -35,9 +35,11 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.event.ValueChangeListener;
 
+import org.richfaces.cdk.annotations.Alias;
 import org.richfaces.cdk.annotations.Attribute;
 import org.richfaces.cdk.annotations.Description;
 import org.richfaces.cdk.annotations.Event;
+import org.richfaces.cdk.annotations.EventName;
 import org.richfaces.cdk.annotations.Facet;
 import org.richfaces.cdk.annotations.JsfComponent;
 import org.richfaces.cdk.annotations.JsfRenderer;
@@ -102,8 +104,19 @@ public abstract class AbstractTestComponent extends UIComponentBase /*implements
     @Attribute
     public abstract void setBarValue(List<Object> bar);
     
-    @Attribute(signature = @Signature(parameters = String.class, returnType = Boolean.class)) 
-    public abstract MethodExpression getMethodExpressionListener(); 
+    @Attribute(
+        aliases={@Alias("getAction")},
+        defaultValue="",
+        description=@Description(),
+        events={@EventName(value="click",defaultEvent=true)},
+        hidden=false,
+        literal=false,
+        passThrough=false,
+        readOnly=true,
+        required=false,
+        suggestedValue="#{foo}",
+        signature = @Signature(parameters = String.class, returnType = Boolean.class)) 
+    public abstract MethodExpression getMethodExpression(); 
 
     @Attribute(signature = @Signature(parameters = {String.class,Integer.class}, returnType = int.class)) 
     public abstract MethodBinding getMethodBindingListener(); 
