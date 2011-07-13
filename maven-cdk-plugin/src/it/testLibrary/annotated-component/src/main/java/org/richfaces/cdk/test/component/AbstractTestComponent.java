@@ -79,7 +79,7 @@ import org.richfaces.cdk.test.model.TestModel;
             attributes="html5.xml")
     }
 )
-public abstract class AbstractTestComponent extends UIComponentBase /*implements ValueHolder */{
+public abstract class AbstractTestComponent extends TestComponentBase /*implements ValueHolder */{
     
     @Facet
     public abstract UIComponent getFooter();
