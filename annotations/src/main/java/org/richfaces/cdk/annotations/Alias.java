@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.annotations;
 
 import java.lang.annotation.Retention;
@@ -28,24 +27,22 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * <p class="changed_added_4_0">
- * Attribute aliases. CDK will generate getters/setters for these aliases which delegate calls to the original attribute
- * methods.
+ * Attribute aliases. CDK will generate getter and setter methods for these aliases which delegate calls to the original
+ * attribute methods.
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
  */
 @Retention(RetentionPolicy.CLASS)
 public @interface Alias {
-
-    public static final String NAME = "org.richfaces.cdk.annotations.Alias";
+    String NAME = "org.richfaces.cdk.annotations.Alias";
 
     /**
      * <p class="changed_added_4_0">
      * Attribute alias. This is mandatory parameter
      * </p>
-     * 
+     *
      * @return attribute aliases.
      */
-    public String value();
-
+    String value();
 }

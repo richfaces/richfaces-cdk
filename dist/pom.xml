@@ -1,51 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-        <parent>
-                <groupId>org.richfaces.cdk</groupId>
-                <artifactId>parent</artifactId>
-                <version>4.0.0.Final</version>
-                <relativePath>../parent</relativePath>
-        </parent>
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.richfaces.cdk</groupId>
-	<artifactId>dist</artifactId>
-	<version>4.0.0.Final</version>
-	<name>JSF Components Development Kit (CDK) distribution assembly</name>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.richfaces.cdk</groupId>
+        <artifactId>parent</artifactId>
+        <version>4.1.0.20110805-M1</version>
+        <relativePath>../parent</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.richfaces.cdk</groupId>
+    <artifactId>dist</artifactId>
+    <version>4.1.0.20110805-M1</version>
+    <name>JSF Components Development Kit (CDK) distribution assembly</name>
 
-	<!-- SCM and distribution management -->
-	<scm>
-		<connection>scm:svn:http://anonsvn.jboss.org/repos/richfaces/tags/4.0.0.20110319-Final/cdk/dist</connection>
-		<developerConnection>scm:svn:https://svn.jboss.org/repos/richfaces/tags/4.0.0.20110319-Final/cdk/dist</developerConnection>
-		<url>http://fisheye.jboss.org/browse/Richfaces/cdk/tags/4.0.0.20110319-Final/cdk/dist</url>
-	</scm>
-	<build>
-	    <finalName>cdk</finalName>
-		<plugins>
-			<plugin>
-				<!--
-					NOTE: We don't need a groupId specification because the group is
-					org.apache.maven.plugins ...which is assumed by default.
-				-->
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.2-beta-5</version>
-				<configuration>
-					<descriptors>
-            				   <descriptor>src/main/resources/assemblies/project.xml</descriptor>
-          				</descriptors>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id> <!-- this is used for inheritance merges -->
-						<phase>package</phase> <!-- append to the packaging phase. -->
-						<goals>
-							<goal>single</goal> <!-- goals == mojos -->
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
-
+    <!-- SCM and distribution management -->
+    <scm>
+        <connection>scm:git:git://github.com/richfaces/cdk.git</connection>
+        <developerConnection>scm:git:git@github.com:richfaces/cdk.git</developerConnection>
+        <url>https://github.com/richfaces/cdk</url>
+    </scm>
+    <build>
+        <finalName>cdk</finalName>
+        <plugins>
+            <plugin>
+                <!--
+                        NOTE: We don't need a groupId specification because the group is
+                        org.apache.maven.plugins ...which is assumed by default.
+                    -->
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2-beta-5</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/main/resources/assemblies/project.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <!-- this is used for inheritance merges -->
+                        <phase>package</phase>
+                        <!-- append to the packaging phase. -->
+                        <goals>
+                            <goal>single</goal>
+                            <!-- goals == mojos -->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

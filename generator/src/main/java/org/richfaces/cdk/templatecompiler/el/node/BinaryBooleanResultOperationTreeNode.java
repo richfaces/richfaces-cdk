@@ -32,7 +32,6 @@ import org.richfaces.cdk.templatecompiler.el.types.TypesFactory;
  * @since 4.0
  */
 public class BinaryBooleanResultOperationTreeNode extends AbstractBinaryOperationTreeNode {
-
     /**
      * @param node
      * @param operatorString
@@ -41,18 +40,19 @@ public class BinaryBooleanResultOperationTreeNode extends AbstractBinaryOperatio
         super(node, operatorString);
     }
 
-    /* (non-Javadoc)
-      * @see org.richfaces.cdk.templatecompiler.el.node.AbstractBinaryOperationTreeNode#getOperationType(java.lang.reflect.Type, java.lang.reflect.Type)
-      */
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.richfaces.cdk.templatecompiler.el.node.AbstractBinaryOperationTreeNode#getOperationType(java.lang.reflect.Type,
+     * java.lang.reflect.Type)
+     */
     @Override
-    protected ELType getOperationType(ELType firstArgumentType,
-                                    ELType secondArgumentType) {
+    protected ELType getOperationType(ELType firstArgumentType, ELType secondArgumentType) {
         return TypesFactory.BOOLEAN_TYPE;
     }
 
     @Override
-    protected String getCoercedChildOutput(int childIndex, ELVisitor visitor)
-        throws ParsingException {
+    protected String getCoercedChildOutput(int childIndex, ELVisitor visitor) throws ParsingException {
 
         return getChildOutput(childIndex, visitor);
     }

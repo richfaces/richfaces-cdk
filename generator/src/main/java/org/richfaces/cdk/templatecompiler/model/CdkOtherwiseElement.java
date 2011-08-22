@@ -31,7 +31,6 @@ import org.richfaces.cdk.CdkException;
  */
 @XmlRootElement(name = "otherwise", namespace = Template.JSTL_CORE_NAMESPACE)
 public class CdkOtherwiseElement extends ModelFragment {
-
     @Override
     public void beforeVisit(TemplateVisitor visitor) throws CdkException {
         visitor.startElement(this);

@@ -20,14 +20,20 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt.processors;
 
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.createNiceMock;
+import static org.easymock.EasyMock.eq;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.same;
+import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Collections;
-import java.util.HashSet;
 
 import javax.lang.model.element.TypeElement;
 
@@ -53,26 +59,20 @@ import com.google.inject.Inject;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 @RunWith(CdkTestRunner.class)
 public class AttributesProcessorTest extends AnnotationProcessorTestBase {
-
     private static final String FOO = "foo";
-
     private static final String FOO_XML = "foo.xml";
-
     @Mock
     private DescriptionProcessor descriptionProcessor;
-
     @Inject
     private AttributesProcessorImpl processor;
-
     @Mock
     private SourceUtils utils;
-
     @Mock
     private JAXB xmlProcessor;
 
@@ -89,8 +89,8 @@ public class AttributesProcessorTest extends AnnotationProcessorTestBase {
         expectLastCall();
         BeanProperty beanProperty = createNiceMock(BeanProperty.class);
         expect(utils.getBeanPropertiesAnnotatedWith(eq(Attribute.class), same(element))).andReturn(
-            Collections.singleton(beanProperty));
-//        expect(utils.getAbstractBeanProperties(same(element))).andReturn(new HashSet<BeanProperty>(0));
+                Collections.singleton(beanProperty));
+        // expect(utils.getAbstractBeanProperties(same(element))).andReturn(new HashSet<BeanProperty>(0));
         expect(beanProperty.getName()).andReturn(FOO);
         expect(beanProperty.getType()).andReturn(ClassName.parseName(String.class.getName()));
         mockController.replay();
@@ -108,9 +108,8 @@ public class AttributesProcessorTest extends AnnotationProcessorTestBase {
         PropertyModel propertyModel = new PropertyModel();
         propertyModel.setName(FOO);
         fragment.getProperties().add(propertyModel);
-        expect(
-            xmlProcessor.unmarshal(eq(CdkEntityResolver.URN_ATTRIBUTES + FOO_XML), (String) anyObject(),
-                eq(Fragment.class))).andReturn(fragment);
+        expect(xmlProcessor.unmarshal(eq(CdkEntityResolver.URN_ATTRIBUTES + FOO_XML), (String) anyObject(), eq(Fragment.class)))
+                .andReturn(fragment);
         mockController.replay();
         processor.processXmlFragment(bean, FOO_XML);
         mockController.verify();
@@ -121,5 +120,4 @@ public class AttributesProcessorTest extends AnnotationProcessorTestBase {
     protected Iterable<String> sources() {
         return Collections.emptySet();
     }
-
 }

@@ -19,10 +19,11 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.annotations;
 
 /**
+ * VDL type for {@link Tag} annotation.
+ *
  * @author akolonitsky
  * @since Feb 11, 2010
  */
@@ -32,12 +33,14 @@ public enum TagType {
      * Defines JSP tag.
      * </p>
      */
-    Jsp, /**
+    Jsp,
+    /**
      * <p class="changed_added_4_0">
      * Defines Facelets tag.
      * </p>
      */
-    Facelets, /**
+    Facelets,
+    /**
      * <p class="changed_added_4_0">
      * Enforces tag annotation to generate all known tag types
      * </p>

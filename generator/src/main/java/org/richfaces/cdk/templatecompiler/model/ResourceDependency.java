@@ -34,17 +34,14 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlRootElement(name = "resourceDependency", namespace = Template.CDK_NAMESPACE)
 public class ResourceDependency implements Serializable {
-
     private static final long serialVersionUID = -7513798674871079584L;
-    
     private String name;
-
-    private String library ="";
-
+    private String library = "";
     private String target = "";
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the name
      */
@@ -55,7 +52,8 @@ public class ResourceDependency implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param name the name to set
      */
@@ -64,7 +62,8 @@ public class ResourceDependency implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the libraryName
      */
@@ -75,7 +74,8 @@ public class ResourceDependency implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param library the libraryName to set
      */
@@ -84,7 +84,8 @@ public class ResourceDependency implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the target
      */
@@ -94,7 +95,8 @@ public class ResourceDependency implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param target the target to set
      */
@@ -104,7 +106,7 @@ public class ResourceDependency implements Serializable {
 
     @Override
     public String toString() {
-        return MessageFormat.format("ResourceDependency[name={0}, library={1}, target={2}]",
-            getName(), getLibrary(), getTarget());
+        return MessageFormat.format("ResourceDependency[name={0}, library={1}, target={2}]", getName(), getLibrary(),
+                getTarget());
     }
 }

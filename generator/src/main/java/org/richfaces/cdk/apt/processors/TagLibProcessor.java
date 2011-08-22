@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt.processors;
 
 import java.lang.annotation.Annotation;
@@ -35,13 +34,16 @@ import org.richfaces.cdk.model.Taglib;
 import org.richfaces.cdk.util.Strings;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class TagLibProcessor implements CdkAnnotationProcessor {
-
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.apt.processors.CdkAnnotationProcessor#getProcessedAnnotation()
      */
     @Override
@@ -49,42 +51,44 @@ public class TagLibProcessor implements CdkAnnotationProcessor {
         return TagLibrary.class;
     }
 
-    /* (non-Javadoc)
-     * @see org.richfaces.cdk.apt.processors.CdkAnnotationProcessor#process(javax.lang.model.element.Element, org.richfaces.cdk.model.ComponentLibrary)
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.richfaces.cdk.apt.processors.CdkAnnotationProcessor#process(javax.lang.model.element.Element,
+     * org.richfaces.cdk.model.ComponentLibrary)
      */
     @Override
     public void process(Element element, ComponentLibrary library) throws CdkProcessingException {
         TagLibrary tagLibrary = element.getAnnotation(TagLibrary.class);
         Taglib taglibModel = library.getTaglib();
-        if(null == taglibModel){
+        if (null == taglibModel) {
             taglibModel = new Taglib();
         }
         taglibModel.setUri(tagLibrary.uri());
         String shortName = tagLibrary.shortName();
-        if(!Strings.isEmpty(shortName)){
+        if (!Strings.isEmpty(shortName)) {
             taglibModel.setShortName(shortName);
         }
         String displayName = tagLibrary.displayName();
-        if(!Strings.isEmpty(displayName)){
+        if (!Strings.isEmpty(displayName)) {
             taglibModel.setDisplayName(displayName);
         }
         String tlibVersion = tagLibrary.tlibVersion();
-        if(!Strings.isEmpty(tlibVersion)){
+        if (!Strings.isEmpty(tlibVersion)) {
             taglibModel.setTlibVersion(tlibVersion);
         }
         // Default prefix for library
         String preffix = tagLibrary.prefix();
-        if(!Strings.isEmpty(preffix)){
+        if (!Strings.isEmpty(preffix)) {
             library.setPrefix(preffix);
         } else if (Strings.isEmpty(library.getPrefix())) {
             // record package name to use in NamingConventions
             PackageElement packageElement = (PackageElement) element;
             preffix = packageElement.getQualifiedName().toString();
-            if(!Strings.isEmpty(preffix)){
+            if (!Strings.isEmpty(preffix)) {
                 library.setPrefix(preffix);
             }
         }
         library.setTaglib(taglibModel);
     }
-
 }

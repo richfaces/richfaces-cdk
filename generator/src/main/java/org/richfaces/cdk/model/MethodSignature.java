@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.model;
 
 import java.io.Serializable;
@@ -34,7 +33,9 @@ import javax.xml.bind.annotation.XmlType;
 import com.google.common.collect.Lists;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
@@ -42,13 +43,13 @@ import com.google.common.collect.Lists;
 @XmlType(name = "signature", namespace = ComponentLibrary.CDK_EXTENSIONS_NAMESPACE)
 @XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
 public class MethodSignature implements Serializable {
-    
     private ClassName returnType = ClassName.get(Void.class);
-    
     private List<ClassName> parameters = Lists.newArrayList();
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the returnType
      */
     @XmlElement(name = "return-type", namespace = ComponentLibrary.CDK_EXTENSIONS_NAMESPACE)
@@ -57,7 +58,9 @@ public class MethodSignature implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param returnType the returnType to set
      */
     public void setReturnType(ClassName returnType) {
@@ -65,7 +68,9 @@ public class MethodSignature implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the parameters
      */
     @XmlElement(name = "param", namespace = ComponentLibrary.CDK_EXTENSIONS_NAMESPACE)
@@ -74,12 +79,12 @@ public class MethodSignature implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param parameters the parameters to set
      */
     public void setParameters(List<ClassName> parameters) {
         this.parameters = parameters;
     }
-
-
 }

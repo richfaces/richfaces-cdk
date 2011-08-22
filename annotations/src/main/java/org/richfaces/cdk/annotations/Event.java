@@ -20,17 +20,17 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.annotations;
 
-import javax.faces.component.UIComponent;
-import javax.faces.event.FacesEvent;
-import javax.faces.event.FacesListener;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import javax.faces.component.UIComponent;
+import javax.faces.event.FacesEvent;
+import javax.faces.event.FacesListener;
 
 /**
  * <p class="changed_added_4_0">
@@ -38,60 +38,65 @@ import java.lang.annotation.Target;
  * <ul>
  * <li>Event listener interface</li>
  * <li>Event source interface</li>
- * <li>Event tag handler and binding wrapper.</li>
+ * <li>Listener tag handler and wrapper to bind listener to the EL-expression.</li>
  * </ul>
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
  */
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.TYPE)
 @Inherited
 public @interface Event {
-
-    public static final String NAME = "org.richfaces.cdk.annotations.Event";
+    String NAME = "org.richfaces.cdk.annotations.Event";
 
     /**
-     * <p class="changed_added_4_0">Used in the {@link JsfComponent} only, to define event type.</p>
+     * <p class="changed_added_4_0">
+     * Used in the {@link JsfComponent} only, to define event type.
+     * </p>
+     *
      * @return
      */
-    public Class<? extends FacesEvent> value() default DEFAULT.class;
+    Class<? extends FacesEvent> value() default DEFAULT.class;
+
     /**
      * <p class="changed_added_4_0">
      * The listener interface class that process annotated event.
      * </p>
-     * 
+     *
      * @return name of listener interface
      */
-    public Class<? extends FacesListener> listener() default DEFAULT_LISTENER.class;
+    Class<? extends FacesListener> listener() default DEFAULT_LISTENER.class;
 
     /**
-     * <p class="changed_added_4_0">Name for the listener interface method that process annotated event type.</p>
+     * <p class="changed_added_4_0">
+     * Name for the listener interface method that process annotated event type.
+     * </p>
+     *
      * @return
      */
-    public String listenerMethod() default "";
+    String listenerMethod() default "";
 
     /**
      * <p class="changed_added_4_0">
      * Name of the interface class that fires annotated events and accepts its listeners.
      * </p>
-     * 
+     *
      * @return name of generated source interface..
      */
-    public String source() default "";
+    String source() default "";
 
     /**
      * <p class="changed_added_4_0">
      * View Description Language, JSP or Facelets, tags for event listeners, eg &lt;foo:barListener&gt;.
      * </p>
-     * 
+     *
      * @return
      */
-    public Tag[] tag() default {};
+    Tag[] tag() default {};
 
     @SuppressWarnings("serial")
     static final class DEFAULT extends FacesEvent {
-
         public DEFAULT(UIComponent component) {
             super(component);
         }
@@ -104,9 +109,8 @@ public @interface Event {
         @Override
         public void processListener(FacesListener listener) {
         }
-        }
-    
+    }
+
     static final class DEFAULT_LISTENER implements FacesListener {
-        
     }
 }

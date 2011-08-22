@@ -19,10 +19,13 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.generate.java;
 
-import static org.easymock.EasyMock.*;
+import static org.easymock.EasyMock.anyInt;
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
 
 import java.io.StringWriter;
 import java.util.Set;
@@ -45,7 +48,6 @@ import com.google.inject.Inject;
  */
 @RunWith(CdkTestRunner.class)
 public class ValidatorClassGeneratorTest extends AbstractClassGeneratorTest {
-
     @Inject
     private ValidatorClassGenerator generator;
 
@@ -72,7 +74,7 @@ public class ValidatorClassGeneratorTest extends AbstractClassGeneratorTest {
         ComponentLibrary library = new ComponentLibrary();
         library.getValidators().add(validator);
 
-        generator.generate(library,validator);
+        generator.generate(library, validator);
         log.debug(outputWriter.toString());
 
         verify(output);
@@ -80,5 +82,4 @@ public class ValidatorClassGeneratorTest extends AbstractClassGeneratorTest {
 
         // compare(outputWriter, "GeneratedValidator.java");
     }
-
 }

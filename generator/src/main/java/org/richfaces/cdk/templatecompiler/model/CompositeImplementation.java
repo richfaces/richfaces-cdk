@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.model;
 
 import java.io.Serializable;
@@ -30,20 +29,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.richfaces.cdk.CdkException;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 @XmlRootElement(name = "implementation", namespace = Template.COMPOSITE_NAMESPACE)
 public class CompositeImplementation extends ModelFragment implements Serializable {
-
     private static final long serialVersionUID = -3046226976516170979L;
 
     @Override
     public void beforeVisit(TemplateVisitor visitor) throws CdkException {
         visitor.preProcess(this);
     }
-    
+
     @Override
     public void afterVisit(TemplateVisitor visitor) throws CdkException {
         visitor.postProcess(this);

@@ -18,9 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package net.sf.alchim.mojo.yuicompressor;
 
 import java.io.File;
@@ -28,14 +25,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-
 import java.util.zip.GZIPOutputStream;
 
 import org.apache.maven.plugin.MojoExecutionException;
-
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
-
 import com.yahoo.platform.yui.compressor.CssCompressor;
 import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
 
@@ -51,7 +45,6 @@ import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
 
 //@SuppressWarnings("unchecked")
 public class YuiCompressorMojo extends MojoSupport {
-
     /**
      * a list of aggregation/concatenation to do after processing,
      * for example to create big js files that contain several small js files.
@@ -60,14 +53,12 @@ public class YuiCompressorMojo extends MojoSupport {
      * @parameter
      */
     private Aggregation[] aggregations;
-
     /**
      * Read the input file using "encoding".
      *
      * @parameter expression="${file.encoding}" default-value="UTF-8"
      */
     private String encoding;
-
     /**
      * force the compression of every files,
      * else if compressed file already exists and is younger than source file, nothing is done.
@@ -75,7 +66,6 @@ public class YuiCompressorMojo extends MojoSupport {
      * @parameter expression="${maven.yuicompressor.force}" default-value="false"
      */
     private boolean force;
-
     /**
      * request to create a gzipped version of the yuicompressed/aggregation files.
      *
@@ -83,21 +73,18 @@ public class YuiCompressorMojo extends MojoSupport {
      */
     private boolean gzip;
     private long inSizeTotal_;
-
     /**
      * Insert line breaks in output after the specified column number.
      *
      * @parameter expression="${maven.yuicompressor.linebreakpos}" default-value="0"
      */
     private int linebreakpos;
-
     /**
      * [js only] Minify only, do not obfuscate.
      *
      * @parameter expression="${maven.yuicompressor.nomunge}" default-value="false"
      */
     private boolean nomunge;
-
     /**
      * If no "suffix" must be add to output filename (maven's configuration manage empty suffix like default).
      *
@@ -105,28 +92,24 @@ public class YuiCompressorMojo extends MojoSupport {
      */
     private boolean nosuffix;
     private long outSizeTotal_;
-
     /**
      * [js only] Preserve unnecessary semicolons.
      *
      * @parameter expression="${maven.yuicompressor.preserveAllSemiColons}" default-value="false"
      */
     private boolean preserveAllSemiColons;
-
     /**
      * [js only] Preserve string (no optimization).
      *
      * @parameter expression="${maven.yuicompressor.preserveStringLiterals}" default-value="false"
      */
     private boolean preserveStringLiterals;
-
     /**
      * show statistics (compression ratio).
      *
      * @parameter expression="${maven.yuicompressor.statistics}" default-value="true"
      */
     private boolean statistics;
-
     /**
      * The output filename suffix.
      *
@@ -136,7 +119,7 @@ public class YuiCompressorMojo extends MojoSupport {
 
     @Override
     protected String[] getDefaultIncludes() throws Exception {
-        return new String[] {"**/*.css", "**/*.js"};
+        return new String[] { "**/*.css", "**/*.js" };
     }
 
     @Override
@@ -150,7 +133,7 @@ public class YuiCompressorMojo extends MojoSupport {
     protected void afterProcess() throws Exception {
         if (statistics && (inSizeTotal_ > 0)) {
             getLog().info(String.format("total input (%db) -> output (%db)[%d%%]", inSizeTotal_, outSizeTotal_,
-                                        ((outSizeTotal_ * 100) / inSizeTotal_)));
+                    ((outSizeTotal_ * 100) / inSizeTotal_)));
         }
 
         if (aggregations != null) {
@@ -163,11 +146,11 @@ public class YuiCompressorMojo extends MojoSupport {
                 if (statistics) {
                     if (gzipped != null) {
                         getLog().info(String.format("%s (%db) -> %s (%db)[%d%%]", aggregation.output.getName(),
-                                                    aggregation.output.length(), gzipped.getName(), gzipped.length(),
-                                                    ratioOfSize(aggregation.output, gzipped)));
+                                aggregation.output.length(), gzipped.getName(), gzipped.length(),
+                                ratioOfSize(aggregation.output, gzipped)));
                     } else if (aggregation.output.exists()) {
                         getLog().info(String.format("%s (%db)", aggregation.output.getName(),
-                                                    aggregation.output.length()));
+                                aggregation.output.length()));
                     } else {
                         getLog().warn(String.format("%s not created", aggregation.output.getName()));
                     }
@@ -190,7 +173,7 @@ public class YuiCompressorMojo extends MojoSupport {
         if (!force && outFile.exists() && (outFile.lastModified() > inFile.lastModified())) {
             if (getLog().isInfoEnabled()) {
                 getLog().info("nothing to do, " + outFile
-                              + " is younger than original, use 'force' option or clean your target");
+                        + " is younger than original, use 'force' option or clean your target");
             }
 
             return;
@@ -242,11 +225,11 @@ public class YuiCompressorMojo extends MojoSupport {
             inSizeTotal_ += inFile.length();
             outSizeTotal_ += outFile.length();
             getLog().info(String.format("%s (%db) -> %s (%db)[%d%%]", inFile.getName(), inFile.length(),
-                                        outFile.getName(), outFile.length(), ratioOfSize(inFile, outFile)));
+                    outFile.getName(), outFile.length(), ratioOfSize(inFile, outFile)));
 
             if (gzipped != null) {
                 getLog().info(String.format("%s (%db) -> %s (%db)[%d%%]", inFile.getName(), inFile.length(),
-                                            gzipped.getName(), gzipped.length(), ratioOfSize(inFile, gzipped)));
+                        gzipped.getName(), gzipped.length(), ratioOfSize(inFile, gzipped)));
             }
         }
     }

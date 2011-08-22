@@ -19,14 +19,25 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.generate.taglib;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.richfaces.cdk.annotations.TagType;
-import org.richfaces.cdk.model.*;
+import org.richfaces.cdk.model.BeanModelBase;
+import org.richfaces.cdk.model.BehaviorModel;
+import org.richfaces.cdk.model.ComponentLibrary;
+import org.richfaces.cdk.model.ComponentModel;
+import org.richfaces.cdk.model.ConverterModel;
+import org.richfaces.cdk.model.DescriptionGroup;
+import org.richfaces.cdk.model.EventModel;
+import org.richfaces.cdk.model.FacesId;
+import org.richfaces.cdk.model.FunctionModel;
+import org.richfaces.cdk.model.PropertyBase;
+import org.richfaces.cdk.model.SimpleVisitor;
+import org.richfaces.cdk.model.TagModel;
+import org.richfaces.cdk.model.ValidatorModel;
 import org.richfaces.cdk.util.Strings;
 
 /**
@@ -38,21 +49,18 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
     private static final String COMPONENT_TYPE = "component-type";
     private static final String RENDERER_TYPE = "renderer-type";
     private static final String HANDLER_CLASS = "handler-class";
-
     /**
      * <p class="changed_added_4_0">
      * Generated document. IDEA - set document as visitor patameter, to reuse this object instance.
      * </p>
      */
     private Document document = DocumentHelper.createDocument();
-
     /**
      * <p class="changed_added_4_0">
      * faces-config element in document.
      * </p>
      */
     private Element faceletTaglib;
-
     private boolean empty = true;
 
     public TaglibGeneratorVisitor() {
@@ -61,7 +69,7 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the empty
      */
     public boolean isEmpty() {
@@ -82,7 +90,7 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
         faceletTaglib = document.addElement("facelet-taglib", "http://java.sun.com/xml/ns/javaee");
         faceletTaglib.addAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
         faceletTaglib.addAttribute("xsi:schemaLocation",
-            "http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd");
+                "http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd");
 
         faceletTaglib.addAttribute("version", "2.0");
         faceletTaglib.addAttribute("id", model.getTaglib().getShortName());
@@ -116,11 +124,9 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param parent
-     *            DOM element for which &lt;handler-class&gt; element should be appended.
-     * @param tag
-     *            model.
+     *
+     * @param parent DOM element for which &lt;handler-class&gt; element should be appended.
+     * @param tag model.
      * @return true is explicit handler class definition was generated.
      */
     private boolean addTagHandler(Element parent, TagModel tag) {
@@ -149,7 +155,7 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
 
     /**
      * This method generates validator tag.
-     * 
+     *
      * <pre>
      *     &lt;tag&gt;
      *        &lt;tag-name>formatValidator&lt;/tag-name&gt;
@@ -157,14 +163,14 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
      *            &lt;validator-id&gt;&lt;/validator-id&gt;
      *            &lt;handler-class&gt;&lt;/handler-class&gt;
      *        &lt;/validator&gt;
-     * 
+     *
      *        &lt;attribute&gt;
      *            ...
      *        &lt;/attribute&gt;
      * &lt;/tag&gt;
-     * 
+     *
      * <pre>
-     * 
+     *
      * */
     public Boolean visitValidator(ValidatorModel model, ComponentLibrary componentLibrary) {
         for (TagModel tagModel : model.getTags()) {
@@ -191,11 +197,11 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
     /**
      * <attribute> <description></description> <name>formatPatterns</name> <required>true</required> <type>String</type>
      * </attribute>
-     * 
+     *
      * @param tag
      * @param name
      * @param attribute
-     * 
+     *
      * @return
      * */
     private Element createAttributeElement(Element tag, String name, PropertyBase attribute) {
@@ -263,7 +269,7 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
     }
 
     private boolean isFaceletsTag(TagType type) {
-        
+
         return TagType.Facelets.equals(type) || TagType.All.equals(type);
     }
 
@@ -275,7 +281,7 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
      * <p class="changed_added_4_0">
      * Add common description elements.
      * </p>
-     * 
+     *
      * @param parent
      * @param model
      */
@@ -294,8 +300,6 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
             if (!Strings.isEmpty(model.getIcon().getLargeIcon())) {
                 iconElement.addElement("large-icon").addText(model.getIcon().getLargeIcon());
             }
-
         }
     }
-
 }

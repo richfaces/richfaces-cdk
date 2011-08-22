@@ -20,26 +20,26 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.model;
 
 import java.util.TreeMap;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class ModelMap<K, E extends ModelElement<? super E>> extends TreeMap<K, E> {
-    
-
     public static <I, T extends ModelElement<? super T>> ModelMap<I, T> create() {
         return new ModelMap<I, T>();
     }
-    
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param key
      * @param value
      * @return
@@ -54,8 +54,4 @@ public class ModelMap<K, E extends ModelElement<? super E>> extends TreeMap<K, E
         }
         return oldValue;
     }
-
-
-
-
 }

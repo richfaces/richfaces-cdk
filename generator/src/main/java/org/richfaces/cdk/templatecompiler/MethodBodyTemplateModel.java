@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler;
 
 import org.richfaces.cdk.templatecompiler.builder.model.JavaStatement;
@@ -30,19 +29,19 @@ import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 public class MethodBodyTemplateModel extends StringModel implements TemplateModel {
-
     private static final String CODE_ATTRIBUTE_NAME = "code";
-    
     private final JavaStatement statement;
     private final JavaClassModelWrapper modelWrapper;
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param statement
      * @param javaClassModelWrapper

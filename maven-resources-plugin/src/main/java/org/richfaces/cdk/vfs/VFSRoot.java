@@ -28,14 +28,12 @@ import java.net.URL;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public interface VFSRoot extends Closeable, VirtualFile {
+    void initialize() throws IOException;
 
-    public void initialize() throws IOException;
-    
-    public VFSType getType();
+    VFSType getType();
 
-    public URL toURL() throws MalformedURLException;
-    
+    URL toURL() throws MalformedURLException;
 }

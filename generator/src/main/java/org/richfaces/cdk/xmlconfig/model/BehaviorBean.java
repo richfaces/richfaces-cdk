@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import java.util.Collection;
@@ -34,18 +33,15 @@ import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.FacesId;
 import org.richfaces.cdk.model.PropertyModel;
 
-
 /**
  * @author akolonitsky
  * @since Jan 21, 2010
  */
-@XmlType(name = "faces-config-behaviorType", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE,
-    propOrder = {"id", "targetClass", "facesAttributes", "properties", "extension"})
+@XmlType(name = "faces-config-behaviorType", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE, propOrder = { "id",
+        "targetClass", "facesAttributes", "properties", "extension" })
 @XmlJavaTypeAdapter(BehaviorAdapter.class)
 public class BehaviorBean extends ElementBeanBase<BehaviorBean.BehaviorExtension> {
-
     private ClassName targetClass;
-
     private FacesId id;
 
     @XmlElement(name = "behavior-id", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE)
@@ -92,6 +88,5 @@ public class BehaviorBean extends ElementBeanBase<BehaviorBean.BehaviorExtension
     }
 
     public static class BehaviorExtension extends TagExtensionBase {
-
     }
 }

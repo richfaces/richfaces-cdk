@@ -18,51 +18,49 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk;
 
 import com.google.inject.ImplementedBy;
 
 /**
- * That interface hides current logging system from generator classes.
- * Concrete tools ( Maven, Ant, JUnit ) should provide appropriate logger instance that delegates
- * messages to the current log system.
+ * That interface hides current logging system from generator classes. Concrete tools ( Maven, Ant, JUnit ) should provide
+ * appropriate logger instance that delegates messages to the current log system.
  *
  * @author shura
  */
 @ImplementedBy(JavaLogger.class)
 public interface Logger {
-    public boolean isDebugEnabled();
+    boolean isDebugEnabled();
 
-    public void debug(CharSequence content);
+    void debug(CharSequence content);
 
-    public void debug(CharSequence content, Throwable error);
+    void debug(CharSequence content, Throwable error);
 
-    public void debug(Throwable error);
+    void debug(Throwable error);
 
-    public boolean isInfoEnabled();
+    boolean isInfoEnabled();
 
-    public void info(CharSequence content);
+    void info(CharSequence content);
 
-    public void info(CharSequence content, Throwable error);
+    void info(CharSequence content, Throwable error);
 
-    public void info(Throwable error);
+    void info(Throwable error);
 
-    public boolean isWarnEnabled();
+    boolean isWarnEnabled();
 
-    public void warn(CharSequence content);
+    void warn(CharSequence content);
 
-    public void warn(CharSequence content, Throwable error);
+    void warn(CharSequence content, Throwable error);
 
-    public void warn(Throwable error);
+    void warn(Throwable error);
 
-    public boolean isErrorEnabled();
+    boolean isErrorEnabled();
 
-    public void error(CharSequence content);
+    void error(CharSequence content);
 
-    public void error(CharSequence content, Throwable error);
+    void error(CharSequence content, Throwable error);
 
-    public void error(Throwable error);
-    
-    public int getErrorCount();
+    void error(Throwable error);
+
+    int getErrorCount();
 }

@@ -35,20 +35,18 @@ import org.richfaces.cdk.vfs.VirtualFile;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class VFSResource extends Resource {
-
     private VirtualFile file;
-    
     private String relativePath;
-    
+
     public VFSResource(VirtualFile file, String relativePath) {
         super();
-        
+
         assert file.isFile();
         assert relativePath != null;
-        
+
         this.file = file;
         this.relativePath = relativePath;
     }
@@ -56,7 +54,7 @@ public class VFSResource extends Resource {
     private FileNameMapper getFileNameMapper() {
         return ServiceTracker.getService(FileNameMapper.class);
     }
-    
+
     @Override
     public InputStream getInputStream() throws IOException {
         return file.getInputStream();
@@ -81,5 +79,4 @@ public class VFSResource extends Resource {
     public boolean userAgentNeedsUpdate(FacesContext context) {
         throw new UnsupportedOperationException();
     }
-
 }

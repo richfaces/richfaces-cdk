@@ -38,18 +38,16 @@ import com.google.common.collect.ImmutableMap;
  * @author Nick Belaevski
  */
 public final class JavaUtils {
-
-    public static final ImmutableMap<Class<?>, Class<?>> BOXING_CLASSES =
-        ImmutableMap.<Class<?>, Class<?>>builder().put(Boolean.TYPE, Boolean.class).put(Character.TYPE,
-            Character.class).put(Byte.TYPE, Byte.class).put(Short.TYPE, Short.class).put(Integer.TYPE, Integer.class)
-            .put(Long.TYPE, Long.class).put(Float.TYPE, Float.class).put(Double.TYPE, Double.class).build();
-
+    public static final ImmutableMap<Class<?>, Class<?>> BOXING_CLASSES = ImmutableMap.<Class<?>, Class<?>>builder()
+            .put(Boolean.TYPE, Boolean.class).put(Character.TYPE, Character.class).put(Byte.TYPE, Byte.class)
+            .put(Short.TYPE, Short.class).put(Integer.TYPE, Integer.class).put(Long.TYPE, Long.class)
+            .put(Float.TYPE, Float.class).put(Double.TYPE, Double.class).build();
     public static final Function<Class<?>, String> CLASS_TO_CLASS_NAME = new Function<Class<?>, String>() {
         public String apply(java.lang.Class<?> from) {
             return from.getName();
         }
     };
-    
+
     private JavaUtils() {
         // private constructor
     }
@@ -197,10 +195,8 @@ public final class JavaUtils {
 
     public static void copyProperties(Object source, Object destination) throws CdkException {
         try {
-            PropertyDescriptor[] targetProperties =
-                Introspector.getBeanInfo(destination.getClass()).getPropertyDescriptors();
-            PropertyDescriptor[] sourceProperties =
-                Introspector.getBeanInfo(source.getClass()).getPropertyDescriptors();
+            PropertyDescriptor[] targetProperties = Introspector.getBeanInfo(destination.getClass()).getPropertyDescriptors();
+            PropertyDescriptor[] sourceProperties = Introspector.getBeanInfo(source.getClass()).getPropertyDescriptors();
 
             for (PropertyDescriptor targetProperty : targetProperties) {
                 String name = targetProperty.getName();
@@ -210,7 +206,8 @@ public final class JavaUtils {
                         try {
                             writeProperty(source, destination, targetProperty, sourceProperty);
                         } catch (Exception e) {
-                            throw new CdkException("Error on copying property " + name + " from object " + source.getClass() + " to " + destination.getClass(), e);
+                            throw new CdkException("Error on copying property " + name + " from object " + source.getClass()
+                                    + " to " + destination.getClass(), e);
                         }
                     }
                 }
@@ -221,7 +218,7 @@ public final class JavaUtils {
     }
 
     public static void writeProperty(Object source, Object destination, PropertyDescriptor targetProperty,
-                                     PropertyDescriptor sourceProperty) throws IllegalAccessException, InvocationTargetException {
+            PropertyDescriptor sourceProperty) throws IllegalAccessException, InvocationTargetException {
         Method readMethod = sourceProperty.getReadMethod();
         if (readMethod == null) {
             return;

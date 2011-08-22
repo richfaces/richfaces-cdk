@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt.processors;
 
 import javax.lang.model.element.TypeElement;
@@ -30,33 +29,30 @@ import org.richfaces.cdk.model.BeanModelBase;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public interface AttributesProcessor {
-
     /**
      * <p class="changed_added_4_0">
      * Process attributes defined by the faces-config fragment.
      * </p>
-     * 
-     * @param attributesConfig
-     *            relative URL to the fragment file.
+     *
+     * @param attributesConfig relative URL to the fragment file.
      * @return properties defined by that fragment.
      */
-    public void processXmlFragment(BeanModelBase component, String ...attributesConfig);
+    void processXmlFragment(BeanModelBase component, String... attributesConfig);
 
     /**
      * <p class="changed_added_4_0">
-     * Process all bean properties associated with type element. Recursively visit all supertypes and interfaces. For
-     * each type, tries to read xml fragment with same name as class or interface with ".xml" suffix, then collect all
-     * bean properties marked by the {@link Attribute} annotation
+     * Process all bean properties associated with type element. Recursively visit all supertypes and interfaces. For each type,
+     * tries to read xml fragment with same name as class or interface with ".xml" suffix, then collect all bean properties
+     * marked by the {@link Attribute} annotation
      * </p>
-     * 
+     *
      * @param element
      * @return
      */
-    public void processType(BeanModelBase component, TypeElement element);
-    
+    void processType(BeanModelBase component, TypeElement element);
 }

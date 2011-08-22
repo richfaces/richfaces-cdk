@@ -26,12 +26,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class ImportAttributes {
-
     private String source;
-    
+
     /**
      * @return the source
      */
@@ -40,12 +39,11 @@ public class ImportAttributes {
     public String getSource() {
         return source;
     }
-    
+
     /**
      * @param source the source to set
      */
     public void setSource(String source) {
         this.source = source;
     }
-    
 }

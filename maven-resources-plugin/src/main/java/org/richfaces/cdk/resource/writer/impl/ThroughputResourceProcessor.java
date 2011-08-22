@@ -33,24 +33,23 @@ import com.google.common.io.OutputSupplier;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 final class ThroughputResourceProcessor implements ResourceProcessor {
-
     public static final ResourceProcessor INSTANCE = new ThroughputResourceProcessor();
 
-    private ThroughputResourceProcessor() {}
-    
+    private ThroughputResourceProcessor() {
+    }
+
     @Override
     public boolean isSupportedFile(String name) {
         return true;
     }
 
     @Override
-    public void process(String resourceName, InputSupplier<? extends InputStream> in,
-        OutputSupplier<? extends OutputStream> out) throws IOException {
+    public void process(String resourceName, InputSupplier<? extends InputStream> in, OutputSupplier<? extends OutputStream> out)
+            throws IOException {
 
         ByteStreams.copy(in, out);
     }
-    
 }

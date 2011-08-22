@@ -25,27 +25,27 @@ import org.richfaces.cdk.templatecompiler.builder.model.RequireImports;
 
 /**
  * This class represents abstraction from concrete Java classes, used by EL compiler or template generator.
+ *
  * @author Nick Belaevski
- * 
+ *
  */
-//TODO unit-test thoroughly all implementations of this interface
+// TODO unit-test thoroughly all implementations of this interface
 public interface ELType extends RequireImports {
+    String getCode();
 
-    public String getCode();
-    
-    public String getRawName();
-    
-    public boolean isNullType();
-    
-    public boolean isArray();
-    
-    public ELType getRawType();
-    
-    public ELType getContainerType();
-    
-    public ELType[] getTypeArguments();
+    String getRawName();
 
-    public boolean isAssignableFrom(ELType anotherType);
+    boolean isNullType();
 
-    public boolean isPrimitive();
+    boolean isArray();
+
+    ELType getRawType();
+
+    ELType getContainerType();
+
+    ELType[] getTypeArguments();
+
+    boolean isAssignableFrom(ELType anotherType);
+
+    boolean isPrimitive();
 }

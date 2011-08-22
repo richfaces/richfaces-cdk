@@ -20,47 +20,51 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.annotations;
 
 /**
  * <p class="changed_added_4_0">
- * Description used that would be used in IDE to display.
+ * Object or attribute description. Included into generated faces-config.xml or tag library, so it can be used by IDE.
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
  */
 public @interface Description {
-
-    public static final String NAME = "org.richfaces.cdk.annotations.Description";
+    String NAME = "org.richfaces.cdk.annotations.Description";
 
     /**
-     * <p class="changed_added_4_0">Long description of the object.</p>
+     * <p class="changed_added_4_0">
+     * Long description of the object. If omited, javadoc comment for associated Java element.
+     * </p>
+     *
      * @return
      */
-    public String value() default "";
+    String value() default "";
+
     /**
      * <p class="changed_added_4_0">
      * Display name for development tools.
      * </p>
-     * 
+     *
      * @return
      */
-    public String displayName() default "";
+    String displayName() default "";
 
     /**
      * <p class="changed_added_4_0">
-     * URL that defines IDE icon.
+     * URL that defines small IDE icon.
      * </p>
-     * 
+     *
      * @return Description url.
      */
-    public String smallIcon() default "";
+    String smallIcon() default "";
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * URL that defines large IDE icon.
+     * </p>
+     *
      * @return
      */
-    public String largeIcon() default "";
-
+    String largeIcon() default "";
 }

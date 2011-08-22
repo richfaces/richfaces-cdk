@@ -27,24 +27,22 @@ import java.util.Collection;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public interface VirtualFile {
+    boolean isFile();
 
-    public boolean isFile();
-    
-    public boolean isDirectory();
-    
-    public InputStream getInputStream() throws IOException;
-    
-    public String getName();
-    
-    public String getRelativePath();
-    
-    public Collection<VirtualFile> getChildren();
-    
-    public VirtualFile getChild(String path);
+    boolean isDirectory();
 
-    public VirtualFile getChild(String path, boolean chrooted);
-    
+    InputStream getInputStream() throws IOException;
+
+    String getName();
+
+    String getRelativePath();
+
+    Collection<VirtualFile> getChildren();
+
+    VirtualFile getChild(String path);
+
+    VirtualFile getChild(String path, boolean chrooted);
 }

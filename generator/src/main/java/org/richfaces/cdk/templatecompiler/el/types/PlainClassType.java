@@ -30,32 +30,31 @@ import org.richfaces.cdk.templatecompiler.builder.model.JavaImportImpl;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public final class PlainClassType implements ELType {
-
     public static final ELType[] NO_TYPES = new ELType[0];
-    
     private final Class<?> clazz;
-
     private final Set<JavaImport> imports;
 
     public PlainClassType(Class<?> clazz) {
         super();
-        
+
         if (clazz.isArray()) {
             throw new IllegalArgumentException("Array classes are not supported");
         }
-        
+
         this.clazz = clazz;
         this.imports = Collections.<JavaImport>singleton(new JavaImportImpl(clazz));
     }
 
-    public Class<?> getPlainJavaClass(){
+    public Class<?> getPlainJavaClass() {
         return this.clazz;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#getCode()
      */
     @Override
@@ -68,7 +67,9 @@ public final class PlainClassType implements ELType {
         return clazz.getName();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#getImportsIterator()
      */
     @Override
@@ -76,15 +77,19 @@ public final class PlainClassType implements ELType {
         return imports;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#isNullType()
      */
     @Override
     public boolean isNullType() {
         return false;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#getRawType()
      */
     @Override
@@ -92,7 +97,9 @@ public final class PlainClassType implements ELType {
         return this;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#getTypeArguments()
      */
     @Override
@@ -100,7 +107,9 @@ public final class PlainClassType implements ELType {
         return NO_TYPES;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -111,7 +120,9 @@ public final class PlainClassType implements ELType {
         return result;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -135,8 +146,10 @@ public final class PlainClassType implements ELType {
         }
         return true;
     }
- 
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#toString()
      */
     @Override
@@ -144,15 +157,19 @@ public final class PlainClassType implements ELType {
         return MessageFormat.format("{0}: {1}", getClass().getName(), clazz.toString());
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#getCompositeType()
      */
     @Override
     public ELType getContainerType() {
         return TypesFactory.OBJECT_TYPE;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#isArray()
      */
     @Override
@@ -160,19 +177,21 @@ public final class PlainClassType implements ELType {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.el.ELType#isAssignableFrom(org.richfaces.cdk.templatecompiler.el.ELType)
      */
     @Override
     public boolean isAssignableFrom(ELType anotherType) {
-        if( Object.class.equals(clazz)){
+        if (Object.class.equals(clazz)) {
             return true;
         } else if (anotherType.isNullType()) {
             return !clazz.isPrimitive();
-        } else if(anotherType instanceof PlainClassType) {
-            Class<?> boxedClass = clazz.isPrimitive()?TypesFactoryImpl.PRIMITIVE_TO_WRAPPER_CLASSES_MAP.get(clazz):clazz;
-            Class<?> clazz2 = ((PlainClassType)anotherType).clazz;
-            clazz2 = clazz2.isPrimitive()?TypesFactoryImpl.PRIMITIVE_TO_WRAPPER_CLASSES_MAP.get(clazz2):clazz2;
+        } else if (anotherType instanceof PlainClassType) {
+            Class<?> boxedClass = clazz.isPrimitive() ? TypesFactoryImpl.PRIMITIVE_TO_WRAPPER_CLASSES_MAP.get(clazz) : clazz;
+            Class<?> clazz2 = ((PlainClassType) anotherType).clazz;
+            clazz2 = clazz2.isPrimitive() ? TypesFactoryImpl.PRIMITIVE_TO_WRAPPER_CLASSES_MAP.get(clazz2) : clazz2;
             return boxedClass.isAssignableFrom(clazz2);
         } else {
             return getRawName().equals(anotherType.getRawName());

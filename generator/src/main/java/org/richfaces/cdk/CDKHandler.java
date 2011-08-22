@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk;
 
 import java.util.logging.Handler;
@@ -30,12 +29,11 @@ import java.util.logging.LogRecord;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class CDKHandler extends Handler {
-
     private final Logger log;
 
     public CDKHandler(Logger log) {
@@ -44,7 +42,7 @@ public class CDKHandler extends Handler {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.util.logging.Handler#close()
      */
     @Override
@@ -55,7 +53,7 @@ public class CDKHandler extends Handler {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.util.logging.Handler#flush()
      */
     @Override
@@ -80,7 +78,7 @@ public class CDKHandler extends Handler {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.util.logging.Handler#publish(java.util.logging.LogRecord)
      */
     @Override
@@ -96,5 +94,4 @@ public class CDKHandler extends Handler {
             log.debug(record.getMessage(), record.getThrown());
         }
     }
-
 }

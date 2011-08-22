@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import java.util.Collection;
@@ -33,20 +32,16 @@ import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.FacesId;
 import org.richfaces.cdk.model.PropertyModel;
 
-
 /**
  * @author akolonitsky
  * @since Jan 6, 2010
  */
-@XmlType(name = "faces-config-converterType", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE,
-    propOrder = {"id", "converterForClass", "targetClass", "facesAttributes", "properties", "extension"})
+@XmlType(name = "faces-config-converterType", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE, propOrder = { "id",
+        "converterForClass", "targetClass", "facesAttributes", "properties", "extension" })
 @XmlJavaTypeAdapter(ConverterAdapter.class)
 public class ConverterBean extends ElementBeanBase<ConverterBean.ConverterExtension> {
-
     private ClassName converterForClass;
-
     private ClassName targetClass;
-
     private FacesId id;
 
     @XmlElement(name = "converter-id", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE)
@@ -102,6 +97,5 @@ public class ConverterBean extends ElementBeanBase<ConverterBean.ConverterExtens
     }
 
     public static class ConverterExtension extends TagExtensionBase {
-
     }
 }

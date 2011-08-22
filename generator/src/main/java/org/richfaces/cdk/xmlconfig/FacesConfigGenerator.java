@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig;
 
 import java.io.Writer;
@@ -38,24 +37,19 @@ import com.google.inject.Inject;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class FacesConfigGenerator implements CdkWriter {
-
-    public static final String FACES_SCHEMA_LOCATION =
-        ComponentLibrary.FACES_CONFIG_NAMESPACE + " " + ComponentLibrary.FACES_CONFIG_SCHEMA_LOCATION;
-
+    public static final String FACES_SCHEMA_LOCATION = ComponentLibrary.FACES_CONFIG_NAMESPACE + " "
+            + ComponentLibrary.FACES_CONFIG_SCHEMA_LOCATION;
     private static final String FACES_CONFIG_XML = "META-INF/faces-config.xml";
-
     @Inject
     private JAXB jaxbBinding;
-
     @Inject
     @Output(Outputs.RESOURCES)
     private FileManager outputFileManager;
-
     private FacesConfigAdapter libraryAdapter;
 
     public FacesConfigGenerator() {
@@ -64,7 +58,7 @@ public class FacesConfigGenerator implements CdkWriter {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.CdkWriter#render(org.richfaces.cdk.model.ComponentLibrary )
      */
     @Override
@@ -89,15 +83,18 @@ public class FacesConfigGenerator implements CdkWriter {
     }
 
     /**
-     * <p class="changed_added_4_0">Check that library is empty</p>
+     * <p class="changed_added_4_0">
+     * Check that library is empty
+     * </p>
+     *
      * @param library
      * @return
      */
     private boolean empty(ComponentLibrary library) {
 
-        return library.getComponents().isEmpty() && library.getBehaviors().isEmpty()
-            && library.getConverters().isEmpty() && library.getEvents().isEmpty() && library.getFunctions().isEmpty()
-            && library.getListeners().isEmpty() && library.getRenderKits().isEmpty()
-            && library.getValidators().isEmpty() && library.getExtension().getExtensions().isEmpty();
+        return library.getComponents().isEmpty() && library.getBehaviors().isEmpty() && library.getConverters().isEmpty()
+                && library.getEvents().isEmpty() && library.getFunctions().isEmpty() && library.getListeners().isEmpty()
+                && library.getRenderKits().isEmpty() && library.getValidators().isEmpty()
+                && library.getExtension().getExtensions().isEmpty();
     }
 }

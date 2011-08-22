@@ -30,13 +30,11 @@ import com.google.inject.Inject;
  * @author Nick Belaevski
  */
 public class EncodeMethodPrefaceStatement extends FreeMarkerTemplateStatementBase {
-
     /**
      * @param templateName
      */
     @Inject
     public EncodeMethodPrefaceStatement(@TemplateModel FreeMarkerRenderer renderer) {
-        super(renderer,"encode-method-preface");
+        super(renderer, "encode-method-preface");
     }
-
 }

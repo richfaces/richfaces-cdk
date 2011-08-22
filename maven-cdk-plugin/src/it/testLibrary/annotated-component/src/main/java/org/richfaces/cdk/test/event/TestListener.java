@@ -21,54 +21,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-package org.richfaces.cdk.test.component;
+package org.richfaces.cdk.test.event;
 
-import javax.faces.component.UIComponent;
-
-import org.richfaces.cdk.annotations.Attribute;
-import org.richfaces.cdk.annotations.EventName;
-import org.richfaces.cdk.annotations.Facet;
+import javax.faces.event.FacesListener;
 
 /**
  * <p class="changed_added_4_0"></p>
  * @author asmirnov@exadel.com
  *
  */
-public interface Html5Attributes {
+public interface TestListener extends FacesListener {
     
-    
-    /**
-     * <p class="changed_added_4_0"></p>
-     * @author asmirnov@exadel.com
-     *
-     */
-    public enum DraggableState {
-        TRUE,
-        FALSE,
-        AUTO
-    }
-    
-    @Facet
-    UIComponent getHeader();
-    /**
-     * @return
-     */
-    @Attribute(events=@EventName("drag"))
-    DraggableState getDraggable();
+    void process(TestEvent event);
 
-    /**
-     * @param newValue
-     */
-    void setDraggable(DraggableState newValue);
-
-    /**
-     * @return
-     */
-    @Attribute
-    boolean isHidden();
-
-    /**
-     * @param newValue
-     */
-    void setHidden(boolean newValue);
 }

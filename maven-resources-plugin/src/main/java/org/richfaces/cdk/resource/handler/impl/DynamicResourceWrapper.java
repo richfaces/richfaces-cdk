@@ -41,15 +41,13 @@ import com.google.common.base.Strings;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class DynamicResourceWrapper extends Resource {
-
     /**
-     * 
+     *
      */
     private static final String ECSS_EXTENSION = ".ecss";
-
     private Resource resource;
 
     public DynamicResourceWrapper(Resource resource) {
@@ -94,7 +92,7 @@ public class DynamicResourceWrapper extends Resource {
     private FileNameMapper getFileNameMapper() {
         return ServiceTracker.getService(FileNameMapper.class);
     }
-    
+
     private String getVersion() {
         String version = null;
         if (resource instanceof VersionedResource) {
@@ -102,7 +100,7 @@ public class DynamicResourceWrapper extends Resource {
         }
         return version;
     }
-    
+
     @Override
     public String getRequestPath() {
         String resourceExtension = getResourceExtension();
@@ -115,18 +113,18 @@ public class DynamicResourceWrapper extends Resource {
                 resourceName = resourceName.substring(0, resourceName.length() - resourceExtension.length());
             }
         }
-        
+
         String libraryName = getLibraryName();
-        
+
         if (Strings.isNullOrEmpty(libraryName)) {
             int idx = resourceName.lastIndexOf('.');
-            
+
             if (idx >= 0) {
                 libraryName = resourceName.substring(0, idx);
                 resourceName = resourceName.substring(idx + 1);
             }
         }
-        
+
         String versionedName = DASH_JOINER.join(resourceName, getVersion()) + Strings.nullToEmpty(resourceExtension);
         String resourcePath = SLASH_JOINER.join(libraryName, versionedName);
 
@@ -148,14 +146,14 @@ public class DynamicResourceWrapper extends Resource {
         if (contentType == null) {
             return null;
         }
-        
+
         if (contentType.startsWith("text/") || contentType.startsWith("image/")) {
             String[] split = contentType.split("/");
             if (split.length == 2) {
                 return '.' + split[1];
             }
         }
-        
+
         return null;
     }
 }

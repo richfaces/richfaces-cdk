@@ -1,21 +1,20 @@
-
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing,
-* software distributed under the License is distributed on an
-* "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-* KIND, either express or implied.  See the License for the
-* specific language governing permissions and limitations
-* under the License.
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
 package org.apache.cocoon.pipeline.component.xpointer;
 
@@ -39,7 +38,6 @@ public final class XPointerContext implements NamespaceContext {
     private static final String XMLNS = "xmlns";
     private static final String XMLNS_NAMESPACE = "http://www.w3.org/2000/xmlns/";
     private static final String XML_NAMESPACE = "http://www.w3.org/XML/1998/namespace";
-
     private final Logger logger;
     private Map<String, String> prefixes = new HashMap<String, String>();
     private Document document;
@@ -48,8 +46,7 @@ public final class XPointerContext implements NamespaceContext {
     private String xPointer;
     private SAXConsumer xmlConsumer;
 
-    public XPointerContext(String xPointer, InputSource source,
-                           SAXConsumer xmlConsumer, EntityResolver resolver, Logger log) {
+    public XPointerContext(String xPointer, InputSource source, SAXConsumer xmlConsumer, EntityResolver resolver, Logger log) {
         this.xPointer = xPointer;
         this.source = source;
         this.xmlConsumer = xmlConsumer;
@@ -103,7 +100,6 @@ public final class XPointerContext implements NamespaceContext {
     }
 
     @SuppressWarnings("unchecked")
-
     // This method isn't necessary for XPath processing either.
     public Iterator getPrefixes(String namespaceURI) {
         throw new UnsupportedOperationException();

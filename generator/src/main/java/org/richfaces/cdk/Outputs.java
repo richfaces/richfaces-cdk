@@ -20,17 +20,20 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.cdk;
 
-
 /**
- * <p class="changed_added_4_0">This enumeration defines standard types of output folders.</p>
+ * <p class="changed_added_4_0">
+ * This enumeration defines standard types of output folders.
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public enum Outputs {
-    JAVA_CLASSES, RESOURCES, TEST_JAVA_CLASSES, TEST_RESOURCES, DOCUMENTATION
+    JAVA_CLASSES,
+    RESOURCES,
+    TEST_JAVA_CLASSES,
+    TEST_RESOURCES,
+    DOCUMENTATION
 }

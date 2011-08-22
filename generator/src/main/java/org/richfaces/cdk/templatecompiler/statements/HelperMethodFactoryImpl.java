@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.statements;
 
 import java.io.IOException;
@@ -44,21 +43,17 @@ import com.google.inject.name.Named;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class HelperMethodFactoryImpl implements HelperMethodFactory {
-
     private TypesFactory typesFactory;
-
     @Inject(optional = true)
     @Named(Generator.RENDERER_UTILS_CLASS)
     private String rendererUtilsClass = "org.richfaces.renderkit.RenderKitUtils";
-
     private FreeMarkerRenderer renderer;
     private final EnumMap<HelperMethod, JavaMethod> helperMethods = Maps.newEnumMap(HelperMethod.class);
-
     private final Logger log;
 
     @Inject
@@ -68,10 +63,10 @@ public class HelperMethodFactoryImpl implements HelperMethodFactory {
 
     /**
      * <p class="changed_added_4_0">
-     * Initialization code. It should be called after field injection, so render kit utils class name should have proper
-     * value here.
+     * Initialization code. It should be called after field injection, so render kit utils class name should have proper value
+     * here.
      * </p>
-     * 
+     *
      * @param renderer
      * @param typesFactory
      */
@@ -84,11 +79,13 @@ public class HelperMethodFactoryImpl implements HelperMethodFactory {
         buildHelperMethod(HelperMethod.TO_BOOLEAN_CONVERSION, false, "conversion-to-boolean-method", "object");
         buildHelperMethod(HelperMethod.TO_STRING_CONVERSION, false, "conversion-to-string-method", "object");
         buildHelperMethod(HelperMethod.SHOULD_RENDER_ATTRIBUTE, true, "should-render-attribute", "attributeValue");
-        buildHelperMethod(HelperMethod.RENDER_ATTRIBUTE, true, "render-attribute", "attributeValue").getExceptions().add(typesFactory.getType(IOException.class));
-        JavaMethod renderAttributes = buildHelperMethod(HelperMethod.RENDER_ATTRIBUTES_SET, true, "render-attributes-set", "context","component");
+        buildHelperMethod(HelperMethod.RENDER_ATTRIBUTE, true, "render-attribute", "attributeValue").getExceptions().add(
+                typesFactory.getType(IOException.class));
+        JavaMethod renderAttributes = buildHelperMethod(HelperMethod.RENDER_ATTRIBUTES_SET, true, "render-attributes-set",
+                "context", "component");
         // TODO - put unknown 'Attributes' class into HelperMethod.
         List<Argument> arguments = renderAttributes.getArguments();
-        arguments.add(new Argument("attributes",typesFactory.getType("Attributes")));
+        arguments.add(new Argument("attributes", typesFactory.getType("Attributes")));
         renderAttributes.getExceptions().add(typesFactory.getType(IOException.class));
         buildHelperMethod(HelperMethod.CREATE_ATTRIBUTES, true, "create-attributes");
         buildHelperMethod(HelperMethod.ADD_TO_SCRIPT_HASH, true, null);
@@ -98,7 +95,7 @@ public class HelperMethodFactoryImpl implements HelperMethodFactory {
     }
 
     private JavaMethod buildHelperMethod(HelperMethod helperMethod, boolean utilsMethod, String templateName,
-        String... argumentNames) {
+            String... argumentNames) {
         JavaMethod helperJavaMethod;
         if (utilsMethod && !RendererUtilsMethod.BUILT_IN.equals(rendererUtilsClass)) {
             helperJavaMethod = new RendererUtilsMethod(helperMethod, rendererUtilsClass);
@@ -120,14 +117,12 @@ public class HelperMethodFactoryImpl implements HelperMethodFactory {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see
-     * org.richfaces.cdk.templatecompiler.statements.HelperMethodFactory#getHelperMethod(org.richfaces.cdk.templatecompiler
+     *
+     * @see org.richfaces.cdk.templatecompiler.statements.HelperMethodFactory#getHelperMethod(org.richfaces.cdk.templatecompiler
      * .el.HelperMethod)
      */
     @Override
     public JavaMethod getHelperMethod(HelperMethod helper) {
         return helperMethods.get(helper);
     }
-
 }

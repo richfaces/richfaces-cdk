@@ -20,24 +20,28 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk;
 
 /**
- * <p class="changed_added_4_0">Instance of an Object implemented this interface can be injected into test class to simplify mock objects manipulations.</p>
+ * <p class="changed_added_4_0">
+ * Instance of an Object implemented this interface can be injected into test class to simplify mock objects manipulations.
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public interface MockController {
-    
     /**
-     * <p class="changed_added_4_0">Repaly all mock objects created by the {@link CdkTestRunner}</p>
+     * <p class="changed_added_4_0">
+     * Repaly all mock objects created by the {@link CdkTestRunner}
+     * </p>
      */
-    public void replay();
-    
-    /**
-     * <p class="changed_added_4_0">Verify all mock objects created by the {@link CdkTestRunner}</p>
-     */
-    public void verify();
+    void replay();
 
+    /**
+     * <p class="changed_added_4_0">
+     * Verify all mock objects created by the {@link CdkTestRunner}
+     * </p>
+     */
+    void verify();
 }

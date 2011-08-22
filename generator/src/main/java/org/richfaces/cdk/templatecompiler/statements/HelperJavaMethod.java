@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.statements;
 
 import org.richfaces.cdk.templatecompiler.builder.model.Argument;
@@ -28,20 +27,18 @@ import org.richfaces.cdk.templatecompiler.builder.model.JavaMethod;
 import org.richfaces.cdk.templatecompiler.el.types.ELType;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class HelperJavaMethod extends JavaMethod {
-    
-
     public HelperJavaMethod(String name, ELType returnType, Argument[] arguments) {
         super(name, returnType, arguments);
     }
-    
+
     public HelperJavaMethod(String name) {
         super(name);
     }
-
-
 }

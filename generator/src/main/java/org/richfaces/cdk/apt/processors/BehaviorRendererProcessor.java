@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt.processors;
 
 import java.lang.annotation.Annotation;
@@ -37,12 +36,13 @@ import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.FacesId;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class BehaviorRendererProcessor extends ProcessorBase implements CdkAnnotationProcessor {
-
     @Override
     public void process(Element element, ComponentLibrary library) throws CdkProcessingException {
         SourceUtils sourceUtils = getSourceUtils();
@@ -50,7 +50,7 @@ public class BehaviorRendererProcessor extends ProcessorBase implements CdkAnnot
 
         BehaviorRendererModel behaviorRendererModel = new BehaviorRendererModel();
         setClassNames((TypeElement) element, behaviorRendererModel, behaviorRenderer);
-        sourceUtils.setModelProperty(behaviorRendererModel, behaviorRenderer, "id","type");
+        sourceUtils.setModelProperty(behaviorRendererModel, behaviorRenderer, "id", "type");
 
         setDescription(behaviorRendererModel, behaviorRenderer, getDocComment(element));
         FacesId renderKitId = sourceUtils.getAnnotationValue(behaviorRenderer, "renderKitId", FacesId.class);
@@ -61,5 +61,4 @@ public class BehaviorRendererProcessor extends ProcessorBase implements CdkAnnot
     public Class<? extends Annotation> getProcessedAnnotation() {
         return JsfBehaviorRenderer.class;
     }
-
 }

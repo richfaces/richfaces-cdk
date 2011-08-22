@@ -20,18 +20,17 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import org.richfaces.cdk.model.BehaviorRendererModel;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 public class BehaviorRendererAdapter extends AdapterBase<BehaviorRendererBean, BehaviorRendererModel> {
-
     @Override
     protected Class<? extends BehaviorRendererBean> getBeanClass(BehaviorRendererModel model) {
         return BehaviorRendererBean.class;

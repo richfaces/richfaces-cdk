@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import java.lang.reflect.Method;
@@ -33,12 +32,12 @@ import org.richfaces.cdk.model.Extensible;
 import org.richfaces.cdk.util.JavaUtils;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 public abstract class AdapterBase<Bean, Model> extends XmlAdapter<Bean, Model> {
-    
     @Override
     public Bean marshal(Model model) throws CdkException {
         Bean bean = null;
@@ -53,16 +52,13 @@ public abstract class AdapterBase<Bean, Model> extends XmlAdapter<Bean, Model> {
 
     /**
      * <p class="changed_added_4_0">
-     * This method creates adapter object and copies properties from model
-     * object to adapter.
+     * This method creates adapter object and copies properties from model object to adapter.
      * </p>
      *
-     * @param beanClass
-     *            adapter class.
-     * @param model
-     *            model object class.
+     * @param beanClass adapter class.
+     * @param model model object class.
      * @return initialized instance of adapter object.
-     * 
+     *
      * @throws org.richfaces.cdk.CdkException
      */
     @SuppressWarnings("unchecked")
@@ -85,7 +81,10 @@ public abstract class AdapterBase<Bean, Model> extends XmlAdapter<Bean, Model> {
     }
 
     /**
-     * <p class="changed_added_4_0">Template method to copy non bean attributes.</p>
+     * <p class="changed_added_4_0">
+     * Template method to copy non bean attributes.
+     * </p>
+     *
      * @param model
      * @param bean
      */
@@ -94,7 +93,10 @@ public abstract class AdapterBase<Bean, Model> extends XmlAdapter<Bean, Model> {
     }
 
     /**
-     * <p class="changed_added_4_0">Returns concrete bean class.</p>
+     * <p class="changed_added_4_0">
+     * Returns concrete bean class.
+     * </p>
+     *
      * @param model
      * @return
      */
@@ -108,8 +110,8 @@ public abstract class AdapterBase<Bean, Model> extends XmlAdapter<Bean, Model> {
     }
 
     @SuppressWarnings("unchecked")
-    protected <D, E extends ConfigExtension> E createExtension(D destination)
-        throws NoSuchMethodException, InstantiationException, IllegalAccessException {
+    protected <D, E extends ConfigExtension> E createExtension(D destination) throws NoSuchMethodException,
+            InstantiationException, IllegalAccessException {
 
         Method method = destination.getClass().getMethod("getExtension");
         return ((Class<E>) method.getReturnType()).newInstance();
@@ -161,7 +163,10 @@ public abstract class AdapterBase<Bean, Model> extends XmlAdapter<Bean, Model> {
     }
 
     /**
-     * <p class="changed_added_4_0">Template method to copy non bean attributes</p>
+     * <p class="changed_added_4_0">
+     * Template method to copy non bean attributes
+     * </p>
+     *
      * @param bean
      * @param model
      */
@@ -170,10 +175,12 @@ public abstract class AdapterBase<Bean, Model> extends XmlAdapter<Bean, Model> {
     }
 
     /**
-     * <p class="changed_added_4_0">Returns concrete model class</p>
+     * <p class="changed_added_4_0">
+     * Returns concrete model class
+     * </p>
+     *
      * @param bean
      * @return
      */
     protected abstract Class<? extends Model> getModelClass(Bean bean);
-
 }

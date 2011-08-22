@@ -25,18 +25,16 @@ import javax.faces.context.FacesContext;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public interface Faces {
+    void start();
 
-    public void start();
-    
-    public void stop();
-    
-    public void setSkin(String skinName);
-    
-    public FacesContext startRequest();
-    
-    public void stopRequest();
+    void stop();
 
+    void setSkin(String skinName);
+
+    FacesContext startRequest();
+
+    void stopRequest();
 }

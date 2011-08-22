@@ -20,18 +20,17 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.model;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class ConverterModel extends ModelElementBase implements ModelElement<ConverterModel> {
-
     private static final long serialVersionUID = -6238591637703737886L;
-
     private ClassName converterForClass;
 
     public ConverterModel() {
@@ -40,7 +39,6 @@ public class ConverterModel extends ModelElementBase implements ModelElement<Con
     public ConverterModel(FacesId converterId) {
         setId(converterId);
     }
-
 
     @Merge(false)
     public ClassName getConverterForClass() {
@@ -51,8 +49,8 @@ public class ConverterModel extends ModelElementBase implements ModelElement<Con
         this.converterForClass = converterForClass;
     }
 
-    public <R,D> R accept(Visitor<R,D> visitor, D data) {
-        return visitor.visitConverter(this,data);
+    public <R, D> R accept(Visitor<R, D> visitor, D data) {
+        return visitor.visitConverter(this, data);
     }
 
     @Override
@@ -60,7 +58,7 @@ public class ConverterModel extends ModelElementBase implements ModelElement<Con
         ComponentLibrary.merge(getAttributes(), other.getAttributes());
         ComponentLibrary.merge(this, other);
     }
-    
+
     @Override
     public boolean same(ConverterModel other) {
         return null != getId() && getId().equals(other.getId());

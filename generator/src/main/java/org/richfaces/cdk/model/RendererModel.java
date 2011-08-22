@@ -20,34 +20,28 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.cdk.model;
 
 import org.richfaces.cdk.templatecompiler.model.Template;
 import org.richfaces.cdk.util.Strings;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class RendererModel extends ModelElementBase implements ModelElement<RendererModel> {
-
     private static final long serialVersionUID = -5802466539382148578L;
-
     private FacesId family;
-
     private String componentType;
-
     private String templatePath;
-
     private Template template;
-
     private boolean rendersChildren;
-    
-    public RendererModel() { }
+
+    public RendererModel() {
+    }
 
     public RendererModel(FacesId type) {
         setId(type);
@@ -95,8 +89,8 @@ public class RendererModel extends ModelElementBase implements ModelElement<Rend
         this.templatePath = templatePath;
     }
 
-    public <R,D> R accept(Visitor<R,D> visitor, D data) {
-        return visitor.visitRender(this,data);
+    public <R, D> R accept(Visitor<R, D> visitor, D data) {
+        return visitor.visitRender(this, data);
     }
 
     @Override
@@ -104,7 +98,7 @@ public class RendererModel extends ModelElementBase implements ModelElement<Rend
         if (other == null) {
             return;
         }
-        
+
         ComponentLibrary.merge(this, other);
 
         // TODO review
@@ -112,7 +106,7 @@ public class RendererModel extends ModelElementBase implements ModelElement<Rend
         if (targetClass == null || Strings.isEmpty(targetClass.getName())) {
             setTargetClass(other.getTargetClass());
         }
-        
+
         ClassName baseClass = this.getBaseClass();
         if (baseClass == null || Strings.isEmpty(baseClass.getName())) {
             setTargetClass(other.getBaseClass());
@@ -128,7 +122,7 @@ public class RendererModel extends ModelElementBase implements ModelElement<Rend
             }
             // Both types not null, compare them.
             return getId().equals(other.getId());
-        } 
+        }
         // one or both types are null, compare classes.
         if (null != getRendererClass() && getRendererClass().equals(other.getRendererClass())) {
             return true;
@@ -143,7 +137,7 @@ public class RendererModel extends ModelElementBase implements ModelElement<Rend
     public void setComponentType(String componentType) {
         this.componentType = componentType;
     }
-    
+
     @Override
     protected PropertyBase createAttribute() {
         return new AttributeModel();

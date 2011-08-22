@@ -30,12 +30,11 @@ import com.google.common.io.OutputSupplier;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public interface ResourceProcessor {
+    boolean isSupportedFile(String name);
 
-    public boolean isSupportedFile(String name);
-    
-    public void process(String resourceName, InputSupplier<? extends InputStream> in, OutputSupplier<? extends OutputStream> out) throws IOException;
-    
+    public void process(String resourceName, InputSupplier<? extends InputStream> in, OutputSupplier<? extends OutputStream> out)
+            throws IOException;
 }

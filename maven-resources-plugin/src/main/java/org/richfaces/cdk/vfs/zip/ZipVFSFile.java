@@ -37,16 +37,13 @@ import com.google.common.collect.Lists;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class ZipVFSFile implements VirtualFile {
-
     private ZipFile zipFile;
-    
     private ZipNode zipNode;
-    
     private String relativePath;
-    
+
     public ZipVFSFile(ZipFile zipFile, ZipNode zipNode, String relativePath) {
         super();
         this.zipFile = zipFile;
@@ -77,13 +74,13 @@ public class ZipVFSFile implements VirtualFile {
     @Override
     public Collection<VirtualFile> getChildren() {
         Iterable<ZipNode> children = zipNode.listChildren();
-        
+
         List<VirtualFile> result = Lists.newArrayList();
-        
-        for (ZipNode child: children) {
+
+        for (ZipNode child : children) {
             result.add(new ZipVFSFile(zipFile, child, SLASH_JOINER.join(getRelativePath(), child.getName())));
         }
-        
+
         return result;
     }
 
@@ -91,7 +88,7 @@ public class ZipVFSFile implements VirtualFile {
     public VirtualFile getChild(String path) {
         return getChild(path, false);
     }
-    
+
     @Override
     public VirtualFile getChild(String path, boolean chrooted) {
         Iterable<String> split = SLASH_SPLITTER.split(path);
@@ -102,12 +99,12 @@ public class ZipVFSFile implements VirtualFile {
                 return null;
             }
         }
-        
+
         String relativePath = null;
         if (!chrooted) {
             relativePath = SLASH_JOINER.join(getRelativePath(), path);
         }
-        
+
         return new ZipVFSFile(zipFile, node, relativePath);
     }
 
@@ -120,11 +117,11 @@ public class ZipVFSFile implements VirtualFile {
     public String getRelativePath() {
         return relativePath;
     }
-    
+
     protected ZipFile getZipFile() {
         return zipFile;
     }
-    
+
     protected ZipNode getZipNode() {
         return zipNode;
     }

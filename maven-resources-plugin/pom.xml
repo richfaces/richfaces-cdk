@@ -1,16 +1,17 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <artifactId>parent</artifactId>
         <groupId>org.richfaces.cdk</groupId>
-        <version>4.0.0.Final</version>
+        <version>4.1.0.20110805-M1</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
     <groupId>org.richfaces.cdk</groupId>
     <artifactId>maven-resources-plugin</artifactId>
-    <version>4.0.0.Final</version>
+    <version>4.1.0.20110805-M1</version>
     <packaging>maven-plugin</packaging>
     <name>maven-resources-plugin</name>
     <description>Maven plugin for packaging resources with web application</description>
@@ -68,7 +69,7 @@
             <groupId>com.sun.el</groupId>
             <artifactId>el-ri</artifactId>
         </dependency>
-        
+
         <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-api</artifactId>
@@ -80,8 +81,8 @@
         </dependency>
 
         <dependency>
-        	<groupId>com.yahoo.platform.yui</groupId>
-        	<artifactId>yuicompressor</artifactId>
+            <groupId>com.yahoo.platform.yui</groupId>
+            <artifactId>yuicompressor</artifactId>
         </dependency>
     </dependencies>
 
@@ -96,12 +97,15 @@
             </plugin>
         </plugins>
     </build>
-    
+
     <profiles>
         <profile>
             <id>it</id>
             <build>
                 <plugins>
+                    <plugin>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-invoker-plugin</artifactId>

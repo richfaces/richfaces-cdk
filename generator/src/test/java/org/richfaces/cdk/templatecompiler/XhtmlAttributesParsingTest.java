@@ -21,7 +21,7 @@
  */
 package org.richfaces.cdk.templatecompiler;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -37,22 +37,20 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.richfaces.cdk.attributes.Attribute;
+import org.richfaces.cdk.attributes.Attribute.Kind;
 import org.richfaces.cdk.attributes.Element;
 import org.richfaces.cdk.attributes.Schema;
 import org.richfaces.cdk.attributes.SchemaSet;
-import org.richfaces.cdk.attributes.Attribute.Kind;
 import org.richfaces.cdk.templatecompiler.model.Template;
 
 import com.google.common.base.Predicate;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class XhtmlAttributesParsingTest {
-
     private static final class AttributeKindPredicate implements Predicate<Attribute> {
-
         private Kind kind;
 
         public AttributeKindPredicate(Kind kind) {
@@ -67,7 +65,6 @@ public class XhtmlAttributesParsingTest {
     }
 
     private static final class AttributeNamePredicate implements Predicate<Attribute> {
-
         private String name;
 
         public AttributeNamePredicate(String name) {
@@ -82,7 +79,6 @@ public class XhtmlAttributesParsingTest {
     }
 
     private static final class AttributeNullDataPredicate implements Predicate<Attribute> {
-
         @Override
         public boolean apply(Attribute attribute) {
             return attribute.getName() == null || attribute.getKind() == null;
@@ -157,25 +153,21 @@ public class XhtmlAttributesParsingTest {
         Collection<String> uriAttributesNames = getNamesCollection(uriAttributes);
 
         System.out.println("XhtmlAttributesParsingTest.testAttributeKinds(), BOOLEAN attribute names: "
-            + booleanAttributesNames);
-        System.out.println("XhtmlAttributesParsingTest.testAttributeKinds(), URI attribute names: "
-            + uriAttributesNames);
+                + booleanAttributesNames);
+        System.out.println("XhtmlAttributesParsingTest.testAttributeKinds(), URI attribute names: " + uriAttributesNames);
 
         for (String booleanAttributeName : booleanAttributesNames) {
-            Collection<Attribute> foundAttributes =
-                findAttributesByPredicate(new AttributeNamePredicate(booleanAttributeName));
+            Collection<Attribute> foundAttributes = findAttributesByPredicate(new AttributeNamePredicate(booleanAttributeName));
             verifyAttributesByPredicate(foundAttributes, booleanAttributePredicate);
         }
 
         for (String genericAttributeName : genericAttributesNames) {
-            Collection<Attribute> foundAttributes =
-                findAttributesByPredicate(new AttributeNamePredicate(genericAttributeName));
+            Collection<Attribute> foundAttributes = findAttributesByPredicate(new AttributeNamePredicate(genericAttributeName));
             verifyAttributesByPredicate(foundAttributes, genericAttributePredicate);
         }
 
         for (String uriAttributeName : uriAttributesNames) {
-            Collection<Attribute> foundAttributes =
-                findAttributesByPredicate(new AttributeNamePredicate(uriAttributeName));
+            Collection<Attribute> foundAttributes = findAttributesByPredicate(new AttributeNamePredicate(uriAttributeName));
             verifyAttributesByPredicate(foundAttributes, uriAttributePredicate);
         }
     }
@@ -183,7 +175,6 @@ public class XhtmlAttributesParsingTest {
     @Test
     public void testRequiredAttributes() throws Exception {
         Collection<Attribute> requiredAttributes = findAttributesByPredicate(new Predicate<Attribute>() {
-
             @Override
             public boolean apply(Attribute input) {
                 return input.isRequired();

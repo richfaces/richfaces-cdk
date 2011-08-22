@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.model;
 
 import java.io.Serializable;
@@ -38,39 +37,29 @@ import org.richfaces.cdk.xmlconfig.model.FacesIdAdapter;
 
 import com.google.common.collect.Lists;
 
-
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 @XmlRootElement(name = "interface", namespace = Template.COMPOSITE_NAMESPACE)
 public class CompositeInterface implements Serializable {
-
     private static final long serialVersionUID = -5578359507253872500L;
-
     private FacesId componentFamily;
-
-    private List<Attribute> attributes=Lists.newArrayList();
-
-    private List<ResourceDependency> resourceDependencies=Lists.newArrayList();
-
-    private List<ImportAttributes> attributesImports=Lists.newArrayList();
-    
+    private List<Attribute> attributes = Lists.newArrayList();
+    private List<ResourceDependency> resourceDependencies = Lists.newArrayList();
+    private List<ImportAttributes> attributesImports = Lists.newArrayList();
     private String renderKitId = RenderKitFactory.HTML_BASIC_RENDER_KIT;
-
     private ClassName javaClass;
-
     private ClassName baseClass;
-
     private FacesId rendererType;
-
     private Boolean rendersChildren = null;
-
     private List<ClassImport> classImports = Lists.newArrayList();
-    
+
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the family
      */
@@ -81,7 +70,8 @@ public class CompositeInterface implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param family the family to set
      */
@@ -90,7 +80,8 @@ public class CompositeInterface implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the attributes
      */
@@ -100,7 +91,8 @@ public class CompositeInterface implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param attributes the attributes to set
      */
@@ -109,28 +101,30 @@ public class CompositeInterface implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the resourceDependencies
      */
-//    @XmlElementWrapper(name = "resource-dependencies", namespace = Template.CDK_NAMESPACE)
+    // @XmlElementWrapper(name = "resource-dependencies", namespace = Template.CDK_NAMESPACE)
     @XmlElement(name = "resource-dependency", namespace = Template.CDK_NAMESPACE)
     public List<ResourceDependency> getResourceDependencies() {
         return resourceDependencies;
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param resourceDependencies the resourceDependencies to set
      */
-    public void setResourceDependencies(
-        List<ResourceDependency> resourceDependencies) {
+    public void setResourceDependencies(List<ResourceDependency> resourceDependencies) {
         this.resourceDependencies = resourceDependencies;
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the renderKitId
      */
@@ -141,7 +135,8 @@ public class CompositeInterface implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param renderKitId the renderKitId to set
      */
@@ -150,7 +145,8 @@ public class CompositeInterface implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the javaClass
      */
@@ -161,7 +157,8 @@ public class CompositeInterface implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param javaClass the javaClass to set
      */
@@ -170,7 +167,8 @@ public class CompositeInterface implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the rendererType
      */
@@ -181,7 +179,8 @@ public class CompositeInterface implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param rendererType the rendererType to set
      */
@@ -190,7 +189,8 @@ public class CompositeInterface implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the baseClass
      */
@@ -201,7 +201,8 @@ public class CompositeInterface implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param baseClass the baseClass to set
      */
@@ -210,7 +211,8 @@ public class CompositeInterface implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the rendersChildren
      */
@@ -225,9 +227,10 @@ public class CompositeInterface implements Serializable {
     public void setRendersChildren(Boolean rendersChildren) {
         this.rendersChildren = rendersChildren;
     }
-    
+
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the attributesImports
      */
@@ -237,14 +240,15 @@ public class CompositeInterface implements Serializable {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param attributesImports the attributesImports to set
      */
     public void setAttributesImports(List<ImportAttributes> attributesImports) {
         this.attributesImports = attributesImports;
     }
-    
+
     /**
      * @return the classImports
      */
@@ -252,7 +256,7 @@ public class CompositeInterface implements Serializable {
     public List<ClassImport> getClassImports() {
         return classImports;
     }
-    
+
     /**
      * @param classImports the classImports to set
      */

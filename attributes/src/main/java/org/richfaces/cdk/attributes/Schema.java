@@ -33,21 +33,19 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class Schema implements KeyedType {
-
     @XmlRootElement(name = "schemas")
     @XmlType(name = "SchemasType")
     public static final class Type implements ContainerType<Schema> {
-
         private Collection<Schema> children = new HashSet<Schema>();
 
         @XmlElement(name = "schema")
         public Collection<Schema> getChildren() {
             return children;
         }
-        
+
         @Override
         public void setChildren(Collection<Schema> values) {
             this.children = values;
@@ -55,13 +53,12 @@ public class Schema implements KeyedType {
     }
 
     private String namespace;
-
     private Map<String, Element> elements = new TreeMap<String, Element>();
-    
+
     public Schema() {
         super();
     }
-    
+
     public Schema(String namespace) {
         super();
         this.namespace = namespace;
@@ -75,23 +72,23 @@ public class Schema implements KeyedType {
     public String getNamespace() {
         return namespace;
     }
-    
+
     /**
      * @param namespace the namespace to set
      */
     public void setNamespace(String namespace) {
         this.namespace = namespace;
     }
-    
+
     @Override
     public String getKey() {
         return getNamespace();
     }
-    
+
     public void addElement(Element element) {
         elements.put(element.getName(), element);
     }
-    
+
     /**
      * @return the elements
      */
@@ -99,7 +96,7 @@ public class Schema implements KeyedType {
     public Map<String, Element> getElements() {
         return elements;
     }
-    
+
     /**
      * @param elements the elements to set
      */
@@ -107,7 +104,9 @@ public class Schema implements KeyedType {
         this.elements = elements;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -118,7 +117,9 @@ public class Schema implements KeyedType {
         return result;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -142,5 +143,4 @@ public class Schema implements KeyedType {
         }
         return true;
     }
-
 }

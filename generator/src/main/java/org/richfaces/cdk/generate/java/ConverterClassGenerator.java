@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.generate.java;
 
 import java.util.Collection;
@@ -41,11 +40,10 @@ import com.google.inject.Inject;
  * @since Jan 20, 2010
  */
 public class ConverterClassGenerator extends FreeMarkerWriter<ConverterModel> implements CdkWriter {
-
     @Inject
-    public ConverterClassGenerator(@LibraryModel FreeMarkerRenderer configuration, 
-        @Output(Outputs.JAVA_CLASSES) FileManager output) {
-        super(configuration,  output);
+    public ConverterClassGenerator(@LibraryModel FreeMarkerRenderer configuration,
+            @Output(Outputs.JAVA_CLASSES) FileManager output) {
+        super(configuration, output);
     }
 
     @Override

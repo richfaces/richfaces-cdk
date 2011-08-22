@@ -25,16 +25,13 @@ import java.util.regex.Pattern;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class FileNameMapping {
-
     private String name;
-
     private String value;
-
     private Pattern namePattern = null;
-    
+
     public String getName() {
         return name;
     }
@@ -55,7 +52,7 @@ public class FileNameMapping {
         if (namePattern == null) {
             namePattern = Pattern.compile(name);
         }
-        
+
         return namePattern;
     }
 }

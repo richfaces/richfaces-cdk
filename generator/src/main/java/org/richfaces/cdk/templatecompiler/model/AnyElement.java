@@ -20,9 +20,9 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.model;
-import static org.richfaces.cdk.templatecompiler.QNameComparator.*;
+
+import static org.richfaces.cdk.templatecompiler.QNameComparator.QNAME_COMPARATOR;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -34,20 +34,20 @@ import javax.xml.namespace.QName;
 import org.richfaces.cdk.CdkException;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 public class AnyElement extends ModelFragment {
-
     private QName name;
     private String passThrough;
     private String passThroughWithExclusions;
-
     private Map<QName, Object> attributes = new TreeMap<QName, Object>(QNAME_COMPARATOR);
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the name
      */
@@ -56,7 +56,8 @@ public class AnyElement extends ModelFragment {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param name the name to set
      */
@@ -65,16 +66,20 @@ public class AnyElement extends ModelFragment {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the passThrough
      */
-    @XmlAttribute(namespace=Template.CDK_NAMESPACE)
+    @XmlAttribute(namespace = Template.CDK_NAMESPACE)
     public String getPassThrough() {
         return this.passThrough;
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param passThrough the passThrough to set
      */
     public void setPassThrough(String passThrough) {
@@ -82,16 +87,20 @@ public class AnyElement extends ModelFragment {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the passThroughWithExclusions
      */
-    @XmlAttribute(namespace=Template.CDK_NAMESPACE)
+    @XmlAttribute(namespace = Template.CDK_NAMESPACE)
     public String getPassThroughWithExclusions() {
         return this.passThroughWithExclusions;
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param passThroughWithExclusions the passThroughWithExclusions to set
      */
     public void setPassThroughWithExclusions(String passThroughWithExclusions) {
@@ -99,7 +108,8 @@ public class AnyElement extends ModelFragment {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the attributes
      */
@@ -109,7 +119,8 @@ public class AnyElement extends ModelFragment {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param attributes the attributes to set
      */

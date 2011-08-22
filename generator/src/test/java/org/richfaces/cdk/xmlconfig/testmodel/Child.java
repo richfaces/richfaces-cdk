@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.testmodel;
 
 import java.util.ArrayList;
@@ -36,18 +35,18 @@ import org.w3c.dom.Element;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 @XmlType(name = "ChildType", namespace = Root.HTTP_FOO_BAR_SCHEMA)
 public class Child implements Id {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @author asmirnov@exadel.com
-     * 
+     *
      */
     public static class Extension {
         private List<Element> extensions = new ArrayList<Element>();
@@ -67,7 +66,7 @@ public class Child implements Id {
         /**
          * <p class="changed_added_4_0">
          * </p>
-         * 
+         *
          * @return the extensions
          */
         @XmlAnyElement
@@ -78,7 +77,7 @@ public class Child implements Id {
         /**
          * <p class="changed_added_4_0">
          * </p>
-         * 
+         *
          * @return the myExtension
          */
         @XmlElement(namespace = Root.EXTENSIONS_NAMESPACE)
@@ -89,9 +88,8 @@ public class Child implements Id {
         /**
          * <p class="changed_added_4_0">
          * </p>
-         * 
-         * @param extensions
-         *            the extensions to set
+         *
+         * @param extensions the extensions to set
          */
         public void setExtensions(List<Element> extensions) {
             this.extensions = extensions;
@@ -100,23 +98,22 @@ public class Child implements Id {
         /**
          * <p class="changed_added_4_0">
          * </p>
-         * 
-         * @param myExtension
-         *            the myExtension to set
+         *
+         * @param myExtension the myExtension to set
          */
         public void setMyExtension(String myExtension) {
             parent.setWrapped(myExtension);
         }
     }
+
     private Extension extension;
     private String id;
     private String value;
-
     private String wrapped;
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -157,7 +154,7 @@ public class Child implements Id {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.xmlconfig.testmodel.Id#getId()
      */
     @Override
@@ -169,7 +166,7 @@ public class Child implements Id {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the value
      */
     @XmlElement(namespace = Root.HTTP_FOO_BAR_SCHEMA)
@@ -180,7 +177,7 @@ public class Child implements Id {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the wrapped
      */
     public String getWrapped() {
@@ -189,7 +186,7 @@ public class Child implements Id {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -209,9 +206,8 @@ public class Child implements Id {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param id
-     *            the id to set
+     *
+     * @param id the id to set
      */
     public void setId(String id) {
         this.id = id;
@@ -220,9 +216,8 @@ public class Child implements Id {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param value
-     *            the value to set
+     *
+     * @param value the value to set
      */
     public void setValue(String value) {
         this.value = value;
@@ -231,9 +226,8 @@ public class Child implements Id {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param wrapped
-     *            the wrapped to set
+     *
+     * @param wrapped the wrapped to set
      */
     public void setWrapped(String wrapped) {
         this.wrapped = wrapped;

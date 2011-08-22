@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.annotations;
 
 import java.lang.annotation.Retention;
@@ -28,114 +27,110 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * <p class="changed_added_4_0">
- * That annotation defines  class that is generated from the concrete class defined in the {@link JsfComponent} 
+ * That annotation defines third lvel component, specific for the concrete renderer, that is generated from the concrete class
+ * defined in the {@link JsfComponent}
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
  */
 @Retention(RetentionPolicy.SOURCE)
 public @interface RendererSpecificComponent {
-
-
-
     /**
      * <p class="changed_added_4_0">
-     * Type of the component. This is mandatory parameter because CDK uses <em>component-type</em> as primary key for
-     * components library model.
+     * Type of the JSF component.
      * </p>
-     * <p class="todo">
-     * TODO if this value is an empty, component type will be inferred from class name.
+     * <p class="naming">
+     * if this value is an empty, component type would be inferred from class name.
      * </p>
-     * 
+     *
      * @return component type.
      */
-    public String type() default "";
-
+    String type() default "";
 
     /**
      * <p class="changed_added_4_0">
      * Name of the generated component implementation class.
      * </p>
-     * 
+     *
      * @return
      */
-    public String generate() default "";
+    String generate() default "";
 
     /**
      * <p class="changed_added_4_0">
-     * Description used by IDE.
+     * Component description to include into generated faces-config and taglib.
      * </p>
-     * 
+     *
      * @return
      */
-    public Description description() default @Description();
+    Description description() default @Description();
 
     /**
      * <p class="changed_added_4_0">
-     * Cenerated Junit test.
+     * Junit test description. Isn't used in RichFaces 4.0, reserved for future releases.
      * </p>
-     * 
+     *
      * @return
      */
-    public Test test() default @Test(testClass = "");
+    Test test() default @Test(testClass = "");
 
     /**
      * <p class="changed_added_4_0">
      * JsfRenderer associated with this component.
      * </p>
-     * 
+     *
      * @return
      */
-    public JsfRenderer renderer() default @JsfRenderer();
+    JsfRenderer renderer() default @JsfRenderer();
 
     /**
      * <p class="changed_added_4_0">
-     * View Description Language, JSP or Facelets, tags.
+     * Tag description. If generated tags require special handlers, provide separate description for every type of tag, JSP and
+     * Facelets. Otherwise, the only one tag tag description with name and type {@link TagType#All}.
      * </p>
-     * 
+     *
      * @return
      */
-    public Tag[] tag() default { @Tag };
-
+    Tag[] tag() default { @Tag };
 
     /**
      * <p class="changed_added_4_0">
      * Component facets.
      * </p>
-     * 
+     *
      * @return
      */
-    public Facet[] facets() default {};
+    Facet[] facets() default {};
 
     /**
      * <p class="changed_added_4_0">
-     * defines fragments of faces-config.xml that contain standard attribute definitions. CDK also tries to read
-     * META-INF/cdk/attributes/[classname].xml file for all component superclasses and interfaces, therefore it is not
-     * necessary to explicit include definitions for UIComponent and any other standard JSF classes. CDK defines couple
-     * of its own "urn" namespaces: "urn:resource:" for classpath resources, "urn:config:" for for project configuration
-     * folder and "urn:attributes:" for META-INF/cdk/attributes/ in the annotations library.
+     * Defines file names for fragment of faces-config.xml that contain standard attribute definitions. All names relative to
+     * the META-INF/cdk/attributes/ folder in classpath. CDK also tries to read META-INF/cdk/attributes/[classname].xml file for
+     * all component superclasses and interfaces. Therefore, it is not necessary to explicitly include definitions for
+     * UIComponent and any other standard JSF classes.
      * </p>
-     * 
+     *
      * @return
      */
-    public String[] attributes() default {};
+    String[] attributes() default {};
 
     /**
      * <p class="changed_added_4_0">
-     * Interfaces that should be implemented in the generated component class. CDK processes all {@link Attribute} and
+     * Interfaces that should be implemented by the generated component class. CDK processes all {@link Attribute} and
      * {@link Facet} annotations in these interfaces
      * </p>
-     * 
+     *
      * @return
      */
-    public Class<?>[] interfaces() default {};
+    Class<?>[] interfaces() default {};
+
     /**
      * <p class="changed_added_4_0">
-     * Events fired by the component.
-     * </p>
-     * 
+     *
+     * @{link FacesEvent}s fired by the component.
+     *        </p>
+     *
      * @return
      */
-    public Event[] fires() default {};
-
+    Event[] fires() default {};
 }

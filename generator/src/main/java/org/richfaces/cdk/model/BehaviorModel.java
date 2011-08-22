@@ -20,22 +20,18 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.cdk.model;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class BehaviorModel extends ModelElementBase implements ModelElement<BehaviorModel> {
-
     private static final long serialVersionUID = -5023589072935390357L;
-    
     private FacesId rendererType;
-
 
     public BehaviorModel() {
     }
@@ -45,7 +41,9 @@ public class BehaviorModel extends ModelElementBase implements ModelElement<Beha
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param rendererType the rendererType to set
      */
     public void setRendererType(FacesId rendererType) {
@@ -53,7 +51,9 @@ public class BehaviorModel extends ModelElementBase implements ModelElement<Beha
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the rendererType
      */
     @Merge
@@ -61,8 +61,8 @@ public class BehaviorModel extends ModelElementBase implements ModelElement<Beha
         return rendererType;
     }
 
-    public <R,D> R accept(Visitor<R,D> visitor, D data) {
-        return visitor.visitBehavior(this,data);
+    public <R, D> R accept(Visitor<R, D> visitor, D data) {
+        return visitor.visitBehavior(this, data);
     }
 
     @Override

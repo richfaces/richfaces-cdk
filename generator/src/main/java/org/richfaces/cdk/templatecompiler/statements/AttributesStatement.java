@@ -29,26 +29,25 @@ import com.google.inject.Provider;
 import com.google.inject.name.Named;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class AttributesStatement extends StatementsContainer {
-
     private static final Splitter PASS_THGOUGH_SPLITTER = Splitter.on(Pattern.compile("\\s+,?\\s*"));
-
     private final Schema attributesSchema;
     private final Provider<WriteAttributeStatement> statementProvider;
     private final Provider<WriteAttributesSetStatement> passThroughStatementProvider;
     private final Logger logger;
     private QName elementName;
-
     private Collection<PropertyBase> componentAttributes;
 
     @Inject
     public AttributesStatement(@Named(Template.XHTML_EL_NAMESPACE) Schema attributesSchema,
-        Provider<WriteAttributeStatement> attributeStatementProvider,
-        Provider<WriteAttributesSetStatement> passThroughStatementProvider, Logger logger) {
+            Provider<WriteAttributeStatement> attributeStatementProvider,
+            Provider<WriteAttributesSetStatement> passThroughStatementProvider, Logger logger) {
         this.attributesSchema = attributesSchema;
         this.statementProvider = attributeStatementProvider;
         this.passThroughStatementProvider = passThroughStatementProvider;
@@ -58,7 +57,7 @@ public class AttributesStatement extends StatementsContainer {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @param attributes
      * @param componentAttributes
      */
@@ -79,8 +78,8 @@ public class AttributesStatement extends StatementsContainer {
         }
     }
 
-    private void processPassThroughWithExclusions(Set<String> processedAttributes,
-        TreeSet<PassThrough> passThroughAttributes, String passThroughWithExclusions) {
+    private void processPassThroughWithExclusions(Set<String> processedAttributes, TreeSet<PassThrough> passThroughAttributes,
+            String passThroughWithExclusions) {
         if (null != passThroughWithExclusions) {
             // cdk:passThroughWithExclusions="id,class,style"
             Map<String, Element> elements = attributesSchema.getElements();
@@ -92,15 +91,15 @@ public class AttributesStatement extends StatementsContainer {
                 for (Attribute schemaAttribute : schemaElement.getAttributes().values()) {
                     if (!processedAttributes.contains(schemaAttribute.getName())) {
                         passThroughAttributes.add(createPassThrough(schemaAttribute.getName(),
-                            schemaAttribute.getComponentAttributeName()));
+                                schemaAttribute.getComponentAttributeName()));
                     }
                 }
             }
         }
     }
 
-    private void processPassThrough(Set<String> processedAttributes,
-        TreeSet<PassThrough> passThroughAttributes, String passThrough) {
+    private void processPassThrough(Set<String> processedAttributes, TreeSet<PassThrough> passThroughAttributes,
+            String passThrough) {
         if (null != passThrough) {
             // cdk:passThrough="class:styleClass,style , id:clientId"
             Iterable<String> split = PASS_THGOUGH_SPLITTER.split(passThrough);
@@ -116,7 +115,7 @@ public class AttributesStatement extends StatementsContainer {
     }
 
     private void processRegularAttributes(AnyElement element, Set<String> processedAttributes,
-        TreeSet<PassThrough> passThroughAttributes) {
+            TreeSet<PassThrough> passThroughAttributes) {
         for (Map.Entry<QName, Object> entry : element.getAttributes().entrySet()) {
             QName qName = entry.getKey();
             if (Template.CDK_NAMESPACE.equals(qName.getNamespaceURI())) {
@@ -164,15 +163,13 @@ public class AttributesStatement extends StatementsContainer {
         return passThrough;
     }
 
-
     private WriteAttributeStatement createAttributeStatement() {
         WriteAttributeStatement writeAttributeStatement = statementProvider.get();
         addStatement(writeAttributeStatement);
         return writeAttributeStatement;
     }
 
-    private PropertyBase findComponentAttribute(final String name)
-        throws NoSuchElementException {
+    private PropertyBase findComponentAttribute(final String name) throws NoSuchElementException {
         return Iterables.find(componentAttributes, new NamePredicate(name));
     }
 

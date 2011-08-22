@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig;
 
 import java.io.IOException;
@@ -49,7 +48,6 @@ import com.google.inject.Inject;
  */
 @RunWith(CdkTestRunner.class)
 public abstract class XmlTest extends JaxbTestBase {
-
     @Inject
     protected Logger log;
 
@@ -74,8 +72,7 @@ public abstract class XmlTest extends JaxbTestBase {
         StreamResult result = new StreamResult(writer);
 
         JAXBBinding jaxbBinding = new JAXBBinding();
-        jaxbBinding.marshal(result, FacesConfigGenerator.FACES_SCHEMA_LOCATION, new FacesConfigAdapter()
-            .marshal(library));
+        jaxbBinding.marshal(result, FacesConfigGenerator.FACES_SCHEMA_LOCATION, new FacesConfigAdapter().marshal(library));
         return writer;
     }
 

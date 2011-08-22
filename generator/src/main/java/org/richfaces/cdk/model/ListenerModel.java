@@ -20,21 +20,20 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.cdk.model;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 @SuppressWarnings("serial")
 public class ListenerModel implements ModelElement<ListenerModel> {
-
     /**
-     *  <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      */
     private FacesId id;
 
@@ -45,12 +44,13 @@ public class ListenerModel implements ModelElement<ListenerModel> {
     public ListenerModel() {
     }
 
-    public <R,D> R accept(Visitor<R,D> visitor, D data) {
-        return visitor.visitListener(this,data);
+    public <R, D> R accept(Visitor<R, D> visitor, D data) {
+        return visitor.visitListener(this, data);
     }
 
     /*
-     *  (non-Javadoc)
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.model.ModelElement#getType()
      */
     public FacesId getId() {
@@ -58,7 +58,9 @@ public class ListenerModel implements ModelElement<ListenerModel> {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param id the id to set
      */
     public void setId(FacesId type) {
@@ -70,10 +72,9 @@ public class ListenerModel implements ModelElement<ListenerModel> {
 
         // TODO Auto-generated method stub
     }
-    
+
     @Override
     public boolean same(ListenerModel other) {
         return equals(other);
     }
-
 }

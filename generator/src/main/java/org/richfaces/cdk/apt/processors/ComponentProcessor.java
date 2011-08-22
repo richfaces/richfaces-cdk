@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt.processors;
 
 import java.lang.annotation.Annotation;
@@ -49,14 +48,12 @@ import org.richfaces.cdk.model.FacetModel;
  * That class process component-related annotations such as {@link org.richfaces.cdk.annotations.JsfComponent} or
  * {@link javax.faces.component.FacesComponent} and stores information in model.
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class ComponentProcessor extends ProcessorBase implements CdkAnnotationProcessor {
-
     public static final String COMPONENT_FAMILY = "COMPONENT_FAMILY";
-
     public static final String COMPONENT_TYPE = "COMPONENT_TYPE";
 
     public void process(Element componentElement, ComponentLibrary library) {
@@ -74,12 +71,11 @@ public class ComponentProcessor extends ProcessorBase implements CdkAnnotationPr
 
             // Process the second level annotations.
             for (AnnotationMirror subcomponent : sourceUtils.getAnnotationValues(annotation, "components",
-                AnnotationMirror.class)) {
+                    AnnotationMirror.class)) {
                 ComponentModel subcomponentModel = new ComponentModel();
                 subcomponentModel.setBaseClass(component.getTargetClass());
                 if (!sourceUtils.isDefaultValue(subcomponent, "generate")) {
-                    subcomponentModel.setTargetClass(sourceUtils.getAnnotationValue(subcomponent, "generate",
-                        ClassName.class));
+                    subcomponentModel.setTargetClass(sourceUtils.getAnnotationValue(subcomponent, "generate", ClassName.class));
                     subcomponentModel.setGenerate(true);
                 }
                 setComponentProperties(null, subcomponentModel, subcomponent);
@@ -92,14 +88,14 @@ public class ComponentProcessor extends ProcessorBase implements CdkAnnotationPr
      * <p class="changed_added_4_0">
      * process annotation and set component model properties.
      * </p>
-     * 
+     *
      * @param componentElement
      * @param component
      * @param annotation
      * @throws CdkException
      */
     void setComponentProperties(TypeElement componentElement, ComponentModel component, AnnotationMirror annotation)
-        throws CdkException {
+            throws CdkException {
         SourceUtils sourceUtils = getSourceUtils();
 
         setComponentType(componentElement, component, annotation);
@@ -111,8 +107,7 @@ public class ComponentProcessor extends ProcessorBase implements CdkAnnotationPr
         processFacets(componentElement, component, annotation);
         processAttributes(componentElement, component, annotation);
         processEvents(componentElement, component, annotation);
-        for (TypeMirror atributesInterface : sourceUtils
-            .getAnnotationValues(annotation, "interfaces", TypeMirror.class)) {
+        for (TypeMirror atributesInterface : sourceUtils.getAnnotationValues(annotation, "interfaces", TypeMirror.class)) {
             if (TypeKind.DECLARED.equals(atributesInterface.getKind())) {
                 processFacetsFromType(sourceUtils.asTypeElement(atributesInterface), component, sourceUtils);
             } else {
@@ -136,7 +131,7 @@ public class ComponentProcessor extends ProcessorBase implements CdkAnnotationPr
     }
 
     void setComponentType(TypeElement componentElement, ComponentModel component, AnnotationMirror annotation) {
-        component.setId(FacesId.parseId(getAnnotationPropertyOrConstant(componentElement, annotation,"type",COMPONENT_TYPE)));
+        component.setId(FacesId.parseId(getAnnotationPropertyOrConstant(componentElement, annotation, "type", COMPONENT_TYPE)));
     }
 
     final void processFacets(TypeElement componentElement, ComponentModel component, AnnotationMirror annotation) {
@@ -167,7 +162,6 @@ public class ComponentProcessor extends ProcessorBase implements CdkAnnotationPr
                     facetModel.setGenerate(true);
                 }
             }
-
         }
     }
 
@@ -182,8 +176,9 @@ public class ComponentProcessor extends ProcessorBase implements CdkAnnotationPr
     }
 
     final void setComponeneFamily(TypeElement componentElement, ComponentModel component, AnnotationMirror annotation) {
-        if(null != componentElement){
-            component.setFamily(FacesId.parseId(getAnnotationPropertyOrConstant(componentElement, annotation,"family",COMPONENT_FAMILY)));
+        if (null != componentElement) {
+            component.setFamily(FacesId.parseId(getAnnotationPropertyOrConstant(componentElement, annotation, "family",
+                    COMPONENT_FAMILY)));
         }
     }
 

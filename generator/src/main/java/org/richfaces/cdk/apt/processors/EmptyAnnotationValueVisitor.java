@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.apt.processors;
 
 import java.util.List;
@@ -35,7 +34,6 @@ import javax.lang.model.type.TypeMirror;
  * @since Apr 1, 2010
  */
 public class EmptyAnnotationValueVisitor<R> implements AnnotationValueVisitor<R, Object> {
-    
     @Override
     public R visit(AnnotationValue av, Object o) {
         System.out.println("-1- AttributeProcessor.visit(" + av + ", " + o + ")");

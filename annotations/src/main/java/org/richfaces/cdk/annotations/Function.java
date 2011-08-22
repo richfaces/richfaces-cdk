@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.annotations;
 
 import java.lang.annotation.ElementType;
@@ -29,25 +28,33 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * <p class="changed_added_4_0">This annotation defines static method or all public static methods in the annotated class as EL functions.</p>
+ * <p class="changed_added_4_0">
+ * This annotation defines static method or all public static methods in the annotated class as EL functions.
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 @Retention(RetentionPolicy.CLASS)
-@Target( { ElementType.METHOD })
+@Target({ ElementType.METHOD })
 public @interface Function {
-    
-    public Description description() default @Description();
+    Description description() default @Description();
 
     /**
-     * <p class="changed_added_4_0">Function n</p>
+     * <p class="changed_added_4_0">
+     * EL-function name
+     * </p>
+     *
      * @return
      */
-    public String name() default "";
-    
+    String name() default "";
+
     /**
-     * <p class="changed_added_4_0">Tag library for include given function</p>
+     * <p class="changed_added_4_0">
+     * Tag library for which given function will be included.
+     * </p>
+     *
      * @return
      */
-    public TagType type() default TagType.Facelets;
+    TagType type() default TagType.Facelets;
 }

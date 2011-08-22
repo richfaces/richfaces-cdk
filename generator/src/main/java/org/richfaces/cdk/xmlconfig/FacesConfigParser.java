@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig;
 
 import java.io.File;
@@ -42,30 +41,25 @@ import com.google.inject.Inject;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class FacesConfigParser implements ModelBuilder {
-
     private static final FacesConfigAdapter ADAPTER = new FacesConfigAdapter();
-
     @Inject
     private Logger log;
-
     @Inject
     private JAXB jaxbBinding;
-
     @Inject
     private ComponentLibrary library;
-
     @Inject
     @Source(Sources.FACES_CONFIGS)
     private FileManager configFiles;
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.ModelBuilder#build()
      */
     @Override

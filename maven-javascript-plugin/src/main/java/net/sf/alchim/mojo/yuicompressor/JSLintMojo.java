@@ -18,9 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package net.sf.alchim.mojo.yuicompressor;
 
 /**
@@ -39,7 +36,7 @@ public class JSLintMojo extends MojoSupport {
 
     @Override
     protected String[] getDefaultIncludes() throws Exception {
-        return new String[] {"**/**.js"};
+        return new String[] { "**/**.js" };
     }
 
     @Override
@@ -48,7 +45,8 @@ public class JSLintMojo extends MojoSupport {
     }
 
     @Override
-    public void afterProcess() throws Exception {}
+    public void afterProcess() throws Exception {
+    }
 
     @Override
     protected void processFile(SourceFile src) throws Exception {

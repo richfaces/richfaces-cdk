@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig.testmodel;
 
 import java.io.StringWriter;
@@ -35,7 +34,6 @@ import org.richfaces.cdk.xmlconfig.XmlTest;
  * @since Jan 13, 2010
  */
 public class ValidatorBeanTest extends XmlTest {
-
     @Test
     public void testMarshal() throws Exception {
         ComponentLibrary library = new ComponentLibrary();

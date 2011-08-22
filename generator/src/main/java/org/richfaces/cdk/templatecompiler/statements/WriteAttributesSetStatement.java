@@ -33,16 +33,12 @@ import com.google.inject.Inject;
  * @author Nick Belaevski
  */
 public class WriteAttributesSetStatement extends FreeMarkerTemplateStatementBase {
-    
     /**
-    *
-    */
+     *
+     */
     private static final String PASS_THROUGH_ATTRIBUTES_FIELD_NAME = "PASS_THROUGH_ATTRIBUTES";
-
     private static AtomicInteger fieldCounter = new AtomicInteger(0);
-
     private String fieldName;
-
     private Collection<PassThrough> attributes;
 
     @Inject
@@ -59,7 +55,9 @@ public class WriteAttributesSetStatement extends FreeMarkerTemplateStatementBase
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param fieldName the fieldName to set
      */
     public void setFieldName(String fieldName) {
@@ -71,11 +69,12 @@ public class WriteAttributesSetStatement extends FreeMarkerTemplateStatementBase
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the attributes
      */
     public Collection<PassThrough> getAttributes() {
         return this.attributes;
     }
-
 }

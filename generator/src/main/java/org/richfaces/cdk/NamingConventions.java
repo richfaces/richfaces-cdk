@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk;
 
 import org.richfaces.cdk.model.ClassName;
@@ -30,32 +29,33 @@ import org.richfaces.cdk.model.InvalidNameException;
 
 /**
  * <p class="changed_added_4_0">
- * That interface defines methods that calculates names according to <a
- * href="http://www.jboss.org/community/docs/DOC-13693">CDK naming
- * conventions</>
+ * That interface defines methods that calculates names according to <a href="http://www.jboss.org/community/docs/DOC-13693">CDK
+ * naming conventions</>
  * </p>
  *
  * @author asmirnov@exadel.com
  */
 public interface NamingConventions {
-
     /**
-     * <p class="changed_added_4_0">Calculates component type from class name.</p>
+     * <p class="changed_added_4_0">
+     * Calculates component type from class name.
+     * </p>
      * <ul>
      * <li><code>&lt;prefix&gt;.component.Abstract&lt;Name&gt;</code> =&gt;<code>&lt;prefix&gt;.&lt;Name&gt;</code></li>
-     * <li><code>&lt;prefix&gt;.component.&lt;Name&gt;Base</code> =&gt; <code>&lt;prefix&gt;.&lt;Name&gt;</code> </li>
-     * <li><code>&lt;prefix&gt;.component.UI&lt;Name&gt;</code> =&gt; <code>&lt;prefix&gt;.&lt;Name&gt;</code> </li>
+     * <li><code>&lt;prefix&gt;.component.&lt;Name&gt;Base</code> =&gt; <code>&lt;prefix&gt;.&lt;Name&gt;</code></li>
+     * <li><code>&lt;prefix&gt;.component.UI&lt;Name&gt;</code> =&gt; <code>&lt;prefix&gt;.&lt;Name&gt;</code></li>
      * </ul>
      *
      * @param componentClass
      * @return JSF component type.
      * @throws InvalidNameException if className does not match naming conventions.
      */
-    public FacesId inferComponentType(ClassName componentClass) throws InvalidNameException;
-
+    FacesId inferComponentType(ClassName componentClass) throws InvalidNameException;
 
     /**
-     * <p class="changed_added_4_0">Calculates concrete component class from explicit value or type.</p>
+     * <p class="changed_added_4_0">
+     * Calculates concrete component class from explicit value or type.
+     * </p>
      * <ul>
      * <li>Calculate name from type as <code>&lt;prefix&gt;.&lt;Name&gt;</code> =&gt;
      * <code>&lt;prefix&gt;.component.UI&lt;Name&gt;</code> .</li>
@@ -65,102 +65,128 @@ public interface NamingConventions {
      * @return Descriptor of generated UIComponent class.
      * @throws InvalidNameException if component type does not follow naming conventions.
      */
-    public ClassName inferUIComponentClass(FacesId componentType) throws InvalidNameException;
-
+    ClassName inferUIComponentClass(FacesId componentType) throws InvalidNameException;
 
     /**
-     * <p class="changed_added_4_0">Infer component family by component type</p>
+     * <p class="changed_added_4_0">
+     * Infer component family by component type
+     * </p>
+     *
      * @param componentType
      * @return
      * @throws InvalidNameException
      */
-    public FacesId inferUIComponentFamily(FacesId componentType)  throws InvalidNameException;
+    FacesId inferUIComponentFamily(FacesId componentType) throws InvalidNameException;
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param componentType
      * @param markup
      * @return
      * @throws InvalidNameException
      */
-    public ClassName inferTagHandlerClass(FacesId componentType, String markup) throws InvalidNameException;
+    ClassName inferTagHandlerClass(FacesId componentType, String markup) throws InvalidNameException;
 
     /**
-     * <p class="changed_added_4_0">Infer VDL tag name by component type</p>
+     * <p class="changed_added_4_0">
+     * Infer VDL tag name by component type
+     * </p>
+     *
      * @param componentType
      * @return
      * @throws InvalidNameException
      */
-    public String inferTagName(FacesId componentType)  throws InvalidNameException;
+    String inferTagName(FacesId componentType) throws InvalidNameException;
 
     /**
-     * <p class="changed_added_4_0">Determine renderer type by Java class</p>
+     * <p class="changed_added_4_0">
+     * Determine renderer type by Java class
+     * </p>
+     *
      * @param targetClass
      * @return
      */
-    public FacesId inferRendererType(ClassName targetClass);
-
+    FacesId inferRendererType(ClassName targetClass);
 
     /**
-     * <p class="changed_added_4_0">Infer renderer family by renderer type</p>
+     * <p class="changed_added_4_0">
+     * Infer renderer family by renderer type
+     * </p>
+     *
      * @param type
      * @return
      */
-    public FacesId inferRendererFamily(FacesId type);
+    FacesId inferRendererFamily(FacesId type);
 
     /**
-     * <p class="changed_added_4_0">Infer renderer type from template file path</p>
+     * <p class="changed_added_4_0">
+     * Infer renderer type from template file path
+     * </p>
+     *
      * @param templateName
      * @return
      */
-    public FacesId inferRendererTypeByTemplatePath(String templateName);
+    FacesId inferRendererTypeByTemplatePath(String templateName);
 
     /**
-     * <p class="changed_added_4_0">Infer Java class name by renderer type.</p>
+     * <p class="changed_added_4_0">
+     * Infer Java class name by renderer type.
+     * </p>
+     *
      * @param id
      * @return
      */
-    public ClassName inferRendererClass(FacesId id);
-
+    ClassName inferRendererClass(FacesId id);
 
     /**
-     * <p class="changed_added_4_0">Infer behavior type by class name</p>
+     * <p class="changed_added_4_0">
+     * Infer behavior type by class name
+     * </p>
+     *
      * @param targetClass
      * @return
      */
-    public FacesId inferBehaviorType(ClassName targetClass);
-    
+    FacesId inferBehaviorType(ClassName targetClass);
 
     /**
-     * <p class="changed_added_4_0">Infer name for generated behavior class by type</p>
+     * <p class="changed_added_4_0">
+     * Infer name for generated behavior class by type
+     * </p>
+     *
      * @param id
      * @return
      */
-    public ClassName inferBehaviorClass(FacesId id);
-
+    ClassName inferBehaviorClass(FacesId id);
 
     /**
-     * <p class="changed_added_4_0">Determine default taglib uri from library model.</p>
+     * <p class="changed_added_4_0">
+     * Determine default taglib uri from library model.
+     * </p>
+     *
      * @param library
      * @return
      */
-    public String inferTaglibUri(ComponentLibrary library);
-
+    String inferTaglibUri(ComponentLibrary library);
 
     /**
-     * <p class="changed_added_4_0">Infer short taglib name from URI</p>
+     * <p class="changed_added_4_0">
+     * Infer short taglib name from URI
+     * </p>
+     *
      * @param uri
      * @return
      */
-    public String inferTaglibName(String uri);
-
+    String inferTaglibName(String uri);
 
     /**
-     * <p class="changed_added_4_0">Infer renderer type by component type or family.</p>
+     * <p class="changed_added_4_0">
+     * Infer renderer type by component type or family.
+     * </p>
+     *
      * @param id
      * @return
      */
-    public FacesId inferRendererType(FacesId id);
-    
-    
+    FacesId inferRendererType(FacesId id);
 }

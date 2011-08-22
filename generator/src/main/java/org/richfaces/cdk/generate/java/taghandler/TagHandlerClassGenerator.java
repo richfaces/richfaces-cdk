@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.generate.java.taghandler;
 
 import java.io.File;
@@ -45,15 +44,13 @@ import freemarker.template.TemplateException;
  * @since Feb 22, 2010
  */
 public class TagHandlerClassGenerator {
-
     private static final String TAGHANDLER_TEMPLATE = "taghandler.ftl";
-
     private final FileManager output;
-
     private final FreeMarkerRenderer configuration;
 
     @Inject
-    public TagHandlerClassGenerator(@LibraryModel FreeMarkerRenderer configuration, @Output(Outputs.JAVA_CLASSES) FileManager output) {
+    public TagHandlerClassGenerator(@LibraryModel FreeMarkerRenderer configuration,
+            @Output(Outputs.JAVA_CLASSES) FileManager output) {
         this.configuration = configuration;
         this.output = output;
     }
@@ -61,8 +58,7 @@ public class TagHandlerClassGenerator {
     public boolean process(ModelElementBase model, TagModel tag) throws CdkException {
         try {
             Writer writer = getOutput(tag);
-            configuration.writeTemplate(TAGHANDLER_TEMPLATE,new TagWithModel<ModelElementBase>(tag, model),
-                writer);
+            configuration.writeTemplate(TAGHANDLER_TEMPLATE, new TagWithModel<ModelElementBase>(tag, model), writer);
             writer.close();
         } catch (IOException e) {
             throw new CdkException(e);

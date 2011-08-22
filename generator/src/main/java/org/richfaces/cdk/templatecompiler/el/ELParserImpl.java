@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.richfaces.cdk.templatecompiler.el;
 
@@ -18,7 +18,6 @@ import com.google.inject.Inject;
  *
  */
 public class ELParserImpl implements ELParser {
-    
     private final TypesFactory typesFactory;
     private final Logger log;
 
@@ -28,23 +27,27 @@ public class ELParserImpl implements ELParser {
         this.log = log;
     }
 
-    /* (non-Javadoc)
-     * @see org.richfaces.cdk.templatecompiler.ELParser#parse(java.lang.String, org.richfaces.cdk.templatecompiler.builder.model.Variables, org.richfaces.cdk.templatecompiler.el.ELType)
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.richfaces.cdk.templatecompiler.ELParser#parse(java.lang.String,
+     * org.richfaces.cdk.templatecompiler.builder.model.Variables, org.richfaces.cdk.templatecompiler.el.ELType)
      */
     @Override
     public TypedTemplateStatement parse(String expression, Variables variables, ELType expectedType) throws ParsingException {
-        ELVisitor visitor = new ELVisitor(log,typesFactory);
+        ELVisitor visitor = new ELVisitor(log, typesFactory);
         visitor.parse(expression, variables, expectedType);
         return visitor;
     }
 
     @Override
-    public TypedTemplateStatement parse(String expression, Variables variables, String expectedType)
-        throws ParsingException {
-        return parse(expression,variables,typesFactory.getType(expectedType));
+    public TypedTemplateStatement parse(String expression, Variables variables, String expectedType) throws ParsingException {
+        return parse(expression, variables, typesFactory.getType(expectedType));
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.ELParser#getType(java.lang.Class)
      */
     @Override
@@ -52,7 +55,9 @@ public class ELParserImpl implements ELParser {
         return typesFactory.getType(targetClass);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.ELParser#getType(java.lang.String)
      */
     @Override
@@ -60,12 +65,13 @@ public class ELParserImpl implements ELParser {
         return typesFactory.getType(classExpression);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.templatecompiler.ELParser#getType(org.richfaces.cdk.model.ClassName)
      */
     @Override
     public ELType getType(ClassName targetClass) {
         return typesFactory.getType(targetClass.toString());
     }
-
 }

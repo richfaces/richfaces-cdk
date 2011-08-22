@@ -27,21 +27,21 @@ import java.util.Arrays;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 class ParameterizedTypeImpl implements ParameterizedType {
-
     private Type rawType;
-    
     private Type[] actualTypeArguments;
-    
+
     public ParameterizedTypeImpl(Type rawType, Type[] actualTypeArguments) {
         super();
         this.rawType = rawType;
         this.actualTypeArguments = actualTypeArguments;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.reflect.ParameterizedType#getActualTypeArguments()
      */
     @Override
@@ -49,7 +49,9 @@ class ParameterizedTypeImpl implements ParameterizedType {
         return actualTypeArguments;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.reflect.ParameterizedType#getOwnerType()
      */
     @Override
@@ -58,7 +60,9 @@ class ParameterizedTypeImpl implements ParameterizedType {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.reflect.ParameterizedType#getRawType()
      */
     @Override
@@ -66,7 +70,9 @@ class ParameterizedTypeImpl implements ParameterizedType {
         return rawType;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -78,7 +84,9 @@ class ParameterizedTypeImpl implements ParameterizedType {
         return result;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -105,5 +113,4 @@ class ParameterizedTypeImpl implements ParameterizedType {
         }
         return true;
     }
-
 }

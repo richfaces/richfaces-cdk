@@ -41,28 +41,30 @@ import com.google.common.collect.Sets;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class ExternalContextImpl extends ExternalContext {
-
     private String webRoot;
-    
     private Map<String, String> initParamsMap = new HashMap<String, String>();
 
     protected void setWebRoot(String webroot) {
         this.webRoot = webroot;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#dispatch(java.lang.String)
      */
     @Override
     public void dispatch(String path) throws IOException {
         // TODO Auto-generated method stub
-        
+
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#encodeActionURL(java.lang.String)
      */
     @Override
@@ -71,7 +73,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#encodeNamespace(java.lang.String)
      */
     @Override
@@ -80,7 +84,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#encodeResourceURL(java.lang.String)
      */
     @Override
@@ -89,7 +95,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getApplicationMap()
      */
     @Override
@@ -98,7 +106,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getAuthType()
      */
     @Override
@@ -107,7 +117,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getContext()
      */
     @Override
@@ -116,7 +128,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getInitParameter(java.lang.String)
      */
     @Override
@@ -125,7 +139,9 @@ public class ExternalContextImpl extends ExternalContext {
         return initParamsMap.get(name);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getInitParameterMap()
      */
     @Override
@@ -134,7 +150,9 @@ public class ExternalContextImpl extends ExternalContext {
         return initParamsMap;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getRemoteUser()
      */
     @Override
@@ -143,7 +161,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getRequest()
      */
     @Override
@@ -152,7 +172,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getRequestContextPath()
      */
     @Override
@@ -161,7 +183,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getRequestCookieMap()
      */
     @Override
@@ -170,7 +194,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getRequestHeaderMap()
      */
     @Override
@@ -179,7 +205,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getRequestHeaderValuesMap()
      */
     @Override
@@ -188,7 +216,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getRequestLocale()
      */
     @Override
@@ -197,7 +227,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getRequestLocales()
      */
     @Override
@@ -206,7 +238,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getRequestMap()
      */
     @Override
@@ -215,7 +249,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getRequestParameterMap()
      */
     @Override
@@ -224,7 +260,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getRequestParameterNames()
      */
     @Override
@@ -233,7 +271,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getRequestParameterValuesMap()
      */
     @Override
@@ -242,7 +282,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getRequestPathInfo()
      */
     @Override
@@ -251,7 +293,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getRequestServletPath()
      */
     @Override
@@ -260,7 +304,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getResource(java.lang.String)
      */
     @Override
@@ -268,7 +314,9 @@ public class ExternalContextImpl extends ExternalContext {
         return new URL("file:" + webRoot + path);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getResourceAsStream(java.lang.String)
      */
     @Override
@@ -282,14 +330,14 @@ public class ExternalContextImpl extends ExternalContext {
                 e.printStackTrace();
             }
         }
-        
+
         return null;
     }
 
     @Override
     public Set<String> getResourcePaths(String path) {
         File root = new File(webRoot, path);
-        
+
         Set<String> result = Sets.newHashSet();
 
         if (root.exists()) {
@@ -300,15 +348,17 @@ public class ExternalContextImpl extends ExternalContext {
                 if (child.isDirectory()) {
                     name += '/';
                 }
-                
+
                 result.add(path + '/' + name);
             }
         }
-        
+
         return result;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getResponse()
      */
     @Override
@@ -317,7 +367,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getSession(boolean)
      */
     @Override
@@ -326,7 +378,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getSessionMap()
      */
     @Override
@@ -335,7 +389,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#getUserPrincipal()
      */
     @Override
@@ -344,7 +400,9 @@ public class ExternalContextImpl extends ExternalContext {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#isUserInRole(java.lang.String)
      */
     @Override
@@ -353,31 +411,37 @@ public class ExternalContextImpl extends ExternalContext {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#log(java.lang.String)
      */
     @Override
     public void log(String message) {
         // TODO Auto-generated method stub
-        
+
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#log(java.lang.String, java.lang.Throwable)
      */
     @Override
     public void log(String message, Throwable exception) {
         // TODO Auto-generated method stub
-        
+
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see javax.faces.context.ExternalContext#redirect(java.lang.String)
      */
     @Override
     public void redirect(String url) throws IOException {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override

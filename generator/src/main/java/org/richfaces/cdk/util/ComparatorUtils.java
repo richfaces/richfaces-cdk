@@ -23,26 +23,32 @@ package org.richfaces.cdk.util;
 
 /**
  * Helper methods for comparable types
- * 
+ *
  * @author Nick Belaevski
  */
 public final class ComparatorUtils {
-
     private ComparatorUtils() {
-        //private constructor
+        // private constructor
     }
-    
+
     /**
-     * <p>Does null-safe comparison of mutually comparable objects.</p>
-     * 
-     * <p>Obeys common rules of {@link Comparable#compareTo(Object)} methods if both objects to compare 
-     * are non-null.</p> 
-     * 
-     * <p>If one of the objects is <code>null</code>, but the other is not, then <code>null</code> object
-     * is considered to be less than non-null.</p>
-     * 
-     * <p>Two <code>null</code> objects are considered as equal.</p>
-     * 
+     * <p>
+     * Does null-safe comparison of mutually comparable objects.
+     * </p>
+     *
+     * <p>
+     * Obeys common rules of {@link Comparable#compareTo(Object)} methods if both objects to compare are non-null.
+     * </p>
+     *
+     * <p>
+     * If one of the objects is <code>null</code>, but the other is not, then <code>null</code> object is considered to be less
+     * than non-null.
+     * </p>
+     *
+     * <p>
+     * Two <code>null</code> objects are considered as equal.
+     * </p>
+     *
      * @param <T> the type of objects that this object may be compared to
      * @param t1 the first object
      * @param t2 the second object
@@ -59,7 +65,10 @@ public final class ComparatorUtils {
     }
 
     /**
-     * <p class="changed_added_4_0">Null-safe equals check. Return true if both arguments are null or equal.</p>
+     * <p class="changed_added_4_0">
+     * Null-safe equals check. Return true if both arguments are null or equal.
+     * </p>
+     *
      * @param <T> the type of objects to compare.
      * @param t1
      * @param t2
@@ -74,5 +83,4 @@ public final class ComparatorUtils {
             return t1.equals(t2);
         }
     }
-   
 }

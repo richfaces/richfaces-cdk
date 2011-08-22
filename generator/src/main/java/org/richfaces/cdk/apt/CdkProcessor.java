@@ -20,22 +20,19 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt;
 
 import javax.annotation.processing.Processor;
 
 /**
  * <p class="changed_added_4_0">
- * Base class for all CDK Annotation processors. That class provides access to current CDK context and utility methods
- * for Java source models.
+ * Base class for all CDK Annotation processors. That class provides access to current CDK context and utility methods for Java
+ * source models.
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public interface CdkProcessor extends Processor {
-
-    public void processNonJavaSources();
-
+    void processNonJavaSources();
 }

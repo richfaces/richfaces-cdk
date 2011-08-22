@@ -4,7 +4,7 @@ import java.util.regex.*;
 
 try
 {
-    File generatedPackage = new File( basedir, "target/generated-sources/main/java" );
+    File generatedPackage = new File( basedir, "annotated-component/target/generated-sources/main/java" );
     System.out.println( "Checking for existence of generated package directory: " + generatedPackage );
     if ( !generatedPackage.isDirectory() )
     {

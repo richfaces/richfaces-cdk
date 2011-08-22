@@ -21,17 +21,16 @@
  */
 package org.richfaces.cdk.util;
 
-import static org.junit.Assert.*;
-import static org.richfaces.cdk.util.ComparatorUtils.*;
+import static org.junit.Assert.assertTrue;
+import static org.richfaces.cdk.util.ComparatorUtils.nullSafeCompare;
 
 import org.junit.Test;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public class ComparatorUtilsTest {
-
     @Test
     public void testNullSafeCompare() throws Exception {
         assertTrue(nullSafeCompare("a", "b") < 0);

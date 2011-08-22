@@ -18,11 +18,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.cdk.templatecompiler.el.node;
-
 
 import static org.richfaces.cdk.util.JavaUtils.getEscapedString;
 
@@ -46,7 +42,7 @@ public class AstLiteralTreeNode extends AbstractTreeNode {
     public void visit(StringBuilder sb, ELVisitor visitor) throws ParsingException {
         if (getNode().getImage() != null) {
             sb.append(getEscapedString(getNode().getImage()));
-            
+
             visitor.setExpressionType(TypesFactory.STRING_TYPE);
         }
     }

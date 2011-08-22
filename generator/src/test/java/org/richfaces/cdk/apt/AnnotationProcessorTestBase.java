@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.apt;
 
 import java.io.File;
@@ -54,9 +53,7 @@ import com.google.inject.Injector;
  * @since Jan 14, 2010
  */
 public abstract class AnnotationProcessorTestBase extends CdkTestBase {
-
     protected static final class TestName implements Name {
-
         private final String name;
 
         public TestName(String name) {
@@ -91,17 +88,13 @@ public abstract class AnnotationProcessorTestBase extends CdkTestBase {
     }
 
     protected static final String FOO_BAR = "foo.Bar";
-
     @Inject
     protected Logger log;
-
     @Inject
     @Source(Sources.JAVA_SOURCES)
     protected FileManager sources;
-
     @Inject
     protected MockController mockController;
-
     @Inject
     private Injector injector;
 
@@ -115,21 +108,19 @@ public abstract class AnnotationProcessorTestBase extends CdkTestBase {
             for (String src : sources()) {
                 sourceFiles.add(getJavaFile(src));
             }
-            binder.bind(FileManager.class).annotatedWith(new SourceImpl(Sources.JAVA_SOURCES)).toInstance(
-                new SourceFileManagerImpl(sourceFiles, this.testSourceDirectory));
+            binder.bind(FileManager.class).annotatedWith(new SourceImpl(Sources.JAVA_SOURCES))
+                    .toInstance(new SourceFileManagerImpl(sourceFiles, null /*this.testSourceDirectory*/));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
     protected CdkClassLoader createClassLoader() {
         try {
             return new CdkClassLoader(ImmutableList.of(getLibraryFile("test.source.properties"),
-                getLibraryFile(ComponentModel.class), getLibraryFile(ELContext.class),
-                getLibraryFile(JsfComponent.class), getLibraryFile(UIComponent.class)), this.getClass()
-                    .getClassLoader());
+                    getLibraryFile(ComponentModel.class), getLibraryFile(ELContext.class), getLibraryFile(JsfComponent.class),
+                    getLibraryFile(UIComponent.class)), this.getClass().getClassLoader());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

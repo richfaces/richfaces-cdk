@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler;
 
 import org.richfaces.cdk.templatecompiler.el.types.ELType;
@@ -30,22 +29,22 @@ import freemarker.ext.beans.StringModel;
 import freemarker.template.TemplateModel;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class ELTypeTemplateModel extends StringModel implements TemplateModel {
-
     private final ELType elType;
 
     public ELTypeTemplateModel(ELType obj, BeansWrapper wrapper) {
         super(obj, wrapper);
         this.elType = obj;
     }
-    
+
     @Override
     public String getAsString() {
         return elType.getCode();
     }
-
 }

@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.generate.freemarker;
 
 import org.richfaces.cdk.model.ClassName;
@@ -41,12 +40,11 @@ import freemarker.template.TemplateModelException;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class LibraryModelWrapper extends BeansWrapper implements ObjectWrapper {
-
     static final ModelFactory STRING_MODEL_FACTORY = new ModelFactory() {
         public TemplateModel create(Object object, ObjectWrapper wrapper) {
             return new StringModel(object, (BeansWrapper) wrapper);
@@ -55,7 +53,7 @@ public class LibraryModelWrapper extends BeansWrapper implements ObjectWrapper {
 
     public LibraryModelWrapper() {
         super();
-//        setStrict(true);
+        // setStrict(true);
         setSimpleMapWrapper(true);
         // setNullModel(TemplateScalarModel.EMPTY_STRING);
         setUseCache(true);
@@ -75,7 +73,7 @@ public class LibraryModelWrapper extends BeansWrapper implements ObjectWrapper {
             return create(obj, TagTemplateModel.FACTORY);
         } else if (obj instanceof FacetModel) {
             return create(obj, FacetTemplateModel.FACTORY);
-        } else if (obj instanceof ModelElementBase ) {
+        } else if (obj instanceof ModelElementBase) {
             return create(obj, ModelElementBaseTemplateModel.FACTORY);
         } else {
             return super.wrap(obj);

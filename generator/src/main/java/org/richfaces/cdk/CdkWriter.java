@@ -20,19 +20,17 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.cdk;
 
 import org.richfaces.cdk.model.ComponentLibrary;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public interface CdkWriter {
-
-    public void render(ComponentLibrary library) throws CdkException;
+    void render(ComponentLibrary library) throws CdkException;
 }

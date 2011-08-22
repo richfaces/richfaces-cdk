@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.richfaces.cdk.templatecompiler;
 
@@ -19,7 +19,6 @@ import com.google.inject.Provider;
  *
  */
 public class XhtmlElSchemaProvider implements Provider<Schema> {
-    
     private final JAXB jaxbBinding;
 
     @Inject
@@ -35,7 +34,6 @@ public class XhtmlElSchemaProvider implements Provider<Schema> {
         } catch (FileNotFoundException e) {
             throw new CdkException(e);
         }
-        return  schemaSet.getSchemas().get(Template.XHTML_EL_NAMESPACE);
+        return schemaSet.getSchemas().get(Template.XHTML_EL_NAMESPACE);
     }
-
 }

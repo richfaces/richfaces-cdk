@@ -18,11 +18,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
-
-
 package org.richfaces.cdk.templatecompiler.el.node;
-
 
 import org.jboss.el.parser.Node;
 import org.richfaces.cdk.templatecompiler.el.ELNodeConstants;
@@ -43,13 +39,13 @@ public class AstChoiceTreeNode extends AbstractTreeNode {
 
     @Override
     public void visit(StringBuilder sb, ELVisitor visitor) throws ParsingException {
-        //condition ? correctConditionBranch : incorrectConditionBranch
+        // condition ? correctConditionBranch : incorrectConditionBranch
         String condition = coerceToBoolean(getChildOutput(0, visitor), visitor);
         String correctConditionBranch = getChildOutput(1, visitor);
-        ELType correctConditionBranchType = visitor.getType(); 
+        ELType correctConditionBranchType = visitor.getType();
         String incorrectConditionBranch = getChildOutput(2, visitor);
-        ELType incorrectConditionBranchType = visitor.getType(); 
-        
+        ELType incorrectConditionBranchType = visitor.getType();
+
         sb.append(ELNodeConstants.LEFT_BRACKET);
 
         sb.append(condition);
@@ -57,9 +53,9 @@ public class AstChoiceTreeNode extends AbstractTreeNode {
         sb.append(correctConditionBranch);
         sb.append(ELNodeConstants.COLON);
         sb.append(incorrectConditionBranch);
-        
+
         sb.append(ELNodeConstants.RIGHT_BRACKET);
-        
+
         visitor.setLiteral(false);
         if (!correctConditionBranchType.isNullType()) {
             visitor.setExpressionType(correctConditionBranchType);

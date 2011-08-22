@@ -1,6 +1,7 @@
 package org.richfaces.cdk;
 
 import java.net.URI;
+
 import org.richfaces.cdk.model.ClassName;
 import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.FacesId;
@@ -12,9 +13,9 @@ import org.richfaces.cdk.util.Strings;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public final class RichFacesConventions implements NamingConventions {
     private static final String ABSTRACT = "Abstract";
@@ -22,9 +23,8 @@ public final class RichFacesConventions implements NamingConventions {
     private static final String UI = "UI";
     private static final String[] COMPONENT_SUFFIXES = { BASE };
     private static final String[] COMPONENT_PREFIXES = { UI, ABSTRACT };
-
     // TODO - inject base name.
-    private String baseName ;//= "org.richfaces";
+    private String baseName;// = "org.richfaces";
 
     public RichFacesConventions() {
     }
@@ -60,6 +60,7 @@ public final class RichFacesConventions implements NamingConventions {
         processName(classifier, markup, name);
         return name;
     }
+
     private void processName(Classifier classifier, String markup, Name name) {
         // Use base library prefix.
         String baseName = this.getBaseName();
@@ -129,7 +130,7 @@ public final class RichFacesConventions implements NamingConventions {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the baseName
      */
     protected String getBaseName() {
@@ -150,7 +151,7 @@ public final class RichFacesConventions implements NamingConventions {
         Name name = Name.create(id.toString());
 
         name.setClassifier(Classifier.component);
-        // All Behavior classes belongs to "component.behavior" package. 
+        // All Behavior classes belongs to "component.behavior" package.
         name.setMarkup("behavior");
 
         return new ClassName(name.toString());
@@ -190,18 +191,18 @@ public final class RichFacesConventions implements NamingConventions {
         try {
             URI taglibUri = URI.create(uri);
             String path = taglibUri.getPath();
-            if(null != path){
+            if (null != path) {
                 int lastIndexOfPathSeparator = path.lastIndexOf('/');
-                if(lastIndexOfPathSeparator>=0){
-                    path = path.substring(lastIndexOfPathSeparator+1);
+                if (lastIndexOfPathSeparator >= 0) {
+                    path = path.substring(lastIndexOfPathSeparator + 1);
                 }
                 int indexOfDot = path.indexOf('.');
-                if(indexOfDot>0){
+                if (indexOfDot > 0) {
                     path = path.substring(0, indexOfDot);
                 }
                 return path;
             } else {
-                throw new InvalidNameException("Invalid taglib uri, no path defined " + uri );
+                throw new InvalidNameException("Invalid taglib uri, no path defined " + uri);
             }
         } catch (IllegalArgumentException e) {
             throw new InvalidNameException("Invalid taglib uri " + uri + " , " + e.getMessage());

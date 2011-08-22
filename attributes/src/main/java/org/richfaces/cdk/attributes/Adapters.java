@@ -29,13 +29,11 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public final class Adapters {
-
-    private abstract static class XmlTypeAdapter<KeyType extends KeyedType, ValueType extends ContainerType<KeyType>>
-        extends XmlAdapter<ValueType, Map<String, KeyType>> {
-
+    private abstract static class XmlTypeAdapter<KeyType extends KeyedType, ValueType extends ContainerType<KeyType>> extends
+            XmlAdapter<ValueType, Map<String, KeyType>> {
         private Class<? extends ValueType> valueTypeClass;
 
         public XmlTypeAdapter(Class<? extends ValueType> valueTypeClass) {
@@ -64,31 +62,24 @@ public final class Adapters {
     }
 
     public static final class SchemaAdapter extends XmlTypeAdapter<Schema, Schema.Type> {
-
         public SchemaAdapter() {
             super(Schema.Type.class);
         }
-
     }
 
     public static final class ElementAdapter extends XmlTypeAdapter<Element, Element.Type> {
-
         public ElementAdapter() {
             super(Element.Type.class);
         }
-
     }
 
     public static final class AttributeAdapter extends XmlTypeAdapter<Attribute, Attribute.Type> {
-
         public AttributeAdapter() {
             super(Attribute.Type.class);
         }
-
     }
-    
-    public static final class NormalizedStringAdapter extends XmlAdapter<String, String> {
 
+    public static final class NormalizedStringAdapter extends XmlAdapter<String, String> {
         @Override
         public String marshal(String text) {
             return text.trim();
@@ -99,7 +90,7 @@ public final class Adapters {
             return v.trim();
         }
     }
-    
+
     private Adapters() {
     }
 }

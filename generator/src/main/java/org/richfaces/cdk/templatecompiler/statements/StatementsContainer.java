@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.statements;
 
 import java.util.ArrayList;
@@ -39,50 +38,41 @@ import com.google.common.collect.Maps;
  * @since 4.0
  */
 public class StatementsContainer implements TemplateStatement, Variables {
-
-    private static final Function<TemplateStatement, Iterable<JavaImport>> IMPORTS_TRANSFORM =
-        new Function<TemplateStatement, Iterable<JavaImport>>() {
-
-            @Override
-            public Iterable<JavaImport> apply(TemplateStatement from) {
-                return from.getRequiredImports();
-            }
-        };
-
-    private static final Function<TemplateStatement, Iterable<JavaField>> FIELDS_TRANSFORM =
-        new Function<TemplateStatement, Iterable<JavaField>>() {
-
-            @Override
-            public Iterable<JavaField> apply(TemplateStatement from) {
-                return from.getRequiredFields();
-            }
-        };
-
-    private static final Function<TemplateStatement, Iterable<HelperMethod>> HELPER_METHODS_TRANSFORM =
-        new Function<TemplateStatement, Iterable<HelperMethod>>() {
-
-            @Override
-            public Iterable<HelperMethod> apply(TemplateStatement from) {
-                return from.getRequiredMethods();
-            }
-        };
-
+    private static final Function<TemplateStatement, Iterable<JavaImport>> IMPORTS_TRANSFORM = new Function<TemplateStatement, Iterable<JavaImport>>() {
+        @Override
+        public Iterable<JavaImport> apply(TemplateStatement from) {
+            return from.getRequiredImports();
+        }
+    };
+    private static final Function<TemplateStatement, Iterable<JavaField>> FIELDS_TRANSFORM = new Function<TemplateStatement, Iterable<JavaField>>() {
+        @Override
+        public Iterable<JavaField> apply(TemplateStatement from) {
+            return from.getRequiredFields();
+        }
+    };
+    private static final Function<TemplateStatement, Iterable<HelperMethod>> HELPER_METHODS_TRANSFORM = new Function<TemplateStatement, Iterable<HelperMethod>>() {
+        @Override
+        public Iterable<HelperMethod> apply(TemplateStatement from) {
+            return from.getRequiredMethods();
+        }
+    };
     @SuppressWarnings("serial")
     private final List<TemplateStatement> statements = new ArrayList<TemplateStatement>() {
-
         public boolean add(TemplateStatement e) {
             e.setParent(StatementsContainer.this);
             return super.add(e);
-        };
+        }
+
+        ;
 
         public void add(int index, TemplateStatement element) {
             element.setParent(StatementsContainer.this);
             super.add(index, element);
-        };
+        }
+
+        ;
     };
-
     private StatementsContainer parent;
-
     private final Map<String, ELType> localVariablesMap = Maps.newHashMap();
 
     public List<TemplateStatement> getStatements() {
@@ -100,9 +90,8 @@ public class StatementsContainer implements TemplateStatement, Variables {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param parent
-     *            the parent to set
+     *
+     * @param parent the parent to set
      */
     public void setParent(StatementsContainer parent) {
         this.parent = parent;
@@ -111,7 +100,7 @@ public class StatementsContainer implements TemplateStatement, Variables {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the parent
      */
     public StatementsContainer getParent() {
@@ -124,7 +113,7 @@ public class StatementsContainer implements TemplateStatement, Variables {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.builder.model.JavaStatement#getCode()
      */
     @Override
@@ -183,9 +172,8 @@ public class StatementsContainer implements TemplateStatement, Variables {
         return concatStatements(HELPER_METHODS_TRANSFORM);
     }
 
-//    @Override
-//    public String toString() {
-//        return getCode();
-//    }
-    
+    // @Override
+    // public String toString() {
+    // return getCode();
+    // }
 }

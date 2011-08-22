@@ -25,18 +25,15 @@ import java.util.Collection;
 
 import org.richfaces.resource.ResourceKey;
 
-
-
 /**
  * @author Nick Belaevski
- * 
+ *
  */
 public interface ResourcesScanner {
 
-    //TODO inclusions/exclusions
-    
-    public void scan() throws Exception;
-    
-    public Collection<ResourceKey> getResources();
-    
+    // TODO inclusions/exclusions
+
+    void scan() throws Exception;
+
+    Collection<ResourceKey> getResources();
 }

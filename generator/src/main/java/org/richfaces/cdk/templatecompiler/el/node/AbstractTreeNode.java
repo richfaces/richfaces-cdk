@@ -18,7 +18,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.el.node;
 
 import org.jboss.el.parser.Node;
@@ -28,12 +27,11 @@ import org.richfaces.cdk.templatecompiler.el.types.TypesFactory;
 
 /**
  * This abstract class implement some methods of ITreeNode interface to using in subclasses.
- * 
+ *
  * @author amarkhel
- * 
+ *
  */
 public abstract class AbstractTreeNode implements ITreeNode {
-
     private Node node;
 
     public AbstractTreeNode(Node node) {
@@ -42,15 +40,14 @@ public abstract class AbstractTreeNode implements ITreeNode {
 
     /**
      * Collects output from visiting child of the current node with the specified index and returns collected string.
-     * 
+     *
      * @param childIndex
      * @param context
      * @param visitor
      * @return
      * @throws ParsingException
      */
-    protected String getChildOutput(int childIndex, ELVisitor visitor)
-        throws ParsingException {
+    protected String getChildOutput(int childIndex, ELVisitor visitor) throws ParsingException {
 
         StringBuilder sb = new StringBuilder();
         getChild(childIndex, visitor).visit(sb, visitor);
@@ -59,14 +56,14 @@ public abstract class AbstractTreeNode implements ITreeNode {
     }
 
     protected String coerceToBoolean(String value, ELVisitor visitor) {
-        return visitor.coerceToType(value,  TypesFactory.BOOLEAN_TYPE);
+        return visitor.coerceToType(value, TypesFactory.BOOLEAN_TYPE);
     }
-    
+
     /**
      * Return node of current wrapper.
-     * 
+     *
      * @return instance of org.jboss.el.parser.Node
-     * 
+     *
      */
     public Node getNode() {
         return node;
@@ -74,17 +71,14 @@ public abstract class AbstractTreeNode implements ITreeNode {
 
     /**
      * Visit current node. Generate Java code, that represent current node.
-     * @param stringBuilder
-     *            instance to collect information.
-     * @param context
-     *            - context to resolve beans
-     * @param visitor
-     *            - ELVisitor
-     * 
-     * @throws ParsingException
-     *             - if error occurred during parsing process.
+     *
+     * @param stringBuilder instance to collect information.
+     * @param context - context to resolve beans
+     * @param visitor - ELVisitor
+     *
+     * @throws ParsingException - if error occurred during parsing process.
      * @return instance of org.jboss.el.parser.Node
-     * 
+     *
      */
     public ITreeNode getChild(int index, ELVisitor visitor) throws ParsingException {
         Node childNode = getNode().jjtGetChild(index);
@@ -100,7 +94,7 @@ public abstract class AbstractTreeNode implements ITreeNode {
 
     /**
      * Returns count of children for this node
-     * 
+     *
      * @return children count
      */
     public int getChildrenCount() {
@@ -109,14 +103,12 @@ public abstract class AbstractTreeNode implements ITreeNode {
 
     /**
      * Return child of wrapped node by specified index. Abstract operation to override in subclasses.
-     * @param index
-     *            - index of child.
-     * 
-     * @throws ParsingException
-     *             - if error occurred(child not found).
+     *
+     * @param index - index of child.
+     *
+     * @throws ParsingException - if error occurred(child not found).
      * @return wrapper for child
-     * 
+     *
      */
     public abstract void visit(StringBuilder sb, ELVisitor visitor) throws ParsingException;
-
 }

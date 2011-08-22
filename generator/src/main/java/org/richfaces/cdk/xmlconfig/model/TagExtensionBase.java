@@ -10,12 +10,11 @@ import org.richfaces.cdk.model.TagModel;
 import com.google.common.collect.Lists;
 
 public class TagExtensionBase extends ExtensionBeanBase {
-
     private List<TagModel> tags = Lists.newArrayList();
 
-
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @return the tags
      */
@@ -25,12 +24,12 @@ public class TagExtensionBase extends ExtensionBeanBase {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
      *
      * @param tags the tags to set
      */
     public void setTags(List<TagModel> tags) {
         this.tags = tags;
     }
-
 }

@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.generate.freemarker;
 
 import java.util.List;
@@ -39,55 +38,52 @@ import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 
 /**
- * <p class="changed_added_4_0">This class implements different utility functions used by generator.</p>
+ * <p class="changed_added_4_0">
+ * This class implements different utility functions used by generator.
+ * </p>
+ *
  * @author asmirnov@exadel.com
  *
  */
 public class FreeMakerUtils implements TemplateHashModel {
+    private static final ImmutableSet<String> KEYWORDS = ImmutableSet.of("abstract", "continue", "for", "new", "switch",
+            "assert", "default", "goto", "package", "synchronized", "boolean", "do", "if", "private", "this", "break",
+            "double", "implements", "protected", "throw", "byte", "else", "import", "public", "throws", "case", "enum",
+            "instanceof", "return", "transient", "catch", "extends", "int", "short", "try", "char", "final", "interface",
+            "static", "void", "class", "finally", "long", "strictfp", "volatile", "const", "float", "native", "super", "while");
+    private static final ImmutableMap<String, ? extends TemplateMethodModel> FUNCTIONS = ImmutableMap
+            .<String, TemplateMethodModel>builder().put("version", new TemplateMethodModelEx() {
+                @SuppressWarnings("unchecked")
+                @Override
+                public Object exec(List arguments) throws TemplateModelException {
+                    return new SimpleScalar("4.0.0");
+                }
+            }).put("capitaliyze", new TemplateMethodModel() {
+                @SuppressWarnings("unchecked")
+                @Override
+                public Object exec(List arguments) throws TemplateModelException {
+                    if (arguments.size() == 1) {
+                        return new SimpleScalar(Strings.firstToUpperCase(arguments.get(0).toString()));
+                    } else {
+                        return null;
+                    }
+                }
+            }).put("isKeyword", new TemplateMethodModel() {
+                @SuppressWarnings("unchecked")
+                @Override
+                public Object exec(List arguments) throws TemplateModelException {
+                    if (arguments.size() == 1) {
+                        return KEYWORDS.contains(arguments.get(0).toString()) ? TemplateBooleanModel.TRUE
+                                : TemplateBooleanModel.FALSE;
+                    } else {
+                        return null;
+                    }
+                }
+            }).build();
 
-    private static final ImmutableSet<String> KEYWORDS = ImmutableSet.of("abstract",   "continue",    "for", "new", "switch",
-        "assert",   "default", "goto",   "package", "synchronized",
-        "boolean", "do",  "if",  "private", "this",
-        "break",   "double",  "implements",  "protected",   "throw",
-        "byte",    "else",    "import",  "public",  "throws",
-        "case",    "enum",    "instanceof",  "return",  "transient",
-        "catch",   "extends", "int", "short",   "try",
-        "char",    "final",   "interface",   "static",  "void",
-        "class",   "finally", "long",    "strictfp",  "volatile",
-        "const",  "float",   "native",  "super",   "while" );
-    
-    private static final ImmutableMap<String, ? extends TemplateMethodModel> FUNCTIONS = ImmutableMap.<String, TemplateMethodModel>builder().
-        put("version", new TemplateMethodModelEx() {
-            @SuppressWarnings("unchecked")
-            @Override
-            public Object exec(List arguments) throws TemplateModelException {
-                return new SimpleScalar("4.0.0");
-            }
-        }). 
-        put("capitaliyze", new TemplateMethodModel() {            
-            @SuppressWarnings("unchecked")
-            @Override
-            public Object exec(List arguments) throws TemplateModelException {
-                if (arguments.size() == 1) {
-                    return new SimpleScalar(Strings.firstToUpperCase(arguments.get(0).toString()));
-                } else {
-                    return null;
-                }
-            }
-        }). 
-        put("isKeyword", new TemplateMethodModel() {            
-            @SuppressWarnings("unchecked")
-            @Override
-            public Object exec(List arguments) throws TemplateModelException {
-                if (arguments.size() == 1) {
-                    return KEYWORDS.contains(arguments.get(0).toString())?TemplateBooleanModel.TRUE:TemplateBooleanModel.FALSE;
-                } else {
-                    return null;
-                }
-            }
-        }). 
-        build();
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see freemarker.template.TemplateHashModel#get(java.lang.String)
      */
     @Override
@@ -95,12 +91,13 @@ public class FreeMakerUtils implements TemplateHashModel {
         return FUNCTIONS.get(key);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see freemarker.template.TemplateHashModel#isEmpty()
      */
     @Override
     public boolean isEmpty() throws TemplateModelException {
         return false;
     }
-
 }

@@ -19,7 +19,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.richfaces.cdk.xmlconfig.model;
 
 import org.richfaces.cdk.model.BeanModelBase;
@@ -28,10 +27,11 @@ import org.richfaces.cdk.model.BeanModelBase;
  * @author akolonitsky
  * @since Mar 19, 2010
  */
-public abstract class ElementAdapterBase<Bean extends ElementBeanBase, Model extends BeanModelBase> extends AdapterBase<Bean, Model> {
-
+public abstract class ElementAdapterBase<Bean extends ElementBeanBase, Model extends BeanModelBase> extends
+        AdapterBase<Bean, Model> {
     protected void postMarshal(Model model, Bean bean) {
         bean.setFilterHiddenAttributes(true);
-    };
-}
+    }
 
+    ;
+}

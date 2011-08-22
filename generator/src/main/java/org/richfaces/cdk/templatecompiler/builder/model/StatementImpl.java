@@ -23,13 +23,10 @@ package org.richfaces.cdk.templatecompiler.builder.model;
 
 import java.util.Collections;
 
-
-
 /**
  * @author Nick Belaevski
  */
 public class StatementImpl implements JavaStatement {
-
     private String code;
 
     public StatementImpl(String code) {

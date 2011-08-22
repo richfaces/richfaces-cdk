@@ -9,8 +9,8 @@
  * <li>Encapsulates restrictions and references for model components, therefore it should be modified by model metods only.</li>
  * <li>Encapsulates <a href="http://www.jboss.org/community/docs/DOC-13693">CDK naming conventions</a></li>
  * <li>Provides 'Visitor' pattern methods. see {@link LibraryVisitor} for reference.</li>
- * </ul> 
- * 
+ * </ul>
+ *
  */
 @XmlAccessorType(XmlAccessType.NONE)
 @javax.xml.bind.annotation.XmlSchema(namespace = Root.HTTP_FOO_BAR_SCHEMA, xmlns = {

@@ -24,19 +24,14 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 public abstract class ProcessorBase {
-
     @Inject
     protected Logger log;
-
     @Inject
     private Provider<SourceUtils> sourceUtils;
-
     @Inject
     private AttributesProcessor attributeProcessor;
-
     @Inject
     private NamingConventions namingConventions;
-
     @Inject
     private DescriptionProcessor descriptionProcessor;
 
@@ -64,11 +59,9 @@ public abstract class ProcessorBase {
         return tagModel;
     }
 
-    protected void setClassNames(TypeElement componentElement, GeneratedFacesComponent modelElement,
-        AnnotationMirror behavior) {
+    protected void setClassNames(TypeElement componentElement, GeneratedFacesComponent modelElement, AnnotationMirror behavior) {
         SourceUtils sourceUtils = getSourceUtils();
-        if (componentElement.getModifiers().contains(Modifier.ABSTRACT)
-            || !sourceUtils.isDefaultValue(behavior, "generate")) {
+        if (componentElement.getModifiers().contains(Modifier.ABSTRACT) || !sourceUtils.isDefaultValue(behavior, "generate")) {
             modelElement.setGenerate(true);
             sourceUtils.setModelProperty(modelElement, behavior, "targetClass", "generate");
         } else {
@@ -85,7 +78,7 @@ public abstract class ProcessorBase {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the attributeProcessor
      */
     protected AttributesProcessor getAttributeProcessor() {
@@ -102,7 +95,7 @@ public abstract class ProcessorBase {
 
     protected void setDescription(DescriptionGroup model, AnnotationMirror annotation, String docComment) {
         descriptionProcessor.processDescription(model,
-            getSourceUtils().getAnnotationValue(annotation, "description", AnnotationMirror.class), docComment);
+                getSourceUtils().getAnnotationValue(annotation, "description", AnnotationMirror.class), docComment);
     }
 
     protected void processAttributes(Element element, ModelElementBase component, AnnotationMirror annotation) {
@@ -114,8 +107,7 @@ public abstract class ProcessorBase {
         if (element != null && ElementKind.CLASS.equals(element.getKind())) {
             attributesProcessor.processType(component, (TypeElement) element);
         }
-        for (TypeMirror atributesInterface : sourceUtils
-            .getAnnotationValues(annotation, "interfaces", TypeMirror.class)) {
+        for (TypeMirror atributesInterface : sourceUtils.getAnnotationValues(annotation, "interfaces", TypeMirror.class)) {
             processInterface(component, attributesProcessor, atributesInterface);
         }
     }
@@ -130,7 +122,7 @@ public abstract class ProcessorBase {
     }
 
     protected String getAnnotationPropertyOrConstant(TypeElement element, AnnotationMirror annotation,
-        String annotationAttribute, String fieldName) {
+            String annotationAttribute, String fieldName) {
         SourceUtils utils = getSourceUtils();
         if (!utils.isDefaultValue(annotation, annotationAttribute)) {
             return utils.getAnnotationValue(annotation, annotationAttribute, String.class);

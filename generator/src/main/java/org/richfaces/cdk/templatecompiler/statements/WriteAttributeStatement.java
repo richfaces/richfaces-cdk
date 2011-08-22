@@ -39,28 +39,21 @@ import com.google.inject.Inject;
  * @author Nick Belaevski
  */
 public class WriteAttributeStatement extends FreeMarkerTemplateStatementBase {
-
     private QName attributeName;
-
     private TypedTemplateStatement valueExpression;
-
     private final ELParser parser;
-
     private final Logger log;
-
     private String defaultValue;
-
     private Iterable<String> events = Collections.emptyList();
 
-
     @Inject
-    public WriteAttributeStatement(@TemplateModel FreeMarkerRenderer renderer,ELParser parser,Logger log) {
-        super(renderer,"write-attribute");
+    public WriteAttributeStatement(@TemplateModel FreeMarkerRenderer renderer, ELParser parser, Logger log) {
+        super(renderer, "write-attribute");
         this.parser = parser;
         this.log = log;
     }
-    
-    public void setAttribute(QName qName,Object object, String defaultValue) {
+
+    public void setAttribute(QName qName, Object object, String defaultValue) {
         this.defaultValue = defaultValue;
         setAttributeName(qName);
         parseExpression(object, TypesFactory.OBJECT_TYPE);
@@ -81,7 +74,7 @@ public class WriteAttributeStatement extends FreeMarkerTemplateStatementBase {
             valueExpression = parser.parse(object.toString(), this, objectType);
             this.addStatement(valueExpression);
         } catch (ParsingException e) {
-            log.error("Error parsing expression for attribute "+getAttributeName(), e);            
+            log.error("Error parsing expression for attribute " + getAttributeName(), e);
         }
     }
 
@@ -98,7 +91,9 @@ public class WriteAttributeStatement extends FreeMarkerTemplateStatementBase {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the defaultValue
      */
     public String getDefaultValue() {
@@ -107,7 +102,9 @@ public class WriteAttributeStatement extends FreeMarkerTemplateStatementBase {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param iterable the events to set
      */
     public void setEvents(Iterable<String> iterable) {
@@ -115,11 +112,12 @@ public class WriteAttributeStatement extends FreeMarkerTemplateStatementBase {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the events
      */
     public Iterable<String> getEvents() {
         return this.events;
     }
-
 }

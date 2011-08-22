@@ -18,20 +18,24 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.builder.model;
 
 /**
  * @author Maksim Kaszynski
  */
 public enum JavaModifier {
-    PRIVATE, DEFAULT {
+    PRIVATE,
+    DEFAULT {
         @Override
         public String toString() {
             return "";
         }
     },
-    PROTECTED, PUBLIC, STATIC, FINAL, TRANSIENT;
+    PROTECTED,
+    PUBLIC,
+    STATIC,
+    FINAL,
+    TRANSIENT;
 
     @Override
     public String toString() {

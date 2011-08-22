@@ -20,10 +20,10 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.After;
 import org.junit.Before;
@@ -32,16 +32,15 @@ import org.junit.Test;
 /**
  * <p class="changed_added_4_0">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class NameTest {
-
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @throws java.lang.Exception
      */
     @Before
@@ -51,7 +50,7 @@ public class NameTest {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @throws java.lang.Exception
      */
     @After
@@ -60,7 +59,7 @@ public class NameTest {
 
     /**
      * Test method for {@link org.richfaces.cdk.model.Name#create(java.lang.String)}.
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -75,7 +74,7 @@ public class NameTest {
 
     /**
      * Test method for {@link org.richfaces.cdk.model.Name#create(java.lang.String)}.
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -90,7 +89,7 @@ public class NameTest {
 
     /**
      * Test method for {@link org.richfaces.cdk.model.Name#create(java.lang.String)}.
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -105,7 +104,7 @@ public class NameTest {
 
     /**
      * Test method for {@link org.richfaces.cdk.model.Name#create(java.lang.String)}.
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -120,7 +119,7 @@ public class NameTest {
 
     /**
      * Test method for {@link org.richfaces.cdk.model.Name#create(java.lang.String)}.
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -135,7 +134,7 @@ public class NameTest {
 
     /**
      * Test method for {@link org.richfaces.cdk.model.Name#create(java.lang.String)}.
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -150,7 +149,7 @@ public class NameTest {
 
     /**
      * Test method for {@link org.richfaces.cdk.model.Name#create(java.lang.String)}.
-     * 
+     *
      * @throws Exception
      */
     @Test

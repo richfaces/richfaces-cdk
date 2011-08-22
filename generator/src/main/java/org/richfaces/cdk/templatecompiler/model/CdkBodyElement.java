@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.templatecompiler.model;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -29,17 +28,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.richfaces.cdk.CdkException;
 
 /**
- * <p class="changed_added_4_0"></p>
+ * <p class="changed_added_4_0">
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 @XmlRootElement(name = "body", namespace = Template.CDK_NAMESPACE)
 public class CdkBodyElement extends ModelFragment {
-    
     private boolean enforce = false;
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @return the enforce
      */
     @XmlAttribute
@@ -48,7 +49,9 @@ public class CdkBodyElement extends ModelFragment {
     }
 
     /**
-     * <p class="changed_added_4_0"></p>
+     * <p class="changed_added_4_0">
+     * </p>
+     *
      * @param enforce the enforce to set
      */
     public void setEnforce(boolean enforce) {
@@ -64,5 +67,4 @@ public class CdkBodyElement extends ModelFragment {
     public void afterVisit(TemplateVisitor visitor) throws CdkException {
         visitor.endElement(this);
     }
-
 }

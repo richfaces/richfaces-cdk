@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.model;
 
 import java.lang.annotation.ElementType;
@@ -30,17 +29,20 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * <p class="changed_added_4_0">Marker for model bean property that should be merged with other.</p>
+ * <p class="changed_added_4_0">
+ * Marker for model bean property that should be merged with other.
+ * </p>
  *
  * @author asmirnov@exadel.com
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD})
+@Target({ ElementType.METHOD })
 @Inherited
 public @interface Merge {
-
     /**
-     * <p class="changed_added_4_0">If true, target value should be overwritten, otherwise only null values will bw replaced.</p>
+     * <p class="changed_added_4_0">
+     * If true, target value should be overwritten, otherwise only null values will bw replaced.
+     * </p>
      *
      * @return
      */

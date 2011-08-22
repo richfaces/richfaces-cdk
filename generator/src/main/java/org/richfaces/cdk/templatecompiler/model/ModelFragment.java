@@ -14,15 +14,13 @@ import com.google.common.collect.Lists;
  * <p class="changed_added_4_0">
  * All classes that are used in template bodey should be presented in the {@link XmlSeeAlso} annotation
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
  */
-@XmlSeeAlso( { CdkCallElement.class, CdkBodyElement.class, CdkIfElement.class, CdkObjectElement.class,
-    CdkChooseElement.class, CdkWhenElement.class, CdkOtherwiseElement.class, CdkForEachElement.class,
-    CdkSwitchElement.class, CdkCaseElement.class, CdkDefaultElement.class, 
-    CdkScriptObjectElement.class, CdkScriptOptionElement.class })
+@XmlSeeAlso({ CdkCallElement.class, CdkBodyElement.class, CdkIfElement.class, CdkObjectElement.class, CdkChooseElement.class,
+        CdkWhenElement.class, CdkOtherwiseElement.class, CdkForEachElement.class, CdkSwitchElement.class, CdkCaseElement.class,
+        CdkDefaultElement.class, CdkScriptObjectElement.class, CdkScriptOptionElement.class })
 public class ModelFragment implements LeafModelElement {
-
     private List<Object> children = Lists.newArrayList();
 
     @XmlAnyElement(lax = true, value = ElementsHandler.class)
@@ -34,9 +32,8 @@ public class ModelFragment implements LeafModelElement {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
-     * @param body
-     *            the body to set
+     *
+     * @param body the body to set
      */
     public void setChildren(List<Object> body) {
         this.children = body;
@@ -63,5 +60,4 @@ public class ModelFragment implements LeafModelElement {
 
     public void beforeVisit(TemplateVisitor visitor) throws CdkException {
     }
-
 }

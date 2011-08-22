@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
-
 package org.richfaces.cdk.xmlconfig;
 
 import java.io.FileNotFoundException;
@@ -40,12 +39,11 @@ import com.google.inject.Inject;
  * <p class="changed_added_4_0">
  * That class parses xml document with fragment of faces-config ( eg, standard component attributes )
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class FragmentParser {
-    
     private ComponentAdapter adapter;
     private final JAXB binding;
 
@@ -59,7 +57,7 @@ public class FragmentParser {
      * <p class="changed_added_4_0">
      * Parses faces-config.xml fragment with component/renderer properties.
      * </p>
-     * 
+     *
      * @param url
      * @return
      */
@@ -71,7 +69,7 @@ public class FragmentParser {
             ComponentModel component = adapter.unmarshal(unmarshal);
             return component.getAttributes();
         } else {
-            return Collections.<PropertyBase> emptySet();
+            return Collections.<PropertyBase>emptySet();
         }
     }
 }
