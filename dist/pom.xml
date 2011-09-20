@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.richfaces.cdk</groupId>
         <artifactId>parent</artifactId>
-        <version>4.1.0.20110805-M1</version>
+        <version>4.1.0.20110910-M2</version>
         <relativePath>../parent</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.richfaces.cdk</groupId>
     <artifactId>dist</artifactId>
-    <version>4.1.0.20110805-M1</version>
+    <version>4.1.0.20110910-M2</version>
     <name>JSF Components Development Kit (CDK) distribution assembly</name>
 
     <!-- SCM and distribution management -->

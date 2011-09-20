@@ -14,7 +14,7 @@ import org.richfaces.component.PartialStateHolderHelper;
 /**
  * ${description?if_exists}
  **/
-@Generated({"RichFaces CDK", "4.1.0.20110805-M1"})
+@Generated({"RichFaces CDK", "4.1.0.20110910-M2"})
 public class ${targetClass.simpleName} extends ${baseClass} implements Converter, PartialStateHolder {
 
     @Override
