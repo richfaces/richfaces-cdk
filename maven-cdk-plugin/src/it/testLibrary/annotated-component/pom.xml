@@ -15,7 +15,7 @@
             <plugin>
                 <groupId>org.richfaces.cdk</groupId>
                 <artifactId>maven-cdk-plugin</artifactId>
-                <version>4.1.0.20110910-M2</version>
+                <version>4.1.0-SNAPSHOT</version>
                 <configuration>
                 </configuration>
                 <executions>
@@ -56,7 +56,7 @@
         <dependency>
             <groupId>org.richfaces.cdk</groupId>
             <artifactId>annotations</artifactId>
-            <version>4.1.0.20110910-M2</version>
+            <version>4.1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>javax.el</groupId>
