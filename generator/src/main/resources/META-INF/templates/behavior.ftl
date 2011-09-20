@@ -13,7 +13,7 @@ import javax.faces.el.ValueBinding;
 /**
  * ${description?if_exists}
  **/
-@Generated({"RichFaces CDK", "4.1.0-SNAPSHOT"})
+@Generated({"RichFaces CDK", "4.1.0.20110910-M2"})
 public class ${targetClass.simpleName} extends ${baseClass} implements Behavior, PartialStateHolder
 <#if (implemented?size > 0)>, <@util.concat seq=implemented ; interface>${interface.simpleName}</@util.concat></#if> {
 
