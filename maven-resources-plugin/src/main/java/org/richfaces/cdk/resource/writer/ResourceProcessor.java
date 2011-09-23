@@ -35,6 +35,9 @@ import com.google.common.io.OutputSupplier;
 public interface ResourceProcessor {
     boolean isSupportedFile(String name);
 
-    public void process(String resourceName, InputSupplier<? extends InputStream> in, OutputSupplier<? extends OutputStream> out)
+    public void process(String resourceName, InputSupplier<? extends InputStream> in, OutputSupplier<? extends OutputStream> out,  boolean closeAtFinish)
+            throws IOException;
+    
+    public void process(String resourceName, InputStream in, OutputStream out, boolean closeAtFinish)
             throws IOException;
 }

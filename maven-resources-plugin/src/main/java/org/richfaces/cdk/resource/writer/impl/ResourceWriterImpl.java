@@ -25,8 +25,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -44,6 +46,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import com.google.common.io.Files;
 import com.google.common.io.InputSupplier;
+import com.google.common.io.OutputSupplier;
 
 /**
  * @author Nick Belaevski
@@ -63,6 +66,11 @@ public class ResourceWriterImpl implements ResourceWriter {
             return resource.getInputStream();
         }
     }
+    
+    /*
+     * packed output stream by extension
+     */
+    private static final Map<String, FileOutputStream> PACKED = new LinkedHashMap<String, FileOutputStream>();
 
     private File resourceContentsDir;
     private File resourceMappingDir;
@@ -111,19 +119,61 @@ public class ResourceWriterImpl implements ResourceWriter {
                     requestPath.substring(ResourceFactory.SKINNED_RESOURCE_PREFIX.length()));
         }
 
-        ResourceProcessor matchingProcessor = Iterables.get(
+        ResourceProcessor matchingProcessor = getMatchingResourceProcessor(requestPath);
+        File outFile = createOutputFile(requestPathWithSkin);
+
+        log.debug("Opening output stream for " + outFile);
+        matchingProcessor.process(requestPathWithSkin, new ResourceInputStreamSupplier(resource),
+                Files.newOutputStreamSupplier(outFile), true);
+        
+        processedResources.put(ResourceUtil.getResourceQualifier(resource), requestPath);
+    }
+    
+    
+    
+    public void writePackedResource(String skinName, Resource resource) throws IOException {
+        
+        final String requestPath = resource.getRequestPath();
+        String extension = getExtension(requestPath);
+        
+        if (!"js".equals(extension) && !"css".equals(extension)) {
+            writeResource(skinName, resource);
+            return;
+        }
+        
+        String requestPathWithSkin = Constants.SLASH_JOINER.join(skinName, "packed." + extension);
+        ResourceProcessor matchingProcessor = getMatchingResourceProcessor(requestPathWithSkin);
+        
+        FileOutputStream outputStream;
+        synchronized (PACKED) {
+            if (!PACKED.containsKey(extension)) {
+                 File outFile = createOutputFile(requestPathWithSkin);
+                 log.debug("Opening shared output stream for " + outFile);
+                 outputStream = Files.newOutputStreamSupplier(outFile, true).getOutput();
+                 PACKED.put(extension, outputStream);
+            }
+            outputStream = PACKED.get(extension);
+        }
+        
+        synchronized (outputStream) {
+            matchingProcessor.process(requestPathWithSkin, new ResourceInputStreamSupplier(resource).getInput(),
+                    outputStream, false);
+        }
+    }
+    
+    private ResourceProcessor getMatchingResourceProcessor(final String requestPath) {
+        return Iterables.get(
                 Iterables.filter(resourceProcessors, new Predicate<ResourceProcessor>() {
                     @Override
                     public boolean apply(ResourceProcessor input) {
                         return input.isSupportedFile(requestPath);
                     }
                 }), 0);
-
-        File outFile = createOutputFile(requestPathWithSkin);
-
-        matchingProcessor.process(requestPathWithSkin, new ResourceInputStreamSupplier(resource),
-                Files.newOutputStreamSupplier(outFile));
-        processedResources.put(ResourceUtil.getResourceQualifier(resource), requestPath);
+    }
+    
+    private String getExtension(String requestPath) {
+        int extensionIndex = Math.max(requestPath.lastIndexOf('.'), requestPath.lastIndexOf('/'));
+        return requestPath.substring(extensionIndex + 1);
     }
 
     @Override

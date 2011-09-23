@@ -33,7 +33,7 @@ import com.google.common.io.OutputSupplier;
 
 /**
  * @author Nick Belaevski
- *
+ * 
  */
 final class ThroughputResourceProcessor implements ResourceProcessor {
     public static final ResourceProcessor INSTANCE = new ThroughputResourceProcessor();
@@ -47,9 +47,13 @@ final class ThroughputResourceProcessor implements ResourceProcessor {
     }
 
     @Override
-    public void process(String resourceName, InputSupplier<? extends InputStream> in, OutputSupplier<? extends OutputStream> out)
-            throws IOException {
+    public void process(String resourceName, InputSupplier<? extends InputStream> in,
+            OutputSupplier<? extends OutputStream> out, boolean closeAtFinish) throws IOException {
+        process(resourceName, in.getInput(), out.getOutput(), closeAtFinish);
+    }
 
+    @Override
+    public void process(String resourceName, InputStream in, OutputStream out, boolean closeAtFinish) throws IOException {
         ByteStreams.copy(in, out);
     }
 }

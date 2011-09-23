@@ -448,4 +448,22 @@ public class ExternalContextImpl extends ExternalContext {
     public String getResponseCharacterEncoding() {
         return "UTF-8";
     }
+    
+    @Override
+    public String getMimeType(String file) {
+        if (file.endsWith(".png")) {
+            return "image/png";
+        }
+        if (file.endsWith(".css")) {
+            return "text/css";
+        }
+        // TODO where is source of /js files?
+        if (file.endsWith(".js") || file.endsWith("/js")) {
+            return "application/javascript";
+        }
+        if (file.endsWith(".gif")) {
+            return "image/gif";
+        }
+        throw new UnsupportedOperationException("unknown mime-type for file '" + file + "'");
+    }
 }

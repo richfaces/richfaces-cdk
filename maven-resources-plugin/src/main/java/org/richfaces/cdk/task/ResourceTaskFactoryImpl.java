@@ -79,8 +79,8 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
                     log.info(MessageFormat.format("Skipping {0} because it contains EL-expressions", resourceInfo));
                     return;
                 }
-
-                resourceWriter.writeResource(skin, resource);
+                
+                resourceWriter.writePackedResource(skin, resource);
             } catch (Exception e) {
                 if (skin != null) {
                     log.error(
