@@ -33,6 +33,7 @@ import javax.faces.context.FacesContext;
 
 import org.apache.maven.plugin.logging.Log;
 import org.richfaces.cdk.Faces;
+import org.richfaces.cdk.ProcessMojo;
 import org.richfaces.cdk.ResourceTaskFactory;
 import org.richfaces.cdk.ResourceWriter;
 import org.richfaces.cdk.faces.CurrentResourceContext;
@@ -49,6 +50,7 @@ import com.google.common.io.Closeables;
  *
  */
 public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
+    
     private class ResourcesRendererCallable implements Callable<Object> {
         private ResourceKey resourceInfo;
         private boolean skinDependent;
@@ -56,8 +58,9 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
 
         ResourcesRendererCallable(ResourceKey resourceInfo) {
             this.resourceInfo = resourceInfo;
+            
             if ("javax.faces".equals(resourceInfo.getLibraryName()) && "jsf.js".equals(resourceInfo.getResourceName())) {
-                this.resourceInfo = new ResourceKey("jsf-uncompressed.js", "javax.faces");
+                this.resourceInfo = ProcessMojo.JSF_UNCOMPRESSED;
             }
         }
 
@@ -83,7 +86,11 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
                     return;
                 }
                 
-                resourceWriter.writePackedResource(skin, resource);
+                if (pack) {
+                    resourceWriter.writePackedResource(skin, resource);
+                } else {
+                    resourceWriter.writeResource(skin, resource);
+                }
             } catch (Exception e) {
                 if (skin != null) {
                     log.error(
@@ -150,10 +157,12 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
     private CompletionService<Object> completionService;
     private String[] skins = new String[0];
     private Predicate<Resource> filter = Predicates.alwaysTrue();
+    private boolean pack;
 
-    public ResourceTaskFactoryImpl(Faces faces) {
+    public ResourceTaskFactoryImpl(Faces faces, boolean pack) {
         super();
         this.faces = faces;
+        this.pack = pack;
     }
 
     private boolean containsELExpression(Resource resource) {

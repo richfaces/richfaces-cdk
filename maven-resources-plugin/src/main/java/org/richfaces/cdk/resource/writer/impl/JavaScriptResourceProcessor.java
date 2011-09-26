@@ -75,6 +75,12 @@ public class JavaScriptResourceProcessor implements ResourceProcessor {
             MavenLogErrorReporter reporter = new MavenLogErrorReporter(resourceName);
             new JavaScriptCompressor(reader, reporter).compress(writer, 0, true, true, false, false);
 
+            if (!closeAtFinish) {
+                // add semicolon to satisfy end of context of each script when packing files
+                writer.write(";");
+                writer.flush();
+            }
+            
             if (reporter.hasErrors() && log.isErrorEnabled()) {
                 log.error(reporter.getErrorsLog());
             }

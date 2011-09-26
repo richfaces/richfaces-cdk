@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -46,7 +45,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import javax.faces.FacesException;
 import javax.faces.application.Resource;
 import javax.faces.application.ResourceHandler;
 
@@ -55,12 +53,10 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
-import org.richfaces.application.DefaultModule;
 import org.richfaces.application.Module;
 import org.richfaces.application.ServiceException;
 import org.richfaces.application.ServiceLoader;
 import org.richfaces.application.ServiceTracker;
-import org.richfaces.application.ServicesFactory;
 import org.richfaces.application.ServicesFactoryImpl;
 import org.richfaces.cdk.concurrent.CountingExecutorCompletionService;
 import org.richfaces.cdk.faces.FacesImpl;
@@ -76,26 +72,20 @@ import org.richfaces.cdk.resource.writer.ResourceProcessor;
 import org.richfaces.cdk.resource.writer.impl.CSSResourceProcessor;
 import org.richfaces.cdk.resource.writer.impl.JavaScriptResourceProcessor;
 import org.richfaces.cdk.resource.writer.impl.ResourceWriterImpl;
-import org.richfaces.cdk.resource.writer.impl.ThroughputJavaScriptResourceProcessor;
 import org.richfaces.cdk.task.ResourceTaskFactoryImpl;
 import org.richfaces.cdk.util.MoreConstraints;
 import org.richfaces.cdk.util.MorePredicates;
 import org.richfaces.cdk.vfs.VFS;
 import org.richfaces.cdk.vfs.VFSRoot;
 import org.richfaces.cdk.vfs.VirtualFile;
-import org.richfaces.renderkit.html.ResourceLibraryRenderer;
 import org.richfaces.resource.ResourceFactory;
 import org.richfaces.resource.ResourceFactoryImpl;
 import org.richfaces.resource.ResourceKey;
-import org.richfaces.resource.ResourceLibrary;
-import org.richfaces.resource.ResourceLibraryFactory;
-import org.richfaces.resource.ResourceLibraryFactoryImpl;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.base.Strings;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.Constraints;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
@@ -181,6 +171,14 @@ public class ProcessMojo extends AbstractMojo {
     /**
      * @parameter
      */
+    private boolean compress = true;
+    /**
+     * @parameter
+     */
+    private boolean pack = false;
+    /**
+     * @parameter
+     */
     // TODO review usage of properties?
     private FileNameMapping[] fileNameMappings = new FileNameMapping[0];
     /**
@@ -210,6 +208,9 @@ public class ProcessMojo extends AbstractMojo {
     }
 
     private Collection<ResourceProcessor> getDefaultResourceProcessors() {
+        if (!compress) {
+            return Arrays.asList();
+        }
         Charset charset = Charset.defaultCharset();
         if (!Strings.isNullOrEmpty(encoding)) {
             charset = Charset.forName(encoding);
@@ -217,10 +218,8 @@ public class ProcessMojo extends AbstractMojo {
             getLog().warn(
                     "Encoding is not set explicitly, CDK resources plugin will use default platform encoding for processing char-based resources");
         }
-
-//        return Arrays.<ResourceProcessor>asList(new JavaScriptResourceProcessor(charset, getLog()), new CSSResourceProcessor(
-//                charset));
-        return Arrays.<ResourceProcessor>asList(new ThroughputJavaScriptResourceProcessor(charset, getLog()));
+        return Arrays.<ResourceProcessor>asList(new JavaScriptResourceProcessor(charset, getLog()), new CSSResourceProcessor(
+                charset));
     }
 
     private Predicate<Resource> createResourcesFilter() {
@@ -326,6 +325,29 @@ public class ProcessMojo extends AbstractMojo {
             throw new IllegalStateException(e);
         }
     }
+    
+    private void reorderFoundResources(Collection<VFSRoot> cpResources, DynamicResourceHandler dynamicResourceHandler, ResourceFactory resourceFactory) throws Exception {
+        Faces faces = new FacesImpl(null, new FileNameMapperImpl(fileNameMappings), dynamicResourceHandler);
+        faces.start();
+        
+        initializerServiceTracker();
+        
+        foundResources = new ResourceLibraryExpander().expandResourceLibraries(foundResources);
+        
+        faces.startRequest();
+        scanResourceOrdering(cpResources);
+        faces.stopRequest();
+        faces.stop();
+        
+        foundResources = resourceOrdering.sortedCopy(foundResources);
+        
+        foundResources.remove(JSF_UNCOMPRESSED);
+        getLog().debug("foundResources: " + foundResources);
+        
+        
+        resourcesWithKnownOrder.add(JSF_UNCOMPRESSED);
+        getLog().debug("resourcesWithKnownOrder: " + resourcesWithKnownOrder);
+    }
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -350,44 +372,26 @@ public class ProcessMojo extends AbstractMojo {
             ResourceFactory resourceFactory = new ResourceFactoryImpl(staticResourceHandler);
 
             scanDynamicResources(cpResources, resourceFactory);
-            
 
-            ResourceHandler resourceHandler = new DynamicResourceHandler(staticResourceHandler, resourceFactory);
-            // TODO set webroot
-            faces = new FacesImpl(null, new FileNameMapperImpl(fileNameMappings), resourceHandler);
-            faces.start();
+            DynamicResourceHandler dynamicResourceHandler = new DynamicResourceHandler(staticResourceHandler, resourceFactory);
             
-            initializerServiceTracker();
+            if (pack) {
+                reorderFoundResources(cpResources, dynamicResourceHandler, resourceFactory);
+            }
             
-            foundResources = new ResourceLibraryExpander().expandResourceLibraries(foundResources);
-            
-            faces.startRequest();
-            scanResourceOrdering(cpResources);
-            faces.stopRequest();
-            
-            faces.stop();
-            
-            foundResources = resourceOrdering.sortedCopy(foundResources);
-            
-            foundResources.remove(JSF_UNCOMPRESSED);
-            System.out.println("foundResources: " + foundResources);
-            
-            resourcesWithKnownOrder.add(JSF_UNCOMPRESSED);
-            System.out.println("resourcesWithKnownOrder: " + resourcesWithKnownOrder);
-
             File resourceOutputDir = new File(outputDir);
             if (!resourceOutputDir.exists()) {
                 resourceOutputDir = new File(project.getBuild().getDirectory(), outputDir);
             }
-
+            
             File resourceMappingDir = new File(project.getBuild().getOutputDirectory());
 
-            faces = new FacesImpl(null, new FileNameMapperImpl(fileNameMappings), resourceHandler);
+            faces = new FacesImpl(null, new FileNameMapperImpl(fileNameMappings), dynamicResourceHandler);
             faces.start();
             
             ResourceWriterImpl resourceWriter = new ResourceWriterImpl(resourceOutputDir, resourceMappingDir,
                     getDefaultResourceProcessors(), getLog(), resourcesWithKnownOrder);
-            ResourceTaskFactoryImpl taskFactory = new ResourceTaskFactoryImpl(faces);
+            ResourceTaskFactoryImpl taskFactory = new ResourceTaskFactoryImpl(faces, pack);
             taskFactory.setResourceWriter(resourceWriter);
 
             executorService = createExecutorService();
