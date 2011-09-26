@@ -41,10 +41,10 @@ import com.yahoo.platform.yui.compressor.CssCompressor;
  * @author Nick Belaevski
  * 
  */
-public class CSSResourceProcessor implements ResourceProcessor {
+public class CSSCompressingProcessor implements ResourceProcessor {
     private Charset charset;
 
-    public CSSResourceProcessor(Charset charset) {
+    public CSSCompressingProcessor(Charset charset) {
         this.charset = charset;
     }
 

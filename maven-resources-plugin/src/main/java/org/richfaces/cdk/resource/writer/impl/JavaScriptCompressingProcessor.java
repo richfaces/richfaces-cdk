@@ -42,11 +42,11 @@ import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
  * @author Nick Belaevski
  * 
  */
-public class JavaScriptResourceProcessor implements ResourceProcessor {
+public class JavaScriptCompressingProcessor implements ResourceProcessor {
     private Charset charset;
     private Log log;
 
-    public JavaScriptResourceProcessor(Charset charset, Log log) {
+    public JavaScriptCompressingProcessor(Charset charset, Log log) {
         this.charset = charset;
         this.log = log;
     }

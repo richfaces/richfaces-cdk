@@ -71,8 +71,9 @@ import org.richfaces.cdk.resource.scan.impl.StaticResourcesScanner;
 import org.richfaces.cdk.resource.util.ResourceConstants;
 import org.richfaces.cdk.resource.util.ResourceUtil;
 import org.richfaces.cdk.resource.writer.ResourceProcessor;
-import org.richfaces.cdk.resource.writer.impl.CSSResourceProcessor;
-import org.richfaces.cdk.resource.writer.impl.JavaScriptResourceProcessor;
+import org.richfaces.cdk.resource.writer.impl.CSSCompressingProcessor;
+import org.richfaces.cdk.resource.writer.impl.JavaScriptCompressingProcessor;
+import org.richfaces.cdk.resource.writer.impl.JavaScriptPackagingProcessor;
 import org.richfaces.cdk.resource.writer.impl.ResourceWriterImpl;
 import org.richfaces.cdk.task.ResourceTaskFactoryImpl;
 import org.richfaces.cdk.util.MoreConstraints;
@@ -200,9 +201,7 @@ public class ProcessMojo extends AbstractMojo {
     }
 
     private Collection<ResourceProcessor> getDefaultResourceProcessors() {
-        if (!compress) {
-            return Arrays.asList();
-        }
+        
         Charset charset = Charset.defaultCharset();
         if (!Strings.isNullOrEmpty(encoding)) {
             charset = Charset.forName(encoding);
@@ -210,8 +209,13 @@ public class ProcessMojo extends AbstractMojo {
             getLog().warn(
                     "Encoding is not set explicitly, CDK resources plugin will use default platform encoding for processing char-based resources");
         }
-        return Arrays.<ResourceProcessor>asList(new JavaScriptResourceProcessor(charset, getLog()), new CSSResourceProcessor(
-                charset));
+        if (compress) {
+            return Arrays.<ResourceProcessor>asList(new JavaScriptCompressingProcessor(charset, getLog()), new CSSCompressingProcessor(
+                    charset));
+        } else {
+            return Arrays.<ResourceProcessor>asList(new JavaScriptPackagingProcessor(charset));
+        }
+        
     }
 
     private Predicate<Resource> createResourcesFilter() {
