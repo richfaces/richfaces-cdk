@@ -60,6 +60,7 @@ import org.richfaces.application.ServiceTracker;
 import org.richfaces.application.ServicesFactoryImpl;
 import org.richfaces.cdk.concurrent.CountingExecutorCompletionService;
 import org.richfaces.cdk.faces.FacesImpl;
+import org.richfaces.cdk.faces.ServiceFactoryModule;
 import org.richfaces.cdk.naming.FileNameMapperImpl;
 import org.richfaces.cdk.resource.handler.impl.DynamicResourceHandler;
 import org.richfaces.cdk.resource.handler.impl.StaticResourceHandler;
@@ -317,7 +318,7 @@ public class ProcessMojo extends AbstractMojo {
         ServiceTracker.setFactory(servicesFactory);
         
         ArrayList<Module> modules = new ArrayList<Module>();
-        modules.add(new FakeModule());
+        modules.add(new ServiceFactoryModule());
         try {
             modules.addAll(ServiceLoader.loadServices(Module.class));
             servicesFactory.init(modules);
