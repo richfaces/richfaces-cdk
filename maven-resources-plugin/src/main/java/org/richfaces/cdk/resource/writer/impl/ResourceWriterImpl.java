@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.faces.application.Resource;
 
@@ -40,10 +41,12 @@ import org.richfaces.cdk.resource.util.ResourceUtil;
 import org.richfaces.cdk.resource.writer.ResourceProcessor;
 import org.richfaces.cdk.strings.Constants;
 import org.richfaces.resource.ResourceFactory;
+import org.richfaces.resource.ResourceKey;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Ordering;
 import com.google.common.io.Files;
 import com.google.common.io.InputSupplier;
 import com.google.common.io.OutputSupplier;
@@ -141,6 +144,7 @@ public class ResourceWriterImpl implements ResourceWriter {
             return;
         }
         
+        String requestPathWithSkinVariable = ResourceFactory.SKINNED_RESOURCE_PREFIX + "packed." + extension;
         String requestPathWithSkin = Constants.SLASH_JOINER.join(skinName, "packed." + extension);
         ResourceProcessor matchingProcessor = getMatchingResourceProcessor(requestPathWithSkin);
         
@@ -158,6 +162,12 @@ public class ResourceWriterImpl implements ResourceWriter {
         synchronized (outputStream) {
             matchingProcessor.process(requestPathWithSkin, new ResourceInputStreamSupplier(resource).getInput(),
                     outputStream, false);
+        }
+        
+        processedResources.put(ResourceUtil.getResourceQualifier(resource), requestPathWithSkinVariable);
+        
+        if ("javax.faces".equals(resource.getLibraryName()) && "jsf-uncompressed.js".equals(resource.getResourceName())) {
+            processedResources.put("javax.faces:jsf.js", requestPathWithSkinVariable);
         }
     }
     

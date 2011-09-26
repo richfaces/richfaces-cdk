@@ -56,6 +56,9 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
 
         ResourcesRendererCallable(ResourceKey resourceInfo) {
             this.resourceInfo = resourceInfo;
+            if ("javax.faces".equals(resourceInfo.getLibraryName()) && "jsf.js".equals(resourceInfo.getResourceName())) {
+                this.resourceInfo = new ResourceKey("jsf-uncompressed.js", "javax.faces");
+            }
         }
 
         private Resource createResource(FacesContext facesContext, ResourceKey resourceInfo) {
