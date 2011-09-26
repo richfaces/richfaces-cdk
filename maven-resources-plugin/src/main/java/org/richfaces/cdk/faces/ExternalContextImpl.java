@@ -449,6 +449,14 @@ public class ExternalContextImpl extends ExternalContext {
         return "UTF-8";
     }
     
+    /**
+     * Returns mime-type for known resorce file types
+     * 
+     * @param file the full name of file
+     * @return mime-type for known resorce file types
+     * 
+     * TODO load supported mime-types from mime.types file in this project
+     */
     @Override
     public String getMimeType(String file) {
         if (file.endsWith(".png")) {

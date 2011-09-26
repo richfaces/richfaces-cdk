@@ -252,7 +252,7 @@ public class ProcessMojo extends AbstractMojo {
     }
 
     private void scanResourceOrdering(Collection<VFSRoot> cpFiles) throws Exception {
-        ResourceOrderingScanner scanner = new ResourceOrderingScanner(cpFiles);
+        ResourceOrderingScanner scanner = new ResourceOrderingScanner(cpFiles, getLog());
         scanner.scan();
         resourceOrdering = scanner.getCompleteOrdering();
         resourcesWithKnownOrder = Sets.newLinkedHashSet(scanner.getResources());
@@ -327,31 +327,23 @@ public class ProcessMojo extends AbstractMojo {
     }
 
     /**
-     * Releases current instance of {@link ServiceTracker}.
-     */
-    private void finalizeServiceTracker() {
-        ServiceTracker.release();
-    }
-
-    /**
      * Will determine ordering of resources from {@link ResourceDependency} annotations on renderers.
      *
      * Sorts foundResources using the determined ordering.
      */
     private void reorderFoundResources(Collection<VFSRoot> cpResources, DynamicResourceHandler dynamicResourceHandler, ResourceFactory resourceFactory) throws Exception {
-        // if there are some resource libraries (.reslib), we need to expand them
-        foundResources = new ResourceLibraryExpander().expandResourceLibraries(foundResources);
-
         Faces faces = new FacesImpl(null, new FileNameMapperImpl(fileNameMappings), dynamicResourceHandler);
         faces.start();
         initializeServiceTracker();
 
+        // if there are some resource libraries (.reslib), we need to expand them
+        foundResources = new ResourceLibraryExpander().expandResourceLibraries(foundResources);
+        
         faces.startRequest();
         scanResourceOrdering(cpResources);
         faces.stopRequest();
-
+        
         faces.stop();
-        finalizeServiceTracker();
 
         foundResources = resourceOrdering.sortedCopy(foundResources);
 

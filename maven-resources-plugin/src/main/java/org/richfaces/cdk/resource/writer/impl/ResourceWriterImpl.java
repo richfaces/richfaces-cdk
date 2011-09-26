@@ -25,7 +25,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -37,6 +36,7 @@ import javax.faces.application.Resource;
 
 import org.apache.maven.plugin.logging.Log;
 import org.richfaces.cdk.ResourceWriter;
+import org.richfaces.cdk.resource.util.ResourceConstants;
 import org.richfaces.cdk.resource.util.ResourceUtil;
 import org.richfaces.cdk.resource.writer.ResourceProcessor;
 import org.richfaces.cdk.strings.Constants;
@@ -46,11 +46,9 @@ import org.richfaces.resource.ResourceKey;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.google.common.io.Files;
 import com.google.common.io.InputSupplier;
-import com.google.common.io.OutputSupplier;
 
 /**
  * @author Nick Belaevski
@@ -70,7 +68,7 @@ public class ResourceWriterImpl implements ResourceWriter {
             return resource.getInputStream();
         }
     }
-    
+
     /*
      * packed output stream by extension
      */
@@ -132,70 +130,72 @@ public class ResourceWriterImpl implements ResourceWriter {
         log.debug("Opening output stream for " + outFile);
         matchingProcessor.process(requestPathWithSkin, new ResourceInputStreamSupplier(resource),
                 Files.newOutputStreamSupplier(outFile), true);
-        
+
         processedResources.put(ResourceUtil.getResourceQualifier(resource), requestPath);
     }
-    
-    
-    
+
     public void writePackedResource(String skinName, Resource resource) throws IOException {
-        
+
         final String requestPath = resource.getRequestPath();
         String extension = getExtension(requestPath);
         ResourceKey resourceKey = new ResourceKey(resource.getResourceName(), resource.getLibraryName());
-        
+
         if (!"js".equals(extension) && !"css".equals(extension)) {
             writeResource(skinName, resource);
             return;
         }
-        
+
         if (!resourcesWithKnownOrder.contains(resourceKey)) {
             writeResource(skinName, resource);
             return;
         }
-        
+
         if (packedResources.contains(resourceKey)) {
             return;
         }
-        
+
         String requestPathWithSkinVariable = ResourceFactory.SKINNED_RESOURCE_PREFIX + "packed." + extension;
         String requestPathWithSkin = Constants.SLASH_JOINER.join(skinName, "packed." + extension);
         ResourceProcessor matchingProcessor = getMatchingResourceProcessor(requestPathWithSkin);
-        
+
         FileOutputStream outputStream;
         synchronized (PACKED) {
             if (!PACKED.containsKey(extension)) {
-                 File outFile = createOutputFile(requestPathWithSkin);
-                 log.debug("Opening shared output stream for " + outFile);
-                 outputStream = Files.newOutputStreamSupplier(outFile, true).getOutput();
-                 PACKED.put(extension, outputStream);
+                File outFile = createOutputFile(requestPathWithSkin);
+                log.debug("Opening shared output stream for " + outFile);
+                outputStream = Files.newOutputStreamSupplier(outFile, true).getOutput();
+                PACKED.put(extension, outputStream);
             }
             outputStream = PACKED.get(extension);
         }
-        
+
         synchronized (outputStream) {
-            matchingProcessor.process(requestPathWithSkin, new ResourceInputStreamSupplier(resource).getInput(),
-                    outputStream, false);
+            matchingProcessor.process(requestPathWithSkin, new ResourceInputStreamSupplier(resource).getInput(), outputStream,
+                    false);
         }
-        
+
         processedResources.put(ResourceUtil.getResourceQualifier(resource), requestPathWithSkinVariable);
         packedResources.add(resourceKey);
-        
-        if ("javax.faces".equals(resource.getLibraryName()) && "jsf-uncompressed.js".equals(resource.getResourceName())) {
-            processedResources.put("javax.faces:jsf.js", requestPathWithSkinVariable);
+
+        // when packaging JSF's JavaScript, make sure both compressed and uncompressed are written to static mappings
+        if (ResourceUtil.isSameResource(resource, ResourceConstants.JSF_UNCOMPRESSED)
+                || ResourceUtil.isSameResource(resource, ResourceConstants.JSF_COMPRESSED)) {
+            processedResources.put(ResourceUtil.getResourceQualifier(ResourceConstants.JSF_COMPRESSED),
+                    requestPathWithSkinVariable);
+            processedResources.put(ResourceUtil.getResourceQualifier(ResourceConstants.JSF_UNCOMPRESSED),
+                    requestPathWithSkinVariable);
         }
     }
-    
+
     private ResourceProcessor getMatchingResourceProcessor(final String requestPath) {
-        return Iterables.get(
-                Iterables.filter(resourceProcessors, new Predicate<ResourceProcessor>() {
-                    @Override
-                    public boolean apply(ResourceProcessor input) {
-                        return input.isSupportedFile(requestPath);
-                    }
-                }), 0);
+        return Iterables.get(Iterables.filter(resourceProcessors, new Predicate<ResourceProcessor>() {
+            @Override
+            public boolean apply(ResourceProcessor input) {
+                return input.isSupportedFile(requestPath);
+            }
+        }), 0);
     }
-    
+
     private String getExtension(String requestPath) {
         int extensionIndex = Math.max(requestPath.lastIndexOf('.'), requestPath.lastIndexOf('/'));
         return requestPath.substring(extensionIndex + 1);

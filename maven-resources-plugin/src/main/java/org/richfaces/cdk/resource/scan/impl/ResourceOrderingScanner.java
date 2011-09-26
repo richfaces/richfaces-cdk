@@ -31,6 +31,7 @@ import java.util.List;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 
+import org.apache.maven.plugin.logging.Log;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.scanners.TypeAnnotationsScanner;
 import org.reflections.util.ConfigurationBuilder;
@@ -64,10 +65,12 @@ public class ResourceOrderingScanner implements ResourcesScanner {
     private Collection<ResourceKey> resources = Lists.newLinkedList();
     private PartialOrderToCompleteOrder<ResourceKey> ordering = new PartialOrderToCompleteOrder<ResourceKey>();
     private Collection<VFSRoot> cpFiles;
+    private Log log;
 
-    public ResourceOrderingScanner(Collection<VFSRoot> cpFiles) {
+    public ResourceOrderingScanner(Collection<VFSRoot> cpFiles, Log log) {
         super();
         this.cpFiles = cpFiles;
+        this.log = log;
     }
 
     public void scan() throws IOException {
@@ -101,22 +104,21 @@ public class ResourceOrderingScanner implements ResourcesScanner {
                 resourceDependencies.addAll(Arrays.asList(annotatedClass.getAnnotation(ResourceDependencies.class).value()));
             }
             try {
-                System.out.println(annotatedClass);
+                log.debug(annotatedClass.toString());
                 addResourceDependencies(resourceDependencies);
             } catch (IllegalPartialOrderingException e) {
                 throw new IllegalStateException("Exception caught when scanning " + annotatedClass, e);
             }
         }
         
-        resources = ordering.getCompletelyOrdered();
+        resources = ordering.getCompletelyOrderedItems();
     }
 
     private void addResourceDependencies(List<ResourceDependency> resourceDependencies) {
         Collection<ResourceKey> resourceKeys = Collections2.transform(resourceDependencies, RESOURCE_DEPENDENCY_TO_KEY);
         resourceKeys = new ResourceLibraryExpander().expandResourceLibraries(resourceKeys);
-        System.out.println(resourceKeys);
-        ordering.addPartialOrder(resourceKeys);
-        System.out.println();
+        log.debug(resourceKeys.toString());
+        ordering.addPartialOrdering(resourceKeys);
     }
 
     private void addAnnotatedClasses(Class<? extends Annotation> annotationClass, ReflectionsExt refl,
