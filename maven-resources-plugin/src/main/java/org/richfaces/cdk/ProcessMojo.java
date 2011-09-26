@@ -46,7 +46,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import javax.faces.application.Resource;
-import javax.faces.application.ResourceHandler;
+import javax.faces.application.ResourceDependency;
 
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
@@ -68,6 +68,7 @@ import org.richfaces.cdk.resource.scan.ResourcesScanner;
 import org.richfaces.cdk.resource.scan.impl.DynamicResourcesScanner;
 import org.richfaces.cdk.resource.scan.impl.ResourceOrderingScanner;
 import org.richfaces.cdk.resource.scan.impl.StaticResourcesScanner;
+import org.richfaces.cdk.resource.util.ResourceConstants;
 import org.richfaces.cdk.resource.util.ResourceUtil;
 import org.richfaces.cdk.resource.writer.ResourceProcessor;
 import org.richfaces.cdk.resource.writer.impl.CSSResourceProcessor;
@@ -104,22 +105,16 @@ public class ProcessMojo extends AbstractMojo {
             Predicate<CharSequence> containsPredicate = Predicates.containsPattern(from);
             return Predicates.and(Predicates.notNull(), containsPredicate);
         }
-
-        ;
     };
     private static final Function<Resource, String> CONTENT_TYPE_FUNCTION = new Function<Resource, String>() {
         public String apply(Resource from) {
             return from.getContentType();
         }
-
-        ;
     };
     private static final Function<Resource, String> RESOURCE_QUALIFIER_FUNCTION = new Function<Resource, String>() {
         public String apply(Resource from) {
             return ResourceUtil.getResourceQualifier(from);
         }
-
-        ;
     };
     private final Function<String, URL> filePathToURL = new Function<String, URL>() {
         public URL apply(String from) {
@@ -134,8 +129,6 @@ public class ProcessMojo extends AbstractMojo {
 
             return null;
         }
-
-        ;
     };
     /**
      * @parameter
@@ -199,13 +192,11 @@ public class ProcessMojo extends AbstractMojo {
     private Collection<ResourceKey> foundResources = Sets.newHashSet();
     private Ordering<ResourceKey> resourceOrdering;
     private Set<ResourceKey> resourcesWithKnownOrder;
-    
-
-    public static final ResourceKey JSF_UNCOMPRESSED = new ResourceKey("jsf-uncompressed.js", "javax.faces");
 
     // TODO executor parameters
-    private static ExecutorService createExecutorService() {
-        return Executors.newFixedThreadPool(1);
+    private ExecutorService createExecutorService() {
+        int poolSize = pack ? 1 : Runtime.getRuntime().availableProcessors();
+        return Executors.newFixedThreadPool(poolSize);
     }
 
     private Collection<ResourceProcessor> getDefaultResourceProcessors() {
@@ -259,7 +250,7 @@ public class ProcessMojo extends AbstractMojo {
         scanner.scan();
         foundResources.addAll(scanner.getResources());
     }
-    
+
     private void scanResourceOrdering(Collection<VFSRoot> cpFiles) throws Exception {
         ResourceOrderingScanner scanner = new ResourceOrderingScanner(cpFiles);
         scanner.scan();
@@ -312,11 +303,19 @@ public class ProcessMojo extends AbstractMojo {
         classLoader = new URLClassLoader(cp, classLoader);
         return classLoader;
     }
-    
-    private void initializerServiceTracker() {
+
+    /**
+     * Initializes {@link ServiceTracker} to be able use it inside RichFaces framework code
+     * in order to handle dynamic resources.
+     *
+     * Fake {@link ServiceFactoryModule} is used for this purpose.
+     *
+     * @throws IllegalStateException when initialization fails
+     */
+    private void initializeServiceTracker() {
         ServicesFactoryImpl servicesFactory = new ServicesFactoryImpl();
         ServiceTracker.setFactory(servicesFactory);
-        
+
         ArrayList<Module> modules = new ArrayList<Module>();
         modules.add(new ServiceFactoryModule());
         try {
@@ -326,27 +325,42 @@ public class ProcessMojo extends AbstractMojo {
             throw new IllegalStateException(e);
         }
     }
-    
+
+    /**
+     * Releases current instance of {@link ServiceTracker}.
+     */
+    private void finalizeServiceTracker() {
+        ServiceTracker.release();
+    }
+
+    /**
+     * Will determine ordering of resources from {@link ResourceDependency} annotations on renderers.
+     *
+     * Sorts foundResources using the determined ordering.
+     */
     private void reorderFoundResources(Collection<VFSRoot> cpResources, DynamicResourceHandler dynamicResourceHandler, ResourceFactory resourceFactory) throws Exception {
+        // if there are some resource libraries (.reslib), we need to expand them
+        foundResources = new ResourceLibraryExpander().expandResourceLibraries(foundResources);
+
         Faces faces = new FacesImpl(null, new FileNameMapperImpl(fileNameMappings), dynamicResourceHandler);
         faces.start();
-        
-        initializerServiceTracker();
-        
-        foundResources = new ResourceLibraryExpander().expandResourceLibraries(foundResources);
-        
+        initializeServiceTracker();
+
         faces.startRequest();
         scanResourceOrdering(cpResources);
         faces.stopRequest();
+
         faces.stop();
-        
+        finalizeServiceTracker();
+
         foundResources = resourceOrdering.sortedCopy(foundResources);
-        
-        foundResources.remove(JSF_UNCOMPRESSED);
+
+        // do not package two versions of JFS JavaScript (remove it from resources for packaging)
+        foundResources.remove(ResourceConstants.JSF_UNCOMPRESSED);
+        // we need to load java.faces:jsf-uncompressed.js, but we will package
+        resourcesWithKnownOrder.add(ResourceConstants.JSF_UNCOMPRESSED);
+
         getLog().debug("foundResources: " + foundResources);
-        
-        
-        resourcesWithKnownOrder.add(JSF_UNCOMPRESSED);
         getLog().debug("resourcesWithKnownOrder: " + resourcesWithKnownOrder);
     }
 
@@ -375,21 +389,21 @@ public class ProcessMojo extends AbstractMojo {
             scanDynamicResources(cpResources, resourceFactory);
 
             DynamicResourceHandler dynamicResourceHandler = new DynamicResourceHandler(staticResourceHandler, resourceFactory);
-            
+
             if (pack) {
                 reorderFoundResources(cpResources, dynamicResourceHandler, resourceFactory);
             }
-            
+
             File resourceOutputDir = new File(outputDir);
             if (!resourceOutputDir.exists()) {
                 resourceOutputDir = new File(project.getBuild().getDirectory(), outputDir);
             }
-            
+
             File resourceMappingDir = new File(project.getBuild().getOutputDirectory());
 
             faces = new FacesImpl(null, new FileNameMapperImpl(fileNameMappings), dynamicResourceHandler);
             faces.start();
-            
+
             ResourceWriterImpl resourceWriter = new ResourceWriterImpl(resourceOutputDir, resourceMappingDir,
                     getDefaultResourceProcessors(), getLog(), resourcesWithKnownOrder);
             ResourceTaskFactoryImpl taskFactory = new ResourceTaskFactoryImpl(faces, pack);
@@ -420,7 +434,6 @@ public class ProcessMojo extends AbstractMojo {
 
             resourceWriter.writeProcessedResourceMappings();
         } catch (Exception e) {
-            e.printStackTrace();
             throw new MojoExecutionException(e.getMessage(), e);
         } finally {
 
