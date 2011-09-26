@@ -71,10 +71,22 @@ public class PartialOrderToCompleteOrderTest {
         order.addPartialOrder(asList(2));
         order.addPartialOrder(asList(4));
         order.addPartialOrder(asList(7));
-        Assert.assertEquals(asList(1, 2, 3, 4, 6, 7, 8, 9), order.getCompletelyOrdered());
+        Assert.assertEquals(asList(1, 3, 6, 8, 2, 4, 7, 9), order.getCompletelyOrdered());
         
         Ordering<Integer> completeOrdering = order.getCompleteOrdering();
-        Assert.assertEquals(asList(1, 2, 3, 4, 6, 7, 8, 9, 5), completeOrdering.sortedCopy(asList(5, 6, 7, 8, 9, 1, 2, 3, 4)));
+        Assert.assertEquals(asList(1, 3, 6, 8, 2, 4, 7, 9, 5), completeOrdering.sortedCopy(asList(5, 6, 7, 8, 9, 1, 2, 3, 4)));
+    }
+    
+    @Test
+    public void testCustomOrderingWithMissingValue2() {
+        order.addPartialOrder(asList(2, 3, 8));
+        order.addPartialOrder(asList(1, 2, 5));
+        order.addPartialOrder(asList(2, 4, 7, 9));
+        order.addPartialOrder(asList(1, 2, 6));
+        Assert.assertEquals(asList(1, 2, 3, 5, 4, 6, 8, 7, 9), order.getCompletelyOrdered());
+        
+        Ordering<Integer> completeOrdering = order.getCompleteOrdering();
+        Assert.assertEquals(asList(1, 2, 3, 5, 4, 6, 8, 7, 9), completeOrdering.sortedCopy(asList(2, 8, 9, 3, 1, 4, 6, 5, 7)));
     }
     
     @Test

@@ -199,6 +199,10 @@ public class ProcessMojo extends AbstractMojo {
     private Locale resourceLocales;
     private Collection<ResourceKey> foundResources = Sets.newHashSet();
     private Ordering<ResourceKey> resourceOrdering;
+    private Set<ResourceKey> resourcesWithKnownOrder;
+    
+
+    public static final ResourceKey JSF_UNCOMPRESSED = new ResourceKey("jsf-uncompressed.js", "javax.faces");
 
     // TODO executor parameters
     private static ExecutorService createExecutorService() {
@@ -256,12 +260,11 @@ public class ProcessMojo extends AbstractMojo {
         foundResources.addAll(scanner.getResources());
     }
     
-    ResourceOrderingScanner scanner;
-    
     private void scanResourceOrdering(Collection<VFSRoot> cpFiles) throws Exception {
-        scanner = new ResourceOrderingScanner(cpFiles);
+        ResourceOrderingScanner scanner = new ResourceOrderingScanner(cpFiles);
         scanner.scan();
         resourceOrdering = scanner.getCompleteOrdering();
+        resourcesWithKnownOrder = Sets.newLinkedHashSet(scanner.getResources());
     }
 
     private Collection<VFSRoot> fromUrls(Iterable<URL> urls) throws URISyntaxException, IOException {
@@ -358,9 +361,6 @@ public class ProcessMojo extends AbstractMojo {
             
             foundResources = new ResourceLibraryExpander().expandResourceLibraries(foundResources);
             
-            foundResources.remove(new ResourceKey("jsf-uncompressed.js", "javax.faces"));
-            System.out.println(foundResources);
-            
             faces.startRequest();
             scanResourceOrdering(cpResources);
             faces.stopRequest();
@@ -368,6 +368,12 @@ public class ProcessMojo extends AbstractMojo {
             faces.stop();
             
             foundResources = resourceOrdering.sortedCopy(foundResources);
+            
+            foundResources.remove(JSF_UNCOMPRESSED);
+            System.out.println("foundResources: " + foundResources);
+            
+            resourcesWithKnownOrder.add(JSF_UNCOMPRESSED);
+            System.out.println("resourcesWithKnownOrder: " + resourcesWithKnownOrder);
 
             File resourceOutputDir = new File(outputDir);
             if (!resourceOutputDir.exists()) {
@@ -380,7 +386,7 @@ public class ProcessMojo extends AbstractMojo {
             faces.start();
             
             ResourceWriterImpl resourceWriter = new ResourceWriterImpl(resourceOutputDir, resourceMappingDir,
-                    getDefaultResourceProcessors(), getLog());
+                    getDefaultResourceProcessors(), getLog(), resourcesWithKnownOrder);
             ResourceTaskFactoryImpl taskFactory = new ResourceTaskFactoryImpl(faces);
             taskFactory.setResourceWriter(resourceWriter);
 
@@ -409,6 +415,7 @@ public class ProcessMojo extends AbstractMojo {
 
             resourceWriter.writeProcessedResourceMappings();
         } catch (Exception e) {
+            e.printStackTrace();
             throw new MojoExecutionException(e.getMessage(), e);
         } finally {
 

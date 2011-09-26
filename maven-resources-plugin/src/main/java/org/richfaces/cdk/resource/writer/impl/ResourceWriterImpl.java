@@ -47,6 +47,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Ordering;
+import com.google.common.collect.Sets;
 import com.google.common.io.Files;
 import com.google.common.io.InputSupplier;
 import com.google.common.io.OutputSupplier;
@@ -81,14 +82,17 @@ public class ResourceWriterImpl implements ResourceWriter {
     private Iterable<ResourceProcessor> resourceProcessors;
     private Log log;
     private long currentTime;
+    private Set<ResourceKey> resourcesWithKnownOrder;
+    private Set<ResourceKey> packedResources = Sets.newHashSet();
 
     public ResourceWriterImpl(File resourceContentsDir, File resourceMappingDir,
-            Iterable<ResourceProcessor> resourceProcessors, Log log) {
+            Iterable<ResourceProcessor> resourceProcessors, Log log, Set<ResourceKey> resourcesWithKnownOrder) {
         this.resourceContentsDir = resourceContentsDir;
         this.resourceMappingDir = resourceMappingDir;
         this.resourceProcessors = Iterables.concat(resourceProcessors,
                 Collections.singleton(ThroughputResourceProcessor.INSTANCE));
         this.log = log;
+        this.resourcesWithKnownOrder = resourcesWithKnownOrder;
 
         resourceContentsDir.mkdirs();
 
@@ -138,9 +142,19 @@ public class ResourceWriterImpl implements ResourceWriter {
         
         final String requestPath = resource.getRequestPath();
         String extension = getExtension(requestPath);
+        ResourceKey resourceKey = new ResourceKey(resource.getResourceName(), resource.getLibraryName());
         
         if (!"js".equals(extension) && !"css".equals(extension)) {
             writeResource(skinName, resource);
+            return;
+        }
+        
+        if (!resourcesWithKnownOrder.contains(resourceKey)) {
+            writeResource(skinName, resource);
+            return;
+        }
+        
+        if (packedResources.contains(resourceKey)) {
             return;
         }
         
@@ -165,6 +179,7 @@ public class ResourceWriterImpl implements ResourceWriter {
         }
         
         processedResources.put(ResourceUtil.getResourceQualifier(resource), requestPathWithSkinVariable);
+        packedResources.add(resourceKey);
         
         if ("javax.faces".equals(resource.getLibraryName()) && "jsf-uncompressed.js".equals(resource.getResourceName())) {
             processedResources.put("javax.faces:jsf.js", requestPathWithSkinVariable);
