@@ -150,23 +150,20 @@ public class ResourceWriterImpl implements ResourceWriter {
             return;
         }
 
-        if (packedResources.contains(resourceKey)) {
-            return;
-        }
-
-        String requestPathWithSkinVariable = ResourceFactory.SKINNED_RESOURCE_PREFIX + "packed." + extension;
-        String requestPathWithSkin = Constants.SLASH_JOINER.join(skinName, "packed." + extension);
+        String requestPathWithSkinVariable = ResourceFactory.SKINNED_RESOURCE_PREFIX + "packed/packed." + extension;
+        String requestPathWithSkin = Constants.SLASH_JOINER.join(skinName, "packed", "packed." + extension);
         ResourceProcessor matchingProcessor = getMatchingResourceProcessor(requestPathWithSkin);
 
         FileOutputStream outputStream;
         synchronized (PACKED) {
-            if (!PACKED.containsKey(extension)) {
+            String packagingCacheKey = extension + ":" + skinName;
+            if (!PACKED.containsKey(packagingCacheKey)) {
                 File outFile = createOutputFile(requestPathWithSkin);
                 log.debug("Opening shared output stream for " + outFile);
                 outputStream = Files.newOutputStreamSupplier(outFile, true).getOutput();
-                PACKED.put(extension, outputStream);
+                PACKED.put(packagingCacheKey, outputStream);
             }
-            outputStream = PACKED.get(extension);
+            outputStream = PACKED.get(packagingCacheKey);
         }
 
         synchronized (outputStream) {
