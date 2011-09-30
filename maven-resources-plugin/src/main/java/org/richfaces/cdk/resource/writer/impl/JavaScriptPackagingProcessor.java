@@ -23,11 +23,17 @@ package org.richfaces.cdk.resource.writer.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.charset.Charset;
 
 import org.richfaces.cdk.resource.writer.ResourceProcessor;
 
 import com.google.common.io.ByteStreams;
+import com.google.common.io.Closeables;
 import com.google.common.io.InputSupplier;
 import com.google.common.io.OutputSupplier;
 
@@ -35,17 +41,18 @@ import com.google.common.io.OutputSupplier;
  * @author Nick Belaevski
  * 
  */
-final class ThroughputResourceProcessor implements ResourceProcessor {
-    public static final ResourceProcessor INSTANCE = new ThroughputResourceProcessor();
+public class JavaScriptPackagingProcessor implements ResourceProcessor {
+    private Charset charset;
 
-    private ThroughputResourceProcessor() {
+    public JavaScriptPackagingProcessor(Charset charset) {
+        this.charset = charset;
     }
 
     @Override
     public boolean isSupportedFile(String name) {
-        return true;
+        return name.endsWith(".js");
     }
-
+    
     @Override
     public void process(String resourceName, InputSupplier<? extends InputStream> in,
             OutputSupplier<? extends OutputStream> out, boolean closeAtFinish) throws IOException {
@@ -54,6 +61,27 @@ final class ThroughputResourceProcessor implements ResourceProcessor {
 
     @Override
     public void process(String resourceName, InputStream in, OutputStream out, boolean closeAtFinish) throws IOException {
-        ByteStreams.copy(in, out);
+        
+        Reader reader = null;
+        Writer writer = null;
+
+        try {
+            reader = new InputStreamReader(in, charset);
+            writer = new OutputStreamWriter(out, charset);
+
+            ByteStreams.copy(in, out);
+            if (!closeAtFinish) {
+                // add semicolon to satisfy end of context of each script when packing files
+                writer.write(";");
+                writer.flush();
+            }
+        } finally {
+            Closeables.closeQuietly(reader);
+            if (closeAtFinish) {
+                Closeables.closeQuietly(writer);
+            } else {
+                writer.flush();
+            }
+        }
     }
 }

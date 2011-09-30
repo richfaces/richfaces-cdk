@@ -40,13 +40,13 @@ import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
 
 /**
  * @author Nick Belaevski
- *
+ * 
  */
-public class JavaScriptResourceProcessor implements ResourceProcessor {
+public class JavaScriptCompressingProcessor implements ResourceProcessor {
     private Charset charset;
     private Log log;
 
-    public JavaScriptResourceProcessor(Charset charset, Log log) {
+    public JavaScriptCompressingProcessor(Charset charset, Log log) {
         this.charset = charset;
         this.log = log;
     }
@@ -55,21 +55,32 @@ public class JavaScriptResourceProcessor implements ResourceProcessor {
     public boolean isSupportedFile(String name) {
         return name.endsWith(".js");
     }
+    
+    @Override
+    public void process(String resourceName, InputSupplier<? extends InputStream> in,
+            OutputSupplier<? extends OutputStream> out, boolean closeAtFinish) throws IOException {
+        process(resourceName, in.getInput(), out.getOutput(), closeAtFinish);
+    }
 
     @Override
-    public void process(String resourceName, InputSupplier<? extends InputStream> in, OutputSupplier<? extends OutputStream> out)
-            throws IOException {
-
+    public void process(String resourceName, InputStream in, OutputStream out, boolean closeAtFinish) throws IOException {
+        
         Reader reader = null;
         Writer writer = null;
 
         try {
-            reader = new InputStreamReader(in.getInput(), charset);
-            writer = new OutputStreamWriter(out.getOutput(), charset);
+            reader = new InputStreamReader(in, charset);
+            writer = new OutputStreamWriter(out, charset);
 
             MavenLogErrorReporter reporter = new MavenLogErrorReporter(resourceName);
             new JavaScriptCompressor(reader, reporter).compress(writer, 0, true, true, false, false);
 
+            if (!closeAtFinish) {
+                // add semicolon to satisfy end of context of each script when packing files
+                writer.write(";");
+                writer.flush();
+            }
+            
             if (reporter.hasErrors() && log.isErrorEnabled()) {
                 log.error(reporter.getErrorsLog());
             }
@@ -79,7 +90,11 @@ public class JavaScriptResourceProcessor implements ResourceProcessor {
             }
         } finally {
             Closeables.closeQuietly(reader);
-            Closeables.closeQuietly(writer);
+            if (closeAtFinish) {
+                Closeables.closeQuietly(writer);
+            } else {
+                writer.flush();
+            }
         }
     }
 }

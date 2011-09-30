@@ -36,6 +36,7 @@ import org.richfaces.cdk.Faces;
 import org.richfaces.cdk.ResourceTaskFactory;
 import org.richfaces.cdk.ResourceWriter;
 import org.richfaces.cdk.faces.CurrentResourceContext;
+import org.richfaces.cdk.resource.util.ResourceConstants;
 import org.richfaces.resource.ResourceFactory;
 import org.richfaces.resource.ResourceKey;
 
@@ -49,13 +50,20 @@ import com.google.common.io.Closeables;
  *
  */
 public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
+    
     private class ResourcesRendererCallable implements Callable<Object> {
-        private ResourceKey resourceInfo;
+        private ResourceKey resourceKey;
         private boolean skinDependent;
         private boolean skipped = false;
 
-        ResourcesRendererCallable(ResourceKey resourceInfo) {
-            this.resourceInfo = resourceInfo;
+        ResourcesRendererCallable(ResourceKey resourceKey) {
+            this.resourceKey = resourceKey;
+            
+            // when packaging JSF's JavaScript implementation, use uncompressed version
+            // as double compression may lead in inability to use it
+            if (pack && ResourceConstants.JSF_COMPRESSED.equals(resourceKey)) {
+                this.resourceKey = ResourceConstants.JSF_UNCOMPRESSED;
+            }
         }
 
         private Resource createResource(FacesContext facesContext, ResourceKey resourceInfo) {
@@ -71,23 +79,27 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
                     faces.setSkin(skin);
                 }
 
-                Resource resource = createResource(facesContext, resourceInfo);
+                Resource resource = createResource(facesContext, resourceKey);
                 CurrentResourceContext.getInstance(facesContext).setResource(resource);
                 // TODO check content type
 
                 if (shouldCheckForEL(resource) && containsELExpression(resource)) {
-                    log.info(MessageFormat.format("Skipping {0} because it contains EL-expressions", resourceInfo));
+                    log.info(MessageFormat.format("Skipping {0} because it contains EL-expressions", resourceKey));
                     return;
                 }
-
-                resourceWriter.writeResource(skin, resource);
+                
+                if (pack) {
+                    resourceWriter.writePackedResource(skin, resource);
+                } else {
+                    resourceWriter.writeResource(skin, resource);
+                }
             } catch (Exception e) {
                 if (skin != null) {
                     log.error(
-                            MessageFormat.format("Exception rendering resorce {0} using skin {1}: {2}", resourceInfo, skin,
+                            MessageFormat.format("Exception rendering resorce {0} using skin {1}: {2}", resourceKey, skin,
                                     e.getMessage()), e);
                 } else {
-                    log.error(MessageFormat.format("Exception rendering resorce {0}: {1}", resourceInfo, e.getMessage()), e);
+                    log.error(MessageFormat.format("Exception rendering resorce {0}: {1}", resourceKey, e.getMessage()), e);
                 }
             } finally {
                 faces.setSkin(null);
@@ -100,7 +112,7 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
                 FacesContext facesContext = faces.startRequest();
                 faces.setSkin("DEFAULT");
 
-                Resource resource = createResource(facesContext, resourceInfo);
+                Resource resource = createResource(facesContext, resourceKey);
                 if (resource == null) {
                     // TODO log null resource
                     skipped = true;
@@ -147,10 +159,12 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
     private CompletionService<Object> completionService;
     private String[] skins = new String[0];
     private Predicate<Resource> filter = Predicates.alwaysTrue();
+    private boolean pack;
 
-    public ResourceTaskFactoryImpl(Faces faces) {
+    public ResourceTaskFactoryImpl(Faces faces, boolean pack) {
         super();
         this.faces = faces;
+        this.pack = pack;
     }
 
     private boolean containsELExpression(Resource resource) {
