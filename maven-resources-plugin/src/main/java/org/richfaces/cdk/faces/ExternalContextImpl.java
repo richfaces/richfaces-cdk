@@ -35,6 +35,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.faces.context.ExternalContext;
 
 import com.google.common.collect.Sets;
@@ -459,19 +460,6 @@ public class ExternalContextImpl extends ExternalContext {
      */
     @Override
     public String getMimeType(String file) {
-        if (file.endsWith(".png")) {
-            return "image/png";
-        }
-        if (file.endsWith(".css")) {
-            return "text/css";
-        }
-        // TODO where is source of /js files?
-        if (file.endsWith(".js") || file.endsWith("/js")) {
-            return "application/javascript";
-        }
-        if (file.endsWith(".gif")) {
-            return "image/gif";
-        }
-        throw new UnsupportedOperationException("unknown mime-type for file '" + file + "'");
+        return MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(file);
     }
 }
