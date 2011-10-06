@@ -45,6 +45,7 @@ import org.richfaces.cdk.vfs.VFSType;
 import org.richfaces.resource.ResourceKey;
 
 import com.google.common.base.Function;
+import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
@@ -59,6 +60,13 @@ public class ResourceOrderingScanner implements ResourcesScanner {
         @Override
         public ResourceKey apply(ResourceDependency resourceDependency) {
             return new ResourceKey(resourceDependency.name(), resourceDependency.library());
+        }
+    };
+    
+    private static final Predicate<ResourceDependency> RESOURCE_DEPENDENCY_NOT_BODY = new Predicate<ResourceDependency>() {
+        @Override
+        public boolean apply(ResourceDependency resourceDependency) {
+            return !"body".equals(resourceDependency.target());
         }
     };
     
@@ -115,7 +123,9 @@ public class ResourceOrderingScanner implements ResourcesScanner {
     }
 
     private void addResourceDependencies(List<ResourceDependency> resourceDependencies) {
-        Collection<ResourceKey> resourceKeys = Collections2.transform(resourceDependencies, RESOURCE_DEPENDENCY_TO_KEY);
+        Collection<ResourceDependency> filteredResourceDependencies = Collections2.filter(resourceDependencies, RESOURCE_DEPENDENCY_NOT_BODY);
+        System.out.println(filteredResourceDependencies);
+        Collection<ResourceKey> resourceKeys = Collections2.transform(filteredResourceDependencies, RESOURCE_DEPENDENCY_TO_KEY);
         resourceKeys = new ResourceLibraryExpander().expandResourceLibraries(resourceKeys);
         log.debug(resourceKeys.toString());
         ordering.addPartialOrdering(resourceKeys);
