@@ -62,8 +62,15 @@ public class CountingExecutorCompletionService<T> extends ExecutorCompletionServ
 
         try {
             return super.take();
+        } catch (Exception e) {
+            throw new IllegalStateException("CompletionService failed", e);
         } finally {
             tasksCounter.getAndDecrement();
         }
+    }
+    
+    @Override
+    public String toString() {
+        return "CountingExecutorCompletionService (" + tasksCounter.get() + ")"; 
     }
 }

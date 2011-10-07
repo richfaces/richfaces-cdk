@@ -125,4 +125,9 @@ public class ZipVFSFile implements VirtualFile {
     protected ZipNode getZipNode() {
         return zipNode;
     }
+    
+    @Override
+    public String toString() {
+        return "ZipVFSFile[" + zipFile.getName() + ", " + zipNode + ", " + relativePath + "]";
+    }
 }

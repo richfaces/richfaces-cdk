@@ -72,10 +72,9 @@ public class ResourceWriterImpl implements ResourceWriter {
     /*
      * packed output stream by extension
      */
-    private static final Map<String, FileOutputStream> PACKED = new LinkedHashMap<String, FileOutputStream>();
+    private final Map<String, FileOutputStream> PACKED = new LinkedHashMap<String, FileOutputStream>();
 
     private File resourceContentsDir;
-    private File resourceMappingDir;
     private Map<String, String> processedResources = Maps.newConcurrentMap();
     private Iterable<ResourceProcessor> resourceProcessors;
     private Log log;
@@ -83,10 +82,9 @@ public class ResourceWriterImpl implements ResourceWriter {
     private Set<ResourceKey> resourcesWithKnownOrder;
     private Set<ResourceKey> packedResources = Sets.newHashSet();
 
-    public ResourceWriterImpl(File resourceContentsDir, File resourceMappingDir,
+    public ResourceWriterImpl(File resourceContentsDir,
             Iterable<ResourceProcessor> resourceProcessors, Log log, Set<ResourceKey> resourcesWithKnownOrder) {
         this.resourceContentsDir = resourceContentsDir;
-        this.resourceMappingDir = resourceMappingDir;
         this.resourceProcessors = Iterables.concat(resourceProcessors,
                 Collections.singleton(ThroughputResourceProcessor.INSTANCE));
         this.log = log;
@@ -199,11 +197,11 @@ public class ResourceWriterImpl implements ResourceWriter {
     }
 
     @Override
-    public void writeProcessedResourceMappings() throws IOException {
+    public void writeProcessedResourceMappings(String staticResourceMappingFile) throws IOException {
         // TODO separate mappings file location
         FileOutputStream fos = null;
         try {
-            File mappingsFile = new File(resourceMappingDir, ResourceFactory.STATIC_RESOURCE_MAPPINGS);
+            File mappingsFile = new File(staticResourceMappingFile);
             // TODO merge properties
             mappingsFile.delete();
             mappingsFile.getParentFile().mkdirs();

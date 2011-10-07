@@ -34,5 +34,5 @@ public interface ResourceWriter {
     
     void writePackedResource(String skinName, Resource resource) throws IOException;
 
-    void writeProcessedResourceMappings() throws IOException;
+    void writeProcessedResourceMappings(String staticResourceMappingFile) throws IOException;
 }

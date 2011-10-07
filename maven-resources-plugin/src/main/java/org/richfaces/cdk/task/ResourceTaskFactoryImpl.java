@@ -72,13 +72,14 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
         }
 
         private void renderResource(String skin) {
+            log.debug("rendering " + resourceKey + " (" + skin + ")");
             try {
                 FacesContext facesContext = faces.startRequest();
 
                 if (skin != null) {
                     faces.setSkin(skin);
                 }
-
+                
                 Resource resource = createResource(facesContext, resourceKey);
                 CurrentResourceContext.getInstance(facesContext).setResource(resource);
                 // TODO check content type
@@ -93,7 +94,9 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
                 } else {
                     resourceWriter.writeResource(skin, resource);
                 }
+                log.debug("rendered " + resourceKey + " (" + skin + ")");
             } catch (Exception e) {
+                log.debug("not rendered " + resourceKey + " (" + skin + ") - cought exception");
                 if (skin != null) {
                     log.error(
                             MessageFormat.format("Exception rendering resorce {0} using skin {1}: {2}", resourceKey, skin,
@@ -108,6 +111,7 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
         }
 
         private void checkResource() {
+            log.debug("checking " + resourceKey);
             try {
                 FacesContext facesContext = faces.startRequest();
                 faces.setSkin("DEFAULT");
@@ -132,7 +136,10 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
                 }
 
                 skinDependent = resource.getRequestPath().startsWith(ResourceFactory.SKINNED_RESOURCE_PREFIX);
+            } catch (Exception e) {
+                throw (RuntimeException) e;
             } finally {
+                log.debug("checked " + resourceKey + ": skinDependent: " + skinDependent + ", skipped: " + skipped);
                 faces.setSkin(null);
                 faces.stopRequest();
             }
@@ -140,7 +147,9 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
 
         public Object call() throws Exception {
             checkResource();
-            if (!skipped) {
+            if (skipped) {
+                log.info("Skipped resource rendering: " + resourceKey);
+            } else {
                 if (skinDependent) {
                     for (String skin : skins) {
                         renderResource(skin);

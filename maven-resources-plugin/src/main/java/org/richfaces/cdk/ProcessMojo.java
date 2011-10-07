@@ -135,7 +135,12 @@ public class ProcessMojo extends AbstractMojo {
      * @parameter
      * @required
      */
-    private String outputDir;
+    private String resourcesOutputDir;
+    /**
+     * @parameter
+     * @required
+     */
+    private String staticResourceMappingFile;
     /**
      * @parameter
      * @required
@@ -355,8 +360,7 @@ public class ProcessMojo extends AbstractMojo {
         foundResources.remove(ResourceConstants.JSF_UNCOMPRESSED);
         // we need to load java.faces:jsf-uncompressed.js, but we will package
         resourcesWithKnownOrder.add(ResourceConstants.JSF_UNCOMPRESSED);
-
-        getLog().debug("foundResources: " + foundResources);
+        
         getLog().debug("resourcesWithKnownOrder: " + resourcesWithKnownOrder);
     }
 
@@ -378,6 +382,7 @@ public class ProcessMojo extends AbstractMojo {
             cpResources = getClasspathVfs(projectCP);
 
             Collection<VirtualFile> resourceRoots = ResourceUtil.getResourceRoots(cpResources, webResources);
+            getLog().debug("resourceRoots: " + resourceRoots);
             scanStaticResources(resourceRoots);
             StaticResourceHandler staticResourceHandler = new StaticResourceHandler(resourceRoots);
             ResourceFactory resourceFactory = new ResourceFactoryImpl(staticResourceHandler);
@@ -386,22 +391,16 @@ public class ProcessMojo extends AbstractMojo {
 
             DynamicResourceHandler dynamicResourceHandler = new DynamicResourceHandler(staticResourceHandler, resourceFactory);
 
+            getLog().debug("foundResources: " + foundResources);
+            
             if (pack) {
                 reorderFoundResources(cpResources, dynamicResourceHandler, resourceFactory);
             }
 
-            File resourceOutputDir = new File(outputDir);
-            if (!resourceOutputDir.exists()) {
-                resourceOutputDir = new File(project.getBuild().getDirectory(), outputDir);
-            }
-
-            File resourceMappingDir = new File(project.getBuild().getOutputDirectory());
-
             faces = new FacesImpl(null, new FileNameMapperImpl(fileNameMappings), dynamicResourceHandler);
             faces.start();
 
-            ResourceWriterImpl resourceWriter = new ResourceWriterImpl(resourceOutputDir, resourceMappingDir,
-                    getDefaultResourceProcessors(), getLog(), resourcesWithKnownOrder);
+            ResourceWriterImpl resourceWriter = new ResourceWriterImpl(new File(resourcesOutputDir), getDefaultResourceProcessors(), getLog(), resourcesWithKnownOrder);
             ResourceTaskFactoryImpl taskFactory = new ResourceTaskFactoryImpl(faces, pack);
             taskFactory.setResourceWriter(resourceWriter);
 
@@ -412,6 +411,8 @@ public class ProcessMojo extends AbstractMojo {
             taskFactory.setLog(getLog());
             taskFactory.setFilter(createResourcesFilter());
             taskFactory.submit(foundResources);
+            
+            getLog().debug(completionService.toString());
 
             Future<Object> future = null;
             while (true) {
@@ -420,15 +421,16 @@ public class ProcessMojo extends AbstractMojo {
                     try {
                         future.get();
                     } catch (ExecutionException e) {
-                        // TODO: handle exception
-                        e.getCause().printStackTrace();
+                        getLog().error(e);
                     }
                 } else {
                     break;
                 }
             }
+            
+            getLog().debug(completionService.toString());
 
-            resourceWriter.writeProcessedResourceMappings();
+            resourceWriter.writeProcessedResourceMappings(staticResourceMappingFile);
         } catch (Exception e) {
             throw new MojoExecutionException(e.getMessage(), e);
         } finally {
