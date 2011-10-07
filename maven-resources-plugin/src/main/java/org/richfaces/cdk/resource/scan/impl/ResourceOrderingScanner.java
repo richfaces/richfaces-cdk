@@ -124,7 +124,6 @@ public class ResourceOrderingScanner implements ResourcesScanner {
 
     private void addResourceDependencies(List<ResourceDependency> resourceDependencies) {
         Collection<ResourceDependency> filteredResourceDependencies = Collections2.filter(resourceDependencies, RESOURCE_DEPENDENCY_NOT_BODY);
-        System.out.println(filteredResourceDependencies);
         Collection<ResourceKey> resourceKeys = Collections2.transform(filteredResourceDependencies, RESOURCE_DEPENDENCY_TO_KEY);
         resourceKeys = new ResourceLibraryExpander().expandResourceLibraries(resourceKeys);
         log.debug(resourceKeys.toString());
