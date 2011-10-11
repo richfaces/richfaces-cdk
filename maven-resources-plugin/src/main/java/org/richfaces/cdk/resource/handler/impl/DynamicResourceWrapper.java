@@ -21,7 +21,6 @@
  */
 package org.richfaces.cdk.resource.handler.impl;
 
-import static org.richfaces.cdk.strings.Constants.DASH_JOINER;
 import static org.richfaces.cdk.strings.Constants.SLASH_JOINER;
 
 import java.io.IOException;
@@ -35,9 +34,6 @@ import javax.faces.context.FacesContext;
 import org.richfaces.application.ServiceTracker;
 import org.richfaces.cdk.FileNameMapper;
 import org.richfaces.resource.ResourceFactory;
-import org.richfaces.resource.VersionedResource;
-
-import com.google.common.base.Strings;
 
 /**
  * @author Nick Belaevski
@@ -93,14 +89,6 @@ public class DynamicResourceWrapper extends Resource {
         return ServiceTracker.getService(FileNameMapper.class);
     }
 
-    private String getVersion() {
-        String version = null;
-        if (resource instanceof VersionedResource) {
-            version = ((VersionedResource) resource).getVersion();
-        }
-        return version;
-    }
-
     @Override
     public String getRequestPath() {
         String resourceExtension = getResourceExtension();
@@ -108,16 +96,13 @@ public class DynamicResourceWrapper extends Resource {
         String resourceName = getResourceName();
         if (resourceName.endsWith(ECSS_EXTENSION)) {
             resourceName = resourceName.substring(0, resourceName.length() - ECSS_EXTENSION.length());
-        } else {
-            if (resourceExtension != null && resourceName.endsWith(resourceExtension)) {
-                resourceName = resourceName.substring(0, resourceName.length() - resourceExtension.length());
-            }
         }
 
-        String libraryName = getLibraryName();
+        if (resourceExtension != null && !resourceName.endsWith(resourceExtension)) {
+            resourceName = resourceName + resourceExtension;
+        }
 
-        String versionedName = DASH_JOINER.join(resourceName, getVersion()) + Strings.nullToEmpty(resourceExtension);
-        String resourcePath = SLASH_JOINER.join(libraryName, versionedName);
+        String resourcePath = SLASH_JOINER.join(getLibraryName(), resourceName);
 
         return ResourceFactory.SKINNED_RESOURCE_PREFIX + getFileNameMapper().createName(resourcePath);
     }
