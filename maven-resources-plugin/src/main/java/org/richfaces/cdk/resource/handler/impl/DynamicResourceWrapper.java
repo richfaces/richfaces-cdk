@@ -116,15 +116,6 @@ public class DynamicResourceWrapper extends Resource {
 
         String libraryName = getLibraryName();
 
-        if (Strings.isNullOrEmpty(libraryName)) {
-            int idx = resourceName.lastIndexOf('.');
-
-            if (idx >= 0) {
-                libraryName = resourceName.substring(0, idx);
-                resourceName = resourceName.substring(idx + 1);
-            }
-        }
-
         String versionedName = DASH_JOINER.join(resourceName, getVersion()) + Strings.nullToEmpty(resourceExtension);
         String resourcePath = SLASH_JOINER.join(libraryName, versionedName);
 
