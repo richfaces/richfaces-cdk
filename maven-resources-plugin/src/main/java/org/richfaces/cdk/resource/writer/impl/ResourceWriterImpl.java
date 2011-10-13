@@ -147,8 +147,11 @@ public class ResourceWriterImpl implements ResourceWriter {
             writeResource(skinName, resource);
             return;
         }
-
-        String requestPathWithSkinVariable = ResourceFactory.SKINNED_RESOURCE_PREFIX + "packed/packed." + extension;
+        
+        String requestPathWithSkinVariable = "packed/packed." + extension;
+        if (skinName != null && skinName.length() > 0) {
+            requestPathWithSkinVariable = ResourceFactory.SKINNED_RESOURCE_PREFIX + requestPathWithSkinVariable;
+        }
         String requestPathWithSkin = Constants.SLASH_JOINER.join(skinName, "packed", "packed." + extension);
         ResourceProcessor matchingProcessor = getMatchingResourceProcessor(requestPathWithSkin);
 
