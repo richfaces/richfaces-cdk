@@ -14,7 +14,7 @@ import javax.faces.el.ValueBinding;
 /**
  * ${description?if_exists}
  **/
-@Generated({"RichFaces CDK", "4.1.0.20111011-M3"})
+@Generated({"RichFaces CDK", "4.1.0.M3-SNAPSHOT"})
 public class ${targetClass.simpleName} extends ${baseClass} implements Validator, PartialStateHolder {
 
     @Override

@@ -3,13 +3,13 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>org.richfaces.cdk</groupId>
-        <version>4.1.0.20111011-M3</version>
+        <version>4.1.0.M3-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.richfaces.cdk</groupId>
     <artifactId>maven-cdk-plugin</artifactId>
-    <version>4.1.0.20111011-M3</version>
+    <version>4.1.0.M3-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     <name>Maven plugin for JSF components code generation</name>
     <dependencies>

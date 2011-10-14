@@ -8,7 +8,7 @@ import ${listenerInterface};
 /**
  * ${description?if_exists}
  **/
-@Generated({"RichFaces CDK", "4.1.0.20111011-M3"})
+@Generated({"RichFaces CDK", "4.1.0.M3-SNAPSHOT"})
 public interface ${sourceInterface.simpleName} {
 
     /**
