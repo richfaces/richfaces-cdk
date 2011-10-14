@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.richfaces.cdk</groupId>
         <artifactId>maven-plugins</artifactId>
-        <version>4.1.0.M3-SNAPSHOT</version>
+        <version>4.1.0.20111014-M3</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <groupId>org.richfaces.cdk</groupId>

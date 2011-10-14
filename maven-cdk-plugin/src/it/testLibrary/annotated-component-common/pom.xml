@@ -34,7 +34,7 @@
         <dependency>
             <groupId>org.richfaces.cdk</groupId>
             <artifactId>annotations</artifactId>
-            <version>4.1.0.M3-SNAPSHOT</version>
+            <version>4.1.0.20111014-M3</version>
         </dependency>
         <dependency>
             <groupId>javax.el</groupId>
