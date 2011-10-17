@@ -128,9 +128,9 @@
                    be "provided" even though it is provided by container this is building a
                    maven plugin that runs outside of container TODO A better place for this
                    may be needed, cdk-parent/cdk-bom? -->
-            <groupId>com.sun.faces</groupId>
+            <groupId>javax.faces</groupId>
             <artifactId>jsf-api</artifactId>
-            <version>2.0.4-b09</version>
+            <version>2.1</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
