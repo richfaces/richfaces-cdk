@@ -30,7 +30,7 @@
     <groupId>org.richfaces.cdk</groupId>
     <artifactId>xinclude</artifactId>
     <version>4.1.0-SNAPSHOT</version>
-    <name>Cocoon 3: xinclude transformer</name>
+    <name>RichFaces CDK XInclude Transformer</name>
     <description>Cocoon 3 xinclude transformer with Xpointer scheme support.</description>
 
     <dependencies>

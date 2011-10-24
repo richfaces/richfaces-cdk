@@ -13,7 +13,7 @@
     <artifactId>maven-resources-plugin</artifactId>
     <version>4.1.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
-    <name>maven-resources-plugin</name>
+    <name>RichFaces CDK Maven Resources Plugin</name>
     <description>Maven plugin for packaging resources with web application</description>
 
     <dependencies>
@@ -68,11 +68,6 @@
         <dependency>
             <groupId>com.sun.el</groupId>
             <artifactId>el-ri</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.spec.javax.faces</groupId>
-            <artifactId>jboss-jsf-api_2.1_spec</artifactId>
         </dependency>
 
         <dependency>

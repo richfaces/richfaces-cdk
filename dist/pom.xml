@@ -12,7 +12,7 @@
     <groupId>org.richfaces.cdk</groupId>
     <artifactId>dist</artifactId>
     <version>4.1.0-SNAPSHOT</version>
-    <name>JSF Components Development Kit (CDK) distribution assembly</name>
+    <name>RichFaces CDK Distribution</name>
 
     <!-- SCM and distribution management -->
     <scm>
@@ -51,4 +51,5 @@
         </plugins>
     </build>
 
+    <description>JSF Components Development Kit (CDK) distribution assembly</description>
 </project>
