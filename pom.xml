@@ -14,7 +14,7 @@
     <artifactId>aggregator</artifactId>
     <version>4.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>JSF Components Development Kit (CDK)</name>
+    <name>RichFaces CDK Aggregator</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
