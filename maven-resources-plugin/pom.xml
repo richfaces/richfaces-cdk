@@ -9,9 +9,7 @@
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
-    <groupId>org.richfaces.cdk</groupId>
     <artifactId>maven-resources-plugin</artifactId>
-    <version>4.1.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     <name>RichFaces CDK Maven Resources Plugin</name>
     <description>Maven plugin for packaging resources with web application</description>

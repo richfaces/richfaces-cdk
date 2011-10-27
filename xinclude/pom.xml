@@ -27,9 +27,7 @@
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
-    <groupId>org.richfaces.cdk</groupId>
     <artifactId>xinclude</artifactId>
-    <version>4.1.0-SNAPSHOT</version>
     <name>RichFaces CDK XInclude Transformer</name>
     <description>Cocoon 3 xinclude transformer with Xpointer scheme support.</description>
 

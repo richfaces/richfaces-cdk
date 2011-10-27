@@ -8,9 +8,7 @@
         <version>4.1.0-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
-    <groupId>org.richfaces.cdk</groupId>
     <artifactId>attributes</artifactId>
-    <version>4.1.0-SNAPSHOT</version>
     <description>That project contains JAXB bindings for model classes representing schema attributes data</description>
     <name>RichFaces CDK Attributes</name>
 
