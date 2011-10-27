@@ -44,7 +44,6 @@
         <dependency>
             <groupId>com.google.code.javaparser</groupId>
             <artifactId>javaparser</artifactId>
-            <version>1.0.1</version>
             <scope>test</scope>
         </dependency>
 
