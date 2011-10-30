@@ -19,7 +19,7 @@
             <plugin>
                 <groupId>org.richfaces.cdk</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>4.1.0-SNAPSHOT</version>
+                <version>4.1.0.20111014-M3</version>
                 <configuration>
                 </configuration>
                 <executions>
@@ -77,7 +77,7 @@
         <dependency>
             <groupId>org.richfaces.ui</groupId>
             <artifactId>richfaces-components-ui</artifactId>
-            <version>4.1.0-SNAPSHOT</version>
+            <version>4.1.0.20111014-M3</version>
         </dependency>
     </dependencies>
 </project>
