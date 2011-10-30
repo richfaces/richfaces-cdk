@@ -36,6 +36,7 @@ import javax.faces.application.Resource;
 
 import org.richfaces.cdk.vfs.VFSRoot;
 import org.richfaces.cdk.vfs.VirtualFile;
+import org.richfaces.resource.ResourceKey;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
@@ -145,5 +146,31 @@ public final class ResourceUtil {
 
     public static String getResourceQualifier(Resource resource) {
         return COLON_JOINER.join(resource.getLibraryName(), resource.getResourceName());
+    }
+    
+    /**
+     * Returns the qualified name of resourceKey in format libraryName:resourceName.
+     * 
+     * @param resourceKey the resourceKey
+     * @return the qualified name of resourceKey in format libraryName:resourceName.
+     */
+    public static String getResourceQualifier(ResourceKey resourceKey) {
+        return COLON_JOINER.join(resourceKey.getLibraryName(), resourceKey.getResourceName());
+    }
+
+    /**
+     * Returns true if resourceKey and resource represents same resource.
+     * 
+     * @param resourceKey resource key representation of resource
+     * @param resource resource instance
+     * @return true if resourceKey and resource represents same resource; false otherwise
+     */
+    public static boolean isSameResource(Resource resource, ResourceKey resourceKey) {
+        return resourceKey.getLibraryName().equals(defaultString(resource.getLibraryName()))
+                && resourceKey.getResourceName().equals(resource.getResourceName());
+    }
+
+    private static String defaultString(String string) {
+        return string == null ? null : string;
     }
 }

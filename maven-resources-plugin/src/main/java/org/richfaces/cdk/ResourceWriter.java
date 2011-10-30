@@ -31,6 +31,8 @@ import javax.faces.application.Resource;
  */
 public interface ResourceWriter {
     void writeResource(String skinName, Resource resource) throws IOException;
+    
+    void writePackedResource(String skinName, Resource resource) throws IOException;
 
-    void writeProcessedResourceMappings() throws IOException;
+    void writeProcessedResourceMappings(String staticResourceMappingFile) throws IOException;
 }

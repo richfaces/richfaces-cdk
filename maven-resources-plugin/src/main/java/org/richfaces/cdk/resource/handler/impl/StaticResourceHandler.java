@@ -23,6 +23,7 @@ package org.richfaces.cdk.resource.handler.impl;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.faces.application.Resource;
@@ -31,6 +32,7 @@ import org.richfaces.cdk.resource.util.ResourceUtil;
 import org.richfaces.cdk.vfs.VirtualFile;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 
 /**
  * @author Nick Belaevski
@@ -44,7 +46,8 @@ public class StaticResourceHandler extends AbstractResourceHandler {
         this.roots = roots;
     }
 
-    private VirtualFile findLibrary(String libraryName) {
+    private Collection<VirtualFile> findLibraries(String libraryName) {
+        List<VirtualFile> libraryDirs = Lists.newLinkedList();
         for (VirtualFile file : roots) {
             VirtualFile child = file.getChild(libraryName);
             if (child == null) {
@@ -53,11 +56,11 @@ public class StaticResourceHandler extends AbstractResourceHandler {
 
             VirtualFile libraryDir = ResourceUtil.getLatestVersion(child, true);
             if (libraryDir != null) {
-                return libraryDir;
+                libraryDirs.add(libraryDir);
             }
         }
 
-        return null;
+        return libraryDirs;
     }
 
     private VirtualFile findResource(Collection<VirtualFile> libraryDirs, String resourceName) {
@@ -78,10 +81,7 @@ public class StaticResourceHandler extends AbstractResourceHandler {
     public Resource createResource(String resourceName, String libraryName, String contentType) {
         Collection<VirtualFile> libraryDirs = Collections.emptyList();
         if (!Strings.isNullOrEmpty(libraryName)) {
-            VirtualFile libraryDir = findLibrary(libraryName);
-            if (libraryDir != null) {
-                libraryDirs = Collections.singletonList(libraryDir);
-            }
+            libraryDirs = findLibraries(libraryName);
         } else {
             libraryDirs = roots;
         }
