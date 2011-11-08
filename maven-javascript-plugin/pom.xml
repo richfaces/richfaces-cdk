@@ -4,14 +4,14 @@
     <parent>
         <groupId>org.richfaces.cdk</groupId>
         <artifactId>maven-plugins</artifactId>
-        <version>4.1.0.20111014-M3</version>
+        <version>4.1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <groupId>org.richfaces.cdk</groupId>
     <artifactId>maven-javascript-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <name>YUI Compressor Maven Mojo</name>
-    <description>
+    <description>YUI Compressor Maven Mojo
+
         To compress (Minify + Ofuscate) Javascript files and CSS files
         (using YUI Compressor from Julien Lecomte) and/or to check
         Javascript files with jslint.
@@ -62,4 +62,5 @@
         <runtime.log>target/velocity.log</runtime.log>
     </properties>
 
+    <name>RichFaces CDK JavaScript Compressor Maven Plugin</name>
 </project>

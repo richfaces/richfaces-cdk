@@ -12,9 +12,9 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.richfaces.cdk</groupId>
     <artifactId>aggregator</artifactId>
-    <version>4.1.0.20111014-M3</version>
+    <version>4.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>JSF Components Development Kit (CDK)</name>
+    <name>RichFaces CDK Aggregator</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

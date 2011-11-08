@@ -5,13 +5,11 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>org.richfaces.cdk</groupId>
-        <version>4.1.0.20111014-M3</version>
+        <version>4.1.0-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
-    <groupId>org.richfaces.cdk</groupId>
     <artifactId>commons</artifactId>
-    <version>4.1.0.20111014-M3</version>
-    <name>commons</name>
+    <name>RichFaces CDK Commons</name>
     <build>
         <plugins>
             <plugin>
@@ -46,7 +44,6 @@
         <dependency>
             <groupId>com.google.code.javaparser</groupId>
             <artifactId>javaparser</artifactId>
-            <version>1.0.1</version>
             <scope>test</scope>
         </dependency>
 

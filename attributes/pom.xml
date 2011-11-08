@@ -5,14 +5,12 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>org.richfaces.cdk</groupId>
-        <version>4.1.0.20111014-M3</version>
+        <version>4.1.0-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
-    <groupId>org.richfaces.cdk</groupId>
     <artifactId>attributes</artifactId>
-    <version>4.1.0.20111014-M3</version>
     <description>That project contains JAXB bindings for model classes representing schema attributes data</description>
-    <name>attributes</name>
+    <name>RichFaces CDK Attributes</name>
 
     <dependencies>
         <dependency>

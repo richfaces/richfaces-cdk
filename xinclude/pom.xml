@@ -23,14 +23,12 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>org.richfaces.cdk</groupId>
-        <version>4.1.0.20111014-M3</version>
+        <version>4.1.0-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
-    <groupId>org.richfaces.cdk</groupId>
     <artifactId>xinclude</artifactId>
-    <version>4.1.0.20111014-M3</version>
-    <name>Cocoon 3: xinclude transformer</name>
+    <name>RichFaces CDK XInclude Transformer</name>
     <description>Cocoon 3 xinclude transformer with Xpointer scheme support.</description>
 
     <dependencies>
@@ -69,7 +67,6 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>javacc-maven-plugin</artifactId>
-                <version>2.4</version>
                 <executions>
                     <execution>
                         <id>javacc</id>

@@ -6,12 +6,20 @@
     <name>Test component annotations</name>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
+    
+    <parent>
+        <groupId>org.richfaces</groupId>
+        <artifactId>richfaces-root-parent</artifactId>
+        <version>4.1.0-SNAPSHOT</version>
+        <relativePath>../../../../build/parent/pom.xml</relativePath>
+    </parent>
+    
     <build>
         <plugins>
             <plugin>
                 <groupId>org.richfaces.cdk</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>4.1.0.20111014-M3</version>
+                <version>4.1.0-SNAPSHOT</version>
                 <configuration>
                 </configuration>
                 <executions>
@@ -67,15 +75,9 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>com.sun.faces</groupId>
-            <artifactId>jsf-api</artifactId>
-            <version>2.0.4-b09</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.richfaces.ui</groupId>
             <artifactId>richfaces-components-ui</artifactId>
-            <version>4.1.0.20111014-M3</version>
+            <version>4.1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>
