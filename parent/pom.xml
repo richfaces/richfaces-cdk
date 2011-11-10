@@ -14,7 +14,6 @@
 
     <groupId>org.richfaces.cdk</groupId>
     <artifactId>parent</artifactId>
-    <version>4.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>RichFaces CDK Parent</name>
 
@@ -141,7 +140,7 @@
             <dependency>
                 <groupId>org.jboss.el</groupId>
                 <artifactId>jboss-el</artifactId>
-                <version>1.0_02.CR4</version>
+                <version>1.0_02.CR6</version>
             </dependency>
             <!-- Common libraries -->
             <dependency>
