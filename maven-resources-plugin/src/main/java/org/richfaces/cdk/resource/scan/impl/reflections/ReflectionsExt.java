@@ -28,7 +28,6 @@ import java.util.Map;
 import org.reflections.Configuration;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanner;
-import org.reflections.util.Utils;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicates;
@@ -43,7 +42,7 @@ public class ReflectionsExt extends Reflections {
     private static final Function<String, Class<?>> CLASS_FOR_NAME = new Function<String, Class<?>>() {
         public java.lang.Class<?> apply(String from) {
             try {
-                return Class.forName(from, true, Utils.getContextClassLoader());
+                return Class.forName(from, true, Thread.currentThread().getContextClassLoader());
             } catch (ClassNotFoundException e) {
                 // TODO: handle exception
                 e.printStackTrace();
