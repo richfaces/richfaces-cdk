@@ -13,7 +13,7 @@ ${projectName}
   
   The ${projectName} scans for all <<<@ResourceDependency>>> definitions in <<<compile>>> scope.
   
-  Pre-rendered component resources does not require runtime processing which saves processing times and
+  Pre-rendered component resources does not require runtime processing which saves processing time and
   avoid some classes otherwise necessary for runtime resource generation.
   
   Additionally ${projectName} is able to pack resources into packages, one package per resource

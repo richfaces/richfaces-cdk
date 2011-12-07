@@ -95,6 +95,9 @@ import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 
 /**
+ * Scans for resource dependencies (ResourceDependency annotations) on the class-path and collect them
+ * in order to pre-generate resources them and optionally pack or compress them.
+ * 
  * @goal process
  * @requiresDependencyResolution compile
  * @phase process-classes
@@ -132,17 +135,24 @@ public class ProcessMojo extends AbstractMojo {
         }
     };
     /**
-     * @parameter
+     * Output directory for processed resources 
+     * 
+     * @parameter expression="${resourcesOutputDir}"
      * @required
      */
     private String resourcesOutputDir;
     /**
-     * @parameter
+     * Output file for resource mapping configuration
+     * 
+     * @parameter expression="${staticResourceMappingFile}"
      * @required
      */
     private String staticResourceMappingFile;
+    
     /**
-     * @parameter
+     * The list of RichFaces skins to be processed
+     * 
+     * @parameter expression="${skins}"
      * @required
      */
     // TODO handle base skins
@@ -153,30 +163,39 @@ public class ProcessMojo extends AbstractMojo {
      */
     private MavenProject project;
     /**
+     * The list of mime-types to be included in processing
+     * 
      * @parameter
      */
     private List<String> includedContentTypes;
     /**
+     * The list of mime-types to be excluded in processing
      * @parameter
      */
     private List<String> excludedContentTypes;
     /**
+     * List of included files.
+     * 
      * @parameter
      */
     private List<String> includedFiles;
     /**
+     * List of excluded files
      * @parameter
      */
     private List<String> excludedFiles;
     /**
-     * @parameter
+     * Turns on compression with YUI Compressor (JavaScript/CSS compression)
+     * @parameter expression="${compress}"
      */
     private boolean compress = true;
     /**
-     * @parameter
+     * Turns on packing of JavaScript/CSS resources
+     * @parameter expression="${pack}"
      */
     private boolean pack = false;
     /**
+     * Mapping of file names to output file names
      * @parameter
      */
     // TODO review usage of properties?
@@ -186,10 +205,12 @@ public class ProcessMojo extends AbstractMojo {
      */
     private ProcessMode processMode = ProcessMode.embedded;
     /**
-     * @parameter expression="${basedir}/src/main/webapp"
+     * The expression determines the root of the webapp resources
+     * @parameter default-value="${basedir}/src/main/webapp"
      */
     private String webRoot;
     /**
+     * The encoding used for resource processing
      * @parameter expression="${encoding}" default-value="${project.build.sourceEncoding}"
      */
     private String encoding;
