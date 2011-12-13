@@ -22,7 +22,7 @@ import ${baseClass};
 /**
  * ${description?if_exists}
  **/
-@Generated({"RichFaces CDK", "4.1.0-SNAPSHOT"})
+@Generated({"RichFaces CDK", "4.1.1-SNAPSHOT"})
 public class ${targetClass.simpleName} extends ${baseClass.simpleName}
     <#if (implemented?size > 0)>implements <@util.concat seq=implemented ; interface>${interface.simpleName}</@util.concat></#if>    {
 
