@@ -11,8 +11,12 @@
 
     <artifactId>maven-richfaces-resources-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <name>RichFaces CDK Resources Maven Plugin</name>
+    <name>RichFaces CDK: Resources Maven Plugin</name>
     <description>Maven plugin for packaging resources with web application</description>
+
+    <properties>
+        <projectName>${project.name}</projectName>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -78,6 +82,32 @@
             <artifactId>yuicompressor</artifactId>
         </dependency>
     </dependencies>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${version.pir.plugin}</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>issue-tracking</report>
+                            <report>project-team</report>
+                            <report>license</report>
+                            <report>scm</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <!-- upgrade in jboss-parent:pom JBBUILD-709 -->
+                <version>2.9</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
     <profiles>
         <profile>
