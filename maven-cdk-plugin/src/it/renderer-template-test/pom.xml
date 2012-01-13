@@ -4,7 +4,7 @@
     <groupId>org.richfaces.cdk</groupId>
     <artifactId>renderer-template-test</artifactId>
     <name>Test for renderer templates compilation</name>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>4.1.1-SNAPSHOT</version>
     <parent>
         <groupId>org.richfaces</groupId>
         <artifactId>richfaces-root-parent</artifactId>

@@ -5,7 +5,7 @@
     <groupId>org.richfaces.cdk</groupId>
     <artifactId>xml-configured-component</artifactId>
     <name>Test component configured by faces-config</name>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>4.1.1-SNAPSHOT</version>
     <parent>
         <groupId>org.richfaces</groupId>
         <artifactId>richfaces-root-parent</artifactId>

@@ -4,12 +4,12 @@
     <parent>
       <groupId>org.richfaces.cdk</groupId>
       <artifactId>testLibrary</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>4.1.1-SNAPSHOT</version>
     </parent>
     <groupId>org.richfaces.cdk</groupId>
     <artifactId>annotated-component</artifactId>
     <name>Test component annotations</name>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>4.1.1-SNAPSHOT</version>
     <build>
         <plugins>
             <plugin>
@@ -60,7 +60,7 @@
         <dependency>
         	<groupId>org.richfaces.cdk</groupId>
         	<artifactId>annotated-component-common</artifactId>
-        	<version>0.0.1-SNAPSHOT</version>
+        	<version>4.1.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>
