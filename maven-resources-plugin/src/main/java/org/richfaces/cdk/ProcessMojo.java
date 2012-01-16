@@ -93,6 +93,7 @@ import com.google.common.collect.Constraints;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
+import com.google.common.io.Closeables;
 
 /**
  * Scans for resource dependencies (ResourceDependency annotations) on the class-path and collect them
@@ -452,6 +453,7 @@ public class ProcessMojo extends AbstractMojo {
             getLog().debug(completionService.toString());
 
             resourceWriter.writeProcessedResourceMappings(staticResourceMappingFile);
+            Closeables.closeQuietly(resourceWriter);
         } catch (Exception e) {
             throw new MojoExecutionException(e.getMessage(), e);
         } finally {
