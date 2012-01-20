@@ -22,6 +22,7 @@
 package org.richfaces.cdk;
 
 import java.io.Closeable;
+import java.io.File;
 import java.io.IOException;
 
 import javax.faces.application.Resource;
@@ -35,7 +36,7 @@ public interface ResourceWriter extends Closeable {
     
     void writePackedResource(String skinName, Resource resource) throws IOException;
 
-    void writeProcessedResourceMappings(String staticResourceMappingFile) throws IOException;
+    void writeProcessedResourceMappings(File staticResourceMappingFile, String staticResourcePrefix) throws IOException;
     
     void close();
 }

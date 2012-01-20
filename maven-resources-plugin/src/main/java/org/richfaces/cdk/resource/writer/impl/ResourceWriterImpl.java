@@ -29,6 +29,7 @@ import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 
@@ -118,9 +119,9 @@ public class ResourceWriterImpl implements ResourceWriter {
         final String requestPath = resource.getRequestPath();
         String requestPathWithSkin = requestPath;
 
-        if (requestPath.startsWith(ResourceFactory.SKINNED_RESOURCE_PREFIX)) {
+        if (requestPath.startsWith(ResourceFactory.SKINNED_RESOURCE_PLACEHOLDER)) {
             requestPathWithSkin = Constants.SLASH_JOINER.join(skinName,
-                    requestPath.substring(ResourceFactory.SKINNED_RESOURCE_PREFIX.length()));
+                    requestPath.substring(ResourceFactory.SKINNED_RESOURCE_PLACEHOLDER.length()));
         }
 
         ResourceProcessor matchingProcessor = getMatchingResourceProcessor(requestPath);
@@ -151,7 +152,7 @@ public class ResourceWriterImpl implements ResourceWriter {
         
         String requestPathWithSkinVariable = "packed/packed." + extension;
         if (skinName != null && skinName.length() > 0) {
-            requestPathWithSkinVariable = ResourceFactory.SKINNED_RESOURCE_PREFIX + requestPathWithSkinVariable;
+            requestPathWithSkinVariable = ResourceFactory.SKINNED_RESOURCE_PLACEHOLDER + requestPathWithSkinVariable;
         }
         String requestPathWithSkin = Constants.SLASH_JOINER.join(skinName, "packed", "packed." + extension);
         ResourceProcessor matchingProcessor = getMatchingResourceProcessor(requestPathWithSkin);
@@ -201,19 +202,24 @@ public class ResourceWriterImpl implements ResourceWriter {
     }
 
     @Override
-    public void writeProcessedResourceMappings(String staticResourceMappingFile) throws IOException {
+    public void writeProcessedResourceMappings(File staticResourceMappingFile, String staticResourcePrefix) throws IOException {
         // TODO separate mappings file location
         FileOutputStream fos = null;
         try {
-            File mappingsFile = new File(staticResourceMappingFile);
             // TODO merge properties
-            mappingsFile.delete();
-            mappingsFile.getParentFile().mkdirs();
-            mappingsFile.createNewFile();
+            staticResourceMappingFile.delete();
+            staticResourceMappingFile.getParentFile().mkdirs();
+            staticResourceMappingFile.createNewFile();
 
-            fos = new FileOutputStream(mappingsFile);
+            fos = new FileOutputStream(staticResourceMappingFile);
+            
+            
+            
             Properties properties = new Properties();
-            properties.putAll(processedResources);
+            for (Entry<String, String> entry : processedResources.entrySet()) {
+                properties.put(entry.getKey(), staticResourcePrefix + entry.getValue());
+            }
+//            properties.putAll(processedResources);
             properties.store(fos, null);
         } finally {
             try {

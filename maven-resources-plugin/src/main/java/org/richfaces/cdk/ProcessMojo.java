@@ -142,6 +142,13 @@ public class ProcessMojo extends AbstractMojo {
      * @required
      */
     private String resourcesOutputDir;
+    
+    /**
+     * Configures what prefix should be placed to each file
+     * @parameter expression="${staticResourcePrefix}" default-value=""
+     */
+    private String staticResourcePrefix;
+    
     /**
      * Output file for resource mapping configuration
      * 
@@ -452,7 +459,7 @@ public class ProcessMojo extends AbstractMojo {
             
             getLog().debug(completionService.toString());
 
-            resourceWriter.writeProcessedResourceMappings(staticResourceMappingFile);
+            resourceWriter.writeProcessedResourceMappings(new File(staticResourceMappingFile), staticResourcePrefix);
             Closeables.closeQuietly(resourceWriter);
         } catch (Exception e) {
             throw new MojoExecutionException(e.getMessage(), e);

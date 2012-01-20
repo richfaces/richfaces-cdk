@@ -135,7 +135,7 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
                     return;
                 }
 
-                skinDependent = resource.getRequestPath().startsWith(ResourceFactory.SKINNED_RESOURCE_PREFIX);
+                skinDependent = resource.getRequestPath().startsWith(ResourceFactory.SKINNED_RESOURCE_PLACEHOLDER);
             } catch (Exception e) {
                 throw (RuntimeException) e;
             } finally {
