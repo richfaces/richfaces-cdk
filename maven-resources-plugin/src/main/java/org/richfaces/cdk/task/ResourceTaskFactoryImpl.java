@@ -37,7 +37,7 @@ import org.richfaces.cdk.ResourceTaskFactory;
 import org.richfaces.cdk.ResourceWriter;
 import org.richfaces.cdk.faces.CurrentResourceContext;
 import org.richfaces.cdk.resource.util.ResourceConstants;
-import org.richfaces.resource.ResourceFactory;
+import org.richfaces.resource.ResourceSkinUtils;
 import org.richfaces.resource.ResourceKey;
 
 import com.google.common.base.Predicate;
@@ -135,7 +135,7 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
                     return;
                 }
 
-                skinDependent = resource.getRequestPath().startsWith(ResourceFactory.SKINNED_RESOURCE_PLACEHOLDER);
+                skinDependent = ResourceSkinUtils.isSkinDependent(resource.getRequestPath());
             } catch (Exception e) {
                 throw (RuntimeException) e;
             } finally {

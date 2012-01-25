@@ -33,7 +33,7 @@ import javax.faces.context.FacesContext;
 
 import org.richfaces.application.ServiceTracker;
 import org.richfaces.cdk.FileNameMapper;
-import org.richfaces.resource.ResourceFactory;
+import org.richfaces.resource.ResourceSkinUtils;
 
 /**
  * @author Nick Belaevski
@@ -103,8 +103,9 @@ public class DynamicResourceWrapper extends Resource {
         }
 
         String resourcePath = SLASH_JOINER.join(getLibraryName(), resourceName);
-
-        return ResourceFactory.SKINNED_RESOURCE_PLACEHOLDER + getFileNameMapper().createName(resourcePath);
+        String filename = getFileNameMapper().createName(resourcePath);
+        String filenameWithSkinPlaceholder = ResourceSkinUtils.prefixPathWithSkinPlaceholder(filename);
+        return filenameWithSkinPlaceholder;
     }
 
     @Override

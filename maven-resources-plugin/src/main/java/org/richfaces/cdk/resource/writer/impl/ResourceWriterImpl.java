@@ -41,8 +41,8 @@ import org.richfaces.cdk.resource.util.ResourceConstants;
 import org.richfaces.cdk.resource.util.ResourceUtil;
 import org.richfaces.cdk.resource.writer.ResourceProcessor;
 import org.richfaces.cdk.strings.Constants;
-import org.richfaces.resource.ResourceFactory;
 import org.richfaces.resource.ResourceKey;
+import org.richfaces.resource.ResourceSkinUtils;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -84,8 +84,8 @@ public class ResourceWriterImpl implements ResourceWriter {
     private Set<ResourceKey> resourcesWithKnownOrder;
     private Set<ResourceKey> packedResources = Sets.newHashSet();
 
-    public ResourceWriterImpl(File resourceContentsDir,
-            Iterable<ResourceProcessor> resourceProcessors, Log log, Set<ResourceKey> resourcesWithKnownOrder) {
+    public ResourceWriterImpl(File resourceContentsDir, Iterable<ResourceProcessor> resourceProcessors, Log log,
+            Set<ResourceKey> resourcesWithKnownOrder) {
         this.resourceContentsDir = resourceContentsDir;
         this.resourceProcessors = Iterables.concat(resourceProcessors,
                 Collections.singleton(ThroughputResourceProcessor.INSTANCE));
@@ -117,12 +117,8 @@ public class ResourceWriterImpl implements ResourceWriter {
 
     public void writeResource(String skinName, Resource resource) throws IOException {
         final String requestPath = resource.getRequestPath();
-        String requestPathWithSkin = requestPath;
-
-        if (requestPath.startsWith(ResourceFactory.SKINNED_RESOURCE_PLACEHOLDER)) {
-            requestPathWithSkin = Constants.SLASH_JOINER.join(skinName,
-                    requestPath.substring(ResourceFactory.SKINNED_RESOURCE_PLACEHOLDER.length()));
-        }
+        final String requestPathWithSkin = skinName == null ? requestPath : ResourceSkinUtils.evaluateSkinInPath(requestPath,
+                skinName);
 
         ResourceProcessor matchingProcessor = getMatchingResourceProcessor(requestPath);
         File outFile = createOutputFile(requestPathWithSkin);
@@ -149,10 +145,10 @@ public class ResourceWriterImpl implements ResourceWriter {
             writeResource(skinName, resource);
             return;
         }
-        
+
         String requestPathWithSkinVariable = "packed/packed." + extension;
         if (skinName != null && skinName.length() > 0) {
-            requestPathWithSkinVariable = ResourceFactory.SKINNED_RESOURCE_PLACEHOLDER + requestPathWithSkinVariable;
+            requestPathWithSkinVariable = ResourceSkinUtils.prefixPathWithSkinPlaceholder(requestPathWithSkinVariable);
         }
         String requestPathWithSkin = Constants.SLASH_JOINER.join(skinName, "packed", "packed." + extension);
         ResourceProcessor matchingProcessor = getMatchingResourceProcessor(requestPathWithSkin);
@@ -212,14 +208,12 @@ public class ResourceWriterImpl implements ResourceWriter {
             staticResourceMappingFile.createNewFile();
 
             fos = new FileOutputStream(staticResourceMappingFile);
-            
-            
-            
+
             Properties properties = new Properties();
             for (Entry<String, String> entry : processedResources.entrySet()) {
                 properties.put(entry.getKey(), staticResourcePrefix + entry.getValue());
             }
-//            properties.putAll(processedResources);
+            // properties.putAll(processedResources);
             properties.store(fos, null);
         } finally {
             try {
@@ -231,7 +225,7 @@ public class ResourceWriterImpl implements ResourceWriter {
             }
         }
     }
-    
+
     public void close() {
         for (FileOutputStream out : PACKED.values()) {
             Closeables.closeQuietly(out);
