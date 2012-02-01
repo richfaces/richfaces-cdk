@@ -25,6 +25,7 @@
         <property-name>execute</property-name>
         <property-class>java.lang.Object</property-class>
     </property>
+
     <property>
         <description>
             Ids of components that will participate in the "render" portion of the Request Processing Lifecycle.
@@ -35,6 +36,7 @@
         <property-name>render</property-name>
         <property-class>java.lang.Object</property-class>
     </property>
+
     <property>
         <description>
             If "true", render only those ids specified in the "render" attribute, forgoing the render of the auto-rendered
@@ -55,6 +57,7 @@
             <cdk:event-name default="false">begin</cdk:event-name>
         </property-extension>
     </property>
+
     <property>
         <description>
             The client-side script method to be called after the ajax response comes back, but before the DOM is updated
@@ -65,6 +68,7 @@
             <cdk:event-name default="false">beforedomupdate</cdk:event-name>
         </property-extension>
     </property>
+
     <property>
         <description>
             The client-side script method to be called after the DOM is updated
@@ -83,7 +87,13 @@
         <property-name>status</property-name>
         <property-class>java.lang.String</property-class>
     </property>
+
     <property>
+        <description>
+            Serialized (on default with JSON) data passed to the client by a developer on an AJAX request.
+            It's accessible via "event.data" syntax. Both primitive types and complex types such as arrays and
+            collections can be serialized and used with data
+        </description>
         <property-name>data</property-name>
         <property-class>java.lang.Object</property-class>
     </property>
