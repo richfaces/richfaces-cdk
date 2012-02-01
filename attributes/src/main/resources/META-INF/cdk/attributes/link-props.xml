@@ -19,8 +19,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee">
     <property>
         <description>
-            The character encoding of the resource designated
-            by this hyperlink.
+            The character encoding of the resource designated by this hyperlink.
         </description>
         <display-name>Character Set</display-name>
         <icon />
@@ -33,8 +32,7 @@
 
     <property>
         <description>
-            The position and shape of the hot spot on the screen
-            (for use in client-side image maps).
+            The position and shape of the hot spot on the screen (for use in client-side image maps).
         </description>
         <display-name>Coordinates</display-name>
         <icon />
@@ -47,8 +45,7 @@
 
     <property>
         <description>
-            The language code of the resource designated
-            by this hyperlink.
+            The language code of the resource designated by this hyperlink.
         </description>
         <display-name>Language</display-name>
         <icon />
@@ -61,11 +58,8 @@
 
     <property>
         <description>
-            The relationship from the current document
-            to the anchor specified by this hyperlink.
-            The value of this
-            attribute is a space-separated
-            list of link types.
+            The relationship from the current document to the anchor specified by this hyperlink.
+            The value of this attribute is a space-separated list of link types.
         </description>
         <display-name>Relationship</display-name>
         <icon />
@@ -78,11 +72,8 @@
 
     <property>
         <description>
-            A reverse link from the anchor specified
-            by this hyperlink to the current document.
-            The value of this
-            attribute is a space-separated
-            list of link types.
+            A reverse link from the anchor specified by this hyperlink to the current document.
+            The value of this attribute is a space-separated list of link types.
         </description>
         <display-name>Reverse Link</display-name>
         <icon />
@@ -95,12 +86,8 @@
 
     <property>
         <description>
-            The shape of the hot spot on the screen
-            (for use in client-side image maps). Valid
-            values are: default
-            (entire region); rect
-            (rectangular region); circle (circular region);
-            and poly (polygonal region).
+            The shape of the hot spot on the screen (for use in client-side image maps). Valid values are:
+            default (entire region); rect (rectangular region); circle (circular region); and poly (polygonal region).
         </description>
         <display-name>Shape</display-name>
         <icon />
@@ -113,9 +100,7 @@
 
     <property>
         <description>
-            Name of a frame where the resource
-            retrieved via this hyperlink is to
-            be displayed.
+            Name of a frame where the resource retrieved via this hyperlink is to be displayed.
         </description>
         <display-name>Target Frame</display-name>
         <icon />
@@ -128,8 +113,7 @@
 
     <property>
         <description>
-            The content type of the resource designated
-            by this hyperlink.
+            The content type of the resource designated by this hyperlink.
         </description>
         <display-name>Content Type</display-name>
         <icon />
@@ -142,9 +126,7 @@
 
     <property>
         <description>
-            Flag indicating that this element must never
-            receive focus or be included in a subsequent
-            submit.
+            Flag indicating that this element must never receive focus or be included in a subsequent submit.
         </description>
         <display-name>Disabled Flag</display-name>
         <icon />
@@ -157,8 +139,7 @@
 
     <property>
         <description>
-            Javascript code executed when a pointer button is
-            clicked over this element.
+            Javascript code executed when a pointer button is clicked over this element.
         </description>
         <display-name>Button Click Script</display-name>
         <icon />
@@ -174,8 +155,7 @@
 
     <property>
         <description>
-            Javascript code executed when a pointer button is
-            double clicked over this element.
+            Javascript code executed when a pointer button is double clicked over this element.
         </description>
         <display-name>Double Click Script</display-name>
         <icon />
@@ -189,8 +169,7 @@
 
     <property>
         <description>
-            Javascript code executed when a pointer button is
-            pressed down over this element.
+            Javascript code executed when a pointer button is pressed down over this element.
         </description>
         <display-name>Mouse Down Script</display-name>
         <icon />
@@ -204,8 +183,7 @@
 
     <property>
         <description>
-            Javascript code executed when a pointer button is
-            released over this element.
+            Javascript code executed when a pointer button is released over this element.
         </description>
         <display-name>Mouse Up Script</display-name>
         <icon />
@@ -219,8 +197,7 @@
 
     <property>
         <description>
-            Javascript code executed when a pointer button is
-            moved onto this element.
+            Javascript code executed when a pointer button is moved onto this element.
         </description>
         <display-name>Mouse Over Script</display-name>
         <icon />
@@ -234,8 +211,7 @@
 
     <property>
         <description>
-            Javascript code executed when a pointer button is
-            moved within this element.
+            Javascript code executed when a pointer button is moved within this element.
         </description>
         <display-name>Mouse Move Script</display-name>
         <icon />
@@ -249,8 +225,7 @@
 
     <property>
         <description>
-            Javascript code executed when a pointer button is
-            moved away from this element.
+            Javascript code executed when a pointer button is moved away from this element.
         </description>
         <display-name>Mouse Out Script</display-name>
         <icon />
@@ -264,8 +239,7 @@
 
     <property>
         <description>
-            Javascript code executed when a key is
-            pressed and released over this element.
+            Javascript code executed when a key is pressed and released over this element.
         </description>
         <display-name>Key Press Script</display-name>
         <icon />
@@ -279,8 +253,7 @@
 
     <property>
         <description>
-            Javascript code executed when a key is
-            pressed down over this element.
+            Javascript code executed when a key is pressed down over this element.
         </description>
         <display-name>Key Down Script</display-name>
         <icon />
@@ -294,8 +267,7 @@
 
     <property>
         <description>
-            Javascript code executed when a key is
-            released over this element.
+            Javascript code executed when a key is released over this element.
         </description>
         <display-name>Key Up Script</display-name>
         <icon />

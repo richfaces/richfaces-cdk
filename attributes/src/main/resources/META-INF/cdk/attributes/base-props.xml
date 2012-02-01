@@ -18,7 +18,9 @@
 <cdk:properties xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:cdk="http://jboss.org/schema/richfaces/cdk/extensions"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee">
     <property>
-        <description>The component identifier for the associated component</description>
+        <description>
+            The component identifier for the associated component
+        </description>
         <display-name />
         <icon />
         <property-name>id</property-name>
@@ -26,8 +28,8 @@
     </property>
 
     <property>
-        <description>The value binding expression used to wire up this
-            component to a component property of a JavaBean class
+        <description>
+            The value binding expression used to wire up this component to a component property of a JavaBean class
         </description>
         <display-name />
         <icon />
@@ -36,8 +38,8 @@
     </property>
 
     <property>
-        <description>An override for the rendered attribute associated with
-            our component
+        <description>
+            An override for the rendered attribute associated with our component
         </description>
         <display-name />
         <icon />
