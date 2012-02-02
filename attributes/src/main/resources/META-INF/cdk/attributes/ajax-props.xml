@@ -82,7 +82,7 @@
 
     <property>
         <description>
-            ID of the request status component
+            Name of the request status component that will indicate the status of the Ajax request
         </description>
         <property-name>status</property-name>
         <property-class>java.lang.String</property-class>
