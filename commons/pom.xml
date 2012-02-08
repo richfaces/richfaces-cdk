@@ -5,7 +5,7 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>org.richfaces.cdk</groupId>
-        <version>4.1.0.Final</version>
+        <version>4.2.0.CR1</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <artifactId>commons</artifactId>
@@ -30,16 +30,19 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.sonatype.sisu</groupId>
             <artifactId>sisu-guice</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.easymock</groupId>
             <artifactId>easymock</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.google.code.javaparser</groupId>

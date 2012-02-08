@@ -5,16 +5,21 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>org.richfaces.cdk</groupId>
-        <version>4.1.0.Final</version>
+        <version>4.2.0.CR1</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>maven-richfaces-resources-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <name>RichFaces CDK Resources Maven Plugin</name>
+    <name>RichFaces CDK: Resources Maven Plugin</name>
     <description>Maven plugin for packaging resources with web application</description>
 
+    <properties>
+        <projectName>${project.name}</projectName>
+    </properties>
+
     <dependencies>
+        <!-- Compile dependencies -->
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-artifact</artifactId>
@@ -39,15 +44,9 @@
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-utils</artifactId>
         </dependency>
-        <!-- TODO - review dependencies -->
         <dependency>
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-velocity</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.reflections</groupId>
@@ -57,27 +56,55 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>
-
         <dependency>
             <groupId>javax.el</groupId>
             <artifactId>el-api</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.sun.el</groupId>
             <artifactId>el-ri</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.richfaces.core</groupId>
             <artifactId>richfaces-core-impl</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.yahoo.platform.yui</groupId>
             <artifactId>yuicompressor</artifactId>
         </dependency>
+        
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${version.pir.plugin}</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>issue-tracking</report>
+                            <report>project-team</report>
+                            <report>license</report>
+                            <report>scm</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>${version.plugin.plugin}</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
     <profiles>
         <profile>
