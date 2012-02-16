@@ -121,49 +121,4 @@
             <cdk:event-name>mouseout</cdk:event-name>
         </property-extension>
     </property>
-
-    <property>
-        <description>
-            Javascript code executed when a key is
-            pressed and released over this element.
-        </description>
-        <display-name>Key Press Script</display-name>
-        <icon />
-        <property-name>onkeypress</property-name>
-        <property-class>java.lang.String</property-class>
-        <property-extension>
-            <cdk:pass-through>true</cdk:pass-through>
-            <cdk:event-name>keypress</cdk:event-name>
-        </property-extension>
-    </property>
-
-    <property>
-        <description>
-            Javascript code executed when a key is
-            pressed down over this element.
-        </description>
-        <display-name>Key Down Script</display-name>
-        <icon />
-        <property-name>onkeydown</property-name>
-        <property-class>java.lang.String</property-class>
-        <property-extension>
-            <cdk:pass-through>true</cdk:pass-through>
-            <cdk:event-name>keydown</cdk:event-name>
-        </property-extension>
-    </property>
-
-    <property>
-        <description>
-            Javascript code executed when a key is
-            released over this element.
-        </description>
-        <display-name>Key Up Script</display-name>
-        <icon />
-        <property-name>onkeyup</property-name>
-        <property-class>java.lang.String</property-class>
-        <property-extension>
-            <cdk:pass-through>true</cdk:pass-through>
-            <cdk:event-name>keyup</cdk:event-name>
-        </property-extension>
-    </property>
 </cdk:properties>
