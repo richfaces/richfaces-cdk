@@ -51,4 +51,34 @@
         <property-class>org.richfaces.component.Positioning</property-class>
     </property>
 
+    <property>
+        <description>
+            &lt;p&gt;
+            Sets the vertical offset between popup element and the conjunction point
+            &lt;/p&gt;
+            &lt;p&gt;
+            default value is: 0;
+            &lt;/p&gt;
+        </description>
+        <display-name>Vertical Offset</display-name>
+        <icon />
+        <property-name>verticalOffset</property-name>
+        <property-class>int</property-class>
+    </property>
+
+    <property>
+        <description>
+            &lt;p&gt;
+            Sets the horizontal offset between popup element and the conjunction point
+            &lt;/p&gt;
+            &lt;p&gt;
+            default value is: 0;
+            &lt;/p&gt;
+        </description>
+        <display-name>Horizontal Offset</display-name>
+        <icon />
+        <property-name>horizontalOffset</property-name>
+        <property-class>int</property-class>
+    </property>
+
 </cdk:properties>
