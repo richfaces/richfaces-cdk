@@ -58,7 +58,7 @@
 
     <property>
         <description>
-            Specifies which item in the data model to start from
+            A zero-relative row number of the first row to display
         </description>
         <property-name>first</property-name>
         <type>int</type>
@@ -66,7 +66,7 @@
 
     <property>
         <description>
-            Specifies the number of items to list
+            A number of rows to display, or zero for all remaining rows in the table
         </description>
         <property-name>rows</property-name>
         <type>int</type>
