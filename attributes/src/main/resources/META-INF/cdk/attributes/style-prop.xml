@@ -17,6 +17,7 @@
     -->
 <cdk:properties xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:cdk="http://jboss.org/schema/richfaces/cdk/extensions"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee">
+
     <property>
         <description>
             CSS style(s) to be applied when this component is rendered.
@@ -27,20 +28,6 @@
         <property-class>java.lang.String</property-class>
         <property-extension>
             <cdk:pass-through>true</cdk:pass-through>
-        </property-extension>
-    </property>
-
-    <property>
-        <description>
-            Space-separated list of CSS style class(es) to be applied when this element is rendered. This value must be
-            passed through as the "class" attribute on generated markup.
-        </description>
-        <display-name>CSS Style Classes</display-name>
-        <icon />
-        <property-name>styleClass</property-name>
-        <property-class>java.lang.String</property-class>
-        <property-extension>
-            <cdk:pass-through>false</cdk:pass-through>
         </property-extension>
     </property>
 

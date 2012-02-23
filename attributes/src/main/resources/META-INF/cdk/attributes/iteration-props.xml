@@ -66,14 +66,6 @@
 
     <property>
         <description>
-            A number of rows to display, or zero for all remaining rows in the table
-        </description>
-        <property-name>rows</property-name>
-        <type>int</type>
-    </property>
-
-    <property>
-        <description>
             Points to the data model
         </description>
         <property-name>value</property-name>
