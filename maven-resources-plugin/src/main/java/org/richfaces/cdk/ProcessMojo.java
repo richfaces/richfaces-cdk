@@ -144,7 +144,7 @@ public class ProcessMojo extends AbstractMojo {
     private String resourcesOutputDir;
     
     /**
-     * Configures what prefix should be placed to each file
+     * Configures what prefix should be placed to each file before the library and name of the resource
      * @parameter expression="${staticResourcePrefix}" default-value=""
      */
     private String staticResourcePrefix;
