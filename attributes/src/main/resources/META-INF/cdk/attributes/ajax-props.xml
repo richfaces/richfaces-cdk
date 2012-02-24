@@ -16,34 +16,63 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee">
 
     <property>
+        <description>
+            Ids of components that will participate in the "execute" portion of the Request Processing Lifecycle.
+            Can be a single id, a space or comma separated list of Id's, or an EL Expression evaluating to an array or Collection.
+            Any of the keywords "@this", "@form", "@all", "@none", "@region" may be specified in the identifier list.
+            Some components make use of additional keywords
+        </description>
         <property-name>execute</property-name>
         <property-class>java.lang.Object</property-class>
     </property>
+
     <property>
+        <description>
+            Ids of components that will participate in the "render" portion of the Request Processing Lifecycle.
+            Can be a single id, a space or comma separated list of Id's, or an EL Expression evaluating to an array or Collection.
+            Any of the keywords "@this", "@form", "@all", "@none", "@region" may be specified in the identifier list.
+            Some components make use of additional keywords
+        </description>
         <property-name>render</property-name>
         <property-class>java.lang.Object</property-class>
     </property>
+
     <property>
+        <description>
+            If "true", render only those ids specified in the "render" attribute, forgoing the render of the auto-rendered
+            panels
+        </description>
         <property-name>limitRender</property-name>
         <property-class>boolean</property-class>
         <default-value>false</default-value>
     </property>
 
     <property>
+        <description>
+            The client-side script method to be called before an ajax request.
+        </description>
         <property-name>onbegin</property-name>
         <property-class>java.lang.String</property-class>
         <property-extension>
             <cdk:event-name default="false">begin</cdk:event-name>
         </property-extension>
     </property>
+
     <property>
+        <description>
+            The client-side script method to be called after the ajax response comes back, but before the DOM is updated
+        </description>
         <property-name>onbeforedomupdate</property-name>
         <property-class>java.lang.String</property-class>
         <property-extension>
             <cdk:event-name default="false">beforedomupdate</cdk:event-name>
         </property-extension>
     </property>
+
     <property>
+        <description>
+            The client-side script method to be called after the DOM is updated
+        </description>
         <property-name>oncomplete</property-name>
         <property-class>java.lang.String</property-class>
         <property-extension>
@@ -52,10 +81,19 @@
     </property>
 
     <property>
+        <description>
+            Name of the request status component that will indicate the status of the Ajax request
+        </description>
         <property-name>status</property-name>
         <property-class>java.lang.String</property-class>
     </property>
+
     <property>
+        <description>
+            Serialized (on default with JSON) data passed to the client by a developer on an AJAX request.
+            It's accessible via "event.data" syntax. Both primitive types and complex types such as arrays and
+            collections can be serialized and used with data
+        </description>
         <property-name>data</property-name>
         <property-class>java.lang.Object</property-class>
     </property>

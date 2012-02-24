@@ -32,10 +32,8 @@
 
     <property>
         <description>
-            Space-separated list of CSS style class(es) to be applied when
-            this element is rendered. This value must be
-            passed through
-            as the "class" attribute on generated markup.
+            Space-separated list of CSS style class(es) to be applied when this element is rendered. This value must be
+            passed through as the "class" attribute on generated markup.
         </description>
         <display-name>CSS Style Classes</display-name>
         <icon />
@@ -48,8 +46,7 @@
 
     <property>
         <description>
-            Advisory title information about markup elements generated
-            for this component.
+            Advisory title information about markup elements generated for this component.
         </description>
         <display-name>Advisory Title</display-name>
         <icon />

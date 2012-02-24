@@ -34,10 +34,11 @@ public class AttributeModel extends PropertyBase {
         super();
     }
 
-    public AttributeModel(String name, boolean required, ClassName type) {
+    public AttributeModel(String name, boolean required, ClassName type, String description) {
         super();
         setName(name);
         setRequired(required);
         setType(type);
+        setDescription(description);
     }
 }

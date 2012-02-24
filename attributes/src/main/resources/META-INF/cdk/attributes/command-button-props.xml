@@ -20,9 +20,7 @@
 
     <property>
         <description>
-            Flag indicating that this element must never
-            receive focus or be included in a subsequent
-            submit.
+            Flag indicating that this element must never receive focus or be included in a subsequent submit.
         </description>
         <display-name>Disabled Flag</display-name>
         <icon />
@@ -35,8 +33,7 @@
 
     <property>
         <description>
-            Javascript code executed when a pointer button is
-            clicked over this element.
+            Javascript code executed when a pointer button is clicked over this element.
         </description>
         <display-name>Button Click Script</display-name>
         <icon />
@@ -52,8 +49,7 @@
 
     <property>
         <description>
-            Javascript code executed when a pointer button is
-            double clicked over this element.
+            Javascript code executed when a pointer button is double clicked over this element.
         </description>
         <display-name>Double Click Script</display-name>
         <icon />
@@ -67,8 +63,7 @@
 
     <property>
         <description>
-            Javascript code executed when a pointer button is
-            pressed down over this element.
+            Javascript code executed when a pointer button is pressed down over this element.
         </description>
         <display-name>Mouse Down Script</display-name>
         <icon />
@@ -82,8 +77,7 @@
 
     <property>
         <description>
-            Javascript code executed when a pointer button is
-            released over this element.
+            Javascript code executed when a pointer button is released over this element.
         </description>
         <display-name>Mouse Up Script</display-name>
         <icon />
@@ -97,8 +91,7 @@
 
     <property>
         <description>
-            Javascript code executed when a pointer button is
-            moved onto this element.
+            Javascript code executed when a pointer button is moved onto this element.
         </description>
         <display-name>Mouse Over Script</display-name>
         <icon />
@@ -112,8 +105,7 @@
 
     <property>
         <description>
-            Javascript code executed when a pointer button is
-            moved within this element.
+            Javascript code executed when a pointer button is moved within this element.
         </description>
         <display-name>Mouse Move Script</display-name>
         <icon />
@@ -127,8 +119,7 @@
 
     <property>
         <description>
-            Javascript code executed when a pointer button is
-            moved away from this element.
+            Javascript code executed when a pointer button is moved away from this element.
         </description>
         <display-name>Mouse Out Script</display-name>
         <icon />
@@ -142,8 +133,7 @@
 
     <property>
         <description>
-            Javascript code executed when a key is
-            pressed and released over this element.
+            Javascript code executed when a key is pressed and released over this element.
         </description>
         <display-name>Key Press Script</display-name>
         <icon />
@@ -157,8 +147,7 @@
 
     <property>
         <description>
-            Javascript code executed when a key is
-            pressed down over this element.
+            Javascript code executed when a key is pressed down over this element.
         </description>
         <display-name>Key Down Script</display-name>
         <icon />
@@ -172,8 +161,7 @@
 
     <property>
         <description>
-            Javascript code executed when a key is
-            released over this element.
+            Javascript code executed when a key is released over this element.
         </description>
         <display-name>Key Up Script</display-name>
         <icon />
@@ -188,8 +176,7 @@
     <property>
         <description>
             Type of button to create. Can be one of "submit", "button", "image" and "reset".
-            If not specified, the
-            default value is "submit".
+            If not specified, the default value is "submit".
         </description>
         <display-name>Button Type</display-name>
         <icon />

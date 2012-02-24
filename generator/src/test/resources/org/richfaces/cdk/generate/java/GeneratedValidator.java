@@ -32,7 +32,7 @@ import javax.faces.el.ValueBinding;
 /**
  * 
  **/
-@Generated({"RichFaces CDK", "4.2.0.CR1"})
+@Generated({"RichFaces CDK", "4.2.0.Final"})
 public class GeneratedValidator extends Object implements Validator, PartialStateHolder {
 
     @Override

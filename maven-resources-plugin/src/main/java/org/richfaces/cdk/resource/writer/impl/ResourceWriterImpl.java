@@ -202,12 +202,12 @@ public class ResourceWriterImpl implements ResourceWriter {
         // TODO separate mappings file location
         FileOutputStream fos = null;
         try {
-            // TODO merge properties
-            staticResourceMappingFile.delete();
-            staticResourceMappingFile.getParentFile().mkdirs();
-            staticResourceMappingFile.createNewFile();
+            if (!staticResourceMappingFile.exists()) {
+                staticResourceMappingFile.getParentFile().mkdirs();
+                staticResourceMappingFile.createNewFile();
+            }
 
-            fos = new FileOutputStream(staticResourceMappingFile);
+            fos = new FileOutputStream(staticResourceMappingFile, true);
 
             Properties properties = new Properties();
             for (Entry<String, String> entry : processedResources.entrySet()) {
