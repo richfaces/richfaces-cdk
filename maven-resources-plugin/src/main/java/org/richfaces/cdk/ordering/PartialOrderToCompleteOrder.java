@@ -46,7 +46,7 @@ import com.google.common.collect.Sets;
  * When storing new partial ordering, checks that new partial ordering does not violates partial orderings stored before.
  * </p>
  * 
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @author <a href="http://community.jboss.org/people/lfryc">Lukas Fryc</a>
  */
 public class PartialOrderToCompleteOrder<T> {
 

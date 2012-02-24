@@ -31,7 +31,7 @@ import org.richfaces.resource.ResourceLibraryFactoryImpl;
 /**
  * Minimum service factory module required for resource generation by maven-resources-plugin.
  *
- * @author <a href="mailto:lfryc@redhat.com">Lukas Fryc</a>
+ * @author <a href="http://community.jboss.org/people/lfryc">Lukas Fryc</a>
  */
 public class ServiceFactoryModule implements Module {
     public void configure(ServicesFactory factory) {
