@@ -19,40 +19,12 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee">
     <property>
         <description>
-            Javascript code executed when this element loses focus.
+            Access key that, when pressed, transfers focus
+            to this element.
         </description>
-        <display-name>Focus Off Script</display-name>
+        <display-name>Access Key</display-name>
         <icon />
-        <property-name>onblur</property-name>
-        <property-class>java.lang.String</property-class>
-        <property-extension>
-            <cdk:pass-through>true</cdk:pass-through>
-            <cdk:event-name>blur</cdk:event-name>
-        </property-extension>
-    </property>
-
-    <property>
-        <description>
-            Javascript code executed when this element receives focus.
-        </description>
-        <display-name>Focus On Script</display-name>
-        <icon />
-        <property-name>onfocus</property-name>
-        <property-class>java.lang.String</property-class>
-        <property-extension>
-            <cdk:pass-through>true</cdk:pass-through>
-            <cdk:event-name>focus</cdk:event-name>
-        </property-extension>
-    </property>
-
-    <property>
-        <description>
-            Position of this element in the tabbing order for the current document.
-            This value must be an integer between 0 and 32767.
-        </description>
-        <display-name>Tab Index</display-name>
-        <icon />
-        <property-name>tabindex</property-name>
+        <property-name>accesskey</property-name>
         <property-class>java.lang.String</property-class>
         <property-extension>
             <cdk:pass-through>true</cdk:pass-through>

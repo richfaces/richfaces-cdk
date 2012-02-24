@@ -19,8 +19,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee">
     <property>
         <description>
-            Alternate textual description of the
-            element rendered by this component.
+            Alternate textual description of the element rendered by this component.
         </description>
         <display-name>Alternate Text</display-name>
         <icon />
@@ -33,15 +32,10 @@
 
     <property>
         <description>
-            If the value of this attribute is "off", render "off" as the value
-            of the attribute. This indicates that the
-            browser should
-            disable its autocomplete feature for this component. This is
-            useful for components that perform
-            autocompletion and do not
-            want the browser interfering. If this attribute is not set or the value
-            is "on", render
-            nothing.
+            If the value of this attribute is "off", render "off" as the value of the attribute.
+            This indicates that the browser should disable its autocomplete feature for this component.
+            This is useful for components that perform autocompletion and do not want the browser interfering.
+            If this attribute is not set or the value is "on", render nothing.
         </description>
         <display-name>Enable or disable browser autocompletion.</display-name>
         <icon />
@@ -51,8 +45,7 @@
 
     <property>
         <description>
-            The maximum number of characters that may
-            be entered in this field.
+            The maximum number of characters that may be entered in this field.
         </description>
         <display-name>Maximum Length</display-name>
         <icon />
@@ -65,8 +58,7 @@
 
     <property>
         <description>
-            The number of characters used to determine
-            the width of this field.
+            The number of characters used to determine the width of this field.
         </description>
         <display-name>Field Width</display-name>
         <icon />

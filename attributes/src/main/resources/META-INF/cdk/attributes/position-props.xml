@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+        JBoss, Home of Professional Open Source Copyright ${year}, Red Hat,
+        Inc. and individual contributors by the @authors tag. See the
+        copyright.txt in the distribution for a full listing of individual
+        contributors. This is free software; you can redistribute it and/or
+        modify it under the terms of the GNU Lesser General Public License as
+        published by the Free Software Foundation; either version 2.1 of the
+        License, or (at your option) any later version. This software is
+        distributed in the hope that it will be useful, but WITHOUT ANY
+        WARRANTY; without even the implied warranty of MERCHANTABILITY or
+        FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+        License for more details. You should have received a copy of the GNU
+        Lesser General Public License along with this software; if not, write
+        to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+        Boston, MA 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+    -->
+<cdk:properties xmlns:cdk="http://jboss.org/schema/richfaces/cdk/extensions"
+                xmlns="http://java.sun.com/xml/ns/javaee">
+    <property>
+        <description>
+            &lt;p&gt;
+            Set the corner attachment point with which the popup should be connected. Possible values are:&lt;br /&gt;
+            AA (auto), LT (topLeft), RT (topRight), LB (bottomLeft), RB (bottomRight, LA (autoLeft),
+            RA (autoRight), AT (topAuto), AB (bottomAuto)
+            &lt;/p&gt;
+            &lt;p&gt;
+            Default value is auto
+            &lt;/p&gt;
+        </description>
+        <display-name>Joint Point</display-name>
+        <icon />
+        <property-name>jointPoint</property-name>
+        <property-class>org.richfaces.component.Positioning</property-class>
+    </property>
+
+    <property>
+        <description>
+            &lt;p&gt;
+            Set the direction of the popup.  Possible values are:&lt;br /&gt;
+            AA (auto), LT (topLeft), RT (topRight), LB (bottomLeft), RB (bottomRight, LA (autoLeft),
+            RA (autoRight), AT (topAuto), AB (bottomAuto)
+            &lt;/p&gt;
+            &lt;p&gt;
+            Default value is auto
+            &lt;/p&gt;
+        </description>
+        <display-name>Direction</display-name>
+        <icon />
+        <property-name>direction</property-name>
+        <property-class>org.richfaces.component.Positioning</property-class>
+    </property>
+
+    <property>
+        <description>
+            &lt;p&gt;
+            Sets the vertical offset between popup element and the conjunction point
+            &lt;/p&gt;
+            &lt;p&gt;
+            Default value is 0
+            &lt;/p&gt;
+        </description>
+        <display-name>Vertical Offset</display-name>
+        <icon />
+        <property-name>verticalOffset</property-name>
+        <property-class>int</property-class>
+    </property>
+
+    <property>
+        <description>
+            &lt;p&gt;
+            Sets the horizontal offset between popup element and the conjunction point
+            &lt;/p&gt;
+            &lt;p&gt;
+            Default value is 0
+            &lt;/p&gt;
+        </description>
+        <display-name>Horizontal Offset</display-name>
+        <icon />
+        <property-name>horizontalOffset</property-name>
+        <property-class>int</property-class>
+    </property>
+
+</cdk:properties>
