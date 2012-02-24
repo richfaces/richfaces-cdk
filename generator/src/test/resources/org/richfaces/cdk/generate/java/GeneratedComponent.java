@@ -43,7 +43,7 @@ import javax.faces.el.MethodBinding;
 /**
  * 
  **/
-@Generated({"RichFaces CDK", "4.2.0.Final"})
+@Generated({"RichFaces CDK", "4.2.1-SNAPSHOT"})
 public class GeneratedComponent extends UIOutput
     implements ClientBehaviorHolder
     {
