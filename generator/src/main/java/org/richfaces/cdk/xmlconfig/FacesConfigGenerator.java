@@ -22,11 +22,13 @@
  */
 package org.richfaces.cdk.xmlconfig;
 
+import java.io.IOException;
 import java.io.Writer;
 
 import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.CdkWriter;
 import org.richfaces.cdk.FileManager;
+import org.richfaces.cdk.Logger;
 import org.richfaces.cdk.Output;
 import org.richfaces.cdk.Outputs;
 import org.richfaces.cdk.model.ComponentLibrary;
@@ -51,6 +53,8 @@ public class FacesConfigGenerator implements CdkWriter {
     @Output(Outputs.RESOURCES)
     private FileManager outputFileManager;
     private FacesConfigAdapter libraryAdapter;
+    @Inject
+    private Logger log;
 
     public FacesConfigGenerator() {
         libraryAdapter = new FacesConfigAdapter();
@@ -66,8 +70,9 @@ public class FacesConfigGenerator implements CdkWriter {
 
         // do not render empty config.
         if (!library.isEmpty()) {
+            Writer facesConfigXml = null;
             try {
-                Writer facesConfigXml = outputFileManager.createOutput(FACES_CONFIG_XML, library.lastModified());
+                facesConfigXml = outputFileManager.createOutput(FACES_CONFIG_XML, library.lastModified());
 
                 if (null != facesConfigXml) {
                     jaxbBinding.marshal(facesConfigXml, FACES_SCHEMA_LOCATION, libraryAdapter.marshal(library));
@@ -77,6 +82,14 @@ public class FacesConfigGenerator implements CdkWriter {
                     throw (CdkException) e;
                 } else {
                     throw new CdkException(e);
+                }
+            } finally {
+                if (null != facesConfigXml) {
+                    try {
+                        facesConfigXml.close();
+                    } catch (IOException e) {
+                        log.warn("IOException occured when closing facesConfigXml writer", e);
+                    }
                 }
             }
         }
