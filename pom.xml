@@ -30,6 +30,7 @@
         <module>maven-cdk-plugin</module>
         <module>maven-resources-plugin</module>
         <module>dist</module>
+        <module>cmdln-generator</module>
     </modules>
     <!-- SCM and distribution management -->
     <scm>
