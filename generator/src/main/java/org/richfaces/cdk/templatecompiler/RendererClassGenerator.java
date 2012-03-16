@@ -106,17 +106,25 @@ public class RendererClassGenerator implements CdkWriter {
 
                     JavaClass javaClass = visitor.getGeneratedClass();
                     String fullName = javaClass.getName();
+                    Writer outFile = null;
                     try {
-                        Writer outFile = output.createOutput(fullName.replace('.', '/') + ".java", library.lastModified());
+                        outFile = output.createOutput(fullName.replace('.', '/') + ".java", library.lastModified());
 
                         if (null != outFile) {
                             this.renderer.writeTemplate("class.ftl", javaClass, outFile);
-                            outFile.close();
                         }
                     } catch (IOException e) {
                         throw new CdkException(e);
                     } catch (TemplateException e) {
                         throw new CdkException(e);
+                    } finally {
+                        if (null != outFile) {
+                            try {
+                                outFile.close();
+                            } catch (IOException e) {
+                                log.warn("IOException occured when closing writer for renderer-class", e);
+                            }
+                        }
                     }
                 }
             }
