@@ -19,7 +19,7 @@ import com.beust.jcommander.Parameter;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 
-public class Parameters {
+public class CommandLineGenerator {
 
     private static final String[] JAVA_INCLUDES = new String[] { "**/*.java" };
     private static final String MAIN_CONFIG = "src/main/config";
@@ -188,8 +188,6 @@ public class Parameters {
     List<File> getClassPathElements() {
         List<File> files = new ArrayList<File>();
         
-//        files.addAll(listClassFiles(new File(projectRoot, "target/classes")));
-//        files.addAll(listClassFiles(new File(projectRoot, "target/dependency")));
         files.add(new File(projectRoot, "target/classes"));
         files.add(new File(projectRoot, "target/dependency"));
         

@@ -8,7 +8,7 @@
         <relativePath>..</relativePath>
     </parent>
     <artifactId>cmdln-generator</artifactId>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.richfaces.cdk</groupId>
@@ -25,12 +25,46 @@
             <artifactId>commons-io</artifactId>
             <version>2.1</version>
         </dependency>
-        
-        
+
         <dependency>
             <groupId>plexus</groupId>
             <artifactId>plexus-utils</artifactId>
             <version>1.0.3</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.faces</artifactId>
+            <version>2.1.5</version>
+        </dependency>
     </dependencies>
+
+    <build>
+        <finalName>cdk-cmdline-generator</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>assembly-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptors>
+                        <descriptor>assembly-jar.xml</descriptor>
+                    </descriptors>
+                    <archive>
+                        <manifest>
+                            <mainClass>org.richfaces.cdk.GenerateMain</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
