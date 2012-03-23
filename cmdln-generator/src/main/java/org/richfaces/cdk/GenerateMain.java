@@ -36,10 +36,9 @@ import com.beust.jcommander.JCommander;
 public class GenerateMain {
 
     public static void main(String[] args) {
-        CommandLineGenerator parameters = new CommandLineGenerator();
-        new JCommander(parameters, args);
-        parameters.execute();
-        System.out.println("[generated]");
+        CommandLineGenerator generator = new CommandLineGenerator();
+        new JCommander(generator, args);
+        generator.execute();
     }
 
 }

@@ -4,16 +4,20 @@ import java.lang.reflect.Method;
 
 public class CustomLogger implements Logger {
 
-    private static final boolean DEBUG = false;
     private static final boolean INFO = true;
     private static final boolean WARN = true;
     private static final boolean ERROR = true;
 
+    private boolean debug = false;
     private int errorCount = 0;
 
     @Override
     public boolean isDebugEnabled() {
-        return DEBUG;
+        return debug;
+    }
+
+    public void setDebugEnabled(boolean enabled) {
+        this.debug = enabled;
     }
 
     @Override

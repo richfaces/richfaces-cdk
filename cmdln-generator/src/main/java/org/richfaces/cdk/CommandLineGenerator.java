@@ -24,12 +24,14 @@ public class CommandLineGenerator {
     private static final String[] JAVA_INCLUDES = new String[] { "**/*.java" };
     private static final String MAIN_CONFIG = "src/main/config";
     private static final String MAIN_TEMPLATES = "src/main/templates";
-    private static final String[] STRINGS_ARRAY = new String[0];
     private static final String[] EMPTY = new String[0];
     private static final String[] XML_INCLUDES = new String[] { "**/*.xml" };
 
     @Parameter(names = "-p")
     String projectRoot;
+    
+    @Parameter(names = "-d")
+    boolean debug = false;
 
     @Parameter(names = "-n")
     private String taglibNamespace;
@@ -48,7 +50,7 @@ public class CommandLineGenerator {
 
     protected Map<String, String> options = new HashMap<String, String>();
 
-    private Logger logger = new CustomLogger();
+    private Logger logger;
 
     private void setup() {
         compileSourceRoots = Arrays.asList(projectRoot + "/src/main/java");
@@ -61,11 +63,25 @@ public class CommandLineGenerator {
         outputResourcesDirectory = new File(projectRoot, "target/generated-sources/main/resources");
         outputTestDirectory = new File(projectRoot, "target/generated-sources/test/java");
         outputTestResourcesDirectory = new File(projectRoot, "target/generated-sources/test/resources");
+        
+        CustomLogger logger = new CustomLogger();
+        logger.setDebugEnabled(debug);
+        this.logger = logger;
     }
-
+    
     public void execute() {
         setup();
+        
+        logger.info("[generate: " + projectRoot + "]");
+        long start = System.currentTimeMillis();
+        
+        executeGenerator();
+        
+        long end = System.currentTimeMillis();
+        logger.info("[total: " + (end - start) + " ms]");
+    }
 
+    public void executeGenerator() {
         Generator generator = new Generator();
         generator.setLog(logger);
         generator.setLoader(createProjectClassLoader());
@@ -110,6 +126,7 @@ public class CommandLineGenerator {
             // LibraryBuilder builder = LibraryBuilder.createInstance(context);
             generator.init();
             generator.execute();
+            
             if (logger.getErrorCount() > 0) {
                 throw new IllegalStateException("Errors occurred while JSF library was built");
             }
