@@ -5,7 +5,7 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>org.richfaces.cdk</groupId>
-        <version>4.2.1-SNAPSHOT</version>
+        <version>4.2.1.CR1</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <artifactId>commons</artifactId>
