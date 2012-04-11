@@ -5,11 +5,11 @@
     <groupId>org.richfaces.cdk</groupId>
     <artifactId>xml-configured-component</artifactId>
     <name>Test component configured by faces-config</name>
-    <version>4.2.1-SNAPSHOT</version>
+    <version>4.2.1.Final</version>
     <parent>
         <groupId>org.richfaces</groupId>
         <artifactId>richfaces-root-parent</artifactId>
-        <version>4.2.1-SNAPSHOT</version>
+        <version>4.2.1.Final</version>
         <relativePath>../../../../build/parent/pom.xml</relativePath>
     </parent>
     <build>
@@ -17,7 +17,7 @@
             <plugin>
                 <groupId>org.richfaces.cdk</groupId>
                 <artifactId>maven-cdk-plugin</artifactId>
-                <version>4.2.1-SNAPSHOT</version>
+                <version>4.2.1.Final</version>
                 <configuration>
                 </configuration>
                 <executions>
@@ -48,7 +48,7 @@
         <dependency>
             <groupId>org.richfaces.cdk</groupId>
             <artifactId>annotations</artifactId>
-            <version>4.2.1-SNAPSHOT</version>
+            <version>4.2.1.Final</version>
         </dependency>
         <dependency>
             <groupId>javax.el</groupId>
