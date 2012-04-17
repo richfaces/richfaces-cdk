@@ -25,6 +25,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.richfaces.cdk.annotations.TagType;
+import org.richfaces.cdk.model.AttributeModel;
 import org.richfaces.cdk.model.BeanModelBase;
 import org.richfaces.cdk.model.BehaviorModel;
 import org.richfaces.cdk.model.ComponentLibrary;
@@ -256,15 +257,16 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
             if (isFaceletsTag(tagModel)) {
                 Element tag = createTag(tagModel.getName());
                 addTagHandler(tag, tagModel);
-                appendAttributesForListener(tag);
+                appendAttributesForListener(tag, model);
             }
         }
         return null;
     }
 
-    private void appendAttributesForListener(Element tag) {
-        for (ListenerAttributes attribute : ListenerAttributes.values()) {
-            createAttributeElement(tag, attribute.getAttribute().getName(), attribute.getAttribute());
+    private void appendAttributesForListener(Element tag, EventModel model) {
+        for (ListenerAttribute attribute : ListenerAttribute.values()) {
+            PropertyBase property = attribute.derivateProperty(model);
+            createAttributeElement(tag, property.getName(), property);
         }
     }
 
