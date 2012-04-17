@@ -36,7 +36,7 @@ mvn clean richfaces-resources:process -Dskins=blueSky -DstaticResourceMappingFil
 <plugin>
     <groupId>org.richfaces.cdk</groupId>
     <artifactId>maven-richfaces-resources-plugin</artifactId>
-    <version>4.1.0-SNAPSHOT</version>
+    <version>4.2.1.Final</version>
     <configuration>
         <skins>
             <skin>blueSky</skin>
@@ -72,10 +72,26 @@ mvn clean richfaces-resources:process -Dskins=blueSky -DstaticResourceMappingFil
                 <goal>process</goal>
             </goals>
             <configuration>
+            
+            	<!-- default RichFaces mapping file, can be anywhere on the classpath, but then you will
+            	     will need to configure Resource Mapping configuration file location in web.xml,
+            	     refer to RichFaces Developer Guide -->
+                <staticResourceMappingFile>${project.build.outputDirectory}/META-INF/richfaces/static-resource-mappings.properties</staticResourceMappingFile>
+                
+                <!-- resources will be placed in JAR/META-INF/resources/com.acme.staticResources/
+                     or WAR/WEB-INF/classes/META-INF/resources/com.acme.staticResources/
+                     depending on packaging of this project -->
                 <resourcesOutputDir>${project.build.outputDirectory}/META-INF/resources/com.acme.staticResources/</resourcesOutputDir>
-                <staticResourceMappingFile>${project.build.outputDirectory}/META-INF/custom-mapping.properties</staticResourceMappingFile>
+                
+                <!-- resources will be located under JSF_RESOURCE_ROOT/com.acme.staticResources (e.g. JAR/META-INF/com.acme.staticResources)
+                <staticResourcePrefix>com.acme.staticResources/</staticResourcePrefix>
+            	
+            	<!-- resources will be packaged, refer to RichFaces Developer Guide -->
             	<pack>true</pack>
+            	
+            	<!-- resources will be compressed, refer to RichFaces Developer Guide -->
             	<compress>true</pack>
+            	
             </configuration>
         </execution>
     </executions>

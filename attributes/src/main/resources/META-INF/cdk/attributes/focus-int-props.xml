@@ -47,13 +47,15 @@
 
     <property>
         <description>
-            Position of this element in the tabbing order for the current document.
-            This value must be an integer between 0 and 32767.
+            Position of this element in the tabbing order
+            for the current document. This value must be
+            an integer between
+            0 and 32767.
         </description>
         <display-name>Tab Index</display-name>
         <icon />
         <property-name>tabindex</property-name>
-        <property-class>java.lang.String</property-class>
+        <property-class>int</property-class>
         <property-extension>
             <cdk:pass-through>true</cdk:pass-through>
         </property-extension>

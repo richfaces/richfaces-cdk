@@ -16,46 +16,49 @@
         Boston, MA 02110-1301 USA, or see the FSF site: http://www.fsf.org.
     -->
 <cdk:properties xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:cdk="http://jboss.org/schema/richfaces/cdk/extensions"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee">
     <property>
         <description>
-            Javascript code executed when this element loses focus.
+            Javascript code executed when a key is
+            pressed and released over this element.
         </description>
-        <display-name>Focus Off Script</display-name>
+        <display-name>Key Press Script</display-name>
         <icon />
-        <property-name>onblur</property-name>
+        <property-name>onkeypress</property-name>
         <property-class>java.lang.String</property-class>
         <property-extension>
             <cdk:pass-through>true</cdk:pass-through>
-            <cdk:event-name>blur</cdk:event-name>
+            <cdk:event-name>keypress</cdk:event-name>
         </property-extension>
     </property>
 
     <property>
         <description>
-            Javascript code executed when this element receives focus.
+            Javascript code executed when a key is
+            pressed down over this element.
         </description>
-        <display-name>Focus On Script</display-name>
+        <display-name>Key Down Script</display-name>
         <icon />
-        <property-name>onfocus</property-name>
+        <property-name>onkeydown</property-name>
         <property-class>java.lang.String</property-class>
         <property-extension>
             <cdk:pass-through>true</cdk:pass-through>
-            <cdk:event-name>focus</cdk:event-name>
+            <cdk:event-name>keydown</cdk:event-name>
         </property-extension>
     </property>
 
     <property>
         <description>
-            Position of this element in the tabbing order for the current document.
-            This value must be an integer between 0 and 32767.
+            Javascript code executed when a key is
+            released over this element.
         </description>
-        <display-name>Tab Index</display-name>
+        <display-name>Key Up Script</display-name>
         <icon />
-        <property-name>tabindex</property-name>
+        <property-name>onkeyup</property-name>
         <property-class>java.lang.String</property-class>
         <property-extension>
             <cdk:pass-through>true</cdk:pass-through>
+            <cdk:event-name>keyup</cdk:event-name>
         </property-extension>
     </property>
 </cdk:properties>

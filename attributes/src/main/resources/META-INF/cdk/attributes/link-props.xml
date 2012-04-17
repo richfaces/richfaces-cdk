@@ -147,7 +147,7 @@
         <property-class>java.lang.String</property-class>
         <property-extension>
             <cdk:pass-through>false</cdk:pass-through>
-            <cdk:event-name>click</cdk:event-name>
+            <cdk:event-name default="true">click</cdk:event-name>
             <cdk:event-name>action</cdk:event-name>
             <default-behavior>true</default-behavior>
         </property-extension>
