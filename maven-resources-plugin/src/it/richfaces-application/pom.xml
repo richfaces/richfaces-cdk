@@ -5,62 +5,56 @@
     <artifactId>richfaces-application</artifactId>
     <name>Test component annotations</name>
     <version>4.3.0-SNAPSHOT</version>
-    <packaging>war</packaging>
-    
+    <packaging>jar</packaging>
+
     <parent>
         <groupId>org.richfaces</groupId>
         <artifactId>richfaces-root-parent</artifactId>
         <version>4.3.0-SNAPSHOT</version>
         <relativePath>../../../../build/parent/pom.xml</relativePath>
     </parent>
-    
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.richfaces.cdk</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
+                <artifactId>maven-richfaces-resources-plugin</artifactId>
                 <version>4.3.0-SNAPSHOT</version>
-                <configuration>
-                </configuration>
                 <executions>
                     <execution>
                         <id>process</id>
                         <goals>
                             <goal>process</goal>
                         </goals>
-                        <configuration>
-                            <outputDir>images</outputDir>
-                            <skins>
-                                <skin>blueSky</skin>
-                                <skin>classic</skin>
-                                <skin>deepMarine</skin>
-                                <skin>emeraldTown</skin>
-                                <skin>japanCherry</skin>
-                                <skin>ruby</skin>
-                                <skin>wine</skin>
-                            </skins>
-                            <includedContentTypes>
-                                <include>application/javascript</include>
-                                <include>text/css</include>
-                                <include>image/.+</include>
-                            </includedContentTypes>
-                            <fileNameMappings>
-                                <property>
-                                    <name>^\Qorg.richfaces.renderkit.html\E</name>
-                                    <value>org.richfaces/images</value>
-                                </property>
-                                <property>
-                                    <name>^\Qorg.richfaces.renderkit.html.images\E</name>
-                                    <value>org.richfaces/images</value>
-                                </property>
-                                <property>
-                                    <name>^css/</name>
-                                    <value>org.richfaces/css</value>
-                                </property>
-                            </fileNameMappings>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <staticResourceMappingFile>${project.build.outputDirectory}/mapping.properties</staticResourceMappingFile>
+                    <resourcesOutputDir>${project.build.outputDirectory}/resources/</resourcesOutputDir>
+                    <pack>false</pack>
+                    <compress>false</compress>
+                    <skins>
+                        <skin>classic</skin>
+                    </skins>
+                    <includedContentTypes>
+                        <include>application/javascript</include>
+                        <include>text/css</include>
+                    </includedContentTypes>
+                    <fileNameMappings>
+                        <property>
+                            <name>^\Qorg.richfaces.renderkit.html\E</name>
+                            <value>org.richfaces/images</value>
+                        </property>
+                        <property>
+                            <name>^\Qorg.richfaces.renderkit.html.images\E</name>
+                            <value>org.richfaces/images</value>
+                        </property>
+                        <property>
+                            <name>^css/</name>
+                            <value>org.richfaces/css</value>
+                        </property>
+                    </fileNameMappings>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -73,11 +67,4 @@
             </plugin>
         </plugins>
     </build>
-    <dependencies>
-        <dependency>
-            <groupId>org.richfaces.ui</groupId>
-            <artifactId>richfaces-components-ui</artifactId>
-            <version>4.3.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
 </project>
