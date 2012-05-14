@@ -109,7 +109,7 @@ public class ELParserTest extends CdkTestBase {
         }
         for (HelperMethod helperMethod : parseExpression.getRequiredMethods()) {
             assertTrue("Unexpected helper method " + helperMethod.getName(),
-                    Iterables.contains(ImmutableSet.of(requiredMethods), helperMethod));
+                    Iterables.contains(ImmutableSet.copyOf(requiredMethods), helperMethod));
         }
         return parseExpression;
     }
