@@ -23,7 +23,7 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>org.richfaces.cdk</groupId>
-        <version>4.2.2-SNAPSHOT</version>
+        <version>4.2.2.Final</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
