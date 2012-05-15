@@ -1,24 +1,49 @@
+/*
+ * JBoss, Home of Professional Open Source
+ * Copyright ${year}, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
 package org.richfaces.cdk;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.codehaus.plexus.util.DirectoryScanner;
 
 import com.beust.jcommander.Parameter;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 
+/**
+ * Configurable command-line interface of CDK generator.
+ * 
+ * This class is similar functionality as {@link org.richfaces.builder.mojo.GenerateMojo} from maven-cdk-plugin.
+ * 
+ * @author Lukas Fryc
+ */
 public class CommandLineGenerator {
 
     private static final String[] JAVA_INCLUDES = new String[] { "**/*.java" };
@@ -29,7 +54,7 @@ public class CommandLineGenerator {
 
     @Parameter(names = "-p")
     String projectRoot;
-    
+
     @Parameter(names = "-d")
     boolean debug = false;
 
@@ -63,20 +88,20 @@ public class CommandLineGenerator {
         outputResourcesDirectory = new File(projectRoot, "target/generated-sources/main/resources");
         outputTestDirectory = new File(projectRoot, "target/generated-sources/test/java");
         outputTestResourcesDirectory = new File(projectRoot, "target/generated-sources/test/resources");
-        
+
         CustomLogger logger = new CustomLogger();
         logger.setDebugEnabled(debug);
         this.logger = logger;
     }
-    
+
     public void execute() {
         setup();
-        
+
         logger.info("[generate: " + projectRoot + "]");
         long start = System.currentTimeMillis();
-        
+
         executeGenerator();
-        
+
         long end = System.currentTimeMillis();
         logger.info("[total: " + (end - start) + " ms]");
     }
@@ -85,7 +110,7 @@ public class CommandLineGenerator {
         Generator generator = new Generator();
         generator.setLog(logger);
         generator.setLoader(createProjectClassLoader());
-        
+
         // Set source folders.
         ArrayList<File> folders = new ArrayList<File>(compileSourceRoots.size());
 
@@ -126,7 +151,7 @@ public class CommandLineGenerator {
             // LibraryBuilder builder = LibraryBuilder.createInstance(context);
             generator.init();
             generator.execute();
-            
+
             if (logger.getErrorCount() > 0) {
                 throw new IllegalStateException("Errors occurred while JSF library was built");
             }
@@ -204,21 +229,16 @@ public class CommandLineGenerator {
 
     List<File> getClassPathElements() {
         List<File> files = new ArrayList<File>();
-        
+
         files.add(new File(projectRoot, "target/classes"));
         files.add(new File(projectRoot, "target/dependency"));
-        
+
         return files;
-    }
-    
-    private Collection<File> listClassFiles(File directory) {
-        return FileUtils.listFiles(directory, FileFilterUtils.suffixFileFilter(".class"),
-                FileFilterUtils.directoryFileFilter());
     }
 
     protected String[] doScan(String[] includes, String[] excludes, File rootFolder) {
         if (!rootFolder.exists()) {
-            return new String[]{};
+            return new String[] {};
         }
         try {
             DirectoryScanner directoryScanner = new DirectoryScanner();
@@ -237,13 +257,13 @@ public class CommandLineGenerator {
     }
 
     private class StringToFile implements Function<String, File> {
-        
+
         private String root;
-        
+
         public StringToFile(String root) {
             this.root = root;
         }
-        
+
         @Override
         public File apply(String input) {
             return new File(root, input);
