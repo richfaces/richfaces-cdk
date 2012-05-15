@@ -27,6 +27,7 @@
         <module>attributes</module>
         <module>xinclude</module>
         <module>generator</module>
+        <module>cmdln-generator</module>
         <module>maven-cdk-plugin</module>
         <module>maven-resources-plugin</module>
         <module>dist</module>
