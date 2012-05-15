@@ -77,7 +77,8 @@ public class CdkClassLoader extends URLClassLoader {
     private void addFiles(Iterable<File> filesSet) throws MalformedURLException {
         this.files = ImmutableSet.copyOf(filesSet);
         for (File file : filesSet) {
-            addURL(file.toURI().toURL());
+            URL url = file.toURI().toURL();
+            addURL(url);
         }
     }
 }
