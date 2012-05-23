@@ -27,8 +27,8 @@ public class TestAttributesThatAreSet {
     private static final String RENDERED = "rendered";
     private static final String ID = "id";
     private static final String ATTRIBUTES_THAT_ARE_SET_KEY = UIComponentBase.class.getName() + ".attributesThatAreSet";
-    private static final @SuppressWarnings("serial")
-    ValueExpression DUMMY_EXPRESSION = new ValueExpression() {
+    @SuppressWarnings("serial")
+    private static final ValueExpression DUMMY_EXPRESSION = new ValueExpression() {
         @Override
         public boolean isLiteralText() {
             // TODO Auto-generated method stub

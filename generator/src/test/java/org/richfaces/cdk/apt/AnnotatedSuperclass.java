@@ -1,7 +1,7 @@
 package org.richfaces.cdk.apt;
 
 public class AnnotatedSuperclass {
-    
+
     String value;
 
     /**

@@ -84,7 +84,7 @@ public class TaskFactoryTest extends AnnotationProcessorTestBase {
      * @throws AptException
      */
     @Test
-    public void testGetTask() throws AptException, Exception {
+    public void testGetTask() throws Exception {
         expect(output.getFolders()).andReturn(null);
         replay(processor, output);
 
@@ -95,7 +95,7 @@ public class TaskFactoryTest extends AnnotationProcessorTestBase {
     }
 
     @Test
-    public void testTask() throws AptException, Exception {
+    public void testTask() throws Exception {
         expect(output.getFolders()).andReturn(null);
         processor.init((ProcessingEnvironment) anyObject());
         expectLastCall();
