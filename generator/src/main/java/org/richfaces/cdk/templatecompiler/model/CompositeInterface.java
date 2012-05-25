@@ -53,6 +53,7 @@ public class CompositeInterface implements Serializable {
     private String renderKitId = RenderKitFactory.HTML_BASIC_RENDER_KIT;
     private ClassName javaClass;
     private ClassName baseClass;
+    private ClassName componentBaseClass;
     private FacesId rendererType;
     private Boolean rendersChildren = null;
     private List<ClassImport> classImports = Lists.newArrayList();
@@ -208,6 +209,28 @@ public class CompositeInterface implements Serializable {
      */
     public void setBaseClass(ClassName baseClass) {
         this.baseClass = baseClass;
+    }
+
+    /**
+     * <p class="changed_added_4_3">
+     * </p>
+     *
+     * @return the componentBaseClass
+     */
+    @XmlJavaTypeAdapter(ClassAdapter.class)
+    @XmlElement(name = "component-base-class", namespace = Template.CDK_NAMESPACE)
+    public ClassName getComponentBaseClass() {
+        return this.componentBaseClass;
+    }
+
+    /**
+     * <p class="changed_added_4_3">
+     * </p>
+     *
+     * @param componentBaseClass the componentBaseClass to set
+     */
+    public void setComponentBaseClass(ClassName componentBaseClass) {
+        this.componentBaseClass = componentBaseClass;
     }
 
     /**

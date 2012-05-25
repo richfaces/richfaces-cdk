@@ -71,6 +71,7 @@ import org.richfaces.cdk.templatecompiler.model.TemplateVisitor;
 import org.richfaces.cdk.templatecompiler.statements.AddAttributesToScriptHashStatement;
 import org.richfaces.cdk.templatecompiler.statements.AttributesStatement;
 import org.richfaces.cdk.templatecompiler.statements.CaseStatement;
+import org.richfaces.cdk.templatecompiler.statements.CastComponentStatement;
 import org.richfaces.cdk.templatecompiler.statements.ConstantReturnMethodBodyStatement;
 import org.richfaces.cdk.templatecompiler.statements.DefineObjectStatement;
 import org.richfaces.cdk.templatecompiler.statements.EncodeMethodPrefaceStatement;
@@ -117,6 +118,10 @@ public class RendererClassVisitor implements TemplateVisitor {
     /**
      *
      */
+    public static final String COMPONENT_PARAMETER = "uiComponent";
+    /**
+     *
+     */
     public static final String THIS_VARIABLE = "this";
     /**
      *
@@ -143,6 +148,7 @@ public class RendererClassVisitor implements TemplateVisitor {
     private final Collection<PropertyBase> attributes;
     private StatementsContainer currentStatement;
     private JavaClass generatedClass;
+    private JavaClass componentBaseClass;
     private Set<HelperMethod> addedHelperMethods = EnumSet.noneOf(HelperMethod.class);
 
     public RendererClassVisitor(CompositeInterface compositeInterface, Collection<PropertyBase> attributes, Logger log,
@@ -241,8 +247,7 @@ public class RendererClassVisitor implements TemplateVisitor {
         currentStatement.setVariable(RESPONSE_WRITER_VARIABLE, getType(ResponseWriter.class));
         currentStatement.setVariable(CLIENT_ID_VARIABLE, getType(String.class));
 
-        // TODO: try load component class
-        currentStatement.setVariable(COMPONENT_VARIABLE, getType(UIComponent.class));
+        currentStatement.setVariable(COMPONENT_VARIABLE, getComponentBaseClass());
 
         ELType generatedClassType = typesFactory.getType(generatedClass.getName());
         currentStatement.setVariable(THIS_VARIABLE, generatedClassType);
@@ -251,16 +256,38 @@ public class RendererClassVisitor implements TemplateVisitor {
         currentStatement.setVariable(SUPER_VARIABLE, generatedClassSuperType);
     }
 
+    private ELType getComponentBaseClass() {
+        ELType componentBaseType;
+        if (null != compositeInterface.getComponentBaseClass()) {
+            componentBaseType = typesFactory.getType(compositeInterface.getComponentBaseClass().getName());
+        } else {
+            componentBaseType = getType(UIComponent.class);
+        }
+        return componentBaseType;
+    }
+
     private void flushToEncodeMethod(String encodeMethodName, boolean enforce) {
         if (enforce || !this.currentStatement.isEmpty()) {
             Argument facesContextArgument = new Argument(FACES_CONTEXT_VARIABLE, getType(FacesContext.class));
-            Argument componentArgument = new Argument(COMPONENT_VARIABLE, getType(UIComponent.class));
+            Argument componentArgument;
+            int statementCount = 0;
+            if (null != compositeInterface.getComponentBaseClass()) {
+                ELType type = getComponentBaseClass();
+                componentArgument = new Argument(COMPONENT_PARAMETER, getType(UIComponent.class));
+                CastComponentStatement statement = createStatement(CastComponentStatement.class);
+                statement.setType(type);
+                statement.setComponentParameter(COMPONENT_PARAMETER);
+                currentStatement.addStatement(statementCount, statement);
+                statementCount++;
+            } else {
+                componentArgument = new Argument(COMPONENT_VARIABLE, getType(UIComponent.class));
+            }
 
             JavaMethod javaMethod = new JavaMethod(encodeMethodName, facesContextArgument, componentArgument);
             javaMethod.addModifier(JavaModifier.PUBLIC);
             javaMethod.addAnnotation(new JavaAnnotation(getType(Override.class)));
             javaMethod.getExceptions().add(getType(IOException.class));
-            currentStatement.addStatement(0, createStatement(EncodeMethodPrefaceStatement.class));
+            currentStatement.addStatement(statementCount, createStatement(EncodeMethodPrefaceStatement.class));
 
             javaMethod.setMethodBody(currentStatement);
 

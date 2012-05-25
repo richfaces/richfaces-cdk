@@ -238,6 +238,18 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </xs:annotation>
     </xs:element>
 
+    <xs:element name="component-base-class" type="javaee:fully-qualified-classType">
+        <xs:annotation>
+            <xs:documentation>
+                <p>Fully-qualified name of a base class common to all components rendered by this renderer.</p>
+                <p>Defaults to <code>javax.faces.component.UIComponent</code>.</p>
+                <p>
+                    <span class="usage">Should be used within cc:interface element.</span>
+                </p>
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
     <xs:element name="renderkit-id">
         <xs:annotation>
             <xs:documentation>

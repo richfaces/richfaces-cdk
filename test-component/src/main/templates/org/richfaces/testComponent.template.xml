@@ -10,10 +10,11 @@
         <cdk:superclass>org.richfaces.renderkit.TestComponentRendererBase</cdk:superclass>
         <cdk:component-family>org.richfaces.TestComponentFamily</cdk:component-family>
         <cdk:renderer-type>org.richfaces.TestComponentRenderer</cdk:renderer-type>
+        <cdk:component-base-class>org.richfaces.component.TestComponent</cdk:component-base-class>
     </cc:interface>
 
     <cc:implementation>
-        
+        Something simple
     </cc:implementation>
 
 </cdk:root>
