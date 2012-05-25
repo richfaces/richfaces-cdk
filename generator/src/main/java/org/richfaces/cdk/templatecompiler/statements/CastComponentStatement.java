@@ -35,7 +35,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author Nick Belaevski
+ * @author <a href="http://community.jboss.org/people/bleathem">Brian Leathem</a>
  */
 public class CastComponentStatement extends FreeMarkerTemplateStatementBase {
     private ELType type;

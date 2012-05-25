@@ -96,10 +96,11 @@ import com.google.common.collect.Lists;
 import com.google.inject.Injector;
 
 /**
- * <p class="changed_added_4_0">
+ * <p class="changed_added_4_3">
  * </p>
  *
  * @author asmirnov@exadel.com
+ * @author <a href="http://community.jboss.org/people/bleathem">Brian Leathem</a>
  */
 public class RendererClassVisitor implements TemplateVisitor {
     /**
@@ -247,7 +248,7 @@ public class RendererClassVisitor implements TemplateVisitor {
         currentStatement.setVariable(RESPONSE_WRITER_VARIABLE, getType(ResponseWriter.class));
         currentStatement.setVariable(CLIENT_ID_VARIABLE, getType(String.class));
 
-        currentStatement.setVariable(COMPONENT_VARIABLE, getComponentBaseClass());
+        currentStatement.setVariable(COMPONENT_VARIABLE, getType(UIComponent.class));
 
         ELType generatedClassType = typesFactory.getType(generatedClass.getName());
         currentStatement.setVariable(THIS_VARIABLE, generatedClassType);

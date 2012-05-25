@@ -38,10 +38,11 @@ import org.richfaces.cdk.xmlconfig.model.FacesIdAdapter;
 import com.google.common.collect.Lists;
 
 /**
- * <p class="changed_added_4_0">
+ * <p class="changed_added_4_3">
  * </p>
  *
  * @author asmirnov@exadel.com
+ * @author <a href="http://community.jboss.org/people/bleathem">Brian Leathem</a>
  */
 @XmlRootElement(name = "interface", namespace = Template.COMPOSITE_NAMESPACE)
 public class CompositeInterface implements Serializable {
