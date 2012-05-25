@@ -19,7 +19,7 @@ if [ ! -f "$PROJECT/pom.xml" ]; then
 fi
 
 if [ ! -d "$PROJECT/target/classes" -o ! -d "$PROJECT/target/dependency" ]; then
-	mvn -f "$PROJECT/pom.xml" compiler:compile dependency:unpack-dependencies
+	mvn -f "$PROJECT/pom.xml" compiler:compile dependency:unpack-dependencies -DexcludeTypes=pom
 fi
 
 TARGET=$(dirname $0)"/target"
