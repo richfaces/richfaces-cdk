@@ -257,23 +257,13 @@ public class RendererClassVisitor implements TemplateVisitor {
         currentStatement.setVariable(SUPER_VARIABLE, generatedClassSuperType);
     }
 
-    private ELType getComponentBaseClass() {
-        ELType componentBaseType;
-        if (null != compositeInterface.getComponentBaseClass()) {
-            componentBaseType = typesFactory.getType(compositeInterface.getComponentBaseClass().getName());
-        } else {
-            componentBaseType = getType(UIComponent.class);
-        }
-        return componentBaseType;
-    }
-
     private void flushToEncodeMethod(String encodeMethodName, boolean enforce) {
         if (enforce || !this.currentStatement.isEmpty()) {
             Argument facesContextArgument = new Argument(FACES_CONTEXT_VARIABLE, getType(FacesContext.class));
             Argument componentArgument;
             int statementCount = 0;
             if (null != compositeInterface.getComponentBaseClass()) {
-                ELType type = getComponentBaseClass();
+                ELType type = typesFactory.getType(compositeInterface.getComponentBaseClass().getName());
                 componentArgument = new Argument(COMPONENT_PARAMETER, getType(UIComponent.class));
                 CastComponentStatement statement = createStatement(CastComponentStatement.class);
                 statement.setType(type);
