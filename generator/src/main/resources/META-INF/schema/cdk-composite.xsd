@@ -343,7 +343,28 @@
         </xs:choice>
     </xs:complexType>
 
+    <xs:complexType name="renderFacetType" mixed="true">
+        <xs:choice>
+            <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##other " />
+        </xs:choice>
+        <xs:attribute name="name" use="required" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>
+                    <p>
+                        This element is used in the
+                        &lt;composite:implementation&gt; section. The facet with the name equal to the
+                        value of the name attribute,
+                        given by the page author in the using page, will be rendered at this point
+                        in the composite
+                        component PDL page.
+                    </p>
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
     <xs:element name="interface" type="cc:compositeInterfaceType" />
     <xs:element name="implementation" type="cc:compositeImplementationType" />
+    <xs:element name="renderFacet" type="cc:renderFacetType" />
 
 </xs:schema>

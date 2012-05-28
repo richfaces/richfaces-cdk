@@ -519,6 +519,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <xs:element ref="call" />
             <xs:element ref="switch" />
             <xs:element ref="object" />
+            <xs:element ref="cc:renderFacet" />
         </xs:choice>
     </xs:group>
 

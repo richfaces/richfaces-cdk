@@ -65,6 +65,7 @@ import org.richfaces.cdk.templatecompiler.model.CdkWhenElement;
 import org.richfaces.cdk.templatecompiler.model.ClassImport;
 import org.richfaces.cdk.templatecompiler.model.CompositeImplementation;
 import org.richfaces.cdk.templatecompiler.model.CompositeInterface;
+import org.richfaces.cdk.templatecompiler.model.CompositeRenderFacet;
 import org.richfaces.cdk.templatecompiler.model.ResourceDependency;
 import org.richfaces.cdk.templatecompiler.model.Template;
 import org.richfaces.cdk.templatecompiler.model.TemplateVisitor;
@@ -81,6 +82,7 @@ import org.richfaces.cdk.templatecompiler.statements.HelperMethod;
 import org.richfaces.cdk.templatecompiler.statements.HelperMethodFactory;
 import org.richfaces.cdk.templatecompiler.statements.IfElseStatement;
 import org.richfaces.cdk.templatecompiler.statements.IfStatement;
+import org.richfaces.cdk.templatecompiler.statements.RenderFacetStatement;
 import org.richfaces.cdk.templatecompiler.statements.ScriptObjectStatement;
 import org.richfaces.cdk.templatecompiler.statements.ScriptOptionStatement;
 import org.richfaces.cdk.templatecompiler.statements.StartElementStatement;
@@ -132,7 +134,7 @@ public class RendererClassVisitor implements TemplateVisitor {
      *
      */
     public static final String FACES_CONTEXT_VARIABLE = "facesContext";
-    public static final ImmutableMap<String, Object> ENCODE_METHOD_VARIABLES = ImmutableMap.<String, Object>builder()
+    public static final ImmutableMap<String, Object> ENCODE_METHOD_VARIABLES = ImmutableMap.<String, Object> builder()
             .put("facesContextVariable", RendererClassVisitor.FACES_CONTEXT_VARIABLE)
             .put("componentVariable", RendererClassVisitor.COMPONENT_VARIABLE)
             .put("responseWriterVariable", RendererClassVisitor.RESPONSE_WRITER_VARIABLE)
@@ -629,6 +631,17 @@ public class RendererClassVisitor implements TemplateVisitor {
      */
     public void preProcess(CompositeImplementation impl) {
         initializeJavaClass();
+    }
+
+    @Override
+    public void startElement(CompositeRenderFacet compositeRenderFacetElement) throws CdkException {
+        RenderFacetStatement renderFacetStatement = pushStatement(RenderFacetStatement.class);
+        renderFacetStatement.setName(compositeRenderFacetElement.getName());
+    }
+
+    @Override
+    public void endElement(CompositeRenderFacet compositeRenderFacetElement) throws CdkException {
+        popStatement();
     }
 
     /**

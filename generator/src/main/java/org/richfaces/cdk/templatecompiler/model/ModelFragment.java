@@ -19,7 +19,7 @@ import com.google.common.collect.Lists;
  */
 @XmlSeeAlso({ CdkCallElement.class, CdkBodyElement.class, CdkIfElement.class, CdkObjectElement.class, CdkChooseElement.class,
         CdkWhenElement.class, CdkOtherwiseElement.class, CdkForEachElement.class, CdkSwitchElement.class, CdkCaseElement.class,
-        CdkDefaultElement.class, CdkScriptObjectElement.class, CdkScriptOptionElement.class })
+        CdkDefaultElement.class, CdkScriptObjectElement.class, CdkScriptOptionElement.class, CompositeRenderFacet.class })
 public class ModelFragment implements LeafModelElement {
     private List<Object> children = Lists.newArrayList();
 
