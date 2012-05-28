@@ -21,18 +21,11 @@
  */
 package org.richfaces.cdk.templatecompiler.statements;
 
-import com.google.inject.Inject;
-import org.richfaces.cdk.Logger;
 import org.richfaces.cdk.generate.freemarker.FreeMarkerRenderer;
-import org.richfaces.cdk.templatecompiler.ELParser;
 import org.richfaces.cdk.templatecompiler.TemplateModel;
-import org.richfaces.cdk.templatecompiler.el.ParsingException;
 import org.richfaces.cdk.templatecompiler.el.types.ELType;
-import org.richfaces.cdk.templatecompiler.el.types.TypesFactory;
-import org.richfaces.cdk.util.Strings;
 
-import java.util.Collections;
-import java.util.List;
+import com.google.inject.Inject;
 
 /**
  * @author <a href="http://community.jboss.org/people/bleathem">Brian Leathem</a>
@@ -54,6 +47,7 @@ public class CastComponentStatement extends FreeMarkerTemplateStatementBase {
     }
 
     public void setType(ELType type) {
+        this.addImports(type.getRequiredImports());
         this.type = type;
     }
 
