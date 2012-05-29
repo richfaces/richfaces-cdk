@@ -36,8 +36,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.xml.namespace.QName;
 
+import org.richfaces.cdk.CdkClassLoader;
 import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.Logger;
+import org.richfaces.cdk.model.ClassName;
 import org.richfaces.cdk.model.PropertyBase;
 import org.richfaces.cdk.templatecompiler.builder.model.Argument;
 import org.richfaces.cdk.templatecompiler.builder.model.JavaAnnotation;
@@ -110,6 +112,8 @@ public class RendererClassVisitor implements TemplateVisitor {
      */
     // TODO externalize
     public static final String RENDER_KIT_UTILS_CLASS_NAME = "org.richfaces.renderkit.RenderKitUtils";
+
+    public static final String RENDERER_BASE_CLASS_NAME = "org.richfaces.renderkit.RendererBase";
     /**
      *
      */
@@ -152,23 +156,29 @@ public class RendererClassVisitor implements TemplateVisitor {
     private StatementsContainer currentStatement;
     private JavaClass generatedClass;
     private JavaClass componentBaseClass;
+    private ClassName rendererSuperClass;
+    private boolean isExtendingRendererBase = false;
     private Set<HelperMethod> addedHelperMethods = EnumSet.noneOf(HelperMethod.class);
+    private CdkClassLoader loader;
 
     public RendererClassVisitor(CompositeInterface compositeInterface, Collection<PropertyBase> attributes, Logger log,
-            Injector injector, TypesFactory typesFactory, HelperMethodFactory helperFactory) {
+            Injector injector, TypesFactory typesFactory, HelperMethodFactory helperFactory, CdkClassLoader loader) {
         this.compositeInterface = compositeInterface;
         this.attributes = attributes;
         this.injector = injector;
         this.typesFactory = typesFactory;
         this.log = log;
         this.helperMethodFactory = helperFactory;
+        this.loader = loader;
     }
 
     private void initializeJavaClass() {
         this.generatedClass = new JavaClass(compositeInterface.getJavaClass());
         this.generatedClass.addModifier(JavaModifier.PUBLIC);
-        if (null != compositeInterface.getBaseClass()) {
-            this.generatedClass.setSuperClass(compositeInterface.getBaseClass());
+        this.rendererSuperClass = compositeInterface.getBaseClass();
+        if (null != this.rendererSuperClass) {
+            this.generatedClass.setSuperClass(this.rendererSuperClass);
+            this.isExtendingRendererBase = isExtendingRendererBase();
         }
         this.generatedClass.addImport(FacesContext.class);
         this.generatedClass.addImport(ResponseWriter.class);
@@ -212,6 +222,18 @@ public class RendererClassVisitor implements TemplateVisitor {
             this.generatedClass.addImport(javax.faces.application.ResourceDependency.class);
         }
         this.createMethodContext();
+    }
+
+    private boolean isExtendingRendererBase() {
+        try {
+            Class<?> rendererSuperType = loader.loadClass(rendererSuperClass.getFullName());
+            Class<?> rendererBaseType = loader.loadClass(RENDERER_BASE_CLASS_NAME);
+            return rendererBaseType.isAssignableFrom(rendererSuperType);
+        } catch (ClassNotFoundException e) {
+            log.warn("Could not determine if the renderer-base-class extends " + RENDERER_BASE_CLASS_NAME + ": "
+                    + e.getMessage());
+            return false;
+        }
     }
 
     private JavaAnnotation createResourceAnnotation(ELType dependencyType, ResourceDependency resource) {
@@ -262,6 +284,7 @@ public class RendererClassVisitor implements TemplateVisitor {
     private void flushToEncodeMethod(String encodeMethodName, boolean enforce) {
         if (enforce || !this.currentStatement.isEmpty()) {
             Argument facesContextArgument = new Argument(FACES_CONTEXT_VARIABLE, getType(FacesContext.class));
+            Argument responseWriterArgument = new Argument(RESPONSE_WRITER_VARIABLE, getType(ResponseWriter.class));
             Argument componentArgument;
             int statementCount = 0;
             if (null != compositeInterface.getComponentBaseClass()) {
@@ -276,11 +299,21 @@ public class RendererClassVisitor implements TemplateVisitor {
                 componentArgument = new Argument(COMPONENT_VARIABLE, getType(UIComponent.class));
             }
 
-            JavaMethod javaMethod = new JavaMethod(encodeMethodName, facesContextArgument, componentArgument);
+            JavaMethod javaMethod;
+
+            if (this.isExtendingRendererBase) {
+                javaMethod = new JavaMethod(encodeMethodName, responseWriterArgument, facesContextArgument, componentArgument);
+            } else {
+                javaMethod = new JavaMethod(encodeMethodName, facesContextArgument, componentArgument);
+            }
+
             javaMethod.addModifier(JavaModifier.PUBLIC);
             javaMethod.addAnnotation(new JavaAnnotation(getType(Override.class)));
             javaMethod.getExceptions().add(getType(IOException.class));
-            currentStatement.addStatement(statementCount, createStatement(EncodeMethodPrefaceStatement.class));
+
+            EncodeMethodPrefaceStatement encodeMethodPreface = createStatement(EncodeMethodPrefaceStatement.class);
+            encodeMethodPreface.setRenderResponseWriter(!this.isExtendingRendererBase);
+            currentStatement.addStatement(statementCount, encodeMethodPreface);
 
             javaMethod.setMethodBody(currentStatement);
 
@@ -356,7 +389,11 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     @Override
     public void startElement(CdkBodyElement cdkBodyElement) throws CdkException {
-        flushToEncodeMethod("encodeBegin", false);
+        if (this.isExtendingRendererBase) {
+            flushToEncodeMethod("doEncodeBegin", false);
+        } else {
+            flushToEncodeMethod("encodeBegin", false);
+        }
     }
 
     /*
@@ -368,7 +405,11 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     @Override
     public void endElement(CdkBodyElement cdkBodyElement) throws CdkException {
-        flushToEncodeMethod("encodeChildren", cdkBodyElement.isEnforce());
+        if (this.isExtendingRendererBase) {
+            flushToEncodeMethod("doEncodeChildren", cdkBodyElement.isEnforce());
+        } else {
+            flushToEncodeMethod("encodeChildren", cdkBodyElement.isEnforce());
+        }
     }
 
     /*
@@ -648,7 +689,11 @@ public class RendererClassVisitor implements TemplateVisitor {
      *
      */
     public void postProcess(CompositeImplementation impl) {
-        flushToEncodeMethod("encodeEnd", false);
+        if (this.isExtendingRendererBase) {
+            flushToEncodeMethod("doEncodeEnd", false);
+        } else {
+            flushToEncodeMethod("encodeEnd", false);
+        }
         createRendersChildrenMethod();
     }
 

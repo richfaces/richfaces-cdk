@@ -30,6 +30,9 @@ import com.google.inject.Inject;
  * @author Nick Belaevski
  */
 public class EncodeMethodPrefaceStatement extends FreeMarkerTemplateStatementBase {
+
+    private boolean renderResponseWriter = true;
+
     /**
      * @param templateName
      */
@@ -37,4 +40,13 @@ public class EncodeMethodPrefaceStatement extends FreeMarkerTemplateStatementBas
     public EncodeMethodPrefaceStatement(@TemplateModel FreeMarkerRenderer renderer) {
         super(renderer, "encode-method-preface");
     }
+
+    public void setRenderResponseWriter(boolean renderResponseWriter) {
+        this.renderResponseWriter = renderResponseWriter;
+    }
+
+    public boolean isRenderResponseWriter() {
+        return renderResponseWriter;
+    }
+
 }

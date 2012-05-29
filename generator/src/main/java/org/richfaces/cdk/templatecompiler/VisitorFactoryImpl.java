@@ -24,6 +24,7 @@ package org.richfaces.cdk.templatecompiler;
 
 import java.util.Collection;
 
+import org.richfaces.cdk.CdkClassLoader;
 import org.richfaces.cdk.Logger;
 import org.richfaces.cdk.model.PropertyBase;
 import org.richfaces.cdk.templatecompiler.el.types.TypesFactory;
@@ -44,6 +45,7 @@ public class VisitorFactoryImpl implements TemplateVisitorFactory<RendererClassV
     final TypesFactory typesFactory;
     final Logger log;
     final Injector injector;
+    final CdkClassLoader loader;
     private final HelperMethodFactory helpersFactory;
 
     /**
@@ -55,11 +57,13 @@ public class VisitorFactoryImpl implements TemplateVisitorFactory<RendererClassV
      * @param log
      */
     @Inject
-    public VisitorFactoryImpl(TypesFactory typesFactory, Logger log, Injector injector, HelperMethodFactory helpersFactory) {
+    public VisitorFactoryImpl(TypesFactory typesFactory, Logger log, Injector injector, HelperMethodFactory helpersFactory,
+            CdkClassLoader loader) {
         this.typesFactory = typesFactory;
         this.log = log;
         this.injector = injector;
         this.helpersFactory = helpersFactory;
+        this.loader = loader;
     }
 
     /*
@@ -70,6 +74,6 @@ public class VisitorFactoryImpl implements TemplateVisitorFactory<RendererClassV
      */
     @Override
     public RendererClassVisitor createVisitor(CompositeInterface composite, Collection<PropertyBase> attributes) {
-        return new RendererClassVisitor(composite, attributes, log, injector, typesFactory, helpersFactory);
+        return new RendererClassVisitor(composite, attributes, log, injector, typesFactory, helpersFactory, loader);
     }
 }

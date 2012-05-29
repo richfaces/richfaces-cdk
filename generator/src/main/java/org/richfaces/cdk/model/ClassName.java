@@ -37,12 +37,12 @@ import com.google.common.collect.ImmutableMap;
  */
 public class ClassName implements Serializable, Comparable<ClassName> {
     private static final long serialVersionUID = -846623207703750456L;
-    private static final ImmutableMap<String, String> PRIMITIVE_TYPES = ImmutableMap.<String, String>builder()
+    private static final ImmutableMap<String, String> PRIMITIVE_TYPES = ImmutableMap.<String, String> builder()
             .put(boolean.class.getName(), Boolean.class.getName()).put(byte.class.getName(), Byte.class.getName())
             .put(char.class.getName(), Character.class.getName()).put(short.class.getName(), Short.class.getName())
             .put(int.class.getName(), Integer.class.getName()).put(long.class.getName(), Long.class.getName())
             .put(float.class.getName(), Float.class.getName()).put(double.class.getName(), Double.class.getName()).build();
-    private static final ImmutableMap<String, String> DEFAULT_VALUES = ImmutableMap.<String, String>builder()
+    private static final ImmutableMap<String, String> DEFAULT_VALUES = ImmutableMap.<String, String> builder()
             .put(boolean.class.getName(), "Boolean.FALSE").put(byte.class.getName(), "Byte.MIN_VALUE")
             .put(char.class.getName(), "Character.MIN_VALUE").put(short.class.getName(), "Short.MIN_VALUE")
             .put(int.class.getName(), "Integer.MIN_VALUE").put(long.class.getName(), "Long.MIN_VALUE")
@@ -133,6 +133,10 @@ public class ClassName implements Serializable, Comparable<ClassName> {
         }
 
         return new ClassName(name);
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 
     /**
