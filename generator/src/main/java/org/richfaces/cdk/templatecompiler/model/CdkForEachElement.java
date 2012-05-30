@@ -34,35 +34,63 @@ import org.richfaces.cdk.CdkException;
 public class CdkForEachElement extends ModelFragment {
     private String items;
     private String var;
+    private String varStatus;
+    private Integer begin;
+    private Integer end;
+    private Integer step;
 
-    /**
-     * @return the items
-     */
     @XmlAttribute
     public String getItems() {
         return items;
     }
 
-    /**
-     * @param items the items to set
-     */
     public void setItems(String items) {
         this.items = items;
     }
 
-    /**
-     * @return the var
-     */
     @XmlAttribute
     public String getVar() {
         return var;
     }
 
-    /**
-     * @param var the var to set
-     */
     public void setVar(String var) {
         this.var = var;
+    }
+
+    @XmlAttribute
+    public String getVarStatus() {
+        return varStatus;
+    }
+
+    public void setVarStatus(String varStatus) {
+        this.varStatus = varStatus;
+    }
+
+    @XmlAttribute
+    public Integer getBegin() {
+        return begin;
+    }
+
+    public void setBegin(Integer begin) {
+        this.begin = begin;
+    }
+
+    @XmlAttribute
+    public Integer getEnd() {
+        return end;
+    }
+
+    public void setEnd(Integer end) {
+        this.end = end;
+    }
+
+    @XmlAttribute
+    public Integer getStep() {
+        return step;
+    }
+
+    public void setStep(Integer step) {
+        this.step = step;
     }
 
     @Override

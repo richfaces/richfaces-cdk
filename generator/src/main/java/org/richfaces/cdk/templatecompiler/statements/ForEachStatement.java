@@ -39,11 +39,24 @@ import com.google.inject.Inject;
 
 /**
  * @author Nick Belaevski
+ * @author Lukas Fryc
  */
 public class ForEachStatement extends FreeMarkerTemplateStatementBase {
+
+    private static final String FOR_EACH_LOOP_CLASS = "org.richfaces.renderkit.ForEachLoop";
+    private static final String FOR_EACH_LOOP_STATUS_CLASS = FOR_EACH_LOOP_CLASS + ".Status";
+    private static String LOOP_OBJECT_PREFIX = "forEach";
+    private static volatile int LOOP_OBJECT_COUNTER = 1;
+
+    private String itemsExpression;
     private TypedTemplateStatement itemsStatement;
     private ELType itemsType;
     private String var;
+    private String loopObject;
+    private String varStatus;
+    private Integer begin;
+    private Integer end;
+    private Integer step;
     private ELType varType;
     private final ELParser parser;
     private final Logger log;
@@ -81,6 +94,30 @@ public class ForEachStatement extends FreeMarkerTemplateStatementBase {
         return varType;
     }
 
+    public String getVarStatus() {
+        return varStatus;
+    }
+
+    public Integer getBegin() {
+        return begin;
+    }
+
+    public Integer getEnd() {
+        return end;
+    }
+
+    public Integer getStep() {
+        return step;
+    }
+
+    public String getLoopObject() {
+        return loopObject;
+    }
+
+    public boolean isLoopObjectRequired() {
+        return varStatus != null || begin != null || end != null || step != null;
+    }
+
     /**
      * <p class="changed_added_4_0">
      * </p>
@@ -88,37 +125,63 @@ public class ForEachStatement extends FreeMarkerTemplateStatementBase {
      * @param itemsExpression the itemsExpression to set
      * @param var
      */
-    public void setItemsExpression(String itemsExpression, String var) {
+    public void setItemsExpression(String itemsExpression, String var, String varStatus, Integer begin, Integer end,
+            Integer step) {
         try {
+            this.itemsExpression = itemsExpression;
             this.itemsStatement = parser.parse(itemsExpression, this, Object.class.getName());
             this.itemsType = this.itemsStatement.getType();
             this.itemsStatement.setParent(this);
             this.varType = this.itemsStatement.getType().getContainerType();
             this.var = var;
+            this.varStatus = varStatus;
+            this.begin = begin;
+            this.end = end;
+            this.step = step;
             setVariable(var, this.varType);
 
-            if (this.itemsType.isArray()) {
-                iterable = true;
+            if (isLoopObjectRequired()) {
+                initializeLoopObjectIteration();
             } else {
-                if (this.itemsType instanceof ComplexType) {
-                    this.itemsType = ((ComplexType) this.itemsType).getRawType();
-                }
-
-                if (typesFactory.getType(Iterable.class).isAssignableFrom(this.itemsType)) {
-                    iterable = true;
-                } else if (typesFactory.getType(Iterator.class).isAssignableFrom(this.itemsType)) {
-                    iterator = true;
-                }
-            }
-
-            if (!iterable && !iterator) {
-                log.info("The <foreach> expression " + itemsExpression
-                        + " is not array, Iterable nor Iterator. It will be treated as single object.");
+                initializePrimitiveIteration();
             }
 
         } catch (ParsingException e) {
             log.error("Error parsing expression for iteration in <foreach> statement", e);
         }
+    }
+
+    public void initializePrimitiveIteration() {
+        if (this.itemsType.isArray()) {
+            iterable = true;
+        } else {
+            if (this.itemsType instanceof ComplexType) {
+                this.itemsType = ((ComplexType) this.itemsType).getRawType();
+            }
+
+            if (typesFactory.getType(Iterable.class).isAssignableFrom(this.itemsType)) {
+                iterable = true;
+            } else if (typesFactory.getType(Iterator.class).isAssignableFrom(this.itemsType)) {
+                iterator = true;
+            }
+        }
+
+        if (!iterable && !iterator) {
+            log.info("The <foreach> expression " + itemsExpression
+                    + " is not array, Iterable nor Iterator. It will be treated as single object.");
+        }
+    }
+
+    public void initializeLoopObjectIteration() {
+        this.loopObject = LOOP_OBJECT_PREFIX + LOOP_OBJECT_COUNTER++;
+
+        this.addImport(FOR_EACH_LOOP_CLASS);
+
+        setVariable(loopObject, typesFactory.getType(FOR_EACH_LOOP_CLASS));
+        if (varStatus != null) {
+            setVariable(varStatus, typesFactory.getType(FOR_EACH_LOOP_STATUS_CLASS));
+        }
+
     }
 
     @Override

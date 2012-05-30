@@ -616,8 +616,15 @@ public class RendererClassVisitor implements TemplateVisitor {
         // if (collectionElementClass == null) {
         // collectionElementClass = Object.class;
         // }
+
+        String var = cdkForEachElement.getVar();
+        String varStatus = cdkForEachElement.getVarStatus();
+        Integer begin = cdkForEachElement.getBegin();
+        Integer end = cdkForEachElement.getEnd();
+        Integer step = cdkForEachElement.getStep();
+
         ForEachStatement forEachStatement = pushStatement(ForEachStatement.class);
-        forEachStatement.setItemsExpression(items, cdkForEachElement.getVar());
+        forEachStatement.setItemsExpression(items, var, varStatus, begin, end, step);
         // currentStatement.setVariable(cdkForEachElement.getVar(), lastCompiledExpressionType.getContainerType());
     }
 

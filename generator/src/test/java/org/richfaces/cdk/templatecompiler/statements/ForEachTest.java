@@ -30,7 +30,7 @@ public class ForEachTest extends FreeMarkerTestBase {
         parsedExpression.setParent(statement);
         expectLastCall();
         controller.replay();
-        statement.setItemsExpression(HTTP_EXAMPLE_COM, "foo");
+        statement.setItemsExpression(HTTP_EXAMPLE_COM, "foo", "status", null, null, null);
         String code = statement.getCode();
         verifyCode(code, HTTP_EXAMPLE_COM, "for");
         controller.verify();

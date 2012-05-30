@@ -163,13 +163,42 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                             </xs:documentation>
                         </xs:annotation>
                     </xs:attribute>
-
-                    <!--
-                         <xs:attribute name="begin" type="cdk:elFreeformExpression" default="0" />
-                         <xs:attribute name="end" type="cdk:elFreeformExpression" />
-                         <xs:attribute name="step" type="cdk:elFreeformExpression" default="1" />
-                         <xs:attribute name="varStatus" type="cdk:literalExpression" />
-                         -->
+                    <xs:attribute name="varStatus" type="literalExpression">
+                        <xs:annotation>
+                            <xs:documentation>
+                                <p>Name of the exported scoped variable for the status of the iteration. Object exported is of
+                                    type javax.servlet.jsp.jstl.core.LoopTagStatus. This scoped variable has nested visibility.
+                                </p>
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+                    <xs:attribute name="begin" type="literalExpression">
+                        <xs:annotation>
+                            <xs:documentation>
+                                <p>If items specified: Iteration begins at the item located at the specified index. First item
+                                    of the collection has index 0. If items not specified: Iteration begins with index set at
+                                    the value specified.
+                                </p>
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+                    <xs:attribute name="end" type="literalExpression">
+                        <xs:annotation>
+                            <xs:documentation>
+                                <p>If items specified: Iteration ends at the item located at the specified index (inclusive). If
+                                    items not specified: Iteration ends when index reaches the value specified.
+                                </p>
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+                    <xs:attribute name="step" type="literalExpression">
+                        <xs:annotation>
+                            <xs:documentation>
+                                <p>Iteration will only process every step items of the collection, starting with the first one.
+                                </p>
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
                 </xs:extension>
             </xs:complexContent>
         </xs:complexType>
