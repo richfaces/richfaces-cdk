@@ -90,4 +90,14 @@ public interface TemplateVisitor {
     void startElement(CompositeRenderFacet compositeRenderFacetElement) throws CdkException;
 
     void endElement(CompositeRenderFacet compositeRenderFacetElement) throws CdkException;
+    
+    void preProcess(CdkFragmentElement fragmentElement);
+
+    void postProcess(CdkFragmentElement fragmentElement);
+
+    void visitElement(CompositeAttribute compositeAttribute);
+
+    void preProcess(CompositeFragmentImplementation compositeFragmentImplementation);
+
+    void postProcess(CompositeFragmentImplementation compositeFragmentImplementation);
 }

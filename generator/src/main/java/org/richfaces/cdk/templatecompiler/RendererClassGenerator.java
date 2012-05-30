@@ -40,6 +40,8 @@ import org.richfaces.cdk.model.PropertyBase;
 import org.richfaces.cdk.model.RenderKitModel;
 import org.richfaces.cdk.model.RendererModel;
 import org.richfaces.cdk.templatecompiler.builder.model.JavaClass;
+import org.richfaces.cdk.templatecompiler.model.CdkFragmentElement;
+import org.richfaces.cdk.templatecompiler.model.CompositeAttribute;
 import org.richfaces.cdk.templatecompiler.model.Template;
 
 import com.google.inject.Inject;
@@ -103,6 +105,15 @@ public class RendererClassGenerator implements CdkWriter {
 
                     // TODO - put real parameters.
                     template.getImplementation().visit(visitor);
+                    
+                    for (CdkFragmentElement fragment : template.getFragments()) {
+                        fragment.beforeVisit(visitor);
+                        for (CompositeAttribute attribute : fragment.getFragmentInterface().getAttributes()) {
+                            attribute.visit(visitor);
+                        }
+                        fragment.getFragmentImplementation().visit(visitor);
+                        fragment.afterVisit(visitor);
+                    }
 
                     JavaClass javaClass = visitor.getGeneratedClass();
                     String fullName = javaClass.getName();

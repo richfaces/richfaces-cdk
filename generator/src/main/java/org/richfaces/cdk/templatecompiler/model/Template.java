@@ -23,6 +23,7 @@
 package org.richfaces.cdk.templatecompiler.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.annotation.XmlElement;
@@ -47,6 +48,7 @@ public class Template implements Serializable {
     private String templatePath;
     private CompositeInterface compositeInterface;
     private CompositeImplementation compositeImplementation;
+    private List<CdkFragmentElement> fragments;
 
     public String getTemplatePath() {
         return templatePath;
@@ -96,6 +98,15 @@ public class Template implements Serializable {
      */
     public void setImplementation(CompositeImplementation implementation) {
         this.compositeImplementation = implementation;
+    }
+    
+    @XmlElement(name = "fragment", namespace = CDK_NAMESPACE)
+    public List<CdkFragmentElement> getFragments() {
+        return fragments;
+    }
+    
+    public void setFragments(List<CdkFragmentElement> fragments) {
+        this.fragments = fragments;
     }
 
     public static boolean isDirectiveNamespace(QName name) {

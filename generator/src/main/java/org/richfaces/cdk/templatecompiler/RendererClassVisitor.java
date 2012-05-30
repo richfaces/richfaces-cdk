@@ -25,7 +25,9 @@ package org.richfaces.cdk.templatecompiler;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
@@ -57,6 +59,7 @@ import org.richfaces.cdk.templatecompiler.model.CdkCaseElement;
 import org.richfaces.cdk.templatecompiler.model.CdkChooseElement;
 import org.richfaces.cdk.templatecompiler.model.CdkDefaultElement;
 import org.richfaces.cdk.templatecompiler.model.CdkForEachElement;
+import org.richfaces.cdk.templatecompiler.model.CdkFragmentElement;
 import org.richfaces.cdk.templatecompiler.model.CdkIfElement;
 import org.richfaces.cdk.templatecompiler.model.CdkObjectElement;
 import org.richfaces.cdk.templatecompiler.model.CdkOtherwiseElement;
@@ -65,6 +68,8 @@ import org.richfaces.cdk.templatecompiler.model.CdkScriptOptionElement;
 import org.richfaces.cdk.templatecompiler.model.CdkSwitchElement;
 import org.richfaces.cdk.templatecompiler.model.CdkWhenElement;
 import org.richfaces.cdk.templatecompiler.model.ClassImport;
+import org.richfaces.cdk.templatecompiler.model.CompositeAttribute;
+import org.richfaces.cdk.templatecompiler.model.CompositeFragmentImplementation;
 import org.richfaces.cdk.templatecompiler.model.CompositeImplementation;
 import org.richfaces.cdk.templatecompiler.model.CompositeInterface;
 import org.richfaces.cdk.templatecompiler.model.CompositeRenderFacet;
@@ -95,6 +100,8 @@ import org.richfaces.cdk.templatecompiler.statements.TemplateStatementImpl;
 import org.richfaces.cdk.templatecompiler.statements.WriteTextStatement;
 import org.richfaces.cdk.util.Strings;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.inject.Injector;
@@ -102,7 +109,7 @@ import com.google.inject.Injector;
 /**
  * <p class="changed_added_4_3">
  * </p>
- *
+ * 
  * @author asmirnov@exadel.com
  * @author <a href="http://community.jboss.org/people/bleathem">Brian Leathem</a>
  */
@@ -281,7 +288,7 @@ public class RendererClassVisitor implements TemplateVisitor {
         currentStatement.setVariable(SUPER_VARIABLE, generatedClassSuperType);
     }
 
-    private void flushToEncodeMethod(String encodeMethodName, boolean enforce) {
+    private void flushToMethod(String methodName, boolean enforce, boolean override, Collection<Argument> additionaArguments) {
         if (enforce || !this.currentStatement.isEmpty()) {
             Argument facesContextArgument = new Argument(FACES_CONTEXT_VARIABLE, getType(FacesContext.class));
             Argument responseWriterArgument = new Argument(RESPONSE_WRITER_VARIABLE, getType(ResponseWriter.class));
@@ -299,17 +306,20 @@ public class RendererClassVisitor implements TemplateVisitor {
                 componentArgument = new Argument(COMPONENT_VARIABLE, getType(UIComponent.class));
             }
 
-            JavaMethod javaMethod;
-
+            List<Argument> arguments = Lists.newLinkedList();
             if (this.isExtendingRendererBase) {
-                javaMethod = new JavaMethod(encodeMethodName, responseWriterArgument, facesContextArgument, componentArgument);
-            } else {
-                javaMethod = new JavaMethod(encodeMethodName, facesContextArgument, componentArgument);
+                arguments.add(responseWriterArgument);
             }
+            arguments.add(facesContextArgument);
+            arguments.add(componentArgument);
+            arguments.addAll(additionaArguments);
 
+            JavaMethod javaMethod = new JavaMethod(methodName, arguments);
             javaMethod.addModifier(JavaModifier.PUBLIC);
-            javaMethod.addAnnotation(new JavaAnnotation(getType(Override.class)));
             javaMethod.getExceptions().add(getType(IOException.class));
+            if (override) {
+                javaMethod.addAnnotation(new JavaAnnotation(getType(Override.class)));
+            }
 
             EncodeMethodPrefaceStatement encodeMethodPreface = createStatement(EncodeMethodPrefaceStatement.class);
             encodeMethodPreface.setRenderResponseWriter(!this.isExtendingRendererBase);
@@ -323,7 +333,10 @@ public class RendererClassVisitor implements TemplateVisitor {
             }
             generatedClass.addMethod(javaMethod);
         }
+    }
 
+    private void flushToEncodeMethod(String encodeMethodName, boolean enforce) {
+        flushToMethod(encodeMethodName, enforce, true, Collections.EMPTY_LIST);
         createMethodContext();
     }
 
@@ -373,7 +386,7 @@ public class RendererClassVisitor implements TemplateVisitor {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     *
+     * 
      * @return the rendererClass
      */
     public JavaClass getGeneratedClass() {
@@ -382,7 +395,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #startElement(org.richfaces.cdk.templatecompiler.model.CdkBodyElement)
      */
@@ -398,7 +411,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #endElement(org.richfaces.cdk.templatecompiler.model.CdkBodyElement)
      */
@@ -414,7 +427,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #startElement(org.richfaces.cdk.templatecompiler.model.AnyElement)
      */
@@ -434,7 +447,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #endElement(org.richfaces.cdk.templatecompiler.model.AnyElement)
      */
@@ -448,7 +461,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor#visitElement(java.lang.String)
      */
 
@@ -465,7 +478,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #visitElement(org.richfaces.cdk.templatecompiler.model.CdkCallElement)
      */
@@ -481,7 +494,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #startElement(org.richfaces.cdk.templatecompiler.model.CdkIfElement)
      */
@@ -495,7 +508,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #endElement(org.richfaces.cdk.templatecompiler.model.CdkIfElement)
      */
@@ -508,7 +521,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #startElement(org.richfaces.cdk.templatecompiler.model.CdkChooseElement)
      */
@@ -520,7 +533,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #endElement(org.richfaces.cdk.templatecompiler.model.CdkChooseElement)
      */
@@ -532,7 +545,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #startElement(org.richfaces.cdk.templatecompiler.model.CdkWhenElement)
      */
@@ -545,7 +558,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #endElement(org.richfaces.cdk.templatecompiler.model.CdkWhenElement)
      */
@@ -557,7 +570,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #startElement(org.richfaces.cdk.templatecompiler.model.CdkOtherwiseElement)
      */
@@ -569,7 +582,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #endElement(org.richfaces.cdk.templatecompiler.model.CdkOtherwiseElement)
      */
@@ -581,7 +594,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #visitElement(org.richfaces.cdk.templatecompiler.model.CdkObjectElement)
      */
@@ -601,7 +614,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #startElement(org.richfaces.cdk.templatecompiler.model.CdkForEachElement)
      */
@@ -630,7 +643,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #endElement(org.richfaces.cdk.templatecompiler.model.CdkForEachElement)
      */
@@ -746,5 +759,43 @@ public class RendererClassVisitor implements TemplateVisitor {
             addScriptOptionStatement(cdkScriptOptionElement.getName(), cdkScriptOptionElement.getValue(),
                     cdkScriptOptionElement.getDefaultValue(), cdkScriptOptionElement.getWrapper());
         }
+    }
+
+    @Override
+    public void preProcess(CdkFragmentElement fragmentElement) {
+        System.out.println("fragment before");
+        this.createMethodContext();
+    }
+
+    @Override
+    public void postProcess(CdkFragmentElement fragmentElement) {
+        System.out.println("fragment after");
+        Collection<Argument> arguments = Collections2.transform(fragmentElement.getFragmentInterface().getAttributes(),
+                new Function<CompositeAttribute, Argument>() {
+                    @Override
+                    public Argument apply(CompositeAttribute attribute) {
+                        ELType type = typesFactory.getType(attribute.getType());
+                        return new Argument(attribute.getName(), type);
+                    }
+                });
+
+        String methodName = fragmentElement.getName();
+        flushToMethod(methodName, true, false, arguments);
+    }
+
+    @Override
+    public void visitElement(CompositeAttribute compositeAttribute) {
+
+    }
+
+    @Override
+    public void preProcess(CompositeFragmentImplementation compositeFragmentImplementation) {
+        System.out.println("impl");
+    }
+
+    @Override
+    public void postProcess(CompositeFragmentImplementation compositeFragmentImplementation) {
+        System.out.println("impl");
+
     }
 }

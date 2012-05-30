@@ -366,5 +366,6 @@
     <xs:element name="interface" type="cc:compositeInterfaceType" />
     <xs:element name="implementation" type="cc:compositeImplementationType" />
     <xs:element name="renderFacet" type="cc:renderFacetType" />
+    <xs:element name="attribute" type="cc:attributeExtensionType" />
 
 </xs:schema>

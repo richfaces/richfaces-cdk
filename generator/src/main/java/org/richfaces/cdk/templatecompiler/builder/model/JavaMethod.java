@@ -21,6 +21,7 @@
 package org.richfaces.cdk.templatecompiler.builder.model;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.richfaces.cdk.templatecompiler.el.types.ELType;
@@ -42,10 +43,14 @@ public class JavaMethod extends JavaLanguageElement {
         super(name);
         this.returnType = TypesFactory.VOID_TYPE;
     }
+    
+    public JavaMethod(String name, Collection<Argument> arguments) {
+        this(name);
+        this.arguments.addAll(arguments);
+    }
 
     public JavaMethod(String name, Argument... arguments) {
-        this(name);
-        this.arguments.addAll(Arrays.asList(arguments));
+        this(name, Arrays.asList(arguments));
     }
 
     public JavaMethod(String name, ELType returnType, Argument... arguments) {

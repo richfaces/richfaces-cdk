@@ -196,6 +196,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <xs:sequence>
                 <xs:element ref="cc:interface" />
                 <xs:element ref="cc:implementation" />
+                <xs:element ref="fragment" maxOccurs="unbounded" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -908,6 +909,20 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </xs:restriction>
                 </xs:simpleType>
             </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="fragment">
+        <xs:annotation>
+            <xs:documentation>
+                <p>Fragment for decomposing the page to the parts.</p>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="cc:interface" />
+                <xs:element ref="cc:implementation" />
+            </xs:sequence>
         </xs:complexType>
     </xs:element>
 

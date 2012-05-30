@@ -14,7 +14,7 @@ import com.google.common.collect.Lists;
  * <p class="changed_added_4_0">
  * All classes that are used in template bodey should be presented in the {@link XmlSeeAlso} annotation
  * </p>
- *
+ * 
  * @author asmirnov@exadel.com
  */
 @XmlSeeAlso({ CdkCallElement.class, CdkBodyElement.class, CdkIfElement.class, CdkObjectElement.class, CdkChooseElement.class,
@@ -32,7 +32,7 @@ public class ModelFragment implements LeafModelElement {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     *
+     * 
      * @param body the body to set
      */
     public void setChildren(List<Object> body) {
