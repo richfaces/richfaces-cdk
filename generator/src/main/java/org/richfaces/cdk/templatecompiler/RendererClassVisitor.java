@@ -769,7 +769,13 @@ public class RendererClassVisitor implements TemplateVisitor {
     @Override
     public void preProcess(CdkFragmentElement fragmentElement) {
         System.out.println("fragment before");
+        
+        Fragment fragment = fragmentStore.addFragment(fragmentElement);
+        
         this.createMethodContext();
+        for (Argument argument : fragment.getAllArguments()) {
+            currentStatement.setVariable(argument.getName(), argument.getType());
+        }
     }
 
     @Override
@@ -777,7 +783,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
         System.out.println("fragment after");
 
-        Fragment fragment = fragmentStore.addFragment(fragmentElement);
+        Fragment fragment = fragmentStore.getFragment(fragmentElement.getName());
         flushToMethod(fragment.getMethodName(), true, false, fragment.getAllArguments());
         
         this.createMethodContext();
@@ -802,25 +808,6 @@ public class RendererClassVisitor implements TemplateVisitor {
     @Override
     public void visitElement(CdkRenderFragmentElement renderFragmentElement) throws CdkException {
         System.out.println("renderFragment");
-
-        // StringBuffer buffer = new StringBuffer(renderFragment.getName());
-        // buffer.append("(");
-        // if (this.isExtendingRendererBase) {
-        // buffer.append(RESPONSE_WRITER_VARIABLE);
-        // buffer.append(", ");
-        // }
-        // buffer.append(FACES_CONTEXT_VARIABLE);
-        // buffer.append(", ");
-        // buffer.append(COMPONENT_VARIABLE);
-        //
-        // for (String attribute : renderFragment.getAttributes().values()) {
-        // buffer.append(", ");
-        // buffer.append(attribute);
-        // }
-        //
-        // buffer.append(");");
-        //
-        // addStatement(new TemplateStatementImpl(buffer.toString()));
 
         RenderFragmentStatement statement = addStatement(RenderFragmentStatement.class);
         statement.setMethodName(renderFragmentElement.getName());
