@@ -43,7 +43,7 @@ public class JavaMethod extends JavaLanguageElement {
         super(name);
         this.returnType = TypesFactory.VOID_TYPE;
     }
-    
+
     public JavaMethod(String name, Collection<Argument> arguments) {
         this(name);
         this.arguments.addAll(arguments);

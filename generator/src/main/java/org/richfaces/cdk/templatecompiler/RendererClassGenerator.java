@@ -41,7 +41,6 @@ import org.richfaces.cdk.model.RenderKitModel;
 import org.richfaces.cdk.model.RendererModel;
 import org.richfaces.cdk.templatecompiler.builder.model.JavaClass;
 import org.richfaces.cdk.templatecompiler.model.CdkFragmentElement;
-import org.richfaces.cdk.templatecompiler.model.CompositeAttribute;
 import org.richfaces.cdk.templatecompiler.model.Template;
 
 import com.google.inject.Inject;
@@ -53,6 +52,7 @@ import freemarker.template.TemplateException;
  * </p>
  *
  * @author asmirnov@exadel.com
+ * @author Lukas Fryc
  */
 public class RendererClassGenerator implements CdkWriter {
     private FileManager output;
@@ -93,7 +93,7 @@ public class RendererClassGenerator implements CdkWriter {
             for (RendererModel renderer : renderKit.getRenderers()) {
                 Template template = renderer.getTemplate();
                 if (null != template) {
-                    Collection<PropertyBase> attributes = ModelSet.<PropertyBase>create();
+                    Collection<PropertyBase> attributes = ModelSet.<PropertyBase> create();
 
                     ComponentModel component = findComponentByRenderer(renderer, library);
                     if (component != null) {
@@ -104,21 +104,15 @@ public class RendererClassGenerator implements CdkWriter {
                     RendererClassVisitor visitor = visitorFactory.createVisitor(template.getInterface(), attributes);
 
                     template.getImplementation().beforeVisit(visitor);
-                    
+
                     for (CdkFragmentElement fragment : template.getFragments()) {
                         fragment.beforeVisit(visitor);
-                        for (CompositeAttribute attribute : fragment.getFragmentInterface().getAttributes()) {
-                            attribute.visit(visitor);
-                        }
                         fragment.getFragmentImplementation().visit(visitor);
                         fragment.afterVisit(visitor);
                     }
-                    
-                    // TODO - put real parameters.
+
                     template.getImplementation().visitChildren(visitor);
                     template.getImplementation().afterVisit(visitor);
-                    
-                    
 
                     JavaClass javaClass = visitor.getGeneratedClass();
                     String fullName = javaClass.getName();

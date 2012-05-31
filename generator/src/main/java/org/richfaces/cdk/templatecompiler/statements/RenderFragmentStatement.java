@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source
- * Copyright 2010, Red Hat, Inc. and individual contributors
+ * Copyright 2012, Red Hat, Inc. and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -40,8 +40,7 @@ import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 /**
- * @author Nick Belaevski
- * 
+ * @author Lukas Fryc
  */
 public class RenderFragmentStatement extends FreeMarkerTemplateStatementBase {
 
@@ -80,7 +79,7 @@ public class RenderFragmentStatement extends FreeMarkerTemplateStatementBase {
                     String code = statement.getCode();
 
                     arguments.add(code);
-                    
+
                     this.addRequiredMethods(statement.getRequiredMethods());
                 } catch (ParsingException e) {
                     logger.error("Error parse renderFragment argument " + argumentName + " expression: " + valueExpression, e);

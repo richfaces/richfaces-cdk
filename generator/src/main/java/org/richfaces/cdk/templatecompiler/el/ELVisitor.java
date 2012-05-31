@@ -360,19 +360,19 @@ public final class ELVisitor implements TypedTemplateStatement {
 
         return treeNode;
     }
-    
+
     private boolean isCompositeComponent(Node node) {
         return "cc".equals(node.getImage());
     }
-    
+
     private boolean isCompositeComponentAttributesMap(Node node) {
         return "attrs".equals(node.getImage()) && isCompositeComponent(node.jjtGetParent().jjtGetChild(0));
     }
-    
+
     private boolean isCompositeComponentAttribute(Node node) {
-        return isCompositeComponentAttributesMap(node.jjtGetParent().jjtGetChild(1)) && node == node.jjtGetParent().jjtGetChild(2);
+        return isCompositeComponentAttributesMap(node.jjtGetParent().jjtGetChild(1))
+                && node == node.jjtGetParent().jjtGetChild(2);
     }
-    
 
     @Override
     public void setParent(StatementsContainer parent) {

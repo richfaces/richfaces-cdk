@@ -99,12 +99,12 @@ public class Template implements Serializable {
     public void setImplementation(CompositeImplementation implementation) {
         this.compositeImplementation = implementation;
     }
-    
+
     @XmlElement(name = "fragment", namespace = CDK_NAMESPACE)
     public List<CdkFragmentElement> getFragments() {
         return fragments;
     }
-    
+
     public void setFragments(List<CdkFragmentElement> fragments) {
         this.fragments = fragments;
     }

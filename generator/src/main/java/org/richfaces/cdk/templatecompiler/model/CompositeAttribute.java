@@ -1,37 +1,34 @@
 /*
- * $Id$
+ * JBoss, Home of Professional Open Source.
+ * Copyright 2012, Red Hat, Inc., and individual contributors
+ * as indicated by the @author tags. See the copyright.txt file in the
+ * distribution for a full listing of individual contributors.
  *
- * License Agreement.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * Rich Faces - Natural Ajax for Java Server Faces (JSF)
- *
- * Copyright (C) 2007 Exadel, Inc.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License version 2.1 as published by the Free Software Foundation.
- *
- * This library is distributed in the hope that it will be useful,
+ * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.richfaces.cdk.templatecompiler.model;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.richfaces.cdk.CdkException;
-
 /**
  * @author Lukas Fryc
  */
 @XmlRootElement(name = "attribute", namespace = Template.COMPOSITE_NAMESPACE)
-public class CompositeAttribute implements ModelElement {
+public class CompositeAttribute {
 
     @XmlAttribute(required = true)
     private String name;
@@ -53,10 +50,5 @@ public class CompositeAttribute implements ModelElement {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    @Override
-    public void visit(TemplateVisitor visitor) throws CdkException {
-        visitor.visitElement(this);
     }
 }

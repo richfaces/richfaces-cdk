@@ -104,7 +104,7 @@ public class FreeMarkerTemplateStatementBase extends StatementsContainer {
             requiredMethods.add(helperMethod);
         }
     }
-    
+
     protected void addRequiredMethods(Iterable<HelperMethod> methods) {
         for (HelperMethod helperMethod : methods) {
             requiredMethods.add(helperMethod);

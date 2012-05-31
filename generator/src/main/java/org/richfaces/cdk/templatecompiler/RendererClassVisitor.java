@@ -68,8 +68,6 @@ import org.richfaces.cdk.templatecompiler.model.CdkScriptOptionElement;
 import org.richfaces.cdk.templatecompiler.model.CdkSwitchElement;
 import org.richfaces.cdk.templatecompiler.model.CdkWhenElement;
 import org.richfaces.cdk.templatecompiler.model.ClassImport;
-import org.richfaces.cdk.templatecompiler.model.CompositeAttribute;
-import org.richfaces.cdk.templatecompiler.model.CompositeFragmentImplementation;
 import org.richfaces.cdk.templatecompiler.model.CompositeImplementation;
 import org.richfaces.cdk.templatecompiler.model.CompositeInterface;
 import org.richfaces.cdk.templatecompiler.model.CompositeRenderFacet;
@@ -101,8 +99,6 @@ import org.richfaces.cdk.templatecompiler.statements.TemplateStatementImpl;
 import org.richfaces.cdk.templatecompiler.statements.WriteTextStatement;
 import org.richfaces.cdk.util.Strings;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.inject.Injector;
@@ -110,9 +106,10 @@ import com.google.inject.Injector;
 /**
  * <p class="changed_added_4_3">
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
  * @author <a href="http://community.jboss.org/people/bleathem">Brian Leathem</a>
+ * @author Lukas Fryc
  */
 public class RendererClassVisitor implements TemplateVisitor {
     /**
@@ -391,7 +388,7 @@ public class RendererClassVisitor implements TemplateVisitor {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @return the rendererClass
      */
     public JavaClass getGeneratedClass() {
@@ -400,7 +397,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #startElement(org.richfaces.cdk.templatecompiler.model.CdkBodyElement)
      */
@@ -416,7 +413,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #endElement(org.richfaces.cdk.templatecompiler.model.CdkBodyElement)
      */
@@ -432,7 +429,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #startElement(org.richfaces.cdk.templatecompiler.model.AnyElement)
      */
@@ -452,7 +449,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #endElement(org.richfaces.cdk.templatecompiler.model.AnyElement)
      */
@@ -466,7 +463,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor#visitElement(java.lang.String)
      */
 
@@ -483,7 +480,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #visitElement(org.richfaces.cdk.templatecompiler.model.CdkCallElement)
      */
@@ -499,7 +496,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #startElement(org.richfaces.cdk.templatecompiler.model.CdkIfElement)
      */
@@ -513,7 +510,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #endElement(org.richfaces.cdk.templatecompiler.model.CdkIfElement)
      */
@@ -526,7 +523,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #startElement(org.richfaces.cdk.templatecompiler.model.CdkChooseElement)
      */
@@ -538,7 +535,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #endElement(org.richfaces.cdk.templatecompiler.model.CdkChooseElement)
      */
@@ -550,7 +547,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #startElement(org.richfaces.cdk.templatecompiler.model.CdkWhenElement)
      */
@@ -563,7 +560,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #endElement(org.richfaces.cdk.templatecompiler.model.CdkWhenElement)
      */
@@ -575,7 +572,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #startElement(org.richfaces.cdk.templatecompiler.model.CdkOtherwiseElement)
      */
@@ -587,7 +584,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #endElement(org.richfaces.cdk.templatecompiler.model.CdkOtherwiseElement)
      */
@@ -599,7 +596,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #visitElement(org.richfaces.cdk.templatecompiler.model.CdkObjectElement)
      */
@@ -619,7 +616,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #startElement(org.richfaces.cdk.templatecompiler.model.CdkForEachElement)
      */
@@ -648,7 +645,7 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.richfaces.cdk.templatecompiler.model.TemplateVisitor
      * #endElement(org.richfaces.cdk.templatecompiler.model.CdkForEachElement)
      */
@@ -769,9 +766,9 @@ public class RendererClassVisitor implements TemplateVisitor {
     @Override
     public void preProcess(CdkFragmentElement fragmentElement) {
         System.out.println("fragment before");
-        
+
         Fragment fragment = fragmentStore.addFragment(fragmentElement);
-        
+
         this.createMethodContext();
         for (Argument argument : fragment.getAllArguments()) {
             currentStatement.setVariable(argument.getName(), argument.getType());
@@ -785,30 +782,12 @@ public class RendererClassVisitor implements TemplateVisitor {
 
         Fragment fragment = fragmentStore.getFragment(fragmentElement.getName());
         flushToMethod(fragment.getMethodName(), true, false, fragment.getAllArguments());
-        
+
         this.createMethodContext();
     }
 
     @Override
-    public void visitElement(CompositeAttribute compositeAttribute) {
-
-    }
-
-    @Override
-    public void preProcess(CompositeFragmentImplementation compositeFragmentImplementation) {
-        System.out.println("impl");
-    }
-
-    @Override
-    public void postProcess(CompositeFragmentImplementation compositeFragmentImplementation) {
-        System.out.println("impl");
-
-    }
-
-    @Override
     public void visitElement(CdkRenderFragmentElement renderFragmentElement) throws CdkException {
-        System.out.println("renderFragment");
-
         RenderFragmentStatement statement = addStatement(RenderFragmentStatement.class);
         statement.setMethodName(renderFragmentElement.getName());
         statement.setAttributes(renderFragmentElement.getAttributes());
