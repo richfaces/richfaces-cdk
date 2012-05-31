@@ -27,10 +27,11 @@ import org.richfaces.cdk.CdkException;
 /**
  * <p class="changed_added_4_0">
  * </p>
- *
+ * 
  * @author asmirnov@exadel.com
  */
 public interface TemplateVisitor {
+    
     void visitElement(CdkCallElement cdkCallElement) throws CdkException;
 
     void visitElement(String child) throws CdkException;
@@ -90,7 +91,7 @@ public interface TemplateVisitor {
     void startElement(CompositeRenderFacet compositeRenderFacetElement) throws CdkException;
 
     void endElement(CompositeRenderFacet compositeRenderFacetElement) throws CdkException;
-    
+
     void preProcess(CdkFragmentElement fragmentElement);
 
     void postProcess(CdkFragmentElement fragmentElement);
@@ -100,4 +101,6 @@ public interface TemplateVisitor {
     void preProcess(CompositeFragmentImplementation compositeFragmentImplementation);
 
     void postProcess(CompositeFragmentImplementation compositeFragmentImplementation);
+
+    void visitElement(CdkRenderFragmentElement cdkRenderFragmentElement) throws CdkException;
 }

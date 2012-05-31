@@ -25,7 +25,6 @@ package org.richfaces.cdk.templatecompiler;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.text.MessageFormat;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
@@ -63,6 +62,7 @@ import org.richfaces.cdk.templatecompiler.model.CdkFragmentElement;
 import org.richfaces.cdk.templatecompiler.model.CdkIfElement;
 import org.richfaces.cdk.templatecompiler.model.CdkObjectElement;
 import org.richfaces.cdk.templatecompiler.model.CdkOtherwiseElement;
+import org.richfaces.cdk.templatecompiler.model.CdkRenderFragmentElement;
 import org.richfaces.cdk.templatecompiler.model.CdkScriptObjectElement;
 import org.richfaces.cdk.templatecompiler.model.CdkScriptOptionElement;
 import org.richfaces.cdk.templatecompiler.model.CdkSwitchElement;
@@ -90,6 +90,7 @@ import org.richfaces.cdk.templatecompiler.statements.HelperMethodFactory;
 import org.richfaces.cdk.templatecompiler.statements.IfElseStatement;
 import org.richfaces.cdk.templatecompiler.statements.IfStatement;
 import org.richfaces.cdk.templatecompiler.statements.RenderFacetStatement;
+import org.richfaces.cdk.templatecompiler.statements.RenderFragmentStatement;
 import org.richfaces.cdk.templatecompiler.statements.ScriptObjectStatement;
 import org.richfaces.cdk.templatecompiler.statements.ScriptOptionStatement;
 import org.richfaces.cdk.templatecompiler.statements.StartElementStatement;
@@ -167,6 +168,7 @@ public class RendererClassVisitor implements TemplateVisitor {
     private boolean isExtendingRendererBase = false;
     private Set<HelperMethod> addedHelperMethods = EnumSet.noneOf(HelperMethod.class);
     private CdkClassLoader loader;
+    private FragmentStore fragmentStore;
 
     public RendererClassVisitor(CompositeInterface compositeInterface, Collection<PropertyBase> attributes, Logger log,
             Injector injector, TypesFactory typesFactory, HelperMethodFactory helperFactory, CdkClassLoader loader) {
@@ -177,6 +179,9 @@ public class RendererClassVisitor implements TemplateVisitor {
         this.log = log;
         this.helperMethodFactory = helperFactory;
         this.loader = loader;
+
+        this.fragmentStore = new FragmentStore();
+        this.injector.injectMembers(this.fragmentStore);
     }
 
     private void initializeJavaClass() {
@@ -769,18 +774,13 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     @Override
     public void postProcess(CdkFragmentElement fragmentElement) {
-        System.out.println("fragment after");
-        Collection<Argument> arguments = Collections2.transform(fragmentElement.getFragmentInterface().getAttributes(),
-                new Function<CompositeAttribute, Argument>() {
-                    @Override
-                    public Argument apply(CompositeAttribute attribute) {
-                        ELType type = typesFactory.getType(attribute.getType());
-                        return new Argument(attribute.getName(), type);
-                    }
-                });
 
-        String methodName = fragmentElement.getName();
-        flushToMethod(methodName, true, false, arguments);
+        System.out.println("fragment after");
+
+        Fragment fragment = fragmentStore.addFragment(fragmentElement);
+        flushToMethod(fragment.getMethodName(), true, false, fragment.getAllArguments());
+        
+        this.createMethodContext();
     }
 
     @Override
@@ -797,5 +797,35 @@ public class RendererClassVisitor implements TemplateVisitor {
     public void postProcess(CompositeFragmentImplementation compositeFragmentImplementation) {
         System.out.println("impl");
 
+    }
+
+    @Override
+    public void visitElement(CdkRenderFragmentElement renderFragmentElement) throws CdkException {
+        System.out.println("renderFragment");
+
+        // StringBuffer buffer = new StringBuffer(renderFragment.getName());
+        // buffer.append("(");
+        // if (this.isExtendingRendererBase) {
+        // buffer.append(RESPONSE_WRITER_VARIABLE);
+        // buffer.append(", ");
+        // }
+        // buffer.append(FACES_CONTEXT_VARIABLE);
+        // buffer.append(", ");
+        // buffer.append(COMPONENT_VARIABLE);
+        //
+        // for (String attribute : renderFragment.getAttributes().values()) {
+        // buffer.append(", ");
+        // buffer.append(attribute);
+        // }
+        //
+        // buffer.append(");");
+        //
+        // addStatement(new TemplateStatementImpl(buffer.toString()));
+
+        RenderFragmentStatement statement = addStatement(RenderFragmentStatement.class);
+        statement.setMethodName(renderFragmentElement.getName());
+        statement.setAttributes(renderFragmentElement.getAttributes());
+        statement.setFragmentStore(this.fragmentStore);
+        statement.setExtendingRendererBase(this.isExtendingRendererBase);
     }
 }

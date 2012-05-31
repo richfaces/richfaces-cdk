@@ -103,8 +103,7 @@ public class RendererClassGenerator implements CdkWriter {
                     attributes.addAll(renderer.getAttributes());
                     RendererClassVisitor visitor = visitorFactory.createVisitor(template.getInterface(), attributes);
 
-                    // TODO - put real parameters.
-                    template.getImplementation().visit(visitor);
+                    template.getImplementation().beforeVisit(visitor);
                     
                     for (CdkFragmentElement fragment : template.getFragments()) {
                         fragment.beforeVisit(visitor);
@@ -114,6 +113,12 @@ public class RendererClassGenerator implements CdkWriter {
                         fragment.getFragmentImplementation().visit(visitor);
                         fragment.afterVisit(visitor);
                     }
+                    
+                    // TODO - put real parameters.
+                    template.getImplementation().visitChildren(visitor);
+                    template.getImplementation().afterVisit(visitor);
+                    
+                    
 
                     JavaClass javaClass = visitor.getGeneratedClass();
                     String fullName = javaClass.getName();
