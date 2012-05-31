@@ -46,6 +46,13 @@ public final class ELNodeConstants {
     public static final String IS_EQUAL_FUNCTION = "isEqual";
     public static final String CONVERT_TO_STRING_FUNCTION = "convertToString";
     public static final String CONVERT_TO_BOOLEAN_FUNCTION = "convertToBoolean";
+    public static final String CONVERT_TO_INTEGER_FUNCTION = "convertToInteger";
+    public static final String CONVERT_TO_BYTE_FUNCTION = "convertToByte";
+    public static final String CONVERT_TO_SHORT_FUNCTION = "convertToShort";
+    public static final String CONVERT_TO_LONG_FUNCTION = "convertToLong";
+    public static final String CONVERT_TO_FLOAT_FUNCTION = "convertToFloat";
+    public static final String CONVERT_TO_DOUBLE_FUNCTION = "convertToDouble";
+    public static final String CONVERT_TO_CHAR_FUNCTION = "convertToChar";
     public static final String DOT = ".";
     public static final String DOUBLE_VALUE_OF_FUNCTION = "Double.valueOf";
     public static final String EXCLAMATION_MARK = "!";

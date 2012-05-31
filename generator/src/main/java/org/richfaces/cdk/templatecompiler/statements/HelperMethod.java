@@ -25,6 +25,13 @@ import static com.google.common.collect.Iterators.forArray;
 import static com.google.common.collect.Iterators.toArray;
 import static com.google.common.collect.Iterators.transform;
 import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.CONVERT_TO_BOOLEAN_FUNCTION;
+import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.CONVERT_TO_BYTE_FUNCTION;
+import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.CONVERT_TO_CHAR_FUNCTION;
+import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.CONVERT_TO_DOUBLE_FUNCTION;
+import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.CONVERT_TO_FLOAT_FUNCTION;
+import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.CONVERT_TO_INTEGER_FUNCTION;
+import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.CONVERT_TO_LONG_FUNCTION;
+import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.CONVERT_TO_SHORT_FUNCTION;
 import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.CONVERT_TO_STRING_FUNCTION;
 import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.IS_EMPTY_FUNCTION;
 import static org.richfaces.cdk.templatecompiler.el.ELNodeConstants.IS_EQUAL_FUNCTION;
@@ -49,7 +56,14 @@ import com.google.common.collect.Maps;
 public enum HelperMethod {
 
     TO_STRING_CONVERSION(CONVERT_TO_STRING_FUNCTION, String.class, Object.class),
-    TO_BOOLEAN_CONVERSION(CONVERT_TO_BOOLEAN_FUNCTION, Boolean.TYPE, Object.class),
+    TO_BOOLEAN_CONVERSION(CONVERT_TO_BOOLEAN_FUNCTION, Boolean.class, Object.class),
+    TO_INTEGER_CONVERSION(CONVERT_TO_INTEGER_FUNCTION, Integer.class, Object.class),
+    TO_BYTE_CONVERSION(CONVERT_TO_BYTE_FUNCTION, Byte.class, Object.class),
+    TO_SHORT_CONVERSION(CONVERT_TO_SHORT_FUNCTION, Short.class, Object.class),
+    TO_LONG_CONVERSION(CONVERT_TO_LONG_FUNCTION, Long.class, Object.class),
+    TO_FLOAT_CONVERSION(CONVERT_TO_FLOAT_FUNCTION, Float.class, Object.class),
+    TO_DOUBLE_CONVERSION(CONVERT_TO_DOUBLE_FUNCTION, Double.class, Object.class),
+    TO_CHAR_CONVERSION(CONVERT_TO_CHAR_FUNCTION, Character.class, Object.class),
     EMPTINESS_CHECK(IS_EMPTY_FUNCTION, Boolean.TYPE, Object.class),
     EQUALS_CHECK(IS_EQUAL_FUNCTION, Boolean.TYPE, Object.class, Object.class),
     SHOULD_RENDER_ATTRIBUTE("shouldRenderAttribute", Boolean.TYPE, Object.class),
@@ -63,7 +77,7 @@ public enum HelperMethod {
     TO_SCRIPT_ARGS("toScriptArgs", String.class, Object[].class),
     CONCAT("concat", String.class, String[].class);
     public static final EnumMap<HelperMethod, String> METHOD_NAMES = Maps.newEnumMap(HelperMethod.class);
-    private static final Set<HelperMethod> CONVERSION_METHODS = EnumSet.of(TO_STRING_CONVERSION, TO_BOOLEAN_CONVERSION);
+    private static final Set<HelperMethod> CONVERSION_METHODS = EnumSet.of(TO_STRING_CONVERSION, TO_BOOLEAN_CONVERSION, TO_INTEGER_CONVERSION, TO_BYTE_CONVERSION, TO_SHORT_CONVERSION, TO_LONG_CONVERSION, TO_FLOAT_CONVERSION, TO_DOUBLE_CONVERSION, TO_CHAR_CONVERSION);
     private final String name;
     private final String returnType;
     private final String[] argumentTypes;

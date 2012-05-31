@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
@@ -57,9 +58,11 @@ import org.richfaces.cdk.templatecompiler.model.CdkCaseElement;
 import org.richfaces.cdk.templatecompiler.model.CdkChooseElement;
 import org.richfaces.cdk.templatecompiler.model.CdkDefaultElement;
 import org.richfaces.cdk.templatecompiler.model.CdkForEachElement;
+import org.richfaces.cdk.templatecompiler.model.CdkFragmentElement;
 import org.richfaces.cdk.templatecompiler.model.CdkIfElement;
 import org.richfaces.cdk.templatecompiler.model.CdkObjectElement;
 import org.richfaces.cdk.templatecompiler.model.CdkOtherwiseElement;
+import org.richfaces.cdk.templatecompiler.model.CdkRenderFragmentElement;
 import org.richfaces.cdk.templatecompiler.model.CdkScriptObjectElement;
 import org.richfaces.cdk.templatecompiler.model.CdkScriptOptionElement;
 import org.richfaces.cdk.templatecompiler.model.CdkSwitchElement;
@@ -85,6 +88,7 @@ import org.richfaces.cdk.templatecompiler.statements.HelperMethodFactory;
 import org.richfaces.cdk.templatecompiler.statements.IfElseStatement;
 import org.richfaces.cdk.templatecompiler.statements.IfStatement;
 import org.richfaces.cdk.templatecompiler.statements.RenderFacetStatement;
+import org.richfaces.cdk.templatecompiler.statements.RenderFragmentStatement;
 import org.richfaces.cdk.templatecompiler.statements.ScriptObjectStatement;
 import org.richfaces.cdk.templatecompiler.statements.ScriptOptionStatement;
 import org.richfaces.cdk.templatecompiler.statements.StartElementStatement;
@@ -105,6 +109,7 @@ import com.google.inject.Injector;
  *
  * @author asmirnov@exadel.com
  * @author <a href="http://community.jboss.org/people/bleathem">Brian Leathem</a>
+ * @author Lukas Fryc
  */
 public class RendererClassVisitor implements TemplateVisitor {
     /**
@@ -160,6 +165,7 @@ public class RendererClassVisitor implements TemplateVisitor {
     private boolean isExtendingRendererBase = false;
     private Set<HelperMethod> addedHelperMethods = EnumSet.noneOf(HelperMethod.class);
     private CdkClassLoader loader;
+    private FragmentStore fragmentStore;
 
     public RendererClassVisitor(CompositeInterface compositeInterface, Collection<PropertyBase> attributes, Logger log,
             Injector injector, TypesFactory typesFactory, HelperMethodFactory helperFactory, CdkClassLoader loader) {
@@ -170,6 +176,9 @@ public class RendererClassVisitor implements TemplateVisitor {
         this.log = log;
         this.helperMethodFactory = helperFactory;
         this.loader = loader;
+
+        this.fragmentStore = new FragmentStore();
+        this.injector.injectMembers(this.fragmentStore);
     }
 
     private void initializeJavaClass() {
@@ -281,7 +290,7 @@ public class RendererClassVisitor implements TemplateVisitor {
         currentStatement.setVariable(SUPER_VARIABLE, generatedClassSuperType);
     }
 
-    private void flushToEncodeMethod(String encodeMethodName, boolean enforce) {
+    private void flushToMethod(String methodName, boolean enforce, boolean override, Collection<Argument> additionaArguments) {
         if (enforce || !this.currentStatement.isEmpty()) {
             Argument facesContextArgument = new Argument(FACES_CONTEXT_VARIABLE, getType(FacesContext.class));
             Argument responseWriterArgument = new Argument(RESPONSE_WRITER_VARIABLE, getType(ResponseWriter.class));
@@ -299,17 +308,20 @@ public class RendererClassVisitor implements TemplateVisitor {
                 componentArgument = new Argument(COMPONENT_VARIABLE, getType(UIComponent.class));
             }
 
-            JavaMethod javaMethod;
-
+            List<Argument> arguments = Lists.newLinkedList();
             if (this.isExtendingRendererBase) {
-                javaMethod = new JavaMethod(encodeMethodName, responseWriterArgument, facesContextArgument, componentArgument);
-            } else {
-                javaMethod = new JavaMethod(encodeMethodName, facesContextArgument, componentArgument);
+                arguments.add(responseWriterArgument);
             }
+            arguments.add(facesContextArgument);
+            arguments.add(componentArgument);
+            arguments.addAll(additionaArguments);
 
+            JavaMethod javaMethod = new JavaMethod(methodName, arguments);
             javaMethod.addModifier(JavaModifier.PUBLIC);
-            javaMethod.addAnnotation(new JavaAnnotation(getType(Override.class)));
             javaMethod.getExceptions().add(getType(IOException.class));
+            if (override) {
+                javaMethod.addAnnotation(new JavaAnnotation(getType(Override.class)));
+            }
 
             EncodeMethodPrefaceStatement encodeMethodPreface = createStatement(EncodeMethodPrefaceStatement.class);
             encodeMethodPreface.setRenderResponseWriter(!this.isExtendingRendererBase);
@@ -323,7 +335,10 @@ public class RendererClassVisitor implements TemplateVisitor {
             }
             generatedClass.addMethod(javaMethod);
         }
+    }
 
+    private void flushToEncodeMethod(String encodeMethodName, boolean enforce) {
+        flushToMethod(encodeMethodName, enforce, true, Collections.EMPTY_LIST);
         createMethodContext();
     }
 
@@ -746,5 +761,37 @@ public class RendererClassVisitor implements TemplateVisitor {
             addScriptOptionStatement(cdkScriptOptionElement.getName(), cdkScriptOptionElement.getValue(),
                     cdkScriptOptionElement.getDefaultValue(), cdkScriptOptionElement.getWrapper());
         }
+    }
+
+    @Override
+    public void preProcess(CdkFragmentElement fragmentElement) {
+        System.out.println("fragment before");
+
+        Fragment fragment = fragmentStore.addFragment(fragmentElement);
+
+        this.createMethodContext();
+        for (Argument argument : fragment.getAllArguments()) {
+            currentStatement.setVariable(argument.getName(), argument.getType());
+        }
+    }
+
+    @Override
+    public void postProcess(CdkFragmentElement fragmentElement) {
+
+        System.out.println("fragment after");
+
+        Fragment fragment = fragmentStore.getFragment(fragmentElement.getName());
+        flushToMethod(fragment.getMethodName(), true, false, fragment.getAllArguments());
+
+        this.createMethodContext();
+    }
+
+    @Override
+    public void visitElement(CdkRenderFragmentElement renderFragmentElement) throws CdkException {
+        RenderFragmentStatement statement = addStatement(RenderFragmentStatement.class);
+        statement.setMethodName(renderFragmentElement.getName());
+        statement.setAttributes(renderFragmentElement.getAttributes());
+        statement.setFragmentStore(this.fragmentStore);
+        statement.setExtendingRendererBase(this.isExtendingRendererBase);
     }
 }

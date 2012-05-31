@@ -40,6 +40,7 @@ import org.richfaces.cdk.model.PropertyBase;
 import org.richfaces.cdk.model.RenderKitModel;
 import org.richfaces.cdk.model.RendererModel;
 import org.richfaces.cdk.templatecompiler.builder.model.JavaClass;
+import org.richfaces.cdk.templatecompiler.model.CdkFragmentElement;
 import org.richfaces.cdk.templatecompiler.model.Template;
 
 import com.google.inject.Inject;
@@ -51,6 +52,7 @@ import freemarker.template.TemplateException;
  * </p>
  *
  * @author asmirnov@exadel.com
+ * @author Lukas Fryc
  */
 public class RendererClassGenerator implements CdkWriter {
     private FileManager output;
@@ -91,7 +93,7 @@ public class RendererClassGenerator implements CdkWriter {
             for (RendererModel renderer : renderKit.getRenderers()) {
                 Template template = renderer.getTemplate();
                 if (null != template) {
-                    Collection<PropertyBase> attributes = ModelSet.<PropertyBase>create();
+                    Collection<PropertyBase> attributes = ModelSet.<PropertyBase> create();
 
                     ComponentModel component = findComponentByRenderer(renderer, library);
                     if (component != null) {
@@ -101,8 +103,16 @@ public class RendererClassGenerator implements CdkWriter {
                     attributes.addAll(renderer.getAttributes());
                     RendererClassVisitor visitor = visitorFactory.createVisitor(template.getInterface(), attributes);
 
-                    // TODO - put real parameters.
-                    template.getImplementation().visit(visitor);
+                    template.getImplementation().beforeVisit(visitor);
+
+                    for (CdkFragmentElement fragment : template.getFragments()) {
+                        fragment.beforeVisit(visitor);
+                        fragment.getFragmentImplementation().visit(visitor);
+                        fragment.afterVisit(visitor);
+                    }
+
+                    template.getImplementation().visitChildren(visitor);
+                    template.getImplementation().afterVisit(visitor);
 
                     JavaClass javaClass = visitor.getGeneratedClass();
                     String fullName = javaClass.getName();
