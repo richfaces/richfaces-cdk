@@ -23,7 +23,6 @@
 package org.richfaces.cdk.templatecompiler;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Collections;
@@ -271,8 +270,9 @@ public class RendererClassVisitor implements TemplateVisitor {
         }
     }
 
-    private ELType getType(Type type) {
-        return typesFactory.getType(type);
+    private ELType getType(Class<?> type) {
+        // get type by name in order to get the class instance from CDK class loader
+        return typesFactory.getType(type.getName());
     }
 
     private void createMethodContext() {
@@ -283,11 +283,11 @@ public class RendererClassVisitor implements TemplateVisitor {
 
         currentStatement.setVariable(COMPONENT_VARIABLE, getType(UIComponent.class));
 
-        ELType generatedClassType = typesFactory.getType(generatedClass.getName());
-        currentStatement.setVariable(THIS_VARIABLE, generatedClassType);
-
         ELType generatedClassSuperType = typesFactory.getType(generatedClass.getSuperClass().getName());
         currentStatement.setVariable(SUPER_VARIABLE, generatedClassSuperType);
+
+        ELType generatedClassType = typesFactory.getGeneratedType(generatedClass.getName(), generatedClassSuperType);
+        currentStatement.setVariable(THIS_VARIABLE, generatedClassType);
     }
 
     private void flushToMethod(String methodName, boolean enforce, boolean override, Collection<Argument> additionaArguments) {

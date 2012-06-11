@@ -34,6 +34,7 @@ import org.richfaces.cdk.generate.freemarker.FreeMakerUtils;
 import org.richfaces.cdk.generate.freemarker.FreeMarkerRenderer;
 import org.richfaces.cdk.generate.freemarker.TemplatesFolder;
 import org.richfaces.cdk.templatecompiler.el.ELParserImpl;
+import org.richfaces.cdk.templatecompiler.el.types.TypeParserFactory;
 import org.richfaces.cdk.templatecompiler.el.types.TypesFactory;
 import org.richfaces.cdk.templatecompiler.el.types.TypesFactoryImpl;
 import org.richfaces.cdk.templatecompiler.model.Template;
@@ -73,6 +74,7 @@ public class TemplateModule extends AbstractModule {
         bind(new TypeLiteral<TemplateVisitorFactory<RendererClassVisitor>>() {
         }).to(VisitorFactoryImpl.class).in(Singleton.class);
         bind(TypesFactory.class).to(TypesFactoryImpl.class);
+        bind(TypeParserFactory.class);
         bind(ELParser.class).to(ELParserImpl.class);
         bind(HelperMethodFactory.class).to(HelperMethodFactoryImpl.class).in(Singleton.class);
         bind(Schema.class).annotatedWith(Names.named(Template.XHTML_EL_NAMESPACE)).toProvider(XhtmlElSchemaProvider.class)
