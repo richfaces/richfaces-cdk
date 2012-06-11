@@ -105,10 +105,12 @@ public class RendererClassGenerator implements CdkWriter {
 
                     template.getImplementation().beforeVisit(visitor);
 
-                    for (CdkFragmentElement fragment : template.getFragments()) {
-                        fragment.beforeVisit(visitor);
-                        fragment.getFragmentImplementation().visit(visitor);
-                        fragment.afterVisit(visitor);
+                    if (template.getFragments() != null) {
+                        for (CdkFragmentElement fragment : template.getFragments()) {
+                            fragment.beforeVisit(visitor);
+                            fragment.getFragmentImplementation().visit(visitor);
+                            fragment.afterVisit(visitor);
+                        }
                     }
 
                     template.getImplementation().visitChildren(visitor);
