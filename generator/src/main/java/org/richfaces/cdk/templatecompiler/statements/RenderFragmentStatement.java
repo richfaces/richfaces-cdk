@@ -67,22 +67,25 @@ public class RenderFragmentStatement extends FreeMarkerTemplateStatementBase {
 
             final Fragment fragment = fragmentStore.getFragment(methodName);
 
-            for (Entry<QName, String> entry : attributes.entrySet()) {
-                QName qname = entry.getKey();
-                String argumentName = qname.getLocalPart();
-                String valueExpression = entry.getValue();
+            if (attributes != null) {
+                for (Entry<QName, String> entry : attributes.entrySet()) {
+                    QName qname = entry.getKey();
+                    String argumentName = qname.getLocalPart();
+                    String valueExpression = entry.getValue();
 
-                Argument argument = fragment.getArgumentByName(argumentName);
+                    Argument argument = fragment.getArgumentByName(argumentName);
 
-                try {
-                    TypedTemplateStatement statement = parser.parse(valueExpression, this, argument.getType());
-                    String code = statement.getCode();
+                    try {
+                        TypedTemplateStatement statement = parser.parse(valueExpression, this, argument.getType());
+                        String code = statement.getCode();
 
-                    arguments.add(code);
+                        arguments.add(code);
 
-                    this.addRequiredMethods(statement.getRequiredMethods());
-                } catch (ParsingException e) {
-                    logger.error("Error parse renderFragment argument " + argumentName + " expression: " + valueExpression, e);
+                        this.addRequiredMethods(statement.getRequiredMethods());
+                    } catch (ParsingException e) {
+                        logger.error("Error parse renderFragment argument " + argumentName + " expression: " + valueExpression,
+                                e);
+                    }
                 }
             }
         }

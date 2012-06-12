@@ -31,6 +31,7 @@ import org.richfaces.cdk.templatecompiler.el.types.ELType;
 import org.richfaces.cdk.templatecompiler.el.types.TypesFactory;
 import org.richfaces.cdk.templatecompiler.model.CdkFragmentElement;
 import org.richfaces.cdk.templatecompiler.model.CompositeAttribute;
+import org.richfaces.cdk.templatecompiler.model.CompositeFragmentInterface;
 
 import com.google.common.collect.Maps;
 
@@ -48,15 +49,19 @@ public class Fragment {
     public Fragment(CdkFragmentElement fragmentElement, TypesFactory typesFactory) {
         methodName = fragmentElement.getName();
 
-        List<CompositeAttribute> attributes = fragmentElement.getFragmentInterface().getAttributes();
+        CompositeFragmentInterface interfaze = fragmentElement.getFragmentInterface();
+        List<CompositeAttribute> attributes = interfaze != null ? interfaze.getAttributes() : null;
 
-        for (CompositeAttribute attribute : attributes) {
-            String name = attribute.getName();
-            String typeName = attribute.getType();
-            ELType type = typesFactory.getType(typeName);
+        if (attributes != null) {
 
-            Argument argument = new Argument(name, type);
-            arguments.put(name, argument);
+            for (CompositeAttribute attribute : attributes) {
+                String name = attribute.getName();
+                String typeName = attribute.getType();
+                ELType type = typesFactory.getType(typeName);
+
+                Argument argument = new Argument(name, type);
+                arguments.put(name, argument);
+            }
         }
     }
 

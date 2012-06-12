@@ -41,6 +41,7 @@ import org.richfaces.cdk.model.RenderKitModel;
 import org.richfaces.cdk.model.RendererModel;
 import org.richfaces.cdk.templatecompiler.builder.model.JavaClass;
 import org.richfaces.cdk.templatecompiler.model.CdkFragmentElement;
+import org.richfaces.cdk.templatecompiler.model.CompositeFragmentImplementation;
 import org.richfaces.cdk.templatecompiler.model.Template;
 
 import com.google.inject.Inject;
@@ -107,8 +108,12 @@ public class RendererClassGenerator implements CdkWriter {
 
                     if (template.getFragments() != null) {
                         for (CdkFragmentElement fragment : template.getFragments()) {
+                            CompositeFragmentImplementation implementation = fragment.getFragmentImplementation();
+
                             fragment.beforeVisit(visitor);
-                            fragment.getFragmentImplementation().visit(visitor);
+                            if (implementation != null) {
+                                implementation.visit(visitor);
+                            }
                             fragment.afterVisit(visitor);
                         }
                     }

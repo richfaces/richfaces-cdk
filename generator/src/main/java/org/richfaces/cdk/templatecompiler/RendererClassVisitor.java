@@ -765,8 +765,6 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     @Override
     public void preProcess(CdkFragmentElement fragmentElement) {
-        System.out.println("fragment before");
-
         Fragment fragment = fragmentStore.addFragment(fragmentElement);
 
         this.createMethodContext();
@@ -777,9 +775,6 @@ public class RendererClassVisitor implements TemplateVisitor {
 
     @Override
     public void postProcess(CdkFragmentElement fragmentElement) {
-
-        System.out.println("fragment after");
-
         Fragment fragment = fragmentStore.getFragment(fragmentElement.getName());
         flushToMethod(fragment.getMethodName(), true, false, fragment.getAllArguments());
 
