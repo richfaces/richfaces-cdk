@@ -57,10 +57,14 @@ public class Fragment {
             for (CompositeAttribute attribute : attributes) {
                 String name = attribute.getName();
                 String typeName = attribute.getType();
+                boolean required = attribute.isRequired();
+                String defaultValue = attribute.getDefault();
 
                 ELType type = getType(name, typeName, typesFactory);
 
                 Argument argument = new Argument(name, type);
+                argument.setDefault(defaultValue);
+                argument.setRequired(required);
                 arguments.put(name, argument);
             }
         }

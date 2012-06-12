@@ -36,6 +36,12 @@ public class CompositeAttribute {
     @XmlAttribute
     private String type;
 
+    @XmlAttribute(name = "default")
+    private String defaultValue;
+
+    @XmlAttribute
+    private boolean required;
+
     public String getName() {
         return name;
     }
@@ -50,5 +56,24 @@ public class CompositeAttribute {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public void setDefault(String defaultValue) {
+        this.defaultValue = defaultValue;
+    }
+
+    public String getDefault() {
+        return defaultValue;
+    }
+
+    public void setRequired(Boolean required) {
+        if (required == null) {
+            required = false;
+        }
+        this.required = required;
+    }
+
+    public boolean isRequired() {
+        return required;
     }
 }

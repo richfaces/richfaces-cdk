@@ -88,6 +88,18 @@ public class RenderFragmentStatement extends FreeMarkerTemplateStatementBase {
                 }
             }
         }
+
+        // no associated attribute in cdk:renderFragment was found
+
+        if (argument.isRequired()) {
+            throw new IllegalStateException("Missing value for required attribute '" + argumentName + "'");
+        }
+
+        if (argument.getDefault() != null) {
+            String valueExpression = argument.getDefault();
+            return parseValueExpression(argument, valueExpression);
+        }
+
         return "null";
     }
 
