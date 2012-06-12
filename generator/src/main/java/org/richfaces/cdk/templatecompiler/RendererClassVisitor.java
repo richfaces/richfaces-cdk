@@ -159,7 +159,7 @@ public class RendererClassVisitor implements TemplateVisitor {
     private final Collection<PropertyBase> attributes;
     private StatementsContainer currentStatement;
     private JavaClass generatedClass;
-    private JavaClass componentBaseClass;
+    private ClassName componentBaseClass;
     private ClassName rendererSuperClass;
     private boolean isExtendingRendererBase = false;
     private Set<HelperMethod> addedHelperMethods = EnumSet.noneOf(HelperMethod.class);
@@ -187,6 +187,10 @@ public class RendererClassVisitor implements TemplateVisitor {
         if (null != this.rendererSuperClass) {
             this.generatedClass.setSuperClass(this.rendererSuperClass);
             this.isExtendingRendererBase = isExtendingRendererBase();
+        }
+        this.componentBaseClass = compositeInterface.getComponentBaseClass();
+        if (null == this.componentBaseClass) {
+            this.componentBaseClass = new ClassName(UIComponent.class.getName());
         }
         this.generatedClass.addImport(FacesContext.class);
         this.generatedClass.addImport(ResponseWriter.class);
@@ -281,7 +285,8 @@ public class RendererClassVisitor implements TemplateVisitor {
         currentStatement.setVariable(RESPONSE_WRITER_VARIABLE, getType(ResponseWriter.class));
         currentStatement.setVariable(CLIENT_ID_VARIABLE, getType(String.class));
 
-        currentStatement.setVariable(COMPONENT_VARIABLE, getType(UIComponent.class));
+        ELType componentBaseClassType = typesFactory.getType(componentBaseClass.getName());
+        currentStatement.setVariable(COMPONENT_VARIABLE, componentBaseClassType);
 
         ELType generatedClassSuperType = typesFactory.getType(generatedClass.getSuperClass().getName());
         currentStatement.setVariable(SUPER_VARIABLE, generatedClassSuperType);
