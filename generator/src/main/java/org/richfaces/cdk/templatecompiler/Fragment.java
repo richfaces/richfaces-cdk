@@ -57,11 +57,21 @@ public class Fragment {
             for (CompositeAttribute attribute : attributes) {
                 String name = attribute.getName();
                 String typeName = attribute.getType();
-                ELType type = typesFactory.getType(typeName);
+
+                ELType type = getType(name, typeName, typesFactory);
 
                 Argument argument = new Argument(name, type);
                 arguments.put(name, argument);
             }
+        }
+    }
+
+    private ELType getType(String attributeName, String typeName, TypesFactory typesFactory) {
+        try {
+            return typesFactory.getType(typeName);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Cannot determine type for attribute '" + attributeName + "' of type '"
+                    + typeName + "'");
         }
     }
 

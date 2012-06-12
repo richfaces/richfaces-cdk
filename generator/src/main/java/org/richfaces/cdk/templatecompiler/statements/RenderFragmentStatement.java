@@ -67,30 +67,42 @@ public class RenderFragmentStatement extends FreeMarkerTemplateStatementBase {
 
             final Fragment fragment = fragmentStore.getFragment(methodName);
 
-            if (attributes != null) {
-                for (Entry<QName, String> entry : attributes.entrySet()) {
-                    QName qname = entry.getKey();
-                    String argumentName = qname.getLocalPart();
-                    String valueExpression = entry.getValue();
-
-                    Argument argument = fragment.getArgumentByName(argumentName);
-
-                    try {
-                        TypedTemplateStatement statement = parser.parse(valueExpression, this, argument.getType());
-                        String code = statement.getCode();
-
-                        arguments.add(code);
-
-                        this.addRequiredMethods(statement.getRequiredMethods());
-                    } catch (ParsingException e) {
-                        logger.error("Error parse renderFragment argument " + argumentName + " expression: " + valueExpression,
-                                e);
-                    }
-                }
+            for (Argument argument : fragment.getAllArguments()) {
+                String argumentValue = getAttributeValue(argument);
+                arguments.add(argumentValue);
             }
         }
 
         return arguments;
+    }
+
+    private String getAttributeValue(Argument argument) {
+        final String argumentName = argument.getName();
+        if (attributes != null) {
+            for (Entry<QName, String> entry : attributes.entrySet()) {
+                QName qname = entry.getKey();
+                String attributeName = qname.getLocalPart();
+                if (argumentName.equals(attributeName)) {
+                    String valueExpression = entry.getValue();
+                    return parseValueExpression(argument, valueExpression);
+                }
+            }
+        }
+        return "null";
+    }
+
+    private String parseValueExpression(Argument argument, String valueExpression) {
+        try {
+            TypedTemplateStatement statement = parser.parse(valueExpression, this, argument.getType());
+            String code = statement.getCode();
+
+            this.addRequiredMethods(statement.getRequiredMethods());
+
+            return code;
+        } catch (ParsingException e) {
+            logger.error("Error parse renderFragment argument " + argument.getName() + " expression: " + valueExpression, e);
+            return valueExpression;
+        }
     }
 
     public String getMethodName() {
