@@ -75,7 +75,7 @@ public class ComponentClassGeneratorTest extends AbstractClassGeneratorTest {
         attribute.setGenerate(true);
 
         attribute = component.getOrCreateAttribute("testFlag");
-        attribute.setType(new ClassName(Boolean.class));
+        attribute.setType(new ClassName(Boolean.TYPE));
         attribute.setRequired(true);
         attribute.setGenerate(true);
 
