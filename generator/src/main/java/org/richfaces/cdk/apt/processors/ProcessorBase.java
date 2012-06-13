@@ -20,6 +20,7 @@ import org.richfaces.cdk.model.ModelElementBase;
 import org.richfaces.cdk.model.TagModel;
 import org.richfaces.cdk.model.ViewElement;
 
+import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
@@ -101,14 +102,21 @@ public abstract class ProcessorBase {
     protected void processAttributes(Element element, ModelElementBase component, AnnotationMirror annotation) {
         AttributesProcessor attributesProcessor = getAttributeProcessor();
         SourceUtils sourceUtils = getSourceUtils();
+
+        // interfaces can be in annotation or they can be directly implemented
+        final Iterable<? extends TypeMirror> attributeInterfaces = sourceUtils.getAnnotationValues(annotation, "interfaces",
+                TypeMirror.class);
+        final Iterable<? extends TypeMirror> implementedInterfaces = sourceUtils.asTypeElement(element.asType())
+                .getInterfaces();
+
         for (String atributesFragment : sourceUtils.getAnnotationValues(annotation, "attributes", String.class)) {
             attributesProcessor.processXmlFragment(component, atributesFragment);
         }
+        for (TypeMirror atributesInterface : Iterables.concat(implementedInterfaces, attributeInterfaces)) {
+            processInterface(component, attributesProcessor, atributesInterface);
+        }
         if (element != null && ElementKind.CLASS.equals(element.getKind())) {
             attributesProcessor.processType(component, (TypeElement) element);
-        }
-        for (TypeMirror atributesInterface : sourceUtils.getAnnotationValues(annotation, "interfaces", TypeMirror.class)) {
-            processInterface(component, attributesProcessor, atributesInterface);
         }
     }
 
