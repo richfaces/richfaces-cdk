@@ -78,7 +78,7 @@ public class CommandLineGenerator {
     private Logger logger;
 
     private void setup() {
-        compileSourceRoots = Arrays.asList(projectRoot + "/src/main/java");
+        compileSourceRoots = Arrays.asList(projectRoot + "/src/main/java", projectRoot + "/target/dependency-sources");
 
         templatesRoot = projectRoot + "/" + MAIN_TEMPLATES;
         configRoot = projectRoot + "/" + MAIN_CONFIG;
