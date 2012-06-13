@@ -18,11 +18,8 @@ if [ ! -f "$PROJECT/pom.xml" ]; then
 	exit 2
 fi
 
-if [ ! -d "$PROJECT/target/classes" -o ! -d "$PROJECT/target/dependency" -o ! -d "$PROJECT/target/dependency-sources" ]; then
-	# compile and extract dependencies
+if [ ! -d "$PROJECT/target/classes" -o ! -d "$PROJECT/target/dependency" ]; then
 	mvn -f "$PROJECT/pom.xml" compiler:compile dependency:unpack-dependencies -DexcludeTypes=pom
-	# extract and extract dependency sources
-	mvn -f "$PROJECT/pom.xml" dependency:unpack-dependencies -DexcludeTypes=pom -Dclassifier='sources' -Dmdep.failOnMissingClassifierArtifact=false -DoutputDirectory='${project.build.directory}/dependency-sources' -DincludeGroupIds=org.richfaces.ui.common
 fi
 
 TARGET=$(dirname $0)"/target"
