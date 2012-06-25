@@ -75,9 +75,13 @@ public enum HelperMethod {
     ADD_TO_SCRIPT_HASH_ATTRIBUTES("addToScriptHash", Void.TYPE.getName(), Map.class.getName(), FacesContext.class.getName(),
             UIComponent.class.getName(), "Attributes", "ScriptHashVariableWrapper"),
     TO_SCRIPT_ARGS("toScriptArgs", String.class, Object[].class),
-    CONCAT("concat", String.class, String[].class);
+    CONCAT("concat", String.class, String[].class),
+    HAS_FACET("hasFacet", Boolean.TYPE, UIComponent.class, String.class);
+
     public static final EnumMap<HelperMethod, String> METHOD_NAMES = Maps.newEnumMap(HelperMethod.class);
-    private static final Set<HelperMethod> CONVERSION_METHODS = EnumSet.of(TO_STRING_CONVERSION, TO_BOOLEAN_CONVERSION, TO_INTEGER_CONVERSION, TO_BYTE_CONVERSION, TO_SHORT_CONVERSION, TO_LONG_CONVERSION, TO_FLOAT_CONVERSION, TO_DOUBLE_CONVERSION, TO_CHAR_CONVERSION);
+    private static final Set<HelperMethod> CONVERSION_METHODS = EnumSet.of(TO_STRING_CONVERSION, TO_BOOLEAN_CONVERSION,
+            TO_INTEGER_CONVERSION, TO_BYTE_CONVERSION, TO_SHORT_CONVERSION, TO_LONG_CONVERSION, TO_FLOAT_CONVERSION,
+            TO_DOUBLE_CONVERSION, TO_CHAR_CONVERSION);
     private final String name;
     private final String returnType;
     private final String[] argumentTypes;

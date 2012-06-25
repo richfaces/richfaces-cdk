@@ -93,6 +93,7 @@ public class HelperMethodFactoryImpl implements HelperMethodFactory {
         buildHelperMethod(HelperMethod.ADD_TO_SCRIPT_HASH_ATTRIBUTES, true, null);
         buildHelperMethod(HelperMethod.TO_SCRIPT_ARGS, true, null);
         buildHelperMethod(HelperMethod.CONCAT, true, null);
+        buildHelperMethod(HelperMethod.HAS_FACET, true, null);
     }
 
     private JavaMethod buildHelperMethod(HelperMethod helperMethod, boolean utilsMethod, String templateName,
