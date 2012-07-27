@@ -1,5 +1,5 @@
 if (object == null) {
-	return null;
+	return false;
 }
 
 if (object instanceof Boolean) {

@@ -56,7 +56,7 @@ import com.google.common.collect.Maps;
 public enum HelperMethod {
 
     TO_STRING_CONVERSION(CONVERT_TO_STRING_FUNCTION, String.class, Object.class),
-    TO_BOOLEAN_CONVERSION(CONVERT_TO_BOOLEAN_FUNCTION, Boolean.class, Object.class),
+    TO_BOOLEAN_CONVERSION(CONVERT_TO_BOOLEAN_FUNCTION, Boolean.TYPE, Object.class),
     TO_INTEGER_CONVERSION(CONVERT_TO_INTEGER_FUNCTION, Integer.class, Object.class),
     TO_BYTE_CONVERSION(CONVERT_TO_BYTE_FUNCTION, Byte.class, Object.class),
     TO_SHORT_CONVERSION(CONVERT_TO_SHORT_FUNCTION, Short.class, Object.class),
