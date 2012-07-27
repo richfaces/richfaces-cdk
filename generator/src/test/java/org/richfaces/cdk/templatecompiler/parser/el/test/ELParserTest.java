@@ -172,7 +172,7 @@ public class ELParserTest extends CdkTestBase {
 
     @Test
     public void testBooleanReturnType() throws Exception {
-        parseExpression("#{clientId}", Boolean.TYPE, "convertToBoolean(clientId)", Boolean.class, TO_BOOLEAN_CONVERSION);
+        parseExpression("#{clientId}", Boolean.TYPE, "convertToBoolean(clientId)", Boolean.TYPE, TO_BOOLEAN_CONVERSION);
     }
 
     @Test
@@ -488,7 +488,7 @@ public class ELParserTest extends CdkTestBase {
     @Test
     public void testNot2() throws Exception {
 
-        parseExpression("#{!action}", "(!convertToBoolean(action))", Boolean.class, TO_BOOLEAN_CONVERSION);
+        parseExpression("#{!action}", "(!convertToBoolean(action))", Boolean.TYPE, TO_BOOLEAN_CONVERSION);
     }
 
     @Test
