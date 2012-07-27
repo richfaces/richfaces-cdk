@@ -1,3 +1,7 @@
+if (object == null) {
+	return null;
+}
+
 if (object instanceof Byte) {
     return (Byte) object;
 }
