@@ -37,6 +37,10 @@ import org.richfaces.application.configuration.ConfigurationServiceImpl;
 import org.richfaces.cdk.Faces;
 import org.richfaces.cdk.FileNameMapper;
 import org.richfaces.cdk.skin.SkinFactoryImpl;
+import org.richfaces.resource.external.ExternalResourceTracker;
+import org.richfaces.resource.external.ExternalResourceTrackerWrapper;
+import org.richfaces.resource.external.ExternalStaticResourceFactory;
+import org.richfaces.resource.external.ExternalStaticResourceFactoryImpl;
 import org.richfaces.skin.SkinFactory;
 
 /**
@@ -56,18 +60,26 @@ public class FacesImpl implements Faces {
     }
 
     public void start() {
+        
         final ServicesFactoryImpl serviceFactory = new ServicesFactoryImpl();
         Module module = new Module() {
             public void configure(ServicesFactory factory) {
-                serviceFactory.setInstance(ConfigurationService.class, new ConfigurationServiceImpl());
-                serviceFactory.setInstance(SkinFactory.class, new SkinFactoryImpl());
-                serviceFactory.setInstance(FileNameMapper.class, fileNameMapper);
-                serviceFactory.setInstance(DependencyInjector.class, new DependencyInjectionServiceImpl());
-                serviceFactory.setInstance(ResourceHandler.class, resourceHandler);
+                factory.setInstance(ConfigurationService.class, new ConfigurationServiceImpl());
+                factory.setInstance(SkinFactory.class, new SkinFactoryImpl());
+                factory.setInstance(FileNameMapper.class, fileNameMapper);
+                factory.setInstance(DependencyInjector.class, new DependencyInjectionServiceImpl());
+                factory.setInstance(ResourceHandler.class, resourceHandler);
+                factory.setInstance(ExternalResourceTracker.class, new ExternalResourceTrackerWrapper());
+                factory.setInstance(ExternalStaticResourceFactory.class, new ExternalStaticResourceFactoryImpl());
             }
         };
+        
         ServiceTracker.setFactory(serviceFactory);
+        
+        // initialization with FacesContext available
+        startRequest();
         serviceFactory.init(Collections.singleton(module));
+        stopRequest();
     }
 
     public void stop() {
