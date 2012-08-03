@@ -128,7 +128,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <xs:simpleType>
                     <xs:list>
                         <xs:simpleType>
-                            <xs:restriction base="xs:NMTOKEN" />
+                            <xs:restriction base="xs:string" />
                         </xs:simpleType>
                     </xs:list>
                 </xs:simpleType>
@@ -172,7 +172,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                 <xs:simpleType>
                     <xs:list>
                         <xs:simpleType>
-                            <xs:restriction base="xs:NMTOKEN" />
+                            <xs:restriction base="xs:string" />
                         </xs:simpleType>
                     </xs:list>
                 </xs:simpleType>
@@ -196,7 +196,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <xs:sequence>
                 <xs:element ref="cc:interface" />
                 <xs:element ref="cc:implementation" />
-                <xs:element ref="fragment" maxOccurs="unbounded" />
+                <xs:element ref="fragment" minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -521,6 +521,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             <xs:element ref="switch" />
             <xs:element ref="object" />
             <xs:element ref="cc:renderFacet" />
+            <xs:element ref="scriptObject" />
+            <xs:element ref="c:forEach" />
+            <xs:element ref="renderFragment" />
         </xs:choice>
     </xs:group>
 
@@ -673,6 +676,13 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                             </xs:documentation>
                         </xs:annotation>
                     </xs:attribute>
+                    <xs:attribute name="type-arguments" form="unqualified" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>
+                               
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
                 </xs:extension>
             </xs:simpleContent>
         </xs:complexType>
@@ -754,7 +764,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
                     </xs:documentation>
                 </xs:annotation>
             </xs:attribute>
-            <xs:attribute type="xs:NMTOKENS" name="names">
+            <xs:attribute type="xs:string" name="names">
                 <xs:annotation>
                     <xs:documentation>
                         <p>Space-separated list of names to be imported.</p>
@@ -792,6 +802,9 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
             </xs:documentation>
         </xs:annotation>
         <xs:complexType>
+            <xs:choice>
+                <xs:element ref="scriptOption" maxOccurs="unbounded" />
+            </xs:choice>
             <xs:attribute type="xs:string" name="name" use="required">
                 <xs:annotation>
                     <xs:documentation>
@@ -920,9 +933,22 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
         </xs:annotation>
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="cc:interface" />
+                <xs:element ref="cc:interface" minOccurs="0" />
                 <xs:element ref="cc:implementation" />
             </xs:sequence>
+            <xs:attribute name="name" type="xs:NMTOKEN" />
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="renderFragment">
+        <xs:annotation>
+            <xs:documentation>
+                <p>Renders fragment</p>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attribute name="name" type="xs:NMTOKEN" />
+            <xs:anyAttribute processContents="lax" />
         </xs:complexType>
     </xs:element>
 
