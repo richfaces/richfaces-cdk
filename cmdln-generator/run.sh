@@ -9,8 +9,7 @@ while getopts ":p:" opt; do
 done
 
 if [ -z "$PROJECT" ]; then
-	echo "Error: No project provided, use -p to provide project home"
-	exit 1
+	PROJECT="."
 fi
 
 if [ ! -f "$PROJECT/pom.xml" ]; then

@@ -34,8 +34,10 @@ import java.util.Set;
 import org.codehaus.plexus.util.DirectoryScanner;
 
 import com.beust.jcommander.Parameter;
+import com.beust.jcommander.Parameters;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
 
 /**
  * Configurable command-line interface of CDK generator.
@@ -44,27 +46,33 @@ import com.google.common.collect.Collections2;
  * 
  * @author Lukas Fryc
  */
+@Parameters(resourceBundle = "cmdln")
 public class CommandLineGenerator {
 
     private static final String[] JAVA_INCLUDES = new String[] { "**/*.java" };
-    private static final String MAIN_CONFIG = "src/main/config";
-    private static final String MAIN_TEMPLATES = "src/main/templates";
+    private static final String MAIN_CONFIG = "src/main/config/";
+    private static final String DEFAULT_TEMPLATES_ROOT = "src/main/templates/";
     private static final String[] EMPTY = new String[0];
     private static final String[] XML_INCLUDES = new String[] { "**/*.xml" };
 
-    @Parameter(names = "-p")
-    String projectRoot;
+    @Parameter(names = { "-p", "--project" }, descriptionKey = "projectRoot")
+    String projectRoot = ".";
 
-    @Parameter(names = "-d")
+    @Parameter(names = { "-d", "--debug" }, descriptionKey = "debug")
     boolean debug = false;
 
-    @Parameter(names = "-n")
+    @Parameter(names = { "-n", "--namespace" }, descriptionKey = "taglibNamespace")
     private String taglibNamespace;
 
+    @Parameter(names = { "-t", "--templates" }, descriptionKey = "templateIncludes")
+    List<String> templateIncludes;
+    
+    @Parameter(names = { "-h", "--help" }, descriptionKey = "help")
+    boolean help = false;
+    
     private List<String> compileSourceRoots;
     protected String[] sourceIncludes;
     protected String[] sourceExcludes;
-    protected String templatesRoot;
     protected String configRoot;
 
     protected File outputDirectory;
@@ -80,7 +88,9 @@ public class CommandLineGenerator {
     private void setup() {
         compileSourceRoots = Arrays.asList(projectRoot + "/src/main/java");
 
-        templatesRoot = projectRoot + "/" + MAIN_TEMPLATES;
+        if (templateIncludes == null || templateIncludes.isEmpty()) {
+            templateIncludes = getDefaultTemplateIncludes();
+        }
         configRoot = projectRoot + "/" + MAIN_CONFIG;
 
         outputDirectory = new File(projectRoot, "target/classes");
@@ -92,6 +102,10 @@ public class CommandLineGenerator {
         CustomLogger logger = new CustomLogger();
         logger.setDebugEnabled(debug);
         this.logger = logger;
+    }
+    
+    public boolean isHelp() {
+        return help;
     }
 
     public void execute() {
@@ -106,7 +120,7 @@ public class CommandLineGenerator {
         logger.info("[total: " + (end - start) + " ms]");
     }
 
-    public void executeGenerator() {
+    private void executeGenerator() {
         Generator generator = new Generator();
         generator.setLog(logger);
         generator.setLoader(createProjectClassLoader());
@@ -189,8 +203,9 @@ public class CommandLineGenerator {
     }
 
     private Iterable<File> findTemplateFiles() {
-        String[] files = doScan(XML_INCLUDES, EMPTY, new File(templatesRoot));
-        return Collections2.transform(Arrays.asList(files), new StringToFile(templatesRoot));
+        String[] includes = templateIncludes.toArray(new String[templateIncludes.size()]);
+        String[] files = doScan(includes, EMPTY, new File(projectRoot));
+        return Collections2.transform(Arrays.asList(files), new StringToFile(projectRoot));
     }
 
     private Iterable<File> findJavaFiles() {
@@ -254,6 +269,14 @@ public class CommandLineGenerator {
         } catch (IllegalStateException e) {
             throw new IllegalStateException("Error scanning source root: \'" + rootFolder + "\'", e);
         }
+    }
+    
+    private List<String> getDefaultTemplateIncludes() {
+        List<String> includes = Lists.newLinkedList();
+        for (String xmlInclude : XML_INCLUDES) {
+            includes.add(DEFAULT_TEMPLATES_ROOT + xmlInclude);
+        }
+        return includes;
     }
 
     private class StringToFile implements Function<String, File> {
