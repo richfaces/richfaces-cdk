@@ -22,4 +22,4 @@ if [ ! -d "$PROJECT/target/classes" -o ! -d "$PROJECT/target/dependency" ]; then
 fi
 
 TARGET=$(dirname $0)"/target"
-java -jar $TARGET/cdk-cmdline-generator.jar $*
+java -jar $TARGET/cdk-cmdline-generator.jar -t "src/main/templates/**/*.xml" -t "src/main/java/**/*.template.xml" $*
