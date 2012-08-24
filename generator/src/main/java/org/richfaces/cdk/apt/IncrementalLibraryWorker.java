@@ -15,8 +15,9 @@ public class IncrementalLibraryWorker implements LibraryWorker {
 
     private LibraryWorker delegate;
     
-    private LibraryCache javaCache = new LibraryCache(new File("target/java-cache.ser"));
-    private LibraryCache nonJavaCache = new LibraryCache(new File("target/nonjava-cache.ser"));
+    // TODO use Guice here
+    public static LibraryCache javaCache = new LibraryCache(new File("target/java-cache.ser"));
+    public static LibraryCache nonJavaCache = new LibraryCache(new File("target/nonjava-cache.ser"));
     
     @Inject
     ComponentLibraryHolder holder;
@@ -58,13 +59,21 @@ public class IncrementalLibraryWorker implements LibraryWorker {
 
     @Override
     public void processNonJavaSources() throws CdkException {
-        if (!nonJavaCache.available()) {
-            holder.setLibrary(nonJavaSourcesLibrary);
-            delegate.processNonJavaSources();
-            nonJavaCache.save(nonJavaSourcesLibrary);
-        } else {
-            nonJavaSourcesLibrary = nonJavaCache.load();
+        ComponentLibrary cachedLibrary = new ComponentLibrary();
+        ComponentLibrary additionsToLibrary = new ComponentLibrary();
+        
+        if (nonJavaCache.available()) {
+            cachedLibrary = nonJavaCache.load();
         }
+        
+        holder.setLibrary(additionsToLibrary);
+        delegate.processNonJavaSources();
+        
+        nonJavaSourcesLibrary.merge(cachedLibrary);
+        nonJavaSourcesLibrary.markUnchanged();
+        nonJavaSourcesLibrary.merge(additionsToLibrary);
+        
+        nonJavaCache.save(nonJavaSourcesLibrary);
     }
 
     @Override
@@ -73,7 +82,6 @@ public class IncrementalLibraryWorker implements LibraryWorker {
         composedLibrary.merge(nonJavaSourcesLibrary);
         
         holder.setLibrary(composedLibrary);
-        
         
         delegate.verify();
     }

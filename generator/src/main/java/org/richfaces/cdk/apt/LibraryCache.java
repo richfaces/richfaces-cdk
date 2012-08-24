@@ -21,6 +21,10 @@ public class LibraryCache {
     public boolean available() {
         return cachingEnabled && cacheFile.exists();
     }
+    
+    public long lastModified() {
+        return available() ? cacheFile.lastModified() : 0L;
+    }
 
     public ComponentLibrary load() {
         try {

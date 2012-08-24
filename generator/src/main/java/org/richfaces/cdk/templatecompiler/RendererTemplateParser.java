@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -38,6 +39,7 @@ import org.richfaces.cdk.ModelBuilder;
 import org.richfaces.cdk.Source;
 import org.richfaces.cdk.Sources;
 import org.richfaces.cdk.apt.ComponentLibraryHolder;
+import org.richfaces.cdk.apt.IncrementalLibraryWorker;
 import org.richfaces.cdk.model.ClassName;
 import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.model.EventName;
@@ -76,6 +78,8 @@ public class RendererTemplateParser implements ModelBuilder {
     private Logger log;
     private FileManager sources;
     private FragmentParser fragmentParser;
+    
+    private File cacheFile = new File("target/nonjava-cache.ser");
 
     /**
      * <p class="changed_added_4_0">
@@ -103,9 +107,15 @@ public class RendererTemplateParser implements ModelBuilder {
      */
     @Override
     public void build() throws CdkException {
+        Date cacheModified = new Date(IncrementalLibraryWorker.nonJavaCache.lastModified());
+        
+        
         Iterable<File> sourceFiles = this.sources.getFiles();
         for (File file : sourceFiles) {
-            build(file);
+            Date sourceModified = new Date(file.lastModified());
+            if (sourceModified.after(cacheModified)) {
+                build(file);
+            }
         }
     }
 

@@ -47,7 +47,7 @@ import org.richfaces.cdk.util.Strings;
  * @author asmirnov@exadel.com
  *
  */
-public class ComponentLibrary implements Serializable, Extensible<ConfigExtension>, Trackable, Visitable {
+public class ComponentLibrary implements Serializable, Extensible<ConfigExtension>, Trackable, Visitable, Cacheable {
     public static final String CDK_EXTENSIONS_NAMESPACE = "http://jboss.org/schema/richfaces/cdk/extensions";
     public static final String FACES_CONFIG_NAMESPACE = "http://java.sun.com/xml/ns/javaee";
     public static final String FACES_CONFIG_SCHEMA_LOCATION = "http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd";
@@ -440,5 +440,19 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
         if (null != library.getPrefix()) {
             this.setPrefix(library.getPrefix());
         }
+    }
+
+    @Override
+    public void markUnchanged() {
+        for (RenderKitModel renderKit : getRenderKits()) {
+            for (RendererModel renderer : renderKit.getRenderers()) {
+                renderer.markUnchanged();
+            }
+        }
+    }
+
+    @Override
+    public boolean hasChanged() {
+        throw new UnsupportedOperationException();
     }
 }
