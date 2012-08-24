@@ -6,7 +6,7 @@ package org.richfaces.cdk.model;
  * @author asmirnov@exadel.com
  *
  */
-public final class ComponentModel extends ModelElementBase implements ModelElement<ComponentModel> {
+public final class ComponentModel extends ModelElementBase implements ModelElement<ComponentModel>, Cacheable {
     private static final long serialVersionUID = 2297349356280370771L;
     /**
      * <p class="changed_added_4_0">
@@ -29,6 +29,8 @@ public final class ComponentModel extends ModelElementBase implements ModelEleme
     private FacesId rendererType;
     private String rendererTemplate;
     private ComponentModel parent;
+    
+    private boolean changed = true;
 
     public ComponentModel(FacesId key) {
         this.setId(key);
@@ -49,6 +51,8 @@ public final class ComponentModel extends ModelElementBase implements ModelEleme
 
     @Override
     public void merge(ComponentModel otherComponent) {
+        this.changed = true;
+        
         // merge facets, renderers, events ...
         ComponentLibrary.merge(getAttributes(), otherComponent.getAttributes());
         ComponentLibrary.merge(getFacets(), otherComponent.getFacets());
@@ -184,5 +188,15 @@ public final class ComponentModel extends ModelElementBase implements ModelEleme
     @Merge
     public ComponentModel getParent() {
         return this.parent;
+    }
+
+    @Override
+    public void markUnchanged() {
+        this.changed = false;
+    }
+
+    @Override
+    public boolean hasChanged() {
+        return changed;
     }
 }

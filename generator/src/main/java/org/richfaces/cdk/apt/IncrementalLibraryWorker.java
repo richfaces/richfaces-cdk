@@ -36,25 +36,31 @@ public class IncrementalLibraryWorker implements LibraryWorker {
     public void beforeJavaSourceProcessing() {
         delegate.beforeJavaSourceProcessing();
         
-        holder.setLibrary(javaSourcesLibrary);
+        holder.setLibrary(new ComponentLibrary());
     }
 
     @Override
     public void processJavaSource(ProcessingEnvironment processingEnv, RoundEnvironment roundEnv) {
-        if (!javaCache.available()) {
-            delegate.processJavaSource(processingEnv, roundEnv);
-        }
+        delegate.processJavaSource(processingEnv, roundEnv);
     }
 
     @Override
     public void afterJavaSourceProcessing() {
         delegate.afterJavaSourceProcessing();
         
+
+        ComponentLibrary cachedLibrary = new ComponentLibrary();
+        ComponentLibrary additionsToLibrary = holder.getLibrary();
+        
         if (javaCache.available()) {
-            javaSourcesLibrary = javaCache.load();
-        } else {
-            javaCache.save(javaSourcesLibrary);
+            cachedLibrary = javaCache.load();
         }
+        
+        javaSourcesLibrary.merge(cachedLibrary);
+        javaSourcesLibrary.markUnchanged();
+        javaSourcesLibrary.merge(additionsToLibrary);
+        
+        javaCache.save(javaSourcesLibrary);
     }
 
     @Override

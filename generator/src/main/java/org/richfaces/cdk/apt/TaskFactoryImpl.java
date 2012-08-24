@@ -28,6 +28,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -88,38 +89,51 @@ public class TaskFactoryImpl implements CompilationTaskFactory {
     @Override
     public CompilationTask get() throws AptException {
         if (sourceFolders.getFiles().iterator().hasNext()) {
+            final Date cacheModified = new Date(IncrementalLibraryWorker.javaCache.lastModified());
+            
             Iterable<? extends JavaFileObject> sourceObjects = getFileManager().getJavaFileObjectsFromFiles(
                     sourceFolders.getFiles());
-
-            if (log.isDebugEnabled()) {
-                compilerOptions.add("-verbose");
+            
+            sourceObjects = Iterables.filter(sourceObjects, new Predicate<Object>() {
+                @Override
+                public boolean apply(Object input) {
+                    JavaFileObject sourceObject = (JavaFileObject) input;
+                    Date sourceModified = new Date(sourceObject.getLastModified());
+                    return sourceModified.after(cacheModified);
+                }
+            });
+            
+            if (sourceObjects.iterator().hasNext()) {
+                if (log.isDebugEnabled()) {
+                    compilerOptions.add("-verbose");
+                }
+    
+                CompilationTask task = getJavaCompiler().getTask(null, getFileManager(),
+                        new DiagnosticListenerImplementation(log, locale), compilerOptions, null, sourceObjects);
+                task.setLocale(locale);
+                task.setProcessors(Collections.singleton(cdkProcessor));
+                return task;
+            }
+        }
+        
+        // no Java sources, try to build from xml files
+        return new CompilationTask() {
+            @Override
+            public void setProcessors(Iterable<? extends Processor> processors) {
+                // do nothing
             }
 
-            CompilationTask task = getJavaCompiler().getTask(null, getFileManager(),
-                    new DiagnosticListenerImplementation(log, locale), compilerOptions, null, sourceObjects);
-            task.setLocale(locale);
-            task.setProcessors(Collections.singleton(cdkProcessor));
-            return task;
-        } else {
-            // no Java sources, try to build from xml files
-            return new CompilationTask() {
-                @Override
-                public void setProcessors(Iterable<? extends Processor> processors) {
-                    // do nothing
-                }
+            @Override
+            public void setLocale(Locale locale) {
 
-                @Override
-                public void setLocale(Locale locale) {
+            }
 
-                }
-
-                @Override
-                public Boolean call() {
-                    cdkProcessor.processNonJavaSources();
-                    return 0 == log.getErrorCount();
-                }
-            };
-        }
+            @Override
+            public Boolean call() {
+                cdkProcessor.processNonJavaSources();
+                return 0 == log.getErrorCount();
+            }
+        };
     }
 
     private StandardJavaFileManager getFileManager() {

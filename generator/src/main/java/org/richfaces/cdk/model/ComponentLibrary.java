@@ -449,6 +449,9 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
                 renderer.markUnchanged();
             }
         }
+        for (ComponentModel component : getComponents()) {
+            component.markUnchanged();
+        }
     }
 
     @Override
