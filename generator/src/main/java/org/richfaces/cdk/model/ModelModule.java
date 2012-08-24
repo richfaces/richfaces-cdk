@@ -22,6 +22,9 @@
  */
 package org.richfaces.cdk.model;
 
+import org.richfaces.cdk.apt.ComponentLibraryHolder;
+import org.richfaces.cdk.apt.ComponentLibraryProvider;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 
@@ -40,6 +43,8 @@ public class ModelModule extends AbstractModule {
      */
     @Override
     protected void configure() {
-        bind(ComponentLibrary.class).in(Singleton.class);
+//      bind(ComponentLibrary.class).in(Singleton.class);
+        bind(ComponentLibraryHolder.class).in(Singleton.class);
+        bind(ComponentLibrary.class).toProvider(ComponentLibraryProvider.class);
     }
 }

@@ -65,14 +65,16 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
     // TODO - set library as parameter.
     @Inject
     private ComponentLibrary library;
-    @Inject
-    private Set<ModelBuilder> builders;
+    
     @Inject
     private SourceUtilsProvider sourceUtilsProducer;
+    
     @Inject
-    private ModelValidator validator;
+    LibraryBuilder builder;
+    
     @Inject
-    private LibraryBuilder builder;
+    LibraryWorker worker;
+    
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -88,28 +90,9 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
                 processAnnotation(process, roundEnv);
             }
         } else {
-            // parse non-java sources
-            processNonJavaSources();
-            verify();
-            if (0 == log.getErrorCount()) {
-                generate();
-            }
+            worker.afterJavaSourceProcessing();
         }
         return false;
-    }
-
-    private void generate() {
-        log.debug("Generate output files");
-        builder.generate(library);
-    }
-
-    private void verify() {
-        try {
-            log.debug("Validate model");
-            validator.verify(library);
-        } catch (CdkException e) {
-            sendError(e);
-        }
     }
 
     /*
@@ -118,14 +101,7 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
      * @see org.richfaces.cdk.apt.CdkProcessor#processNonJavaSources()
      */
     public void processNonJavaSources() {
-        for (ModelBuilder builder : builders) {
-            log.debug("Run builder " + builder.getClass().getName());
-            try {
-                builder.build();
-            } catch (CdkException e) {
-                sendError(e);
-            }
-        }
+        
     }
 
     protected void processAnnotation(CdkAnnotationProcessor processor, RoundEnvironment environment) {

@@ -22,6 +22,7 @@
  */
 package org.richfaces.cdk.model;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -44,9 +45,11 @@ import com.google.common.collect.Lists;
  *
  * @author asmirnov@exadel.com
  */
-public class ModelSet<E extends ModelElement<? super E>> implements ModelCollection<E>, Set<E> {
+public class ModelSet<E extends ModelElement<? super E>> implements ModelCollection<E>, Set<E>, Serializable {
+    private static final long serialVersionUID = -1L;
+    
     private final List<E> elements = Lists.newArrayList();
-    private Comparator<E> comparator;
+    private transient Comparator<E> comparator;
 
     public static <T extends ModelElement<? super T>> ModelSet<T> create() {
         return new ModelSet<T>();

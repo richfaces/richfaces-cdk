@@ -22,7 +22,6 @@
  */
 package org.richfaces.cdk;
 
-import org.richfaces.cdk.model.ComponentLibrary;
 
 /**
  * <p class="changed_added_4_0">
@@ -40,13 +39,4 @@ public interface LibraryBuilder {
      * @throws CdkException
      */
     void build() throws CdkException;
-
-    /**
-     * Generate all types of files from library model.
-     *
-     * @param library TODO
-     *
-     * @throws CdkException
-     */
-    void generate(ComponentLibrary library) throws CdkException;
 }
