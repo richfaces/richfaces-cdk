@@ -26,12 +26,12 @@ public class LibraryWorkerImpl implements LibraryWorker {
     private Set<CdkWriter> generators;
 
     @Inject
-    private ComponentLibrary library;
-
-    @Inject
     private Set<ModelBuilder> builders;
     @Inject
     private ModelValidator validator;
+    
+    @Inject
+    ComponentLibraryHolder libraryHolder;
 
     /* (non-Javadoc)
      * @see org.richfaces.cdk.apt.LibraryWorker#beforeJavaSourceProcessing()
@@ -78,6 +78,7 @@ public class LibraryWorkerImpl implements LibraryWorker {
     public void verify() throws CdkException {
         try {
             log.debug("Validate model");
+            ComponentLibrary library = libraryHolder.getLibrary();
             validator.verify(library);
         } catch (CdkException e) {
             // TODO: sendError(e);
@@ -92,6 +93,7 @@ public class LibraryWorkerImpl implements LibraryWorker {
     public void generate() throws CdkException {
         if (0 == log.getErrorCount()) {
             // processing over, generate files.
+            ComponentLibrary library = libraryHolder.getLibrary();
             for (CdkWriter generator : generators) {
                 generator.render(library);
             }

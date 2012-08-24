@@ -146,7 +146,7 @@ public class CdkProcessorTest extends AnnotationProcessorTestBase {
         expect(log.getErrorCount()).andReturn(0);
         log.debug((CharSequence) anyObject());
         expectLastCall().asStub();
-        builder.generate(library);
+//        builder.generate(library);
         expectLastCall();
         replay(log, element, roundEnv, builder, validator, cdkProcessor);
 

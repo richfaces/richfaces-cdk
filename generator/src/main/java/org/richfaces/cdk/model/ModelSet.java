@@ -49,7 +49,7 @@ public class ModelSet<E extends ModelElement<? super E>> implements ModelCollect
     private static final long serialVersionUID = -1L;
     
     private final List<E> elements = Lists.newArrayList();
-    private transient Comparator<E> comparator;
+    private Comparator<E> comparator;
 
     public static <T extends ModelElement<? super T>> ModelSet<T> create() {
         return new ModelSet<T>();

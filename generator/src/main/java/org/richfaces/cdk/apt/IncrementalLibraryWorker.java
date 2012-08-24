@@ -4,6 +4,7 @@ import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 
 import org.richfaces.cdk.CdkException;
+import org.richfaces.cdk.model.ComponentLibrary;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -51,9 +52,11 @@ public class IncrementalLibraryWorker implements LibraryWorker {
     @Override
     public void verify() throws CdkException {
         if (!cache.available()) {
-            cache.save(holder.getLibrary());
+            ComponentLibrary processed = holder.getLibrary();
+            cache.save(processed);
         } else {
-            holder.setLibrary(cache.load());
+            ComponentLibrary loaded = cache.load();
+            holder.setLibrary(loaded);
         }
         
         delegate.verify();
