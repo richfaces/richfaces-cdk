@@ -22,9 +22,6 @@
  */
 package org.richfaces.cdk.apt;
 
-import java.lang.annotation.Annotation;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Target;
 import java.util.Collections;
 import java.util.Set;
 
@@ -32,18 +29,9 @@ import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 
-import org.richfaces.cdk.CdkException;
-import org.richfaces.cdk.CdkProcessingException;
 import org.richfaces.cdk.LibraryBuilder;
-import org.richfaces.cdk.Logger;
-import org.richfaces.cdk.ModelBuilder;
-import org.richfaces.cdk.ModelValidator;
-import org.richfaces.cdk.apt.processors.CdkAnnotationProcessor;
-import org.richfaces.cdk.model.ComponentLibrary;
 
 import com.google.inject.Inject;
 
@@ -58,13 +46,7 @@ import com.google.inject.Inject;
  */
 public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor {
     private static final Set<String> PROCESSED_ANNOTATION = Collections.singleton("*");
-    @Inject
-    private Logger log;
-    @Inject
-    private Set<CdkAnnotationProcessor> processors;
-    // TODO - set library as parameter.
-    @Inject
-    private ComponentLibrary library;
+    
     
     @Inject
     private SourceUtilsProvider sourceUtilsProducer;
@@ -75,6 +57,8 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
     @Inject
     LibraryWorker worker;
     
+    private boolean firstRound = true;
+    
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -84,94 +68,22 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+        if (firstRound) {
+            worker.beforeJavaSourceProcessing();
+            firstRound = false;
+        }
+        
         if (!roundEnv.processingOver()) {
-            // Process annotations.
-            for (CdkAnnotationProcessor process : processors) {
-                processAnnotation(process, roundEnv);
-            }
+            worker.processJavaSource(processingEnv, roundEnv);
         } else {
-            worker.afterJavaSourceProcessing();
+            processNonJavaSources();
         }
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.richfaces.cdk.apt.CdkProcessor#processNonJavaSources()
-     */
+    @Override
     public void processNonJavaSources() {
-        
-    }
-
-    protected void processAnnotation(CdkAnnotationProcessor processor, RoundEnvironment environment) {
-        Class<? extends Annotation> processedAnnotation = processor.getProcessedAnnotation();
-        log.debug("Process all elements annotated with " + processedAnnotation.getName());
-        Target target = processedAnnotation.getAnnotation(Target.class);
-        Set<? extends Element> rootElements = environment.getRootElements();
-        for (Element element : rootElements) {
-            if (isAppropriateTarget(element, target)) {
-                processElement(processor, processedAnnotation, element);
-            } else {
-                for (Element enclosedElement : element.getEnclosedElements()) {
-                    if (isAppropriateTarget(enclosedElement, target)) {
-                        processElement(processor, processedAnnotation, enclosedElement);
-                    }
-                }
-            }
-        }
-    }
-
-    private void processElement(CdkAnnotationProcessor processor, Class<? extends Annotation> processedAnnotation,
-            Element element) {
-        if (null != element.getAnnotation(processedAnnotation)) {
-            try {
-                log.debug("Process " + element.getSimpleName() + " annotated with " + processedAnnotation.getName());
-                processor.process(element, library);
-            } catch (CdkProcessingException e) {
-                sendError(element, e);
-            }
-        }
-    }
-
-    private boolean isAppropriateTarget(Element element, Target target) {
-        boolean match = false;
-        ElementKind kind = element.getKind();
-        if (null != target) {
-            for (ElementType targetType : target.value()) {
-                switch (targetType) {
-                    case TYPE:
-                        match |= ElementKind.CLASS.equals(kind) || ElementKind.INTERFACE.equals(kind)
-                                || ElementKind.ENUM.equals(kind);
-                        break;
-                    case PACKAGE:
-                        match |= ElementKind.PACKAGE.equals(kind);
-                        break;
-                    case METHOD:
-                        match |= ElementKind.METHOD.equals(kind);
-                        break;
-                    case FIELD:
-                        match |= ElementKind.FIELD.equals(kind);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        } else {
-            // Annotation without @Target match any element.
-            match = ElementKind.CLASS.equals(kind) || ElementKind.INTERFACE.equals(kind) || ElementKind.ENUM.equals(kind)
-                    || ElementKind.PACKAGE.equals(kind) || ElementKind.METHOD.equals(kind) || ElementKind.FIELD.equals(kind);
-        }
-        return match;
-    }
-
-    protected void sendError(Element componentElement, Exception e) {
-        // rise error and continue.
-        processingEnv.getMessager().printMessage(javax.tools.Diagnostic.Kind.ERROR, e.getMessage(), componentElement);
-    }
-
-    protected void sendError(CdkException e) {
-        processingEnv.getMessager().printMessage(javax.tools.Diagnostic.Kind.ERROR, e.getMessage());
+        worker.afterJavaSourceProcessing();
     }
 
     @Override

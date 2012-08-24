@@ -2,6 +2,9 @@ package org.richfaces.cdk.apt;
 
 import java.util.Set;
 
+import javax.annotation.processing.ProcessingEnvironment;
+import javax.annotation.processing.RoundEnvironment;
+
 import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.CdkWriter;
 import org.richfaces.cdk.Logger;
@@ -15,6 +18,10 @@ public class LibraryWorker {
 
     @Inject
     private Logger log;
+    
+    @Inject
+    JavaSourceProcessor javaSourceProcessor;
+    
     @Inject
     private Set<CdkWriter> generators;
 
@@ -27,6 +34,10 @@ public class LibraryWorker {
     private ModelValidator validator;
 
     protected void beforeJavaSourceProcessing() {
+    }
+    
+    protected void processJavaSource(ProcessingEnvironment processingEnv, RoundEnvironment roundEnv) {
+        javaSourceProcessor.process(processingEnv, roundEnv);
     }
     
     protected void afterJavaSourceProcessing() {
