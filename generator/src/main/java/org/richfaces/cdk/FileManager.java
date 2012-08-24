@@ -26,7 +26,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.Date;
 
 /**
  * <p class="changed_added_4_0">

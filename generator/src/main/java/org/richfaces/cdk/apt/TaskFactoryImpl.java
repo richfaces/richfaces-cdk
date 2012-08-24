@@ -90,10 +90,10 @@ public class TaskFactoryImpl implements CompilationTaskFactory {
     public CompilationTask get() throws AptException {
         if (sourceFolders.getFiles().iterator().hasNext()) {
             final Date cacheModified = new Date(IncrementalLibraryWorker.javaCache.lastModified());
-            
+
             Iterable<? extends JavaFileObject> sourceObjects = getFileManager().getJavaFileObjectsFromFiles(
                     sourceFolders.getFiles());
-            
+
             sourceObjects = Iterables.filter(sourceObjects, new Predicate<Object>() {
                 @Override
                 public boolean apply(Object input) {
@@ -102,12 +102,12 @@ public class TaskFactoryImpl implements CompilationTaskFactory {
                     return sourceModified.after(cacheModified);
                 }
             });
-            
+
             if (sourceObjects.iterator().hasNext()) {
                 if (log.isDebugEnabled()) {
                     compilerOptions.add("-verbose");
                 }
-    
+
                 CompilationTask task = getJavaCompiler().getTask(null, getFileManager(),
                         new DiagnosticListenerImplementation(log, locale), compilerOptions, null, sourceObjects);
                 task.setLocale(locale);
@@ -115,7 +115,7 @@ public class TaskFactoryImpl implements CompilationTaskFactory {
                 return task;
             }
         }
-        
+
         // no Java sources, try to build from xml files
         return new CompilationTask() {
             @Override

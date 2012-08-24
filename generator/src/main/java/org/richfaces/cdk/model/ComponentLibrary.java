@@ -324,7 +324,7 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
     public void setMetadataComplete(boolean metadataComplete) {
         this.metadataComplete = metadataComplete;
     }
-    
+
     public Boolean getMetadataComplete() {
         return metadataComplete;
     }
@@ -417,7 +417,7 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
             // TODO Auto-generated catch block
         }
     }
-    
+
     public void merge(ComponentLibrary library) {
         this.getComponents().addAll(library.getComponents());
         this.getRenderKits().addAll(library.getRenderKits());

@@ -95,22 +95,22 @@ public class RendererClassGenerator implements CdkWriter {
                 if (renderer.hasChanged()) {
                     Template template = renderer.getTemplate();
                     if (null != template) {
-                        Collection<PropertyBase> attributes = ModelSet.<PropertyBase> create();
-    
+                        Collection<PropertyBase> attributes = ModelSet.<PropertyBase>create();
+
                         ComponentModel component = findComponentByRenderer(renderer, library);
                         if (component != null) {
                             attributes.addAll(component.getAttributes());
                         }
-    
+
                         attributes.addAll(renderer.getAttributes());
                         RendererClassVisitor visitor = visitorFactory.createVisitor(template.getInterface(), attributes);
-    
+
                         template.getImplementation().beforeVisit(visitor);
-    
+
                         if (template.getFragments() != null) {
                             for (CdkFragmentElement fragment : template.getFragments()) {
                                 CompositeFragmentImplementation implementation = fragment.getFragmentImplementation();
-    
+
                                 fragment.beforeVisit(visitor);
                                 if (implementation != null) {
                                     implementation.visit(visitor);
@@ -118,16 +118,16 @@ public class RendererClassGenerator implements CdkWriter {
                                 fragment.afterVisit(visitor);
                             }
                         }
-    
+
                         template.getImplementation().visitChildren(visitor);
                         template.getImplementation().afterVisit(visitor);
-    
+
                         JavaClass javaClass = visitor.getGeneratedClass();
                         String fullName = javaClass.getName();
                         Writer outFile = null;
                         try {
                             outFile = output.createOutput(fullName.replace('.', '/') + ".java", library.lastModified());
-    
+
                             if (null != outFile) {
                                 this.renderer.writeTemplate("class.ftl", javaClass, outFile);
                             }

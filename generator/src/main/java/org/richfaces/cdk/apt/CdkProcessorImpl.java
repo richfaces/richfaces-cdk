@@ -46,19 +46,17 @@ import com.google.inject.Inject;
  */
 public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor {
     private static final Set<String> PROCESSED_ANNOTATION = Collections.singleton("*");
-    
-    
+
     @Inject
     private SourceUtilsProvider sourceUtilsProducer;
-    
+
     @Inject
     LibraryBuilder builder;
-    
+
     @Inject
     LibraryWorker worker;
-    
+
     private boolean firstRound = true;
-    
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -72,7 +70,7 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
             worker.beforeJavaSourceProcessing();
             firstRound = false;
         }
-        
+
         if (!roundEnv.processingOver()) {
             worker.processJavaSource(processingEnv, roundEnv);
         } else {

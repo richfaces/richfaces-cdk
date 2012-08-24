@@ -78,7 +78,7 @@ public class RendererTemplateParser implements ModelBuilder {
     private Logger log;
     private FileManager sources;
     private FragmentParser fragmentParser;
-    
+
     private File cacheFile = new File("target/nonjava-cache.ser");
 
     /**
@@ -108,8 +108,7 @@ public class RendererTemplateParser implements ModelBuilder {
     @Override
     public void build() throws CdkException {
         Date cacheModified = new Date(IncrementalLibraryWorker.nonJavaCache.lastModified());
-        
-        
+
         Iterable<File> sourceFiles = this.sources.getFiles();
         for (File file : sourceFiles) {
             Date sourceModified = new Date(file.lastModified());
@@ -121,7 +120,7 @@ public class RendererTemplateParser implements ModelBuilder {
 
     public void build(final File file) throws CdkException {
         ComponentLibrary library = libraryHolder.getLibrary();
-        
+
         log.debug("RendererTemplateParser.build");
         final String absolutePath = file.getAbsolutePath();
         log.debug("  - file = " + absolutePath);
@@ -155,7 +154,7 @@ public class RendererTemplateParser implements ModelBuilder {
 
     protected RendererModel mergeTemplateIntoModel(Template template, RendererModel renderer) throws CdkException {
         ComponentLibrary library = libraryHolder.getLibrary();
-        
+
         CompositeInterface compositeInterface = template.getInterface();
 
         if (renderer == null) {

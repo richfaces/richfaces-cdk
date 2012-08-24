@@ -43,7 +43,7 @@ public class ModelModule extends AbstractModule {
      */
     @Override
     protected void configure() {
-//      bind(ComponentLibrary.class).in(Singleton.class);
+        // bind(ComponentLibrary.class).in(Singleton.class);
         bind(ComponentLibraryHolder.class).in(Singleton.class);
         bind(ComponentLibrary.class).toProvider(ComponentLibraryProvider.class);
     }

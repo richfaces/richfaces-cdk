@@ -39,7 +39,7 @@ public class RendererModel extends ModelElementBase implements ModelElement<Rend
     private String templatePath;
     private Template template;
     private boolean rendersChildren;
-    
+
     private boolean changed = true;
 
     public RendererModel() {

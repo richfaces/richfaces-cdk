@@ -47,7 +47,7 @@ import com.google.common.collect.Lists;
  */
 public class ModelSet<E extends ModelElement<? super E>> implements ModelCollection<E>, Set<E>, Serializable {
     private static final long serialVersionUID = -1L;
-    
+
     private final List<E> elements = Lists.newArrayList();
     private Comparator<E> comparator;
 

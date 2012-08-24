@@ -18,10 +18,10 @@ public class LibraryWorkerImpl implements LibraryWorker {
 
     @Inject
     private Logger log;
-    
+
     @Inject
     JavaSourceProcessor javaSourceProcessor;
-    
+
     @Inject
     private Set<CdkWriter> generators;
 
@@ -29,33 +29,42 @@ public class LibraryWorkerImpl implements LibraryWorker {
     private Set<ModelBuilder> builders;
     @Inject
     private ModelValidator validator;
-    
+
     @Inject
     ComponentLibraryHolder libraryHolder;
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.apt.LibraryWorker#beforeJavaSourceProcessing()
      */
     @Override
     public void beforeJavaSourceProcessing() {
     }
-    
-    /* (non-Javadoc)
-     * @see org.richfaces.cdk.apt.LibraryWorker#processJavaSource(javax.annotation.processing.ProcessingEnvironment, javax.annotation.processing.RoundEnvironment)
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.richfaces.cdk.apt.LibraryWorker#processJavaSource(javax.annotation.processing.ProcessingEnvironment,
+     * javax.annotation.processing.RoundEnvironment)
      */
     @Override
     public void processJavaSource(ProcessingEnvironment processingEnv, RoundEnvironment roundEnv) {
         javaSourceProcessor.process(processingEnv, roundEnv);
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.apt.LibraryWorker#afterJavaSourceProcessing()
      */
     @Override
     public void afterJavaSourceProcessing() {
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.apt.LibraryWorker#processNonJavaSources()
      */
     @Override
@@ -71,7 +80,9 @@ public class LibraryWorkerImpl implements LibraryWorker {
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.apt.LibraryWorker#verify()
      */
     @Override
@@ -85,8 +96,10 @@ public class LibraryWorkerImpl implements LibraryWorker {
             e.printStackTrace();
         }
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     *
      * @see org.richfaces.cdk.apt.LibraryWorker#generate()
      */
     @Override

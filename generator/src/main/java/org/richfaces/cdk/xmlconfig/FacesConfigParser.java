@@ -66,7 +66,7 @@ public class FacesConfigParser implements ModelBuilder {
     @Override
     public void build() throws CdkException {
         final ComponentLibrary library = libraryHolder.getLibrary();
-        
+
         for (File file : configFiles.getFiles()) {
             try {
                 FacesConfigBean unmarshal = unmarshalFacesConfig(file);

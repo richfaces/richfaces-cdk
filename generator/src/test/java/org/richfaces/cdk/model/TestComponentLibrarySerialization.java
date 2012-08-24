@@ -11,24 +11,24 @@ import org.junit.Test;
 import org.richfaces.cdk.util.SerializationUtils;
 
 public class TestComponentLibrarySerialization {
-    
+
     @Test
     public void testComponentSerialization() {
         // having
         ComponentModel component = new ComponentModel();
         component.setId(new FacesId("faces-id"));
         component.setFamily(new FacesId("faces-family"));
-        
+
         ComponentLibrary library = new ComponentLibrary();
         library.getComponents().add(component);
-        
+
         // when
         library = serializeDeserialize(library);
-        
+
         // then
         Iterator<ComponentModel> iterator = library.getComponents().iterator();
         assertTrue("deserialized library should contain at least one component", iterator.hasNext());
-        
+
         component = iterator.next();
         assertNotNull(component);
         assertNotNull(component.getId());
@@ -38,7 +38,7 @@ public class TestComponentLibrarySerialization {
         assertNotNull(component.getFamily());
         assertEquals(component.getFamily().getType(), "faces-family");
     }
-    
+
     private <T extends Serializable> T serializeDeserialize(T object) {
         String base64 = SerializationUtils.serializeToBase64(object);
         T deserialized = SerializationUtils.deserializeFromBase64(base64);

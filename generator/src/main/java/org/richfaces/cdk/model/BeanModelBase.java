@@ -33,16 +33,16 @@ import java.util.Comparator;
  */
 public class BeanModelBase extends DescriptionGroupBase {
     private final ModelCollection<PropertyBase> attributes = ModelSet.<PropertyBase>create(new PropertyBaseComparator());
-    
+
     private static class PropertyBaseComparator implements Comparator<PropertyBase>, Serializable {
-            @Override
-            public int compare(PropertyBase o1, PropertyBase o2) {
-                if (o1 != null && o2 != null && null != o1.getName() && null != o2.getName()) {
-                    return o1.getName().compareTo(o2.getName());
-                } else {
-                    return 0;
-                }
+        @Override
+        public int compare(PropertyBase o1, PropertyBase o2) {
+            if (o1 != null && o2 != null && null != o1.getName() && null != o2.getName()) {
+                return o1.getName().compareTo(o2.getName());
+            } else {
+                return 0;
             }
+        }
     }
 
     /**

@@ -33,9 +33,9 @@ import com.google.inject.Inject;
  * <p class="changed_added_4_0">
  * That class compiles files from sources and process annotations
  * </p>
- * 
+ *
  * @author asmirnov@exadel.com
- * 
+ *
  */
 public class AptBuilder implements LibraryBuilder {
 

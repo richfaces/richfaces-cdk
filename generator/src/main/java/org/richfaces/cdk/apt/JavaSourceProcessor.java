@@ -19,27 +19,26 @@ import org.richfaces.cdk.model.ComponentLibrary;
 import com.google.inject.Inject;
 
 public class JavaSourceProcessor {
-    
+
     @Inject
     private Logger log;
     @Inject
     private Set<CdkAnnotationProcessor> processors;
-    
+
     @Inject
     private ComponentLibraryHolder libraryHolder;
-    
+
     private ProcessingEnvironment processingEnv;
-    
-    
+
     public void process(ProcessingEnvironment processingEnv, RoundEnvironment roundEnv) {
         this.processingEnv = processingEnv;
-        
-     // Process annotations.
+
+        // Process annotations.
         for (CdkAnnotationProcessor process : processors) {
             processAnnotation(process, roundEnv);
         }
     }
-    
+
     protected void processAnnotation(CdkAnnotationProcessor processor, RoundEnvironment environment) {
         Class<? extends Annotation> processedAnnotation = processor.getProcessedAnnotation();
         log.debug("Process all elements annotated with " + processedAnnotation.getName());

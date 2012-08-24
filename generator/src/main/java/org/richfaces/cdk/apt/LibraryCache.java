@@ -9,11 +9,11 @@ import org.richfaces.cdk.util.SerializationUtils;
 import com.google.common.io.Files;
 
 public class LibraryCache {
-    
+
     private boolean cachingEnabled = true;
-    
+
     private File cacheFile;
-    
+
     public LibraryCache(File cacheFile) {
         this.cacheFile = cacheFile;
     }
@@ -21,7 +21,7 @@ public class LibraryCache {
     public boolean available() {
         return cachingEnabled && cacheFile.exists();
     }
-    
+
     public long lastModified() {
         return available() ? cacheFile.lastModified() : 0L;
     }

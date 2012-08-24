@@ -22,7 +22,6 @@
  */
 package org.richfaces.cdk;
 
-
 /**
  * <p class="changed_added_4_0">
  * That class builds JSF library model from different sources. It acts as "controller" for whole CDK generation process.

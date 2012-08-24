@@ -29,7 +29,7 @@ public final class ComponentModel extends ModelElementBase implements ModelEleme
     private FacesId rendererType;
     private String rendererTemplate;
     private ComponentModel parent;
-    
+
     private boolean changed = true;
 
     public ComponentModel(FacesId key) {
@@ -52,7 +52,7 @@ public final class ComponentModel extends ModelElementBase implements ModelEleme
     @Override
     public void merge(ComponentModel otherComponent) {
         this.changed = true;
-        
+
         // merge facets, renderers, events ...
         ComponentLibrary.merge(getAttributes(), otherComponent.getAttributes());
         ComponentLibrary.merge(getFacets(), otherComponent.getFacets());
