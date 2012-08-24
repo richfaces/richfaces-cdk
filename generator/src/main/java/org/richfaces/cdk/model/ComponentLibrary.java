@@ -33,6 +33,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.richfaces.cdk.util.JavaUtils;
 import org.richfaces.cdk.util.Strings;
 
 /**
@@ -323,6 +324,10 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
     public void setMetadataComplete(boolean metadataComplete) {
         this.metadataComplete = metadataComplete;
     }
+    
+    public Boolean getMetadataComplete() {
+        return metadataComplete;
+    }
 
     public String getPrefix() {
         return prefix;
@@ -410,6 +415,30 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
         } catch (InvocationTargetException e) {
 
             // TODO Auto-generated catch block
+        }
+    }
+    
+    public void merge(ComponentLibrary library) {
+        this.getComponents().addAll(library.getComponents());
+        this.getRenderKits().addAll(library.getRenderKits());
+        this.getConverters().addAll(library.getConverters());
+        this.getValidators().addAll(library.getValidators());
+        this.getBehaviors().addAll(library.getBehaviors());
+        this.getFunctions().addAll(library.getFunctions());
+        this.getEvents().addAll(library.getEvents());
+        if (null != library.getMetadataComplete()) {
+            this.setMetadataComplete(library.getMetadataComplete());
+        }
+        this.getExtension().getExtensions().addAll(library.getExtension().getExtensions());
+        if (null != library.getTaglib()) {
+            if (null == this.getTaglib()) {
+                this.setTaglib(library.getTaglib());
+            } else {
+                JavaUtils.copyProperties(library.getTaglib(), this.getTaglib());
+            }
+        }
+        if (null != library.getPrefix()) {
+            this.setPrefix(library.getPrefix());
         }
     }
 }

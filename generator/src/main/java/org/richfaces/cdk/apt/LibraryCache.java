@@ -9,11 +9,17 @@ import org.richfaces.cdk.util.SerializationUtils;
 import com.google.common.io.Files;
 
 public class LibraryCache {
-
-    private File cacheFile = new File("target/library-cache.ser");
+    
+    private boolean cachingEnabled = true;
+    
+    private File cacheFile;
+    
+    public LibraryCache(File cacheFile) {
+        this.cacheFile = cacheFile;
+    }
 
     public boolean available() {
-        return cacheFile.exists();
+        return cachingEnabled && cacheFile.exists();
     }
 
     public ComponentLibrary load() {

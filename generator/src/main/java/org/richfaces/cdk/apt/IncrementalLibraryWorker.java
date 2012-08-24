@@ -1,5 +1,7 @@
 package org.richfaces.cdk.apt;
 
+import java.io.File;
+
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 
@@ -12,12 +14,16 @@ import com.google.inject.Injector;
 public class IncrementalLibraryWorker implements LibraryWorker {
 
     private LibraryWorker delegate;
-
-    @Inject
-    LibraryCache cache;
+    
+    private LibraryCache javaCache = new LibraryCache(new File("target/java-cache.ser"));
+    private LibraryCache nonJavaCache = new LibraryCache(new File("target/nonjava-cache.ser"));
     
     @Inject
     ComponentLibraryHolder holder;
+    
+    private ComponentLibrary javaSourcesLibrary = new ComponentLibrary();
+    private ComponentLibrary nonJavaSourcesLibrary = new ComponentLibrary();
+    private ComponentLibrary composedLibrary = new ComponentLibrary();
     
     @Inject
     public IncrementalLibraryWorker(Injector injector) {
@@ -28,11 +34,13 @@ public class IncrementalLibraryWorker implements LibraryWorker {
     @Override
     public void beforeJavaSourceProcessing() {
         delegate.beforeJavaSourceProcessing();
+        
+        holder.setLibrary(javaSourcesLibrary);
     }
 
     @Override
     public void processJavaSource(ProcessingEnvironment processingEnv, RoundEnvironment roundEnv) {
-        if (!cache.available()) {
+        if (!javaCache.available()) {
             delegate.processJavaSource(processingEnv, roundEnv);
         }
     }
@@ -40,24 +48,32 @@ public class IncrementalLibraryWorker implements LibraryWorker {
     @Override
     public void afterJavaSourceProcessing() {
         delegate.afterJavaSourceProcessing();
+        
+        if (javaCache.available()) {
+            javaSourcesLibrary = javaCache.load();
+        } else {
+            javaCache.save(javaSourcesLibrary);
+        }
     }
 
     @Override
     public void processNonJavaSources() throws CdkException {
-        if (!cache.available()) {
+        if (!nonJavaCache.available()) {
+            holder.setLibrary(nonJavaSourcesLibrary);
             delegate.processNonJavaSources();
+            nonJavaCache.save(nonJavaSourcesLibrary);
+        } else {
+            nonJavaSourcesLibrary = nonJavaCache.load();
         }
     }
 
     @Override
     public void verify() throws CdkException {
-        if (!cache.available()) {
-            ComponentLibrary processed = holder.getLibrary();
-            cache.save(processed);
-        } else {
-            ComponentLibrary loaded = cache.load();
-            holder.setLibrary(loaded);
-        }
+        composedLibrary.merge(javaSourcesLibrary);
+        composedLibrary.merge(nonJavaSourcesLibrary);
+        
+        holder.setLibrary(composedLibrary);
+        
         
         delegate.verify();
     }
