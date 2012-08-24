@@ -84,6 +84,9 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
     @Override
     public void processNonJavaSources() {
         worker.afterJavaSourceProcessing();
+        worker.processNonJavaSources();
+        worker.verify();
+        worker.generate();
     }
 
     @Override

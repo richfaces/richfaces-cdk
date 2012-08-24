@@ -7,16 +7,16 @@ import org.richfaces.cdk.CdkException;
 
 public interface LibraryWorker {
 
-    public abstract void beforeJavaSourceProcessing();
+    void beforeJavaSourceProcessing();
 
-    public abstract void processJavaSource(ProcessingEnvironment processingEnv, RoundEnvironment roundEnv);
+    void processJavaSource(ProcessingEnvironment processingEnv, RoundEnvironment roundEnv);
 
-    public abstract void afterJavaSourceProcessing();
+    void afterJavaSourceProcessing();
 
-    public abstract void generate() throws CdkException;
+    void generate() throws CdkException;
 
-    public abstract void processNonJavaSources() throws CdkException;
+    void processNonJavaSources() throws CdkException;
 
-    public abstract void verify() throws CdkException;
+    void verify() throws CdkException;
 
 }

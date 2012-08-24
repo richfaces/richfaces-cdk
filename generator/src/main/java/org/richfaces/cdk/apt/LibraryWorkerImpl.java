@@ -53,24 +53,6 @@ public class LibraryWorkerImpl implements LibraryWorker {
      */
     @Override
     public void afterJavaSourceProcessing() {
-        processNonJavaSources();
-        verify();
-        if (0 == log.getErrorCount()) {
-            generate();
-        }
-    }
-    
-    /* (non-Javadoc)
-     * @see org.richfaces.cdk.apt.LibraryWorker#generate()
-     */
-    @Override
-    public void generate() throws CdkException {
-        if (0 == log.getErrorCount()) {
-            // processing over, generate files.
-            for (CdkWriter generator : generators) {
-                generator.render(library);
-            }
-        }
     }
 
     /* (non-Javadoc)
@@ -100,6 +82,19 @@ public class LibraryWorkerImpl implements LibraryWorker {
         } catch (CdkException e) {
             // TODO: sendError(e);
             e.printStackTrace();
+        }
+    }
+    
+    /* (non-Javadoc)
+     * @see org.richfaces.cdk.apt.LibraryWorker#generate()
+     */
+    @Override
+    public void generate() throws CdkException {
+        if (0 == log.getErrorCount()) {
+            // processing over, generate files.
+            for (CdkWriter generator : generators) {
+                generator.render(library);
+            }
         }
     }
 }
