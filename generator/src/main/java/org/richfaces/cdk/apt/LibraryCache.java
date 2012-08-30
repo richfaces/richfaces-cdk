@@ -1,98 +1,14 @@
 package org.richfaces.cdk.apt;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import org.richfaces.cdk.FileManager;
-import org.richfaces.cdk.Logger;
-import org.richfaces.cdk.Output;
-import org.richfaces.cdk.Outputs;
 import org.richfaces.cdk.model.ComponentLibrary;
-import org.richfaces.cdk.util.SerializationUtils;
 
-import com.google.common.io.Files;
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
+public interface LibraryCache {
 
-public class LibraryCache {
+    boolean available();
 
-    public final static String CACHE_ENABLED_OPTION = "libraryCachingEnabled";
+    long lastModified();
 
-    private CacheType cacheType;
+    ComponentLibrary load();
 
-    @Inject
-    private Logger log;
-
-    @Inject
-    @Output(Outputs.LIBRARY_CACHE)
-    private FileManager fileManager;
-
-    @Inject(optional = true)
-    @Named(CACHE_ENABLED_OPTION)
-    private boolean cachingEnabled = true;
-
-    private ComponentLibrary cachedLibrary = null;
-
-    public LibraryCache(CacheType cacheType) {
-        this.cacheType = cacheType;
-    }
-
-    public boolean available() {
-        try {
-            if (cachedLibrary != null) {
-                return true;
-            }
-            if (cachingEnabled && getCacheFile().exists()) {
-                load();
-                return true;
-            }
-        } catch (FileNotFoundException e) {
-        } catch (Exception e) {
-            cachingEnabled = false;
-            log.warn("Unable to load library cache " + getFilename() + ". Full build will be ran and cache rewritten.", e);
-        }
-        return false;
-    }
-
-    public long lastModified() {
-        try {
-            return available() ? getCacheFile().lastModified() : 0L;
-        } catch (FileNotFoundException e) {
-            throw new IllegalStateException(e);
-        }
-    }
-
-    public ComponentLibrary load() {
-        if (cachedLibrary != null) {
-            return cachedLibrary;
-        }
-
-        try {
-            byte[] bytes = Files.toByteArray(getCacheFile());
-            cachedLibrary = SerializationUtils.deserializeFromBytes(bytes);
-            return cachedLibrary;
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
-    }
-
-    public void save(ComponentLibrary library) {
-        try {
-            byte[] bytes = SerializationUtils.serializeToBytes(library);
-            fileManager.createOutput(getFilename(), System.currentTimeMillis());
-            Files.write(bytes, getCacheFile());
-        } catch (IOException e) {
-            throw new IllegalStateException("Can't write to library cache file " + getFilename(), e);
-        }
-    }
-
-    private File getCacheFile() throws FileNotFoundException {
-        String filename = getFilename();
-        return fileManager.getFile(filename);
-    }
-
-    private String getFilename() {
-        return cacheType + ".ser";
-    }
+    void save(ComponentLibrary library);
 }
