@@ -29,11 +29,6 @@ public class LibraryCompilerWrapper implements LibraryCompiler {
     }
 
     @Override
-    public void generate() throws CdkException {
-        this.delegate.generate();
-    }
-
-    @Override
     public void processNonJavaSources() throws CdkException {
         this.delegate.processNonJavaSources();
     }

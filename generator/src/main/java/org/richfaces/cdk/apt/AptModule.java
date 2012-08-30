@@ -78,5 +78,6 @@ public class AptModule extends AbstractModule {
         bind(SourceUtils.class).toProvider(SourceUtilsProvider.class);
         bind(LibraryCompiler.class).to(IncrementalLibraryCompiler.class);
         bind(JavaSourceProcessor.class).in(Singleton.class);
+        bind(LibraryGenerator.class).to(DefaultLibraryGenerator.class);
     }
 }

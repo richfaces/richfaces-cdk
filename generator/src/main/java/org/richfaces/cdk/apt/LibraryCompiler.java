@@ -13,8 +13,6 @@ public interface LibraryCompiler {
 
     void afterJavaSourceProcessing();
 
-    void generate() throws CdkException;
-
     void processNonJavaSources() throws CdkException;
 
     void verify() throws CdkException;

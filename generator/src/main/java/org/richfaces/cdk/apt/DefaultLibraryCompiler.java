@@ -6,7 +6,6 @@ import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 
 import org.richfaces.cdk.CdkException;
-import org.richfaces.cdk.CdkWriter;
 import org.richfaces.cdk.Logger;
 import org.richfaces.cdk.ModelBuilder;
 import org.richfaces.cdk.ModelValidator;
@@ -20,10 +19,7 @@ public class DefaultLibraryCompiler implements LibraryCompiler {
     private Logger log;
 
     @Inject
-    JavaSourceProcessor javaSourceProcessor;
-
-    @Inject
-    private Set<CdkWriter> generators;
+    private JavaSourceProcessor javaSourceProcessor;
 
     @Inject
     private Set<ModelBuilder> builders;
@@ -93,21 +89,6 @@ public class DefaultLibraryCompiler implements LibraryCompiler {
         } catch (CdkException e) {
             // TODO: sendError(e);
             e.printStackTrace();
-        }
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.richfaces.cdk.apt.LibraryWorker#generate()
-     */
-    @Override
-    public void generate() throws CdkException {
-        if (0 == log.getErrorCount()) {
-            // processing over, generate files.
-            for (CdkWriter generator : generators) {
-                generator.render(library);
-            }
         }
     }
 }

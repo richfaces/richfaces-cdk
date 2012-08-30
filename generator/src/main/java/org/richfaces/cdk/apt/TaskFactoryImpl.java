@@ -138,7 +138,7 @@ public class TaskFactoryImpl implements CompilationTaskFactory {
 
             @Override
             public Boolean call() {
-                cdkProcessor.processNonJavaSources();
+                cdkProcessor.continueAfterJavaSourceProcessing();
                 return 0 == log.getErrorCount();
             }
         };

@@ -59,6 +59,7 @@ public abstract class CdkTestBase implements Module {
     public void configure(Binder binder) {
         binder.bind(Locale.class).toInstance(Locale.getDefault());
         binder.bind(Charset.class).toInstance(Charset.defaultCharset());
+        
         for (CacheType cacheType : CacheType.values()) {
             binder.bind(LibraryCache.class).annotatedWith(new CacheImpl(cacheType)).toInstance(new EmptyLibraryCache());
         }

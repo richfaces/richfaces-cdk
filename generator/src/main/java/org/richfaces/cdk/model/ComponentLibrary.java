@@ -36,6 +36,8 @@ import java.util.NoSuchElementException;
 import org.richfaces.cdk.util.JavaUtils;
 import org.richfaces.cdk.util.Strings;
 
+import com.google.inject.Singleton;
+
 /**
  * <p class="changed_added_4_0">
  * That class contains model of all JSF components asscoiated with that project
@@ -47,6 +49,7 @@ import org.richfaces.cdk.util.Strings;
  * @author asmirnov@exadel.com
  *
  */
+@Singleton
 public class ComponentLibrary implements Serializable, Extensible<ConfigExtension>, Trackable, Visitable, Cacheable {
     public static final String CDK_EXTENSIONS_NAMESPACE = "http://jboss.org/schema/richfaces/cdk/extensions";
     public static final String FACES_CONFIG_NAMESPACE = "http://java.sun.com/xml/ns/javaee";

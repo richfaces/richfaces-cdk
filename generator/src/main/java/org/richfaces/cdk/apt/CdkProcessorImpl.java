@@ -31,7 +31,7 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
 
-import org.richfaces.cdk.LibraryBuilder;
+import org.richfaces.cdk.Logger;
 
 import com.google.inject.Inject;
 
@@ -51,10 +51,13 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
     private SourceUtilsProvider sourceUtilsProducer;
 
     @Inject
-    LibraryBuilder builder;
-
+    private LibraryCompiler compiler;
+    
     @Inject
-    LibraryCompiler worker;
+    private LibraryGenerator generator;
+    
+    @Inject
+    private Logger log;
 
     private boolean firstRound = true;
 
@@ -66,25 +69,27 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        if (firstRound) {
-            worker.beforeJavaSourceProcessing();
-            firstRound = false;
-        }
-
         if (!roundEnv.processingOver()) {
-            worker.processJavaSource(processingEnv, roundEnv);
+            if (firstRound) {
+                firstRound = false;
+                compiler.beforeJavaSourceProcessing();
+            }
+            compiler.processJavaSource(processingEnv, roundEnv);
         } else {
-            processNonJavaSources();
+            compiler.afterJavaSourceProcessing();
+            continueAfterJavaSourceProcessing();
         }
         return false;
     }
 
     @Override
-    public void processNonJavaSources() {
-        worker.afterJavaSourceProcessing();
-        worker.processNonJavaSources();
-        worker.verify();
-        worker.generate();
+    public void continueAfterJavaSourceProcessing() {
+        
+        compiler.processNonJavaSources();
+        compiler.verify();
+        if (0 == log.getErrorCount()) {
+            generator.generate();
+        }
     }
 
     @Override
