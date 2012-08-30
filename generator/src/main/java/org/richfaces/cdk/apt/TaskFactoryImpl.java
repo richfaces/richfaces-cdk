@@ -22,6 +22,8 @@
  */
 package org.richfaces.cdk.apt;
 
+import static org.richfaces.cdk.apt.CacheType.JAVA_SOURCES;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -40,6 +42,7 @@ import javax.tools.StandardJavaFileManager;
 import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
 
+import org.richfaces.cdk.Cache;
 import org.richfaces.cdk.CdkClassLoader;
 import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.FileManager;
@@ -78,6 +81,11 @@ public class TaskFactoryImpl implements CompilationTaskFactory {
     private FileManager sourceFolders;
     @Inject
     private CdkProcessor cdkProcessor;
+    
+    @Inject @Cache(JAVA_SOURCES)
+    public LibraryCache javaCache;
+    
+    
     private JavaCompiler javaCompiler;
     private StandardJavaFileManager fileManager;
 
@@ -89,7 +97,7 @@ public class TaskFactoryImpl implements CompilationTaskFactory {
     @Override
     public CompilationTask get() throws AptException {
         if (sourceFolders.getFiles().iterator().hasNext()) {
-            final Date cacheModified = new Date(IncrementalLibraryWorker.javaCache.lastModified());
+            final Date cacheModified = new Date(javaCache.lastModified());
 
             Iterable<? extends JavaFileObject> sourceObjects = getFileManager().getJavaFileObjectsFromFiles(
                     sourceFolders.getFiles());

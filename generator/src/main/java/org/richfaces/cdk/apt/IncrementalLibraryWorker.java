@@ -1,10 +1,12 @@
 package org.richfaces.cdk.apt;
 
-import java.io.File;
+import static org.richfaces.cdk.apt.CacheType.JAVA_SOURCES;
+import static org.richfaces.cdk.apt.CacheType.NON_JAVA_SOURCES;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 
+import org.richfaces.cdk.Cache;
 import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.model.ComponentLibrary;
 
@@ -15,9 +17,11 @@ public class IncrementalLibraryWorker implements LibraryWorker {
 
     private LibraryWorker delegate;
 
-    // TODO use Guice here
-    public static LibraryCache javaCache = new LibraryCache(new File("target/java-cache.ser"));
-    public static LibraryCache nonJavaCache = new LibraryCache(new File("target/nonjava-cache.ser"));
+    @Inject @Cache(JAVA_SOURCES)
+    public LibraryCache javaCache;
+    
+    @Inject @Cache(NON_JAVA_SOURCES)
+    public LibraryCache nonJavaCache;
 
     @Inject
     ComponentLibraryHolder holder;

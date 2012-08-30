@@ -14,8 +14,8 @@ public class LibraryCache {
 
     private File cacheFile;
 
-    public LibraryCache(File cacheFile) {
-        this.cacheFile = cacheFile;
+    public LibraryCache(CacheType cacheType) {
+        this.cacheFile = new File("target/cache." + cacheType + ".ser");
     }
 
     public boolean available() {
