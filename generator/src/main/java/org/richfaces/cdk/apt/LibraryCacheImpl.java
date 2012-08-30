@@ -48,7 +48,7 @@ public class LibraryCacheImpl implements LibraryCache {
         } catch (FileNotFoundException e) {
         } catch (Exception e) {
             cachingEnabled = false;
-            log.warn("Unable to load library cache " + getFilename() + ". Full build will be ran and cache rewritten.", e);
+            log.info("Unable to load library cache " + getFilename() + ". Full build will be ran and cache rewritten.", e);
         }
         return false;
     }
@@ -78,10 +78,14 @@ public class LibraryCacheImpl implements LibraryCache {
     public void save(ComponentLibrary library) {
         try {
             byte[] bytes = SerializationUtils.serializeToBytes(library);
-            fileManager.createOutput(getFilename(), System.currentTimeMillis());
-            Files.write(bytes, getCacheFile());
-        } catch (IOException e) {
-            throw new IllegalStateException("Can't write to library cache file " + getFilename(), e);
+            try {
+                fileManager.createOutput(getFilename(), System.currentTimeMillis());
+                Files.write(bytes, getCacheFile());
+            } catch (IOException e) {
+                log.warn("Can't write to library cache file " + getFilename(), e);
+            }
+        } catch (Exception e) {
+            log.warn("can't serialize library model", e);
         }
     }
 
