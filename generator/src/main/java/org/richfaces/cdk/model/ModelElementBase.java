@@ -1,5 +1,6 @@
 package org.richfaces.cdk.model;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import com.google.common.collect.Lists;
@@ -12,7 +13,7 @@ import com.google.common.collect.Lists;
  * @author asmirnov@exadel.com
  *
  */
-public class ModelElementBase extends BeanModelBase implements GeneratedFacesComponent, ViewElement {
+public class ModelElementBase extends BeanModelBase implements GeneratedFacesComponent, ViewElement, Serializable {
     private FacesId id;
     private ClassName targetClass;
     private ClassName baseClass;

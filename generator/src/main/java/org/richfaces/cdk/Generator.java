@@ -34,6 +34,9 @@ import java.util.Map;
 import java.util.logging.Level;
 
 import org.richfaces.cdk.apt.AptModule;
+import org.richfaces.cdk.apt.CacheType;
+import org.richfaces.cdk.apt.LibraryCache;
+import org.richfaces.cdk.apt.LibraryCacheImpl;
 import org.richfaces.cdk.generate.java.ClassGeneratorModule;
 import org.richfaces.cdk.generate.taglib.TaglibModule;
 import org.richfaces.cdk.model.ModelModule;
@@ -176,6 +179,11 @@ public class Generator {
             }
             for (Map.Entry<Sources, FileManager> entry : sources.entrySet()) {
                 bind(FileManager.class).annotatedWith(new SourceImpl(entry.getKey())).toInstance(entry.getValue());
+            }
+            for (CacheType cacheType : CacheType.values()) {
+                LibraryCache cache = new LibraryCacheImpl(cacheType);
+                requestInjection(cache);
+                bind(LibraryCache.class).annotatedWith(new CacheImpl(cacheType)).toInstance(cache);
             }
             bind(NamingConventions.class).to(RichFacesConventions.class);
             bind(ModelValidator.class).to(ValidatorImpl.class);

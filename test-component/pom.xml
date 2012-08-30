@@ -16,7 +16,7 @@
     <name>RichFaces CDK: Test Component</name>
 
     <dependencies>
-        
+
         <dependency>
             <groupId>org.richfaces.ui.common</groupId>
             <artifactId>richfaces-ui-common-ui</artifactId>
@@ -60,6 +60,27 @@
                         <goals>
                             <goal>generate</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/wro4j</source>
+                                <source>${project.build.directory}/generated-sources/main/java</source>
+                                <source>${project.build.directory}/generated-sources/main/resources</source>
+                            </sources>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

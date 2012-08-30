@@ -20,6 +20,8 @@
  */
 package org.richfaces.cdk.model;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -35,7 +37,9 @@ import org.richfaces.cdk.xmlconfig.model.ClassAdapter;
  */
 @XmlType(name = "taglib-configType", namespace = ComponentLibrary.CDK_EXTENSIONS_NAMESPACE)
 @XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
-public class Taglib {
+public class Taglib implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String tlibVersion = null;
     private ClassName validatorClass = null;
     private String displayName;

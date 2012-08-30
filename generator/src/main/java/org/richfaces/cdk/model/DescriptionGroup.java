@@ -1,5 +1,7 @@
 package org.richfaces.cdk.model;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -72,7 +74,7 @@ public interface DescriptionGroup {
      * @author asmirnov@exadel.com
      */
     @XmlType(name = "iconType", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE, propOrder = { "smallIcon", "largeIcon" })
-    public static final class Icon {
+    public static final class Icon implements Serializable {
         private String largeIcon;
         private String smallIcon;
 

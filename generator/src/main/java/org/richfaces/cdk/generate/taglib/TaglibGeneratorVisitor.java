@@ -25,7 +25,6 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.richfaces.cdk.annotations.TagType;
-import org.richfaces.cdk.model.AttributeModel;
 import org.richfaces.cdk.model.BeanModelBase;
 import org.richfaces.cdk.model.BehaviorModel;
 import org.richfaces.cdk.model.ComponentLibrary;

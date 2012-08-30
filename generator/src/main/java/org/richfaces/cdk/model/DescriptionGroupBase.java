@@ -21,11 +21,13 @@
  */
 package org.richfaces.cdk.model;
 
+import java.io.Serializable;
+
 /**
  * @author akolonitsky
  * @since Jan 22, 2010
  */
-public class DescriptionGroupBase implements DescriptionGroup, Extensible<ConfigExtension> {
+public class DescriptionGroupBase implements DescriptionGroup, Extensible<ConfigExtension>, Serializable {
     /**
      * <p class="changed_added_4_0">
      * Long description for documentation

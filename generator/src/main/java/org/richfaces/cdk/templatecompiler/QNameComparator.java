@@ -23,6 +23,7 @@ package org.richfaces.cdk.templatecompiler;
 
 import static org.richfaces.cdk.util.ComparatorUtils.nullSafeCompare;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 import javax.xml.namespace.QName;
@@ -31,7 +32,7 @@ import javax.xml.namespace.QName;
  * @author Nick Belaevski
  *
  */
-public final class QNameComparator implements Comparator<QName> {
+public final class QNameComparator implements Comparator<QName>, Serializable {
     public static final Comparator<QName> QNAME_COMPARATOR = new QNameComparator();
 
     private QNameComparator() {

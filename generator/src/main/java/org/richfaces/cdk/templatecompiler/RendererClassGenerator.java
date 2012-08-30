@@ -92,54 +92,56 @@ public class RendererClassGenerator implements CdkWriter {
     public void render(ComponentLibrary library) throws CdkException {
         for (RenderKitModel renderKit : library.getRenderKits()) {
             for (RendererModel renderer : renderKit.getRenderers()) {
-                Template template = renderer.getTemplate();
-                if (null != template) {
-                    Collection<PropertyBase> attributes = ModelSet.<PropertyBase> create();
+                if (renderer.hasChanged()) {
+                    Template template = renderer.getTemplate();
+                    if (null != template) {
+                        Collection<PropertyBase> attributes = ModelSet.<PropertyBase>create();
 
-                    ComponentModel component = findComponentByRenderer(renderer, library);
-                    if (component != null) {
-                        attributes.addAll(component.getAttributes());
-                    }
+                        ComponentModel component = findComponentByRenderer(renderer, library);
+                        if (component != null) {
+                            attributes.addAll(component.getAttributes());
+                        }
 
-                    attributes.addAll(renderer.getAttributes());
-                    RendererClassVisitor visitor = visitorFactory.createVisitor(template.getInterface(), attributes);
+                        attributes.addAll(renderer.getAttributes());
+                        RendererClassVisitor visitor = visitorFactory.createVisitor(template.getInterface(), attributes);
 
-                    template.getImplementation().beforeVisit(visitor);
+                        template.getImplementation().beforeVisit(visitor);
 
-                    if (template.getFragments() != null) {
-                        for (CdkFragmentElement fragment : template.getFragments()) {
-                            CompositeFragmentImplementation implementation = fragment.getFragmentImplementation();
+                        if (template.getFragments() != null) {
+                            for (CdkFragmentElement fragment : template.getFragments()) {
+                                CompositeFragmentImplementation implementation = fragment.getFragmentImplementation();
 
-                            fragment.beforeVisit(visitor);
-                            if (implementation != null) {
-                                implementation.visit(visitor);
+                                fragment.beforeVisit(visitor);
+                                if (implementation != null) {
+                                    implementation.visit(visitor);
+                                }
+                                fragment.afterVisit(visitor);
                             }
-                            fragment.afterVisit(visitor);
                         }
-                    }
 
-                    template.getImplementation().visitChildren(visitor);
-                    template.getImplementation().afterVisit(visitor);
+                        template.getImplementation().visitChildren(visitor);
+                        template.getImplementation().afterVisit(visitor);
 
-                    JavaClass javaClass = visitor.getGeneratedClass();
-                    String fullName = javaClass.getName();
-                    Writer outFile = null;
-                    try {
-                        outFile = output.createOutput(fullName.replace('.', '/') + ".java", library.lastModified());
+                        JavaClass javaClass = visitor.getGeneratedClass();
+                        String fullName = javaClass.getName();
+                        Writer outFile = null;
+                        try {
+                            outFile = output.createOutput(fullName.replace('.', '/') + ".java", library.lastModified());
 
-                        if (null != outFile) {
-                            this.renderer.writeTemplate("class.ftl", javaClass, outFile);
-                        }
-                    } catch (IOException e) {
-                        throw new CdkException(e);
-                    } catch (TemplateException e) {
-                        throw new CdkException(e);
-                    } finally {
-                        if (null != outFile) {
-                            try {
-                                outFile.close();
-                            } catch (IOException e) {
-                                log.warn("IOException occured when closing writer for renderer-class", e);
+                            if (null != outFile) {
+                                this.renderer.writeTemplate("class.ftl", javaClass, outFile);
+                            }
+                        } catch (IOException e) {
+                            throw new CdkException(e);
+                        } catch (TemplateException e) {
+                            throw new CdkException(e);
+                        } finally {
+                            if (null != outFile) {
+                                try {
+                                    outFile.close();
+                                } catch (IOException e) {
+                                    log.warn("IOException occured when closing writer for renderer-class", e);
+                                }
                             }
                         }
                     }

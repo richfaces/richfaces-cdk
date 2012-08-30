@@ -22,6 +22,7 @@
  */
 package org.richfaces.cdk.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAnyElement;
@@ -37,7 +38,10 @@ import com.google.common.collect.Lists;
  *
  * @author asmirnov@exadel.com
  */
-public class ConfigExtension {
+public class ConfigExtension implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private List<Element> extensions = Lists.newArrayList();
 
     /**

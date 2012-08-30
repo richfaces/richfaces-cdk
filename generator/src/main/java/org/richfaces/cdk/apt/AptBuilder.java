@@ -22,15 +22,10 @@
  */
 package org.richfaces.cdk.apt;
 
-import java.util.Set;
-
 import javax.tools.JavaCompiler.CompilationTask;
 
 import org.richfaces.cdk.CdkException;
-import org.richfaces.cdk.CdkWriter;
 import org.richfaces.cdk.LibraryBuilder;
-import org.richfaces.cdk.Logger;
-import org.richfaces.cdk.model.ComponentLibrary;
 
 import com.google.inject.Inject;
 
@@ -43,12 +38,9 @@ import com.google.inject.Inject;
  *
  */
 public class AptBuilder implements LibraryBuilder {
-    @Inject
-    private Logger log;
+
     @Inject
     private CompilationTaskFactory taskFactory;
-    @Inject
-    private Set<CdkWriter> generators;
 
     public void build() throws CdkException {
         CompilationTask task = taskFactory.get();
@@ -57,13 +49,4 @@ public class AptBuilder implements LibraryBuilder {
         }
     }
 
-    @Override
-    public void generate(ComponentLibrary library) throws CdkException {
-        if (0 == log.getErrorCount()) {
-            // processing over, generate files.
-            for (CdkWriter generator : generators) {
-                generator.render(library);
-            }
-        }
-    }
 }
