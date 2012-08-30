@@ -38,15 +38,4 @@ public class SerializationUtils {
             throw new IllegalStateException(e);
         }
     }
-
-    public static String serializeToBase64(Serializable object) {
-        byte[] serialized = serializeToBytes(object);
-        return new String(Base64.encodeBase64(serialized));
-    }
-
-    @SuppressWarnings("unchecked")
-    public static <T extends Serializable> T deserializeFromBase64(String serializedObject) {
-        byte[] bytes = Base64.decodeBase64(serializedObject);
-        return (T) deserializeFromBytes(bytes);
-    }
 }

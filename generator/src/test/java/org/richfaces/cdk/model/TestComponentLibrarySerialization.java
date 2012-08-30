@@ -40,8 +40,8 @@ public class TestComponentLibrarySerialization {
     }
 
     private <T extends Serializable> T serializeDeserialize(T object) {
-        String base64 = SerializationUtils.serializeToBase64(object);
-        T deserialized = SerializationUtils.deserializeFromBase64(base64);
+        byte[] serialized = SerializationUtils.serializeToBytes(object);
+        T deserialized = SerializationUtils.deserializeFromBytes(serialized);
         return deserialized;
     }
 }

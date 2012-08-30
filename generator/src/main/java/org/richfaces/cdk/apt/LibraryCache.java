@@ -3,9 +3,9 @@ package org.richfaces.cdk.apt;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.Writer;
 
 import org.richfaces.cdk.FileManager;
+import org.richfaces.cdk.Logger;
 import org.richfaces.cdk.Output;
 import org.richfaces.cdk.Outputs;
 import org.richfaces.cdk.model.ComponentLibrary;
@@ -17,19 +17,22 @@ import com.google.inject.name.Named;
 
 public class LibraryCache {
 
-    public final static  String CACHE_ENABLED_OPTION = "libraryCachingEnabled";
+    public final static String CACHE_ENABLED_OPTION = "libraryCachingEnabled";
 
     private CacheType cacheType;
 
     @Inject
+    private Logger log;
+
+    @Inject
     @Output(Outputs.LIBRARY_CACHE)
     private FileManager fileManager;
-    
+
     @Inject(optional = true)
     @Named(CACHE_ENABLED_OPTION)
     private boolean cachingEnabled = true;
-    
-    private ComponentLibrary cachedLibrary = null; 
+
+    private ComponentLibrary cachedLibrary = null;
 
     public LibraryCache(CacheType cacheType) {
         this.cacheType = cacheType;
@@ -44,7 +47,10 @@ public class LibraryCache {
                 load();
                 return true;
             }
+        } catch (FileNotFoundException e) {
         } catch (Exception e) {
+            cachingEnabled = false;
+            log.warn("Unable to load library cache " + getFilename() + ". Full build will be ran and cache rewritten.", e);
         }
         return false;
     }
@@ -61,11 +67,10 @@ public class LibraryCache {
         if (cachedLibrary != null) {
             return cachedLibrary;
         }
-        
+
         try {
             byte[] bytes = Files.toByteArray(getCacheFile());
-            String base64 = new String(bytes);
-            cachedLibrary = SerializationUtils.deserializeFromBase64(base64);
+            cachedLibrary = SerializationUtils.deserializeFromBytes(bytes);
             return cachedLibrary;
         } catch (IOException e) {
             throw new IllegalStateException(e);
@@ -74,10 +79,9 @@ public class LibraryCache {
 
     public void save(ComponentLibrary library) {
         try {
-            String base64 = SerializationUtils.serializeToBase64(library);
-            Writer writer = fileManager.createOutput(getFilename(), System.currentTimeMillis());
-            writer.write(base64);
-            writer.close();
+            byte[] bytes = SerializationUtils.serializeToBytes(library);
+            fileManager.createOutput(getFilename(), System.currentTimeMillis());
+            Files.write(bytes, getCacheFile());
         } catch (IOException e) {
             throw new IllegalStateException("Can't write to library cache file " + getFilename(), e);
         }
@@ -87,7 +91,7 @@ public class LibraryCache {
         String filename = getFilename();
         return fileManager.getFile(filename);
     }
-    
+
     private String getFilename() {
         return cacheType + ".ser";
     }
