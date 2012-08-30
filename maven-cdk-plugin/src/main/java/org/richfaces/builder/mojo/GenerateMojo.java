@@ -124,6 +124,12 @@ public class GenerateMojo extends AbstractMojo {
      */
     protected File outputTestResourcesDirectory;
     /**
+     * Directory where serialized library will be cached
+     *
+     * @parameter expression="${project.build.directory}/library-cache"
+     */
+    protected File outputLibraryCache;
+    /**
      * Top maven project.
      *
      * @parameter expression="${project}"
@@ -195,6 +201,7 @@ public class GenerateMojo extends AbstractMojo {
         setOutput(generator, outputResourcesDirectory, Outputs.RESOURCES);
         setOutput(generator, outputTestDirectory, Outputs.TEST_JAVA_CLASSES);
         setOutput(generator, outputTestResourcesDirectory, Outputs.TEST_RESOURCES);
+        setOutput(generator, outputLibraryCache, Outputs.LIBRARY_CACHE);
 
         // configure CDK workers.
         setupPlugins(generator);

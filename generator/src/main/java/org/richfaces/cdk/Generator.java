@@ -66,7 +66,6 @@ public class Generator {
     private Charset charset = Charset.defaultCharset();
     private Map<Outputs, FileManager> outputFolders = Maps.newEnumMap(Outputs.class);
     private Map<Sources, FileManager> sources = Maps.newEnumMap(Sources.class);
-    private Map<CacheType, LibraryCache> caches = Maps.newEnumMap(CacheType.class);
     private LibraryBuilder libraryBuilder;
     private Map<String, String> options = Maps.newHashMap();
     private java.util.logging.Logger logger;
@@ -182,6 +181,7 @@ public class Generator {
             }
             for (CacheType cacheType : CacheType.values()) {
                 LibraryCache cache = new LibraryCache(cacheType);
+                requestInjection(cache);
                 bind(LibraryCache.class).annotatedWith(new CacheImpl(cacheType)).toInstance(cache);
             }
             bind(NamingConventions.class).to(RichFacesConventions.class);

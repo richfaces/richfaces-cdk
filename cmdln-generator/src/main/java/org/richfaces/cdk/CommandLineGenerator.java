@@ -80,6 +80,7 @@ public class CommandLineGenerator {
     protected File outputResourcesDirectory;
     protected File outputTestDirectory;
     protected File outputTestResourcesDirectory;
+    protected File outputLibraryCache;
 
     protected Map<String, String> options = new HashMap<String, String>();
 
@@ -98,6 +99,7 @@ public class CommandLineGenerator {
         outputResourcesDirectory = new File(projectRoot, "target/generated-sources/main/resources");
         outputTestDirectory = new File(projectRoot, "target/generated-sources/test/java");
         outputTestResourcesDirectory = new File(projectRoot, "target/generated-sources/test/resources");
+        outputLibraryCache = new File(projectRoot, "target/library-cache");
 
         CustomLogger logger = new CustomLogger();
         logger.setDebugEnabled(debug);
@@ -146,6 +148,7 @@ public class CommandLineGenerator {
         setOutput(generator, outputResourcesDirectory, Outputs.RESOURCES);
         setOutput(generator, outputTestDirectory, Outputs.TEST_JAVA_CLASSES);
         setOutput(generator, outputTestResourcesDirectory, Outputs.TEST_RESOURCES);
+        setOutput(generator, outputLibraryCache, Outputs.LIBRARY_CACHE);
 
         // configure CDK workers.
         setupPlugins(generator);
