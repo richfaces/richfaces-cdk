@@ -5,7 +5,7 @@ import javax.annotation.processing.RoundEnvironment;
 
 import org.richfaces.cdk.CdkException;
 
-public interface LibraryWorker {
+public interface LibraryCompiler {
 
     void beforeJavaSourceProcessing();
 

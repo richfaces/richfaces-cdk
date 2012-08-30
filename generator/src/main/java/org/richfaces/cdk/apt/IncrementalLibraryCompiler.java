@@ -13,9 +13,9 @@ import org.richfaces.cdk.model.ComponentLibrary;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
-public class IncrementalLibraryWorker implements LibraryWorker {
+public class IncrementalLibraryCompiler implements LibraryCompiler {
 
-    private LibraryWorker delegate;
+    private LibraryCompiler delegate;
 
     @Inject @Cache(JAVA_SOURCES)
     public LibraryCache javaCache;
@@ -31,8 +31,8 @@ public class IncrementalLibraryWorker implements LibraryWorker {
     private ComponentLibrary composedLibrary = new ComponentLibrary();
 
     @Inject
-    public IncrementalLibraryWorker(Injector injector) {
-        delegate = new LibraryWorkerImpl();
+    public IncrementalLibraryCompiler(Injector injector) {
+        delegate = new DefaultLibraryCompiler();
         injector.injectMembers(delegate);
     }
 

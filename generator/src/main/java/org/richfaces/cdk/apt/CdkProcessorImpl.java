@@ -54,7 +54,7 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
     LibraryBuilder builder;
 
     @Inject
-    LibraryWorker worker;
+    LibraryCompiler worker;
 
     private boolean firstRound = true;
 

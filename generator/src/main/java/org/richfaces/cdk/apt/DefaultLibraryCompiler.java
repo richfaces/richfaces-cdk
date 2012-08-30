@@ -14,7 +14,7 @@ import org.richfaces.cdk.model.ComponentLibrary;
 
 import com.google.inject.Inject;
 
-public class LibraryWorkerImpl implements LibraryWorker {
+public class DefaultLibraryCompiler implements LibraryCompiler {
 
     @Inject
     private Logger log;
