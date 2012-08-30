@@ -3,9 +3,6 @@ package org.richfaces.cdk.apt;
 import static org.richfaces.cdk.apt.CacheType.JAVA_SOURCES;
 import static org.richfaces.cdk.apt.CacheType.NON_JAVA_SOURCES;
 
-import javax.annotation.processing.ProcessingEnvironment;
-import javax.annotation.processing.RoundEnvironment;
-
 import org.richfaces.cdk.Cache;
 import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.model.ComponentLibrary;
@@ -13,14 +10,14 @@ import org.richfaces.cdk.model.ComponentLibrary;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
-public class IncrementalLibraryCompiler implements LibraryCompiler {
+public class IncrementalLibraryCompiler extends LibraryCompilerWrapper {
 
-    private LibraryCompiler delegate;
-
-    @Inject @Cache(JAVA_SOURCES)
+    @Inject
+    @Cache(JAVA_SOURCES)
     public LibraryCache javaCache;
-    
-    @Inject @Cache(NON_JAVA_SOURCES)
+
+    @Inject
+    @Cache(NON_JAVA_SOURCES)
     public LibraryCache nonJavaCache;
 
     @Inject
@@ -32,25 +29,20 @@ public class IncrementalLibraryCompiler implements LibraryCompiler {
 
     @Inject
     public IncrementalLibraryCompiler(Injector injector) {
-        delegate = new DefaultLibraryCompiler();
+        super(new DefaultLibraryCompiler());
         injector.injectMembers(delegate);
     }
 
     @Override
     public void beforeJavaSourceProcessing() {
-        delegate.beforeJavaSourceProcessing();
+        super.beforeJavaSourceProcessing();
 
         holder.setLibrary(new ComponentLibrary());
     }
 
     @Override
-    public void processJavaSource(ProcessingEnvironment processingEnv, RoundEnvironment roundEnv) {
-        delegate.processJavaSource(processingEnv, roundEnv);
-    }
-
-    @Override
     public void afterJavaSourceProcessing() {
-        delegate.afterJavaSourceProcessing();
+        super.afterJavaSourceProcessing();
 
         ComponentLibrary cachedLibrary = new ComponentLibrary();
         ComponentLibrary additionsToLibrary = holder.getLibrary();
@@ -76,7 +68,8 @@ public class IncrementalLibraryCompiler implements LibraryCompiler {
         }
 
         holder.setLibrary(additionsToLibrary);
-        delegate.processNonJavaSources();
+
+        super.processNonJavaSources();
 
         nonJavaSourcesLibrary.merge(cachedLibrary);
         nonJavaSourcesLibrary.markUnchanged();
@@ -92,12 +85,6 @@ public class IncrementalLibraryCompiler implements LibraryCompiler {
 
         holder.setLibrary(composedLibrary);
 
-        delegate.verify();
+        super.verify();
     }
-
-    @Override
-    public void generate() throws CdkException {
-        delegate.generate();
-    }
-
 }
