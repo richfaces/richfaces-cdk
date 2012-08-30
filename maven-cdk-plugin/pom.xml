@@ -19,6 +19,12 @@
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>sisu-guice</artifactId>
+                    <groupId>org.sonatype.sisu</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
@@ -43,6 +49,12 @@
         <dependency>
             <groupId>org.richfaces.cdk</groupId>
             <artifactId>generator</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>sisu-guice</artifactId>
+                    <groupId>org.sonatype.sisu</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         
         <!-- Test dependencies -->
@@ -123,4 +135,13 @@
 
     <description>Maven plugin for JSF components code generation</description>
     <name>RichFaces CDK Generator Maven Plugin</name>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.sonatype.sisu</groupId>
+                <artifactId>sisu-guice</artifactId>
+                <version>3.1.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

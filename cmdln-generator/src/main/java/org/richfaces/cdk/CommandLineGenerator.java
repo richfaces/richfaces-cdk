@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.codehaus.plexus.util.DirectoryScanner;
+import org.richfaces.cdk.apt.LibraryCache;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
@@ -70,6 +71,9 @@ public class CommandLineGenerator {
     @Parameter(names = { "-h", "--help" }, descriptionKey = "help")
     boolean help = false;
     
+    @Parameter(names = { "-r", "--force-recompile" }, descriptionKey = "forceRecompile")
+    boolean forceRecompile = false;
+    
     private List<String> compileSourceRoots;
     protected String[] sourceIncludes;
     protected String[] sourceExcludes;
@@ -80,6 +84,7 @@ public class CommandLineGenerator {
     protected File outputResourcesDirectory;
     protected File outputTestDirectory;
     protected File outputTestResourcesDirectory;
+    protected File outputLibraryCache;
 
     protected Map<String, String> options = new HashMap<String, String>();
 
@@ -98,6 +103,7 @@ public class CommandLineGenerator {
         outputResourcesDirectory = new File(projectRoot, "target/generated-sources/main/resources");
         outputTestDirectory = new File(projectRoot, "target/generated-sources/test/java");
         outputTestResourcesDirectory = new File(projectRoot, "target/generated-sources/test/resources");
+        outputLibraryCache = new File(projectRoot, "target/library-cache");
 
         CustomLogger logger = new CustomLogger();
         logger.setDebugEnabled(debug);
@@ -146,13 +152,14 @@ public class CommandLineGenerator {
         setOutput(generator, outputResourcesDirectory, Outputs.RESOURCES);
         setOutput(generator, outputTestDirectory, Outputs.TEST_JAVA_CLASSES);
         setOutput(generator, outputTestResourcesDirectory, Outputs.TEST_RESOURCES);
+        setOutput(generator, outputLibraryCache, Outputs.LIBRARY_CACHE);
+        
+        options.put(LibraryCache.CACHE_ENABLED_OPTION, Boolean.toString(!forceRecompile));
 
         // configure CDK workers.
         setupPlugins(generator);
 
         if (null != options) {
-
-            // TODO make it type safe.
             generator.setOptions(options);
         }
 

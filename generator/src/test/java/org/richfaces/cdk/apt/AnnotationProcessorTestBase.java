@@ -109,7 +109,7 @@ public abstract class AnnotationProcessorTestBase extends CdkTestBase {
                 sourceFiles.add(getJavaFile(src));
             }
             binder.bind(FileManager.class).annotatedWith(new SourceImpl(Sources.JAVA_SOURCES))
-                    .toInstance(new SourceFileManagerImpl(sourceFiles, null /*this.testSourceDirectory*/));
+                    .toInstance(new SourceFileManagerImpl(sourceFiles, null /* this.testSourceDirectory */));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

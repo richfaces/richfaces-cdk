@@ -30,7 +30,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.model.ClassName;
 import org.richfaces.cdk.model.FacesId;
 import org.richfaces.cdk.xmlconfig.model.ClassAdapter;

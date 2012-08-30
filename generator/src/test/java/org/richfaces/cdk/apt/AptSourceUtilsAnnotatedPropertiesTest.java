@@ -23,10 +23,8 @@
 package org.richfaces.cdk.apt;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.lang.reflect.Method;
 import java.util.Set;
 
 import javax.annotation.processing.RoundEnvironment;
@@ -64,7 +62,6 @@ public class AptSourceUtilsAnnotatedPropertiesTest extends SourceUtilsTestBase {
         });
     }
 
-
     @Test
     public void testGetBeanProperties() throws Exception {
         execute(new SourceUtilsCallback() {
@@ -84,11 +81,13 @@ public class AptSourceUtilsAnnotatedPropertiesTest extends SourceUtilsTestBase {
             public void process(SourceUtils utils, RoundEnvironment roundEnv) {
                 AptSourceUtils aptUtils = (AptSourceUtils) utils;
                 TypeElement subClassType = (TypeElement) findElement(roundEnv, TEST_SUB_CLASS);
-                Set<BeanProperty> beanPropertiesAnnotatedWith = aptUtils.getBeanPropertiesAnnotatedWith(TestMethodAnnotation.class, subClassType);
+                Set<BeanProperty> beanPropertiesAnnotatedWith = aptUtils.getBeanPropertiesAnnotatedWith(
+                        TestMethodAnnotation.class, subClassType);
                 assertEquals(1, beanPropertiesAnnotatedWith.size());
             }
         });
     }
+
     /*
      * (non-Javadoc)
      *
@@ -96,6 +95,6 @@ public class AptSourceUtilsAnnotatedPropertiesTest extends SourceUtilsTestBase {
      */
     @Override
     protected Iterable<String> sources() {
-        return ImmutableList.of( SUB_CLASS_JAVA, INTERFACE_JAVA);
+        return ImmutableList.of(SUB_CLASS_JAVA, INTERFACE_JAVA);
     }
 }

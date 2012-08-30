@@ -21,6 +21,7 @@
  */
 package org.richfaces.cdk.templatecompiler.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -30,7 +31,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * @author Nick Belaevski
  *
  */
-public class ClassImport {
+public class ClassImport implements Serializable {
     private String packageName;
     private boolean staticImport;
     private List<String> names;

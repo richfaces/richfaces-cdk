@@ -36,6 +36,9 @@ import java.util.logging.LogManager;
 import org.junit.After;
 import org.junit.Before;
 import org.richfaces.cdk.annotations.JsfComponent;
+import org.richfaces.cdk.apt.CacheType;
+import org.richfaces.cdk.apt.LibraryCache;
+import org.richfaces.cdk.model.ComponentLibrary;
 
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Binder;
@@ -56,6 +59,10 @@ public abstract class CdkTestBase implements Module {
     public void configure(Binder binder) {
         binder.bind(Locale.class).toInstance(Locale.getDefault());
         binder.bind(Charset.class).toInstance(Charset.defaultCharset());
+
+        for (CacheType cacheType : CacheType.values()) {
+            binder.bind(LibraryCache.class).annotatedWith(new CacheImpl(cacheType)).toInstance(new EmptyLibraryCache());
+        }
     }
 
     @Before
@@ -129,6 +136,28 @@ public abstract class CdkTestBase implements Module {
             }
         } else {
             throw new Exception("Resource does not exists " + resource);
+        }
+    }
+
+    private static class EmptyLibraryCache implements LibraryCache {
+
+        @Override
+        public void save(ComponentLibrary library) {
+        }
+
+        @Override
+        public ComponentLibrary load() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public long lastModified() {
+            return 0;
+        }
+
+        @Override
+        public boolean available() {
+            return false;
         }
     }
 }

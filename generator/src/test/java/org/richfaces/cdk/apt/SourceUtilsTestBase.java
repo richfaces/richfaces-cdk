@@ -127,7 +127,7 @@ public abstract class SourceUtilsTestBase extends AnnotationProcessorTestBase {
         }
 
         @Override
-        public void processNonJavaSources() {
+        public void continueAfterJavaSourceProcessing() {
             // do nothing
         }
     }

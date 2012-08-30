@@ -21,6 +21,8 @@
  */
 package org.richfaces.cdk.templatecompiler.model;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -28,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Lukas Fryc
  */
 @XmlRootElement(name = "attribute", namespace = Template.COMPOSITE_NAMESPACE)
-public class CompositeAttribute {
+public class CompositeAttribute implements Serializable {
 
     @XmlAttribute(required = true)
     private String name;

@@ -22,8 +22,11 @@
  */
 package org.richfaces.cdk.model;
 
+import org.richfaces.cdk.apt.LibraryProxyInterceptor;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
+import com.google.inject.matcher.Matchers;
 
 /**
  * <p class="changed_added_4_0">
@@ -41,5 +44,10 @@ public class ModelModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(ComponentLibrary.class).in(Singleton.class);
+        bind(ComponentLibraryHolder.class).in(Singleton.class);
+
+        LibraryProxyInterceptor interceptor = new LibraryProxyInterceptor();
+        requestInjection(interceptor);
+        bindInterceptor(Matchers.subclassesOf(ComponentLibrary.class), Matchers.any(), interceptor);
     }
 }

@@ -33,6 +33,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.richfaces.cdk.util.JavaUtils;
 import org.richfaces.cdk.util.Strings;
 
 import com.google.inject.Singleton;
@@ -49,7 +50,7 @@ import com.google.inject.Singleton;
  *
  */
 @Singleton
-public class ComponentLibrary implements Serializable, Extensible<ConfigExtension>, Trackable, Visitable {
+public class ComponentLibrary implements Serializable, Extensible<ConfigExtension>, Trackable, Visitable, Cacheable {
     public static final String CDK_EXTENSIONS_NAMESPACE = "http://jboss.org/schema/richfaces/cdk/extensions";
     public static final String FACES_CONFIG_NAMESPACE = "http://java.sun.com/xml/ns/javaee";
     public static final String FACES_CONFIG_SCHEMA_LOCATION = "http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd";
@@ -327,6 +328,10 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
         this.metadataComplete = metadataComplete;
     }
 
+    public Boolean getMetadataComplete() {
+        return metadataComplete;
+    }
+
     public String getPrefix() {
         return prefix;
     }
@@ -414,5 +419,46 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
 
             // TODO Auto-generated catch block
         }
+    }
+
+    public void merge(ComponentLibrary library) {
+        this.getComponents().addAll(library.getComponents());
+        this.getRenderKits().addAll(library.getRenderKits());
+        this.getConverters().addAll(library.getConverters());
+        this.getValidators().addAll(library.getValidators());
+        this.getBehaviors().addAll(library.getBehaviors());
+        this.getFunctions().addAll(library.getFunctions());
+        this.getEvents().addAll(library.getEvents());
+        if (null != library.getMetadataComplete()) {
+            this.setMetadataComplete(library.getMetadataComplete());
+        }
+        this.getExtension().getExtensions().addAll(library.getExtension().getExtensions());
+        if (null != library.getTaglib()) {
+            if (null == this.getTaglib()) {
+                this.setTaglib(library.getTaglib());
+            } else {
+                JavaUtils.copyProperties(library.getTaglib(), this.getTaglib());
+            }
+        }
+        if (null != library.getPrefix()) {
+            this.setPrefix(library.getPrefix());
+        }
+    }
+
+    @Override
+    public void markUnchanged() {
+        for (RenderKitModel renderKit : getRenderKits()) {
+            for (RendererModel renderer : renderKit.getRenderers()) {
+                renderer.markUnchanged();
+            }
+        }
+        for (ComponentModel component : getComponents()) {
+            component.markUnchanged();
+        }
+    }
+
+    @Override
+    public boolean hasChanged() {
+        throw new UnsupportedOperationException();
     }
 }

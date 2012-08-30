@@ -73,16 +73,15 @@ import com.google.inject.Inject;
  */
 public final class TypesFactoryImpl implements TypesFactory {
     static final PropertyDescriptor[] EMPTY_PROPERTY_DESCRIPTORS = new PropertyDescriptor[0];
-    static final ImmutableMap<Class<?>, Class<?>> PRIMITIVE_TO_WRAPPER_CLASSES_MAP = ImmutableMap
-            .<Class<?>, Class<?>> builder().put(Boolean.TYPE, Boolean.class).put(Float.TYPE, Float.class)
-            .put(Long.TYPE, Long.class).put(Integer.TYPE, Integer.class).put(Short.TYPE, Short.class)
-            .put(Byte.TYPE, Byte.class).put(Double.TYPE, Double.class).put(Character.TYPE, Character.class)
-            .put(Void.TYPE, Void.class).build();
+    static final ImmutableMap<Class<?>, Class<?>> PRIMITIVE_TO_WRAPPER_CLASSES_MAP = ImmutableMap.<Class<?>, Class<?>>builder()
+            .put(Boolean.TYPE, Boolean.class).put(Float.TYPE, Float.class).put(Long.TYPE, Long.class)
+            .put(Integer.TYPE, Integer.class).put(Short.TYPE, Short.class).put(Byte.TYPE, Byte.class)
+            .put(Double.TYPE, Double.class).put(Character.TYPE, Character.class).put(Void.TYPE, Void.class).build();
     static final ImmutableMap<String, Class<?>> PRIMITIVE_CLASSES_MAP;
 
     static {
 
-        Builder<String, Class<?>> builder = ImmutableMap.<String, Class<?>> builder();
+        Builder<String, Class<?>> builder = ImmutableMap.<String, Class<?>>builder();
         for (Class<?> primitiveClass : PRIMITIVE_TO_WRAPPER_CLASSES_MAP.keySet()) {
             builder.put(primitiveClass.getName(), primitiveClass);
         }
@@ -95,8 +94,8 @@ public final class TypesFactoryImpl implements TypesFactory {
             return from.getPackage().getName();
         }
     };
-    private static final ImmutableCollection<String> GUESS_PACKAGES = ImmutableSet.<String> copyOf(Iterables.transform(
-            ImmutableSet.<Class<?>> of(UIComponent.class, Behavior.class, Converter.class, Validator.class, FacesContext.class,
+    private static final ImmutableCollection<String> GUESS_PACKAGES = ImmutableSet.<String>copyOf(Iterables.transform(
+            ImmutableSet.<Class<?>>of(UIComponent.class, Behavior.class, Converter.class, Validator.class, FacesContext.class,
                     Application.class, FacesEvent.class, DataModel.class, Renderer.class, Collection.class, Object.class),
             PACKAGE_NAME_FUNCTION));
     private final ClassLoader classLoader;

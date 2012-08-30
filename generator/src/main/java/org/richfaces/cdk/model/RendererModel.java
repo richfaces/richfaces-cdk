@@ -32,13 +32,15 @@ import org.richfaces.cdk.util.Strings;
  * @author asmirnov@exadel.com
  *
  */
-public class RendererModel extends ModelElementBase implements ModelElement<RendererModel> {
+public class RendererModel extends ModelElementBase implements ModelElement<RendererModel>, Cacheable {
     private static final long serialVersionUID = -5802466539382148578L;
     private FacesId family;
     private String componentType;
     private String templatePath;
     private Template template;
     private boolean rendersChildren;
+
+    private boolean changed = true;
 
     public RendererModel() {
     }
@@ -99,6 +101,7 @@ public class RendererModel extends ModelElementBase implements ModelElement<Rend
             return;
         }
 
+        this.changed = true;
         ComponentLibrary.merge(this, other);
 
         // TODO review
@@ -146,5 +149,15 @@ public class RendererModel extends ModelElementBase implements ModelElement<Rend
     @Override
     public String toString() {
         return "Renderer {type: " + getId() + ", family: " + getFamily() + "}";
+    }
+
+    @Override
+    public void markUnchanged() {
+        this.changed = false;
+    }
+
+    @Override
+    public boolean hasChanged() {
+        return this.changed;
     }
 }

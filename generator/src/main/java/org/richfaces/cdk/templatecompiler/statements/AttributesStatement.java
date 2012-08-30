@@ -46,8 +46,8 @@ public class AttributesStatement extends StatementsContainer {
 
     @Inject
     public AttributesStatement(@Named(Template.XHTML_EL_NAMESPACE) Schema attributesSchema,
-                               Provider<WriteAttributeStatement> attributeStatementProvider,
-                               Provider<WriteAttributesSetStatement> passThroughStatementProvider, Logger logger) {
+            Provider<WriteAttributeStatement> attributeStatementProvider,
+            Provider<WriteAttributesSetStatement> passThroughStatementProvider, Logger logger) {
         this.attributesSchema = attributesSchema;
         this.statementProvider = attributeStatementProvider;
         this.passThroughStatementProvider = passThroughStatementProvider;
@@ -79,7 +79,7 @@ public class AttributesStatement extends StatementsContainer {
     }
 
     private void processPassThroughWithExclusions(Set<String> processedAttributes, TreeSet<PassThrough> passThroughAttributes,
-                                                  String passThroughWithExclusions) {
+            String passThroughWithExclusions) {
         if (null != passThroughWithExclusions) {
             // cdk:passThroughWithExclusions="id,class,style"
             Map<String, Element> elements = attributesSchema.getElements();
@@ -115,7 +115,7 @@ public class AttributesStatement extends StatementsContainer {
     }
 
     private void processPassThrough(Set<String> processedAttributes, TreeSet<PassThrough> passThroughAttributes,
-                                    String passThrough) {
+            String passThrough) {
         if (null != passThrough) {
             // cdk:passThrough="class:styleClass,style , id:clientId"
             Iterable<String> split = PASS_THGOUGH_SPLITTER.split(passThrough);
@@ -135,7 +135,7 @@ public class AttributesStatement extends StatementsContainer {
     }
 
     private void addPassThroughAttribute(Set<String> processedAttributes, TreeSet<PassThrough> passThroughAttributes,
-                                         String attributeName, String componentAttributeName) {
+            String attributeName, String componentAttributeName) {
 
         if (processedAttributes.add(attributeName)) {
             passThroughAttributes.add(createPassThrough(attributeName, componentAttributeName));
@@ -143,7 +143,7 @@ public class AttributesStatement extends StatementsContainer {
     }
 
     private void processPassThroughWithWildcard(Set<String> processedAttributes, TreeSet<PassThrough> passThroughAttributes,
-                                                String wildcardAttributeName, String wildcardComponentAttributeName) {
+            String wildcardAttributeName, String wildcardComponentAttributeName) {
 
         // cdk:passThrough="on*:onlist*"
 
@@ -172,7 +172,7 @@ public class AttributesStatement extends StatementsContainer {
     }
 
     private void processRegularAttributes(AnyElement element, Set<String> processedAttributes,
-                                          TreeSet<PassThrough> passThroughAttributes) {
+            TreeSet<PassThrough> passThroughAttributes) {
         for (Map.Entry<QName, Object> entry : element.getAttributes().entrySet()) {
             QName qName = entry.getKey();
             if (Template.CDK_NAMESPACE.equals(qName.getNamespaceURI())) {

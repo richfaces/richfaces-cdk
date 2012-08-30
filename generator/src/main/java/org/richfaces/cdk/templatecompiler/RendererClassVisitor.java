@@ -142,7 +142,7 @@ public class RendererClassVisitor implements TemplateVisitor {
      *
      */
     public static final String FACES_CONTEXT_VARIABLE = "facesContext";
-    public static final ImmutableMap<String, Object> ENCODE_METHOD_VARIABLES = ImmutableMap.<String, Object> builder()
+    public static final ImmutableMap<String, Object> ENCODE_METHOD_VARIABLES = ImmutableMap.<String, Object>builder()
             .put("facesContextVariable", RendererClassVisitor.FACES_CONTEXT_VARIABLE)
             .put("componentVariable", RendererClassVisitor.COMPONENT_VARIABLE)
             .put("responseWriterVariable", RendererClassVisitor.RESPONSE_WRITER_VARIABLE)
