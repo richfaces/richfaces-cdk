@@ -31,7 +31,6 @@ import org.richfaces.cdk.Logger;
 import org.richfaces.cdk.ModelBuilder;
 import org.richfaces.cdk.Source;
 import org.richfaces.cdk.Sources;
-import org.richfaces.cdk.apt.ComponentLibraryHolder;
 import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.util.JavaUtils;
 import org.richfaces.cdk.xmlconfig.model.FacesConfigAdapter;
@@ -53,7 +52,7 @@ public class FacesConfigParser implements ModelBuilder {
     @Inject
     private JAXB jaxbBinding;
     @Inject
-    private ComponentLibraryHolder libraryHolder;
+    private ComponentLibrary library;
     @Inject
     @Source(Sources.FACES_CONFIGS)
     private FileManager configFiles;
@@ -65,8 +64,6 @@ public class FacesConfigParser implements ModelBuilder {
      */
     @Override
     public void build() throws CdkException {
-        final ComponentLibrary library = libraryHolder.getLibrary();
-
         for (File file : configFiles.getFiles()) {
             try {
                 FacesConfigBean unmarshal = unmarshalFacesConfig(file);

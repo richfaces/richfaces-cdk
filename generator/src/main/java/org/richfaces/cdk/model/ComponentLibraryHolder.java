@@ -1,6 +1,4 @@
-package org.richfaces.cdk.apt;
-
-import org.richfaces.cdk.model.ComponentLibrary;
+package org.richfaces.cdk.model;
 
 public class ComponentLibraryHolder {
 

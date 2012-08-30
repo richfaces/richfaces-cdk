@@ -26,7 +26,7 @@ public class JavaSourceProcessor {
     private Set<CdkAnnotationProcessor> processors;
 
     @Inject
-    private ComponentLibraryHolder libraryHolder;
+    private ComponentLibrary library;
 
     private ProcessingEnvironment processingEnv;
 
@@ -62,7 +62,6 @@ public class JavaSourceProcessor {
         if (null != element.getAnnotation(processedAnnotation)) {
             try {
                 log.debug("Process " + element.getSimpleName() + " annotated with " + processedAnnotation.getName());
-                ComponentLibrary library = libraryHolder.getLibrary();
                 processor.process(element, library);
             } catch (CdkProcessingException e) {
                 sendError(element, e);

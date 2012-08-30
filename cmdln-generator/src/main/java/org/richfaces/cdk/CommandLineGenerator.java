@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.codehaus.plexus.util.DirectoryScanner;
+import org.richfaces.cdk.apt.LibraryCache;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
@@ -69,6 +70,9 @@ public class CommandLineGenerator {
     
     @Parameter(names = { "-h", "--help" }, descriptionKey = "help")
     boolean help = false;
+    
+    @Parameter(names = { "-r", "--force-recompile" }, descriptionKey = "forceRecompile")
+    boolean forceRecompile = false;
     
     private List<String> compileSourceRoots;
     protected String[] sourceIncludes;
@@ -149,13 +153,13 @@ public class CommandLineGenerator {
         setOutput(generator, outputTestDirectory, Outputs.TEST_JAVA_CLASSES);
         setOutput(generator, outputTestResourcesDirectory, Outputs.TEST_RESOURCES);
         setOutput(generator, outputLibraryCache, Outputs.LIBRARY_CACHE);
+        
+        options.put(LibraryCache.CACHE_ENABLED_OPTION, Boolean.toString(!forceRecompile));
 
         // configure CDK workers.
         setupPlugins(generator);
 
         if (null != options) {
-
-            // TODO make it type safe.
             generator.setOptions(options);
         }
 

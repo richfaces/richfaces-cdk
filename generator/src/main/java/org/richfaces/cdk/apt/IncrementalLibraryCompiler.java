@@ -6,6 +6,7 @@ import static org.richfaces.cdk.apt.CacheType.NON_JAVA_SOURCES;
 import org.richfaces.cdk.Cache;
 import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.model.ComponentLibrary;
+import org.richfaces.cdk.model.ComponentLibraryHolder;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -25,7 +26,6 @@ public class IncrementalLibraryCompiler extends LibraryCompilerWrapper {
 
     private ComponentLibrary javaSourcesLibrary = new ComponentLibrary();
     private ComponentLibrary nonJavaSourcesLibrary = new ComponentLibrary();
-    private ComponentLibrary composedLibrary = new ComponentLibrary();
 
     @Inject
     public IncrementalLibraryCompiler(Injector injector) {
@@ -43,16 +43,14 @@ public class IncrementalLibraryCompiler extends LibraryCompilerWrapper {
     @Override
     public void afterJavaSourceProcessing() {
         super.afterJavaSourceProcessing();
-
-        ComponentLibrary cachedLibrary = new ComponentLibrary();
         ComponentLibrary additionsToLibrary = holder.getLibrary();
 
         if (javaCache.available()) {
-            cachedLibrary = javaCache.load();
+            ComponentLibrary cachedLibrary = javaCache.load();
+            javaSourcesLibrary.merge(cachedLibrary);
+            javaSourcesLibrary.markUnchanged();
         }
 
-        javaSourcesLibrary.merge(cachedLibrary);
-        javaSourcesLibrary.markUnchanged();
         javaSourcesLibrary.merge(additionsToLibrary);
 
         javaCache.save(javaSourcesLibrary);
@@ -60,19 +58,16 @@ public class IncrementalLibraryCompiler extends LibraryCompilerWrapper {
 
     @Override
     public void processNonJavaSources() throws CdkException {
-        ComponentLibrary cachedLibrary = new ComponentLibrary();
-        ComponentLibrary additionsToLibrary = new ComponentLibrary();
-
+        
         if (nonJavaCache.available()) {
-            cachedLibrary = nonJavaCache.load();
+            ComponentLibrary cachedLibrary = nonJavaCache.load();
+            nonJavaSourcesLibrary.merge(cachedLibrary);
+            nonJavaSourcesLibrary.markUnchanged();
         }
-
+        
+        ComponentLibrary additionsToLibrary = new ComponentLibrary();
         holder.setLibrary(additionsToLibrary);
-
         super.processNonJavaSources();
-
-        nonJavaSourcesLibrary.merge(cachedLibrary);
-        nonJavaSourcesLibrary.markUnchanged();
         nonJavaSourcesLibrary.merge(additionsToLibrary);
 
         nonJavaCache.save(nonJavaSourcesLibrary);
@@ -80,6 +75,8 @@ public class IncrementalLibraryCompiler extends LibraryCompilerWrapper {
 
     @Override
     public void verify() throws CdkException {
+        ComponentLibrary composedLibrary = new ComponentLibrary();
+        
         composedLibrary.merge(javaSourcesLibrary);
         composedLibrary.merge(nonJavaSourcesLibrary);
 

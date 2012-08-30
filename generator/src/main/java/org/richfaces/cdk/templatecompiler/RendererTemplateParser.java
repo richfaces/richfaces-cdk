@@ -41,7 +41,6 @@ import org.richfaces.cdk.Logger;
 import org.richfaces.cdk.ModelBuilder;
 import org.richfaces.cdk.Source;
 import org.richfaces.cdk.Sources;
-import org.richfaces.cdk.apt.ComponentLibraryHolder;
 import org.richfaces.cdk.apt.LibraryCache;
 import org.richfaces.cdk.model.ClassName;
 import org.richfaces.cdk.model.ComponentLibrary;
@@ -76,7 +75,7 @@ public class RendererTemplateParser implements ModelBuilder {
     private static final Pattern PARAMETERS_STRING_PATTERN = Pattern.compile("^(\\S+)\\s+(\\S+)\\s*\\(([^\\)]*)\\)$",
             Pattern.COMMENTS);
     private static final Pattern COMMA_SEPARATED_PATTERN = Pattern.compile("\\s*,\\s*", Pattern.COMMENTS);
-    private ComponentLibraryHolder libraryHolder;
+    private ComponentLibrary library;
     private JAXB jaxbBinding;
     private Logger log;
     private FileManager sources;
@@ -95,9 +94,9 @@ public class RendererTemplateParser implements ModelBuilder {
      * @param sources
      */
     @Inject
-    public RendererTemplateParser(ComponentLibraryHolder libraryHolder, JAXB jaxbBinding, Logger log,
+    public RendererTemplateParser(ComponentLibrary library, JAXB jaxbBinding, Logger log,
             @Source(Sources.RENDERER_TEMPLATES) FileManager sources, FragmentParser fragmentParser) {
-        this.libraryHolder = libraryHolder;
+        this.library = library;
         this.jaxbBinding = jaxbBinding;
         this.log = log;
         this.sources = sources;
@@ -123,8 +122,6 @@ public class RendererTemplateParser implements ModelBuilder {
     }
 
     public void build(final File file) throws CdkException {
-        ComponentLibrary library = libraryHolder.getLibrary();
-
         log.debug("RendererTemplateParser.build");
         final String absolutePath = file.getAbsolutePath();
         log.debug("  - file = " + absolutePath);
@@ -157,8 +154,6 @@ public class RendererTemplateParser implements ModelBuilder {
     }
 
     protected RendererModel mergeTemplateIntoModel(Template template, RendererModel renderer) throws CdkException {
-        ComponentLibrary library = libraryHolder.getLibrary();
-
         CompositeInterface compositeInterface = template.getInterface();
 
         if (renderer == null) {

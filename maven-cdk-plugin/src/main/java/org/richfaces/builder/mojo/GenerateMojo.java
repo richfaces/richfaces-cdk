@@ -46,6 +46,9 @@ import org.richfaces.cdk.Generator;
 import org.richfaces.cdk.Logger;
 import org.richfaces.cdk.Outputs;
 import org.richfaces.cdk.Sources;
+import org.richfaces.cdk.apt.LibraryCache;
+
+import com.google.common.collect.Maps;
 
 /**
  * <p class="changed_added_4_0">
@@ -88,7 +91,7 @@ public class GenerateMojo extends AbstractMojo {
     /**
      * @parameter
      */
-    protected Map<String, String> options;
+    protected Map<String, String> options = Maps.newHashMap();
     /**
      * @parameter
      */
@@ -129,6 +132,12 @@ public class GenerateMojo extends AbstractMojo {
      * @parameter expression="${project.build.directory}/library-cache"
      */
     protected File outputLibraryCache;
+    /**
+     * Forces compiler to do not use cache and re-compile all sources from scratch
+     * 
+     * @parameter expression="${cdk.recompile}" default-value="false"
+     */
+    protected boolean forceRecompile;
     /**
      * Top maven project.
      *
@@ -206,11 +215,8 @@ public class GenerateMojo extends AbstractMojo {
         // configure CDK workers.
         setupPlugins(generator);
 
-        if (null != options) {
-
-            // TODO make it type safe.
-            generator.setOptions(options);
-        }
+        options.put(LibraryCache.CACHE_ENABLED_OPTION, Boolean.toString(!forceRecompile));
+        generator.setOptions(options);
 
         try {
             if (this.library != null && this.library.getTaglib() != null && this.library.getTaglib().getShortName() != null) {

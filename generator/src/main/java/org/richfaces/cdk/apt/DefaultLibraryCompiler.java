@@ -31,7 +31,7 @@ public class DefaultLibraryCompiler implements LibraryCompiler {
     private ModelValidator validator;
 
     @Inject
-    ComponentLibraryHolder libraryHolder;
+    private ComponentLibrary library;
 
     /*
      * (non-Javadoc)
@@ -89,7 +89,6 @@ public class DefaultLibraryCompiler implements LibraryCompiler {
     public void verify() throws CdkException {
         try {
             log.debug("Validate model");
-            ComponentLibrary library = libraryHolder.getLibrary();
             validator.verify(library);
         } catch (CdkException e) {
             // TODO: sendError(e);
@@ -106,7 +105,6 @@ public class DefaultLibraryCompiler implements LibraryCompiler {
     public void generate() throws CdkException {
         if (0 == log.getErrorCount()) {
             // processing over, generate files.
-            ComponentLibrary library = libraryHolder.getLibrary();
             for (CdkWriter generator : generators) {
                 generator.render(library);
             }

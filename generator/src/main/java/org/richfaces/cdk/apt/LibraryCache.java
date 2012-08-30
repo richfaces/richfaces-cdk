@@ -13,16 +13,21 @@ import org.richfaces.cdk.util.SerializationUtils;
 
 import com.google.common.io.Files;
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
 public class LibraryCache {
 
-    private boolean cachingEnabled = true;
+    public final static  String CACHE_ENABLED_OPTION = "libraryCachingEnabled";
 
     private CacheType cacheType;
 
     @Inject
     @Output(Outputs.LIBRARY_CACHE)
     private FileManager fileManager;
+    
+    @Inject(optional = true)
+    @Named(CACHE_ENABLED_OPTION)
+    private boolean cachingEnabled = true;
     
     private ComponentLibrary cachedLibrary = null; 
 
