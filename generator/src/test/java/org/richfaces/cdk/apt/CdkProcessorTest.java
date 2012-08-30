@@ -73,7 +73,7 @@ public class CdkProcessorTest extends AnnotationProcessorTestBase {
     private static final String INTERFACE_JAVA = "org/richfaces/cdk/apt/TestInterface.java";
     private static final ImmutableSet<String> PROCESS_ANNOTATIONS = ImmutableSet.of(TestAnnotation.class.getName());
     private static final String SUB_CLASS_JAVA = "org/richfaces/cdk/apt/TestSubClass.java";
-    
+
     @Inject
     private ComponentLibrary library;
     @Mock
@@ -100,15 +100,15 @@ public class CdkProcessorTest extends AnnotationProcessorTestBase {
     public void configure(Binder binder) {
         super.configure(binder);
         binder.bind(CdkProcessor.class).to(CdkProcessorImpl.class).in(Singleton.class);
-        
+
         CdkAnnotationProcessor annotationProcessor = createMock(CdkAnnotationProcessor.class);
         binder.bind(CdkAnnotationProcessor.class).toInstance(annotationProcessor);
         binder.bind(new TypeLiteral<Set<CdkAnnotationProcessor>>() {
         }).toInstance(ImmutableSet.of(annotationProcessor));
-        
+
         binder.bind(new TypeLiteral<Set<ModelBuilder>>() {
         }).toInstance(Collections.<ModelBuilder>emptySet());
-        
+
         binder.bind(LibraryCompiler.class).to(DefaultLibraryCompiler.class);
         binder.bind(JavaSourceProcessor.class).in(Singleton.class);
     }

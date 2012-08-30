@@ -81,7 +81,8 @@ public class RendererTemplateParser implements ModelBuilder {
     private FileManager sources;
     private FragmentParser fragmentParser;
 
-    @Inject @Cache(NON_JAVA_SOURCES)
+    @Inject
+    @Cache(NON_JAVA_SOURCES)
     public LibraryCache nonJavaCache;
 
     /**

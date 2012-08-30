@@ -134,7 +134,7 @@ public class GenerateMojo extends AbstractMojo {
     protected File outputLibraryCache;
     /**
      * Forces compiler to do not use cache and re-compile all sources from scratch
-     * 
+     *
      * @parameter expression="${cdk.recompile}" default-value="false"
      */
     protected boolean forceRecompile;

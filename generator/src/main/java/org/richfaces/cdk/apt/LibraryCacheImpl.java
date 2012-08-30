@@ -17,8 +17,6 @@ import com.google.inject.name.Named;
 
 public class LibraryCacheImpl implements LibraryCache {
 
-    public final static String CACHE_ENABLED_OPTION = "libraryCachingEnabled";
-
     private CacheType cacheType;
 
     @Inject

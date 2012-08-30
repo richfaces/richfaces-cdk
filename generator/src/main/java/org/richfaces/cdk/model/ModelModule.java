@@ -45,7 +45,7 @@ public class ModelModule extends AbstractModule {
     protected void configure() {
         bind(ComponentLibrary.class).in(Singleton.class);
         bind(ComponentLibraryHolder.class).in(Singleton.class);
-        
+
         LibraryProxyInterceptor interceptor = new LibraryProxyInterceptor();
         requestInjection(interceptor);
         bindInterceptor(Matchers.subclassesOf(ComponentLibrary.class), Matchers.any(), interceptor);

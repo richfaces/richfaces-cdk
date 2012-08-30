@@ -58,13 +58,13 @@ public class IncrementalLibraryCompiler extends LibraryCompilerWrapper {
 
     @Override
     public void processNonJavaSources() throws CdkException {
-        
+
         if (nonJavaCache.available()) {
             ComponentLibrary cachedLibrary = nonJavaCache.load();
             nonJavaSourcesLibrary.merge(cachedLibrary);
             nonJavaSourcesLibrary.markUnchanged();
         }
-        
+
         ComponentLibrary additionsToLibrary = new ComponentLibrary();
         holder.setLibrary(additionsToLibrary);
         super.processNonJavaSources();
@@ -76,7 +76,7 @@ public class IncrementalLibraryCompiler extends LibraryCompilerWrapper {
     @Override
     public void verify() throws CdkException {
         ComponentLibrary composedLibrary = new ComponentLibrary();
-        
+
         composedLibrary.merge(javaSourcesLibrary);
         composedLibrary.merge(nonJavaSourcesLibrary);
 

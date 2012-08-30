@@ -29,7 +29,6 @@ import javax.faces.component.UIComponent;
 import javax.lang.model.element.Name;
 
 import org.richfaces.cdk.CdkClassLoader;
-import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.CdkTestBase;
 import org.richfaces.cdk.FileManager;
 import org.richfaces.cdk.Generator;
@@ -48,7 +47,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.inject.Binder;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.google.inject.Singleton;
 
 /**
  * @author akolonitsky
@@ -111,7 +109,7 @@ public abstract class AnnotationProcessorTestBase extends CdkTestBase {
                 sourceFiles.add(getJavaFile(src));
             }
             binder.bind(FileManager.class).annotatedWith(new SourceImpl(Sources.JAVA_SOURCES))
-                    .toInstance(new SourceFileManagerImpl(sourceFiles, null /*this.testSourceDirectory*/));
+                    .toInstance(new SourceFileManagerImpl(sourceFiles, null /* this.testSourceDirectory */));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

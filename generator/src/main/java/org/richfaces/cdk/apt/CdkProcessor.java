@@ -34,7 +34,7 @@ import javax.annotation.processing.Processor;
  *
  */
 public interface CdkProcessor extends Processor {
-    
+
     /**
      * This method will be called once all the Java sources are processed
      */

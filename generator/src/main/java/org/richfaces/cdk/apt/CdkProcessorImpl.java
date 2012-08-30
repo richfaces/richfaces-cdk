@@ -52,10 +52,10 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
 
     @Inject
     private LibraryCompiler compiler;
-    
+
     @Inject
     private LibraryGenerator generator;
-    
+
     @Inject
     private Logger log;
 
@@ -84,7 +84,7 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
 
     @Override
     public void continueAfterJavaSourceProcessing() {
-        
+
         compiler.processNonJavaSources();
         compiler.verify();
         if (0 == log.getErrorCount()) {

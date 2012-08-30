@@ -12,7 +12,7 @@ public class DefaultLibraryGenerator implements LibraryGenerator {
 
     @Inject
     private Set<CdkWriter> generators;
-    
+
     @Inject
     private ComponentLibrary library;
 

@@ -81,11 +81,11 @@ public class TaskFactoryImpl implements CompilationTaskFactory {
     private FileManager sourceFolders;
     @Inject
     private CdkProcessor cdkProcessor;
-    
-    @Inject @Cache(JAVA_SOURCES)
+
+    @Inject
+    @Cache(JAVA_SOURCES)
     public LibraryCache javaCache;
-    
-    
+
     private JavaCompiler javaCompiler;
     private StandardJavaFileManager fileManager;
 
