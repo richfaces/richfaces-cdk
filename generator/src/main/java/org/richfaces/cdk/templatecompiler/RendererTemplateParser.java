@@ -111,12 +111,9 @@ public class RendererTemplateParser implements ModelBuilder {
      */
     @Override
     public void build() throws CdkException {
-        Date cacheModified = new Date(nonJavaCache.lastModified());
-
         Iterable<File> sourceFiles = this.sources.getFiles();
         for (File file : sourceFiles) {
-            Date sourceModified = new Date(file.lastModified());
-            if (sourceModified.after(cacheModified)) {
+            if (nonJavaCache.storedBefore(file.lastModified())) {
                 build(file);
             }
         }

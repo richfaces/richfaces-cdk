@@ -100,14 +100,11 @@ public class TaskFactoryImpl implements CompilationTaskFactory {
     @Override
     public CompilationTask get() throws AptException {
         if (sourceFolders.getFiles().iterator().hasNext()) {
-            final Date cacheModified = new Date(javaCache.lastModified());
-
             Iterable<? extends JavaFileObject> sourceObjects = getFileManager().getJavaFileObjectsFromFiles(
                     sourceFolders.getFiles());
 
             for (JavaFileObject sourceObject : sourceObjects) {
-                Date sourceModified = new Date(sourceObject.getLastModified());
-                if (sourceModified.after(cacheModified)) {
+                if (javaCache.storedBefore(sourceObject.getLastModified())) {
                     sourceCache.putChanged(sourceObject);
                 }
             }

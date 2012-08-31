@@ -9,6 +9,7 @@ import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.Logger;
 import org.richfaces.cdk.ModelBuilder;
 import org.richfaces.cdk.ModelValidator;
+import org.richfaces.cdk.TimeMeasure;
 import org.richfaces.cdk.model.ComponentLibrary;
 
 import com.google.inject.Inject;
@@ -66,9 +67,10 @@ public class DefaultLibraryCompiler implements LibraryCompiler {
     @Override
     public void processNonJavaSources() throws CdkException {
         for (ModelBuilder builder : builders) {
-            log.debug("Run builder " + builder.getClass().getName());
             try {
+                TimeMeasure time = new TimeMeasure("builder", log).info(true).start(builder.getClass().getSimpleName());
                 builder.build();
+                time.stop();
             } catch (CdkException e) {
                 // TODO: sendError(e);
                 e.printStackTrace();
@@ -84,7 +86,6 @@ public class DefaultLibraryCompiler implements LibraryCompiler {
     @Override
     public void verify() throws CdkException {
         try {
-            log.debug("Validate model");
             validator.verify(library);
         } catch (CdkException e) {
             // TODO: sendError(e);

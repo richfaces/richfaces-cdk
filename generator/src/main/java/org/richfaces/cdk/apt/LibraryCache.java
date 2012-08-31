@@ -7,8 +7,8 @@ public interface LibraryCache {
     String CACHE_ENABLED_OPTION = "libraryCachingEnabled";
 
     boolean available();
-
-    long lastModified();
+    
+    boolean storedBefore(long time);
 
     ComponentLibrary load();
 

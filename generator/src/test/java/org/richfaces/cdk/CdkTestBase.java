@@ -151,13 +151,13 @@ public abstract class CdkTestBase implements Module {
         }
 
         @Override
-        public long lastModified() {
-            return 0;
+        public boolean available() {
+            return false;
         }
 
         @Override
-        public boolean available() {
-            return false;
+        public boolean storedBefore(long time) {
+            return true;
         }
     }
 }

@@ -61,6 +61,10 @@ public class LibraryCacheImpl implements LibraryCache {
         }
     }
 
+    public boolean storedBefore(long time) {
+        return lastModified() < time;
+    }
+
     public ComponentLibrary load() {
         if (cachedLibrary != null) {
             return cachedLibrary;
