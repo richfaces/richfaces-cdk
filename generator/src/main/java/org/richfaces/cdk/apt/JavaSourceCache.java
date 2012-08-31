@@ -1,6 +1,9 @@
 package org.richfaces.cdk.apt;
 
-import static javax.lang.model.element.ElementKind.*;
+import static javax.lang.model.element.ElementKind.CLASS;
+import static javax.lang.model.element.ElementKind.ENUM;
+import static javax.lang.model.element.ElementKind.INTERFACE;
+
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +32,7 @@ public class JavaSourceCache {
         }
         return result;
     }
-    
+
     private boolean determineElementChanged(Element element) {
         ElementKind kind = element.getKind();
         if (kind == CLASS || kind == ENUM || kind == INTERFACE) {

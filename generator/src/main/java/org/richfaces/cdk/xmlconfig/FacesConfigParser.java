@@ -59,8 +59,9 @@ public class FacesConfigParser implements ModelBuilder {
     @Inject
     @Source(Sources.FACES_CONFIGS)
     private FileManager configFiles;
-    
-    @Inject @Cache(CacheType.NON_JAVA_SOURCES)
+
+    @Inject
+    @Cache(CacheType.NON_JAVA_SOURCES)
     private LibraryCache nonJavaCache;
 
     /*

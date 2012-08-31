@@ -27,7 +27,7 @@ public class JavaSourceProcessor {
 
     @Inject
     private ComponentLibrary library;
-    
+
     @Inject
     private JavaSourceCache sourceCache;
 
@@ -48,11 +48,11 @@ public class JavaSourceProcessor {
         Target target = processedAnnotation.getAnnotation(Target.class);
         Set<? extends Element> rootElements = environment.getRootElements();
         for (Element element : rootElements) {
-            
+
             if (!sourceCache.isChanged(element)) {
                 continue;
             }
-            
+
             if (isAppropriateTarget(element, target)) {
                 processElement(processor, processedAnnotation, element);
             } else {

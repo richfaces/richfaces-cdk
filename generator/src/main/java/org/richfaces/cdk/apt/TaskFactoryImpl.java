@@ -30,7 +30,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -85,7 +84,7 @@ public class TaskFactoryImpl implements CompilationTaskFactory {
     @Inject
     @Cache(JAVA_SOURCES)
     private LibraryCache javaCache;
-    
+
     @Inject
     private JavaSourceCache sourceCache;
 

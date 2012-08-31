@@ -36,12 +36,12 @@ public class TestComponentLibrarySerialization {
         assertNotNull(component);
         assertEquals("faces-family", component.getFamily().getType());
     }
-    
+
     @Test
     public void testComponentTagSerialization() {
         // given
         ComponentModel component = new ComponentModel();
-        
+
         TagModel tag = new TagModel();
         tag.setName("tag-name");
         component.getTags().add(tag);
@@ -55,7 +55,7 @@ public class TestComponentLibrarySerialization {
         // then
         component = library.getComponents().iterator().next();
         tag = component.getTags().iterator().next();
-        
+
         assertNotNull(tag);
         assertEquals("tag-name", tag.getName());
     }
