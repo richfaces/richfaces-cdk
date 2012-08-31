@@ -27,6 +27,9 @@ public class JavaSourceProcessor {
 
     @Inject
     private ComponentLibrary library;
+    
+    @Inject
+    private JavaSourceCache sourceCache;
 
     private ProcessingEnvironment processingEnv;
 
@@ -34,8 +37,8 @@ public class JavaSourceProcessor {
         this.processingEnv = processingEnv;
 
         // Process annotations.
-        for (CdkAnnotationProcessor process : processors) {
-            processAnnotation(process, roundEnv);
+        for (CdkAnnotationProcessor processor : processors) {
+            processAnnotation(processor, roundEnv);
         }
     }
 
@@ -45,10 +48,18 @@ public class JavaSourceProcessor {
         Target target = processedAnnotation.getAnnotation(Target.class);
         Set<? extends Element> rootElements = environment.getRootElements();
         for (Element element : rootElements) {
+            
+            if (!sourceCache.isChanged(element)) {
+                continue;
+            }
+            
             if (isAppropriateTarget(element, target)) {
                 processElement(processor, processedAnnotation, element);
             } else {
                 for (Element enclosedElement : element.getEnclosedElements()) {
+                    if (!sourceCache.isChanged(enclosedElement)) {
+                        continue;
+                    }
                     if (isAppropriateTarget(enclosedElement, target)) {
                         processElement(processor, processedAnnotation, enclosedElement);
                     }
@@ -59,6 +70,7 @@ public class JavaSourceProcessor {
 
     private void processElement(CdkAnnotationProcessor processor, Class<? extends Annotation> processedAnnotation,
             Element element) {
+        log.info(element.toString());
         if (null != element.getAnnotation(processedAnnotation)) {
             try {
                 log.debug("Process " + element.getSimpleName() + " annotated with " + processedAnnotation.getName());

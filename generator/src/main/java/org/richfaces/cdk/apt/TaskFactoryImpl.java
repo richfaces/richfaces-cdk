@@ -84,7 +84,10 @@ public class TaskFactoryImpl implements CompilationTaskFactory {
 
     @Inject
     @Cache(JAVA_SOURCES)
-    public LibraryCache javaCache;
+    private LibraryCache javaCache;
+    
+    @Inject
+    private JavaSourceCache sourceCache;
 
     private JavaCompiler javaCompiler;
     private StandardJavaFileManager fileManager;
@@ -102,14 +105,12 @@ public class TaskFactoryImpl implements CompilationTaskFactory {
             Iterable<? extends JavaFileObject> sourceObjects = getFileManager().getJavaFileObjectsFromFiles(
                     sourceFolders.getFiles());
 
-            sourceObjects = Iterables.filter(sourceObjects, new Predicate<Object>() {
-                @Override
-                public boolean apply(Object input) {
-                    JavaFileObject sourceObject = (JavaFileObject) input;
-                    Date sourceModified = new Date(sourceObject.getLastModified());
-                    return sourceModified.after(cacheModified);
+            for (JavaFileObject sourceObject : sourceObjects) {
+                Date sourceModified = new Date(sourceObject.getLastModified());
+                if (sourceModified.after(cacheModified)) {
+                    sourceCache.putChanged(sourceObject);
                 }
-            });
+            }
 
             if (sourceObjects.iterator().hasNext()) {
                 if (log.isDebugEnabled()) {

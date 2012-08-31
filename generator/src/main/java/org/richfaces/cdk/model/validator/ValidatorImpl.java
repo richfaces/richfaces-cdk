@@ -447,11 +447,9 @@ public class ValidatorImpl implements ModelValidator {
         // Verify component attributes
         HashSet<ComponentModel> verified = Sets.newHashSet();
         for (ComponentModel component : library.getComponents()) {
-            if (component.hasChanged()) {
-                verifyComponentAttributes(library, component, verified);
-                if (null == component.getFamily()) {
-                    component.setFamily(namingConventions.inferUIComponentFamily(component.getId()));
-                }
+            verifyComponentAttributes(library, component, verified);
+            if (null == component.getFamily()) {
+                component.setFamily(namingConventions.inferUIComponentFamily(component.getId()));
             }
         }
     }

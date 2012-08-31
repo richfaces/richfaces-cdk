@@ -31,12 +31,33 @@ public class TestComponentLibrarySerialization {
 
         component = iterator.next();
         assertNotNull(component);
-        assertNotNull(component.getId());
-        assertEquals(component.getId().getType(), "faces-id");
+        assertEquals("faces-id", component.getId().getType());
 
         assertNotNull(component);
-        assertNotNull(component.getFamily());
-        assertEquals(component.getFamily().getType(), "faces-family");
+        assertEquals("faces-family", component.getFamily().getType());
+    }
+    
+    @Test
+    public void testComponentTagSerialization() {
+        // given
+        ComponentModel component = new ComponentModel();
+        
+        TagModel tag = new TagModel();
+        tag.setName("tag-name");
+        component.getTags().add(tag);
+
+        ComponentLibrary library = new ComponentLibrary();
+        library.getComponents().add(component);
+
+        // when
+        library = serializeDeserialize(library);
+
+        // then
+        component = library.getComponents().iterator().next();
+        tag = component.getTags().iterator().next();
+        
+        assertNotNull(tag);
+        assertEquals("tag-name", tag.getName());
     }
 
     private <T extends Serializable> T serializeDeserialize(T object) {
