@@ -122,8 +122,10 @@ public class Generator {
     }
 
     public void init() {
+        TimeMeasure time = new TimeMeasure("module instantiation", log).info(true).start();
         injector = Guice.createInjector(Stage.PRODUCTION, new CdkConfigurationModule(), new AptModule(), new ModelModule(),
                 new ClassGeneratorModule(), new TemplateModule(), new XmlModule(), new TaglibModule());
+        time.stop();
 
         if (!log.isDebugEnabled()) {
             try {
