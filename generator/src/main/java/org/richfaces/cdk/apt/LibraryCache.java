@@ -8,7 +8,7 @@ public interface LibraryCache {
 
     boolean available();
 
-    long lastModified();
+    boolean storedBefore(long time);
 
     ComponentLibrary load();
 

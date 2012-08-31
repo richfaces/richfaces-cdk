@@ -32,6 +32,7 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
 
 import org.richfaces.cdk.Logger;
+import org.richfaces.cdk.TimeMeasure;
 
 import com.google.inject.Inject;
 
@@ -61,6 +62,8 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
 
     private boolean firstRound = true;
 
+    private TimeMeasure time;
+
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
@@ -69,13 +72,21 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+        if (time == null) {
+            time = new TimeMeasure("java source processing", log).info(true);
+        }
+
         if (!roundEnv.processingOver()) {
             if (firstRound) {
                 firstRound = false;
                 compiler.beforeJavaSourceProcessing();
+
+                time.start();
             }
             compiler.processJavaSource(processingEnv, roundEnv);
         } else {
+            time.stop();
+
             compiler.afterJavaSourceProcessing();
             continueAfterJavaSourceProcessing();
         }
@@ -85,10 +96,18 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
     @Override
     public void continueAfterJavaSourceProcessing() {
 
+        time = new TimeMeasure("non-java source processing", log).info(true).start();
         compiler.processNonJavaSources();
+        time.stop();
+
+        time = new TimeMeasure("library verification", log).info(true).start();
         compiler.verify();
+        time.stop();
+
         if (0 == log.getErrorCount()) {
+            time = new TimeMeasure("library generation", log).info(true).start();
             generator.generate();
+            time.stop();
         }
     }
 

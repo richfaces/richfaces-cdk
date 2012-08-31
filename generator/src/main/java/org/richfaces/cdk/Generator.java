@@ -122,8 +122,10 @@ public class Generator {
     }
 
     public void init() {
-        injector = Guice.createInjector(Stage.PRODUCTION, new CdkConfigurationModule(), new AptModule(), new ModelModule(),
+        TimeMeasure time = new TimeMeasure("module instantiation", log).info(true).start();
+        injector = Guice.createInjector(Stage.DEVELOPMENT, new CdkConfigurationModule(), new AptModule(), new ModelModule(),
                 new ClassGeneratorModule(), new TemplateModule(), new XmlModule(), new TaglibModule());
+        time.stop();
 
         if (!log.isDebugEnabled()) {
             try {
@@ -140,8 +142,6 @@ public class Generator {
     public void execute() {
         checkNotNull(libraryBuilder, "initialized");
         libraryBuilder.build();
-
-        // libraryBuilder.generate(); // TODO ?
     }
 
     public static final class EmptyFileManager implements FileManager {

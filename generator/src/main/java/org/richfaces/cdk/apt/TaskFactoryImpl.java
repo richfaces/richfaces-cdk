@@ -30,7 +30,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -84,7 +83,10 @@ public class TaskFactoryImpl implements CompilationTaskFactory {
 
     @Inject
     @Cache(JAVA_SOURCES)
-    public LibraryCache javaCache;
+    private LibraryCache javaCache;
+
+    @Inject
+    private JavaSourceTracker sourceCache;
 
     private JavaCompiler javaCompiler;
     private StandardJavaFileManager fileManager;
@@ -97,19 +99,14 @@ public class TaskFactoryImpl implements CompilationTaskFactory {
     @Override
     public CompilationTask get() throws AptException {
         if (sourceFolders.getFiles().iterator().hasNext()) {
-            final Date cacheModified = new Date(javaCache.lastModified());
-
             Iterable<? extends JavaFileObject> sourceObjects = getFileManager().getJavaFileObjectsFromFiles(
                     sourceFolders.getFiles());
 
-            sourceObjects = Iterables.filter(sourceObjects, new Predicate<Object>() {
-                @Override
-                public boolean apply(Object input) {
-                    JavaFileObject sourceObject = (JavaFileObject) input;
-                    Date sourceModified = new Date(sourceObject.getLastModified());
-                    return sourceModified.after(cacheModified);
+            for (JavaFileObject sourceObject : sourceObjects) {
+                if (javaCache.storedBefore(sourceObject.getLastModified())) {
+                    sourceCache.putChanged(sourceObject);
                 }
-            });
+            }
 
             if (sourceObjects.iterator().hasNext()) {
                 if (log.isDebugEnabled()) {

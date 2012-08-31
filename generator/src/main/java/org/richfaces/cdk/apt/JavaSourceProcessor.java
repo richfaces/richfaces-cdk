@@ -10,7 +10,6 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 
-import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.CdkProcessingException;
 import org.richfaces.cdk.Logger;
 import org.richfaces.cdk.apt.processors.CdkAnnotationProcessor;
@@ -28,14 +27,17 @@ public class JavaSourceProcessor {
     @Inject
     private ComponentLibrary library;
 
+    @Inject
+    private JavaSourceTracker sourceCache;
+
     private ProcessingEnvironment processingEnv;
 
     public void process(ProcessingEnvironment processingEnv, RoundEnvironment roundEnv) {
         this.processingEnv = processingEnv;
 
         // Process annotations.
-        for (CdkAnnotationProcessor process : processors) {
-            processAnnotation(process, roundEnv);
+        for (CdkAnnotationProcessor processor : processors) {
+            processAnnotation(processor, roundEnv);
         }
     }
 
@@ -45,10 +47,18 @@ public class JavaSourceProcessor {
         Target target = processedAnnotation.getAnnotation(Target.class);
         Set<? extends Element> rootElements = environment.getRootElements();
         for (Element element : rootElements) {
+
+            if (!sourceCache.isChanged(element)) {
+                continue;
+            }
+
             if (isAppropriateTarget(element, target)) {
                 processElement(processor, processedAnnotation, element);
             } else {
                 for (Element enclosedElement : element.getEnclosedElements()) {
+                    if (!sourceCache.isChanged(enclosedElement)) {
+                        continue;
+                    }
                     if (isAppropriateTarget(enclosedElement, target)) {
                         processElement(processor, processedAnnotation, enclosedElement);
                     }
@@ -103,9 +113,5 @@ public class JavaSourceProcessor {
     private void sendError(Element componentElement, Exception e) {
         // rise error and continue.
         processingEnv.getMessager().printMessage(javax.tools.Diagnostic.Kind.ERROR, e.getMessage(), componentElement);
-    }
-
-    private void sendError(CdkException e) {
-        processingEnv.getMessager().printMessage(javax.tools.Diagnostic.Kind.ERROR, e.getMessage());
     }
 }
