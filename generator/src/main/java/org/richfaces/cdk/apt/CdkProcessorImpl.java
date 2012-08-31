@@ -72,12 +72,16 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+        if (time == null) {
+            time = new TimeMeasure("java source processing", log).info(true);
+        }
+
         if (!roundEnv.processingOver()) {
             if (firstRound) {
                 firstRound = false;
                 compiler.beforeJavaSourceProcessing();
 
-                time = new TimeMeasure("java source processing", log).info(true).start();
+                time.start();
             }
             compiler.processJavaSource(processingEnv, roundEnv);
         } else {

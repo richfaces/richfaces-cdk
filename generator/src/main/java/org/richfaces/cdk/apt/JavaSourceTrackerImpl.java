@@ -14,8 +14,10 @@ import javax.tools.JavaFileObject.Kind;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.inject.Singleton;
 
-public class JavaSourceCache {
+@Singleton
+public class JavaSourceTrackerImpl implements JavaSourceTracker {
 
     private List<JavaFileObject> changed = Lists.newLinkedList();
     private Map<Element, Boolean> elements = Maps.newHashMap();

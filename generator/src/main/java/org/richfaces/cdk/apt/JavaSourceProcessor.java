@@ -10,7 +10,6 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 
-import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.CdkProcessingException;
 import org.richfaces.cdk.Logger;
 import org.richfaces.cdk.apt.processors.CdkAnnotationProcessor;
@@ -29,7 +28,7 @@ public class JavaSourceProcessor {
     private ComponentLibrary library;
 
     @Inject
-    private JavaSourceCache sourceCache;
+    private JavaSourceTracker sourceCache;
 
     private ProcessingEnvironment processingEnv;
 
@@ -114,9 +113,5 @@ public class JavaSourceProcessor {
     private void sendError(Element componentElement, Exception e) {
         // rise error and continue.
         processingEnv.getMessager().printMessage(javax.tools.Diagnostic.Kind.ERROR, e.getMessage(), componentElement);
-    }
-
-    private void sendError(CdkException e) {
-        processingEnv.getMessager().printMessage(javax.tools.Diagnostic.Kind.ERROR, e.getMessage());
     }
 }

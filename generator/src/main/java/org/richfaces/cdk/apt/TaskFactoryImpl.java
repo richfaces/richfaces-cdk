@@ -86,7 +86,7 @@ public class TaskFactoryImpl implements CompilationTaskFactory {
     private LibraryCache javaCache;
 
     @Inject
-    private JavaSourceCache sourceCache;
+    private JavaSourceTracker sourceCache;
 
     private JavaCompiler javaCompiler;
     private StandardJavaFileManager fileManager;

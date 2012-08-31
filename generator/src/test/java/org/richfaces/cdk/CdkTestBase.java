@@ -33,10 +33,14 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.logging.LogManager;
 
+import javax.lang.model.element.Element;
+import javax.tools.JavaFileObject;
+
 import org.junit.After;
 import org.junit.Before;
 import org.richfaces.cdk.annotations.JsfComponent;
 import org.richfaces.cdk.apt.CacheType;
+import org.richfaces.cdk.apt.JavaSourceTracker;
 import org.richfaces.cdk.apt.LibraryCache;
 import org.richfaces.cdk.model.ComponentLibrary;
 
@@ -60,6 +64,7 @@ public abstract class CdkTestBase implements Module {
         binder.bind(Locale.class).toInstance(Locale.getDefault());
         binder.bind(Charset.class).toInstance(Charset.defaultCharset());
 
+        binder.bind(JavaSourceTracker.class).to(TestingJavaSourceTracker.class);
         for (CacheType cacheType : CacheType.values()) {
             binder.bind(LibraryCache.class).annotatedWith(new CacheImpl(cacheType)).toInstance(new EmptyLibraryCache());
         }
@@ -136,6 +141,19 @@ public abstract class CdkTestBase implements Module {
             }
         } else {
             throw new Exception("Resource does not exists " + resource);
+        }
+    }
+
+    private static class TestingJavaSourceTracker implements JavaSourceTracker {
+
+        @Override
+        public void putChanged(JavaFileObject sourceObject) {
+            // do nothing
+        }
+
+        @Override
+        public boolean isChanged(Element element) {
+            return true;
         }
     }
 
