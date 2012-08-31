@@ -1,5 +1,6 @@
 package org.richfaces.cdk.apt;
 
+import static javax.lang.model.element.ElementKind.*;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +31,8 @@ public class JavaSourceCache {
     }
     
     private boolean determineElementChanged(Element element) {
-        if (element.getKind() == ElementKind.CLASS) {
+        ElementKind kind = element.getKind();
+        if (kind == CLASS || kind == ENUM || kind == INTERFACE) {
             for (JavaFileObject sourceObject : changed) {
                 if (sourceObject.isNameCompatible(element.getSimpleName().toString(), Kind.SOURCE)) {
                     elements.put(element, true);

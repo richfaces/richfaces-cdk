@@ -89,6 +89,8 @@ public class CommandLineGenerator {
     protected Map<String, String> options = new HashMap<String, String>();
 
     private Logger logger;
+    
+    
 
     private void setup() {
         compileSourceRoots = Arrays.asList(projectRoot + "/src/main/java");
@@ -116,14 +118,10 @@ public class CommandLineGenerator {
 
     public void execute() {
         setup();
-
-        logger.info("[generate: " + projectRoot + "]");
-        long start = System.currentTimeMillis();
-
+        
+        TimeMeasure totalTime = new TimeMeasure("cdk", logger).info(true).start(new File(projectRoot).getAbsolutePath());
         executeGenerator();
-
-        long end = System.currentTimeMillis();
-        logger.info("[total: " + (end - start) + " ms]");
+        totalTime.stop();
     }
 
     private void executeGenerator() {

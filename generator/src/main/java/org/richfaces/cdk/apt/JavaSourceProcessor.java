@@ -70,7 +70,6 @@ public class JavaSourceProcessor {
 
     private void processElement(CdkAnnotationProcessor processor, Class<? extends Annotation> processedAnnotation,
             Element element) {
-        log.info(element.toString());
         if (null != element.getAnnotation(processedAnnotation)) {
             try {
                 log.debug("Process " + element.getSimpleName() + " annotated with " + processedAnnotation.getName());
