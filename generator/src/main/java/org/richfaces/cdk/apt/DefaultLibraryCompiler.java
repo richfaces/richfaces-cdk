@@ -8,7 +8,6 @@ import javax.annotation.processing.RoundEnvironment;
 import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.Logger;
 import org.richfaces.cdk.ModelBuilder;
-import org.richfaces.cdk.ModelValidator;
 import org.richfaces.cdk.TimeMeasure;
 import org.richfaces.cdk.model.ComponentLibrary;
 
@@ -24,8 +23,6 @@ public class DefaultLibraryCompiler implements LibraryCompiler {
 
     @Inject
     private Set<ModelBuilder> builders;
-    @Inject
-    private ModelValidator validator;
 
     @Inject
     private ComponentLibrary library;
@@ -81,15 +78,9 @@ public class DefaultLibraryCompiler implements LibraryCompiler {
     /*
      * (non-Javadoc)
      *
-     * @see org.richfaces.cdk.apt.LibraryWorker#verify()
+     * @see org.richfaces.cdk.apt.LibraryCompiler#completeLibrary()
      */
     @Override
-    public void verify() throws CdkException {
-        try {
-            validator.verify(library);
-        } catch (CdkException e) {
-            // TODO: sendError(e);
-            e.printStackTrace();
-        }
+    public void completeLibrary() throws CdkException {
     }
 }

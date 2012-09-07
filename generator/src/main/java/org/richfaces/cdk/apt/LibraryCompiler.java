@@ -15,6 +15,5 @@ public interface LibraryCompiler {
 
     void processNonJavaSources() throws CdkException;
 
-    void verify() throws CdkException;
-
+    void completeLibrary() throws CdkException;
 }

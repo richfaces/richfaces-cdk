@@ -52,6 +52,7 @@ public class IncrementalLibraryCompiler extends LibraryCompilerWrapper {
         }
 
         javaSourcesLibrary.merge(additionsToLibrary);
+        javaSourcesLibrary.stopTrackingChanges();
 
         javaCache.save(javaSourcesLibrary);
     }
@@ -69,19 +70,19 @@ public class IncrementalLibraryCompiler extends LibraryCompilerWrapper {
         holder.setLibrary(additionsToLibrary);
         super.processNonJavaSources();
         nonJavaSourcesLibrary.merge(additionsToLibrary);
+        nonJavaSourcesLibrary.stopTrackingChanges();
 
         nonJavaCache.save(nonJavaSourcesLibrary);
     }
 
     @Override
-    public void verify() throws CdkException {
+    public void completeLibrary() throws CdkException {
         ComponentLibrary composedLibrary = new ComponentLibrary();
+        composedLibrary.stopTrackingChanges();
 
         composedLibrary.merge(javaSourcesLibrary);
         composedLibrary.merge(nonJavaSourcesLibrary);
 
         holder.setLibrary(composedLibrary);
-
-        super.verify();
     }
 }

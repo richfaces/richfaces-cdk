@@ -202,7 +202,7 @@ public final class JavaUtils {
                 String name = targetProperty.getName();
 
                 for (PropertyDescriptor sourceProperty : sourceProperties) {
-                    if (!JAXBBinding.IGNORE_PROPERTIES.contains(name) && name.equals(sourceProperty.getName())) {
+                    if (!("class".equals(name) || "extension".equals(name)) && name.equals(sourceProperty.getName())) {
                         try {
                             writeProperty(source, destination, targetProperty, sourceProperty);
                         } catch (Exception e) {

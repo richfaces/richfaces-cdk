@@ -457,8 +457,36 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
         }
     }
 
+    /**
+     * This method does not track all changes in library,
+     * but only models marked as {@link Cacheable}.
+     */
     @Override
     public boolean hasChanged() {
-        throw new UnsupportedOperationException();
+        for (RenderKitModel renderKit : getRenderKits()) {
+            for (RendererModel renderer : renderKit.getRenderers()) {
+                if (renderer.hasChanged()) {
+                    return true;
+                }
+            }
+        }
+        for (ComponentModel component : getComponents()) {
+            if (component.hasChanged()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void stopTrackingChanges() {
+        for (RenderKitModel renderKit : getRenderKits()) {
+            for (RendererModel renderer : renderKit.getRenderers()) {
+                renderer.stopTrackingChanges();
+            }
+        }
+        for (ComponentModel component : getComponents()) {
+            component.stopTrackingChanges();
+        }
     }
 }

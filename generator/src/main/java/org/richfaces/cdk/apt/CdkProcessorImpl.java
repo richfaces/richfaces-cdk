@@ -31,10 +31,14 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
 
+import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.Logger;
+import org.richfaces.cdk.ModelValidator;
 import org.richfaces.cdk.TimeMeasure;
+import org.richfaces.cdk.model.ComponentLibrary;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
 /**
  * <p class="changed_added_4_0">
@@ -47,6 +51,7 @@ import com.google.inject.Inject;
  */
 public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor {
     private static final Set<String> PROCESSED_ANNOTATION = Collections.singleton("*");
+    public static final String CACHE_EAGERLY_OPTION = "libraryCachingEagerly";
 
     @Inject
     private SourceUtilsProvider sourceUtilsProducer;
@@ -56,6 +61,16 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
 
     @Inject
     private LibraryGenerator generator;
+
+    @Inject
+    private ModelValidator validator;
+
+    @Inject
+    private ComponentLibrary library;
+
+    @Inject(optional = true)
+    @Named(CACHE_EAGERLY_OPTION)
+    private boolean cachingEagerly = false;
 
     @Inject
     private Logger log;
@@ -96,19 +111,51 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
     @Override
     public void continueAfterJavaSourceProcessing() {
 
+        try {
+            processNonJavaSources();
+            completeLibrary();
+        } catch (CdkException e) {
+            sendError(e);
+        }
+
+        if (!library.hasChanged() && cachingEagerly) {
+            log.info("[caching eagerly - not continuing to verification and generation phase]");
+            return;
+        }
+
+        try {
+            verify();
+        } catch (CdkException e) {
+            sendError(e);
+        }
+
+        if (0 == log.getErrorCount()) {
+            generate();
+        }
+    }
+
+    private void processNonJavaSources() {
         time = new TimeMeasure("non-java source processing", log).info(true).start();
         compiler.processNonJavaSources();
         time.stop();
+    }
 
-        time = new TimeMeasure("library verification", log).info(true).start();
-        compiler.verify();
+    private void completeLibrary() {
+        time = new TimeMeasure("library completion", log).info(true).start();
+        compiler.completeLibrary();
         time.stop();
+    }
 
-        if (0 == log.getErrorCount()) {
-            time = new TimeMeasure("library generation", log).info(true).start();
-            generator.generate();
-            time.stop();
-        }
+    private void verify() {
+        time = new TimeMeasure("library verification", log).info(true).start();
+        validator.verify(library);
+        time.stop();
+    }
+
+    private void generate() {
+        time = new TimeMeasure("library generation", log).info(true).start();
+        generator.generate();
+        time.stop();
     }
 
     @Override
@@ -121,5 +168,9 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
 
         // CDK supports Java 5 or 6 source code.
         return SourceVersion.RELEASE_6;
+    }
+
+    private void sendError(CdkException e) {
+        processingEnv.getMessager().printMessage(javax.tools.Diagnostic.Kind.ERROR, e.getMessage());
     }
 }

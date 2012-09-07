@@ -41,6 +41,7 @@ public class RendererModel extends ModelElementBase implements ModelElement<Rend
     private boolean rendersChildren;
 
     private boolean changed = true;
+    private boolean changeTracking = true;
 
     public RendererModel() {
     }
@@ -101,7 +102,10 @@ public class RendererModel extends ModelElementBase implements ModelElement<Rend
             return;
         }
 
-        this.changed = true;
+        if (this.changeTracking) {
+            this.changed = true;
+        }
+
         ComponentLibrary.merge(this, other);
 
         // TODO review
@@ -159,5 +163,10 @@ public class RendererModel extends ModelElementBase implements ModelElement<Rend
     @Override
     public boolean hasChanged() {
         return this.changed;
+    }
+
+    @Override
+    public void stopTrackingChanges() {
+        this.changeTracking = false;
     }
 }

@@ -46,7 +46,9 @@ import org.richfaces.cdk.Generator;
 import org.richfaces.cdk.Logger;
 import org.richfaces.cdk.Outputs;
 import org.richfaces.cdk.Sources;
+import org.richfaces.cdk.apt.CdkProcessorImpl;
 import org.richfaces.cdk.apt.LibraryCache;
+import org.richfaces.cdk.model.Cacheable;
 
 import com.google.common.collect.Maps;
 
@@ -139,6 +141,14 @@ public class GenerateMojo extends AbstractMojo {
      */
     protected boolean forceRecompile;
     /**
+     * Turns off library generation and verification in case when no change was detected in sources which supports
+     * {@link Cacheable} (it does not have to mean no change was done). Warning: when getting undesired results, try to turn off
+     * this option.
+     *
+     * @parameter expression="${cdk.cache.eagerly}" default-value="false"
+     */
+    protected boolean cacheEagerly;
+    /**
      * Top maven project.
      *
      * @parameter expression="${project}"
@@ -216,6 +226,7 @@ public class GenerateMojo extends AbstractMojo {
         setupPlugins(generator);
 
         options.put(LibraryCache.CACHE_ENABLED_OPTION, Boolean.toString(!forceRecompile));
+        options.put(CdkProcessorImpl.CACHE_EAGERLY_OPTION, Boolean.toString(cacheEagerly));
         generator.setOptions(options);
 
         try {

@@ -31,6 +31,7 @@ public final class ComponentModel extends ModelElementBase implements ModelEleme
     private ComponentModel parent;
 
     private boolean changed = true;
+    private boolean changeTracking = true;
 
     public ComponentModel(FacesId key) {
         this.setId(key);
@@ -51,7 +52,10 @@ public final class ComponentModel extends ModelElementBase implements ModelEleme
 
     @Override
     public void merge(ComponentModel otherComponent) {
-        this.changed = true;
+
+        if (this.changeTracking) {
+            this.changed = true;
+        }
 
         // merge facets, renderers, events ...
         ComponentLibrary.merge(getAttributes(), otherComponent.getAttributes());
@@ -198,5 +202,10 @@ public final class ComponentModel extends ModelElementBase implements ModelEleme
     @Override
     public boolean hasChanged() {
         return changed;
+    }
+
+    @Override
+    public void stopTrackingChanges() {
+        this.changeTracking = false;
     }
 }

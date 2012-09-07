@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.codehaus.plexus.util.DirectoryScanner;
+import org.richfaces.cdk.apt.CdkProcessorImpl;
 import org.richfaces.cdk.apt.LibraryCache;
 
 import com.beust.jcommander.Parameter;
@@ -42,9 +43,9 @@ import com.google.common.collect.Lists;
 
 /**
  * Configurable command-line interface of CDK generator.
- * 
+ *
  * This class is similar functionality as {@link org.richfaces.builder.mojo.GenerateMojo} from maven-cdk-plugin.
- * 
+ *
  * @author Lukas Fryc
  */
 @Parameters(resourceBundle = "cmdln")
@@ -67,13 +68,16 @@ public class CommandLineGenerator {
 
     @Parameter(names = { "-t", "--templates" }, descriptionKey = "templateIncludes")
     List<String> templateIncludes;
-    
+
     @Parameter(names = { "-h", "--help" }, descriptionKey = "help")
     boolean help = false;
-    
+
     @Parameter(names = { "-r", "--force-recompile" }, descriptionKey = "forceRecompile")
     boolean forceRecompile = false;
-    
+
+    @Parameter(names = { "-e", "--cache-eagerly" }, descriptionKey = "cacheEagerly")
+    boolean cacheEagerly = false;
+
     private List<String> compileSourceRoots;
     protected String[] sourceIncludes;
     protected String[] sourceExcludes;
@@ -89,8 +93,6 @@ public class CommandLineGenerator {
     protected Map<String, String> options = new HashMap<String, String>();
 
     private Logger logger;
-    
-    
 
     private void setup() {
         compileSourceRoots = Arrays.asList(projectRoot + "/src/main/java");
@@ -111,14 +113,14 @@ public class CommandLineGenerator {
         logger.setDebugEnabled(debug);
         this.logger = logger;
     }
-    
+
     public boolean isHelp() {
         return help;
     }
 
     public void execute() {
         setup();
-        
+
         TimeMeasure totalTime = new TimeMeasure("cdk", logger).info(true).start(new File(projectRoot).getAbsolutePath());
         executeGenerator();
         totalTime.stop();
@@ -151,8 +153,9 @@ public class CommandLineGenerator {
         setOutput(generator, outputTestDirectory, Outputs.TEST_JAVA_CLASSES);
         setOutput(generator, outputTestResourcesDirectory, Outputs.TEST_RESOURCES);
         setOutput(generator, outputLibraryCache, Outputs.LIBRARY_CACHE);
-        
+
         options.put(LibraryCache.CACHE_ENABLED_OPTION, Boolean.toString(!forceRecompile));
+        options.put(CdkProcessorImpl.CACHE_EAGERLY_OPTION, Boolean.toString(cacheEagerly));
 
         // configure CDK workers.
         setupPlugins(generator);
@@ -182,7 +185,7 @@ public class CommandLineGenerator {
     /**
      * <p class="changed_added_4_0">
      * </p>
-     * 
+     *
      * @param generator
      * @throws MojoFailureException
      */
@@ -194,7 +197,7 @@ public class CommandLineGenerator {
      * <p class="changed_added_4_0">
      * This utility method sets output directory for particular type. I such directory does not exist, it is created.
      * </p>
-     * 
+     *
      * @param generator
      * @param directory
      * @param type
@@ -275,7 +278,7 @@ public class CommandLineGenerator {
             throw new IllegalStateException("Error scanning source root: \'" + rootFolder + "\'", e);
         }
     }
-    
+
     private List<String> getDefaultTemplateIncludes() {
         List<String> includes = Lists.newLinkedList();
         for (String xmlInclude : XML_INCLUDES) {

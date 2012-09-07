@@ -34,8 +34,7 @@ public class LibraryCompilerWrapper implements LibraryCompiler {
     }
 
     @Override
-    public void verify() throws CdkException {
-        this.delegate.verify();
+    public void completeLibrary() throws CdkException {
+        this.delegate.completeLibrary();
     }
-
 }

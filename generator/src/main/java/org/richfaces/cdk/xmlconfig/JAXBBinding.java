@@ -53,7 +53,6 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.ext.EntityResolver2;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-import com.google.common.collect.ImmutableSet;
 import com.google.inject.Inject;
 
 /**
@@ -64,7 +63,6 @@ import com.google.inject.Inject;
  *
  */
 public class JAXBBinding implements JAXB {
-    public static final ImmutableSet<String> IGNORE_PROPERTIES = ImmutableSet.of("class", "extension");
     private static final FacesConfigNamespacePreffixMapper PREFFIX_MAPPER = new FacesConfigNamespacePreffixMapper();
     @Inject
     private EntityResolver2 resolver;
