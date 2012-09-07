@@ -2,6 +2,7 @@ package org.richfaces.cdk.apt;
 
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -125,6 +126,10 @@ public class AptSourceUtils implements SourceUtils {
      * @return
      */
     Map<String, AptBeanProperty> getBeanProperties(TypeElement type) {
+        if (null == type) {
+            return Collections.emptyMap();
+        }
+
         Name qName = type.getQualifiedName();
         Map<String, AptBeanProperty> result = beanPropertyCache.get(qName);
         if (result != null) {
@@ -132,14 +137,12 @@ public class AptSourceUtils implements SourceUtils {
         }
 
         result = Maps.newHashMap();
-        if (null != type) {
-            List<? extends Element> members = this.processingEnv.getElementUtils().getAllMembers(type);
-            // extract all getters/setters.
-            for (Element element : members) {
-                if (ElementKind.METHOD.equals(element.getKind())) {
-                    ExecutableElement method = (ExecutableElement) element;
-                    processMethod(type, result, method);
-                }
+        List<? extends Element> members = this.processingEnv.getElementUtils().getAllMembers(type);
+        // extract all getters/setters.
+        for (Element element : members) {
+            if (ElementKind.METHOD.equals(element.getKind())) {
+                ExecutableElement method = (ExecutableElement) element;
+                processMethod(type, result, method);
             }
         }
         beanPropertyCache.put(qName, result);
