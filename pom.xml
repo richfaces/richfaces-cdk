@@ -3,10 +3,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>org.richfaces</groupId>
-        <artifactId>richfaces-parent</artifactId>
-        <version>13</version>
-        <relativePath>../parent/pom.xml</relativePath>
+        <groupId>org.jboss</groupId>
+        <artifactId>jboss-parent</artifactId>
+        <version>9</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -15,6 +14,7 @@
     <version>4.3.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>RichFaces CDK Aggregator</name>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -29,7 +29,7 @@
         <module>generator</module>
         <module>cmdln-generator</module>
         <module>maven-cdk-plugin</module>
-        <module>maven-resources-plugin</module>
+        <!--<module>maven-resources-plugin</module>-->
         <module>dist</module>
     </modules>
     <!-- SCM and distribution management -->

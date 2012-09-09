@@ -49,6 +49,7 @@
         <dependency>
             <groupId>org.richfaces.cdk</groupId>
             <artifactId>generator</artifactId>
+            <version>${project.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>sisu-guice</artifactId>

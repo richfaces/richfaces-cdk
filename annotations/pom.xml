@@ -11,7 +11,15 @@
     <artifactId>annotations</artifactId>
     <description>That project contains annotations for JSF classes</description>
     <name>RichFaces CDK Annotations</name>
+
     <dependencies>
+        <!-- Java EE -->
+        <dependency>
+            <groupId>org.jboss.spec</groupId>
+            <artifactId>jboss-javaee-web-6.0</artifactId>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
