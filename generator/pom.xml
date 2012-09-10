@@ -10,7 +10,7 @@
         <version>4.3.0-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
-    
+
     <artifactId>generator</artifactId>
     <name>RichFaces CDK Generator</name>
 
@@ -107,14 +107,12 @@
             </plugins>
         </pluginManagement>
     </build>
-    
+
     <dependencies>
         <!-- Java EE -->
         <dependency>
-            <groupId>org.jboss.spec</groupId>
-            <artifactId>jboss-javaee-web-6.0</artifactId>
-            <type>pom</type>
-            <scope>provided</scope>
+            <groupId>org.jboss.spec.javax.faces</groupId>
+            <artifactId>jboss-jsf-api_2.1_spec</artifactId>
         </dependency>
         
         <!-- CDK -->
