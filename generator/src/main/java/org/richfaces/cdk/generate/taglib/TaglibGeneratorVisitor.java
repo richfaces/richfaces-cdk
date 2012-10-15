@@ -255,11 +255,19 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
         for (TagModel tagModel : model.getTags()) {
             if (isFaceletsTag(tagModel)) {
                 Element tag = createTag(tagModel.getName());
+                addDescriptionForListener(tag, model);
                 addTagHandler(tag, tagModel);
                 appendAttributesForListener(tag, model);
             }
         }
         return null;
+    }
+
+    private void addDescriptionForListener(Element tag, EventModel model) {
+        Element component = tag.addElement("component");
+        Element desc = component.addElement("description");
+        String description = model.getDescription() == null ? "" : model.getDescription();
+        desc.setText(description);
     }
 
     private void appendAttributesForListener(Element tag, EventModel model) {
