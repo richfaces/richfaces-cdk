@@ -107,6 +107,7 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
                 // TODO - investigate proper usage of the <handler-class> element.
                 // Most libraries use <handler-class> INSTEAD of <component>
                 Element component = tag.addElement(COMPONENT);
+                addDescription(tag, model);
                 addDescription(component, model);
                 component.addElement(COMPONENT_TYPE).addText(model.getId().getType());
                 FacesId rendererType = model.getRendererType();
@@ -144,6 +145,7 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
             if (isFaceletsTag(tagModel)) {
                 Element tag = createTag(tagModel.getName());
                 Element converter = tag.addElement("converter");
+                addDescription(tag, model);
                 addDescription(converter, model);
                 converter.addElement("converter-id").addText(model.getId().toString());
                 addTagHandler(converter, tagModel);
@@ -177,6 +179,7 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
             if (isFaceletsTag(tagModel)) {
                 Element tag = createTag(tagModel.getName());
                 Element validator = tag.addElement("validator");
+                addDescription(tag, model);
                 addDescription(validator, model);
                 validator.addElement("validator-id").addText(model.getId().toString());
                 addTagHandler(validator, tagModel);
@@ -228,6 +231,7 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
             if (isFaceletsTag(tagModel)) {
                 Element tag = createTag(tagModel.getName());
                 Element behavior = tag.addElement("behavior");
+                addDescription(tag, model);
                 addDescription(behavior, model);
                 behavior.addElement("behavior-id").addText(model.getId().toString());
                 addTagHandler(behavior, tagModel);
@@ -264,8 +268,7 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
     }
 
     private void addDescriptionForListener(Element tag, EventModel model) {
-        Element component = tag.addElement("component");
-        Element desc = component.addElement("description");
+        Element desc = tag.addElement("description");
         String description = model.getDescription() == null ? "" : model.getDescription();
         desc.setText(description);
     }
