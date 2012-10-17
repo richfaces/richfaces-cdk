@@ -52,9 +52,10 @@ public class IncrementalLibraryCompiler extends LibraryCompilerWrapper {
         }
 
         javaSourcesLibrary.merge(additionsToLibrary);
-        javaSourcesLibrary.stopTrackingChanges();
 
         javaCache.save(javaSourcesLibrary);
+
+        javaSourcesLibrary.stopTrackingChanges();
     }
 
     @Override
@@ -70,9 +71,10 @@ public class IncrementalLibraryCompiler extends LibraryCompilerWrapper {
         holder.setLibrary(additionsToLibrary);
         super.processNonJavaSources();
         nonJavaSourcesLibrary.merge(additionsToLibrary);
-        nonJavaSourcesLibrary.stopTrackingChanges();
 
         nonJavaCache.save(nonJavaSourcesLibrary);
+
+        nonJavaSourcesLibrary.stopTrackingChanges();
     }
 
     @Override
