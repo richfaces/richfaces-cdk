@@ -6,6 +6,7 @@
         <groupId>org.richfaces</groupId>
         <artifactId>richfaces-root-parent</artifactId>
         <version>4.3.0.20121024-M2</version>
+        <relativePath>../../build/parent</relativePath>
     </parent>
 
     <groupId>org.richfaces.cdk</groupId>
