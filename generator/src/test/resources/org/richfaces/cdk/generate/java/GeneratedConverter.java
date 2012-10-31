@@ -33,7 +33,7 @@ import org.richfaces.cdk.generate.freemarker.PropertyModel;
 /**
  * 
  **/
-@Generated({"RichFaces CDK", "4.2.3.Final"})
+@Generated({"RichFaces CDK", "4.2.4-SNAPSHOT"})
 public class GeneratedConverter extends Object implements Converter, PartialStateHolder {
 
     @Override
