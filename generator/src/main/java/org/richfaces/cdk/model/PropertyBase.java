@@ -197,6 +197,7 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
      *
      * @return the hidden
      */
+    @Merge(true)
     public boolean isHidden() {
         return hidden;
     }
