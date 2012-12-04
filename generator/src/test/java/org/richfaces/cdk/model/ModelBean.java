@@ -69,7 +69,7 @@ public class ModelBean implements ModelElement<ModelBean> {
      *
      * @return the doNotReplace
      */
-    @Merge(false)
+    @Merge(overwrite = false)
     public String getDoNotReplace() {
         return doNotReplace;
     }

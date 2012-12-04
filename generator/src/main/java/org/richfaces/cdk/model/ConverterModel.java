@@ -40,7 +40,7 @@ public class ConverterModel extends ModelElementBase implements ModelElement<Con
         setId(converterId);
     }
 
-    @Merge(false)
+    @Merge(overwrite = false)
     public ClassName getConverterForClass() {
         return converterForClass;
     }

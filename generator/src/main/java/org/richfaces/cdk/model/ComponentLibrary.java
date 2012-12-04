@@ -397,9 +397,21 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
                 Method writeMethod = propertyDescriptor.getWriteMethod();
 
                 if (null != readMethod && null != writeMethod && readMethod.isAnnotationPresent(Merge.class)) {
-                    boolean overwrite = readMethod.getAnnotation(Merge.class).value();
+                    boolean preferTrue = readMethod.getAnnotation(Merge.class).preferTrue();
+                    boolean overwrite = readMethod.getAnnotation(Merge.class).overwrite();
                     Object oldValue = readMethod.invoke(target);
                     Object newValue = readMethod.invoke(source);
+
+                    if (preferTrue) {
+                        if (boolean.class == readMethod.getReturnType()) {
+                            if ((Boolean) oldValue || (Boolean) newValue) {
+                                writeMethod.invoke(target, Boolean.TRUE);
+                                continue;
+                            }
+                        } else {
+                            throw new IllegalStateException("@Merge methods can be enforceTrue=true only for boolean properties: " + readMethod);
+                        }
+                    }
 
                     if (null != newValue && (overwrite || null == oldValue)) {
                         writeMethod.invoke(target, newValue);
