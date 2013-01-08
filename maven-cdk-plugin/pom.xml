@@ -9,6 +9,9 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>maven-cdk-plugin</artifactId>
     <packaging>maven-plugin</packaging>
+
+    <name>RichFaces CDK: Generator Maven Plugin</name>
+    <description>Maven plugin for JSF components code generation</description>
     
     <dependencies>
         <!-- Compile dependencies -->
@@ -133,16 +136,4 @@
             </build>
         </profile>
     </profiles>
-
-    <description>Maven plugin for JSF components code generation</description>
-    <name>RichFaces CDK Generator Maven Plugin</name>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.sonatype.sisu</groupId>
-                <artifactId>sisu-guice</artifactId>
-                <version>3.1.0</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 </project>

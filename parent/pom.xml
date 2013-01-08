@@ -250,6 +250,11 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <groupId>org.richfaces.cdk</groupId>
+                    <artifactId>maven-cdk-plugin</artifactId>
+                    <version>${version.cdk}</version>
+                </plugin>
+                <plugin>
                     <groupId>org.apache.camel</groupId>
                     <artifactId>guice-maven-plugin</artifactId>
                     <version>${version.guice.plugin}</version>
