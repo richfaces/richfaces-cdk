@@ -10,6 +10,7 @@
     </parent>
     
     <artifactId>cmdln-generator</artifactId>
+    <name>RichFaces CDK: Command-Line Generator Interface</name>
 
     <dependencies>
         <dependency>
