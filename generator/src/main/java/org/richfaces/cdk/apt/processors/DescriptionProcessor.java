@@ -38,7 +38,7 @@ public interface DescriptionProcessor {
     /**
      * <p class="changed_added_4_0">
      * process {@link Description} annotation and set information from it into model. Optional string from the JavaDoc comment
-     * has precedence over {@link Desription#value()} attribute.
+     * has precedence over {@link Desription#overwrite()} attribute.
      * </p>
      *
      * @param model

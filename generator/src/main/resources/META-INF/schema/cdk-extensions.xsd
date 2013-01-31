@@ -28,6 +28,18 @@
         <xs:attribute ref="id" />
         <xs:attribute ref="style" />
         <xs:attribute ref="title" />
+        <!-- HTML5 attributes -->
+        <xs:attribute name="role" />
+        <xs:attributeGroup ref="data" />
+    </xs:attributeGroup>
+    
+    <xs:attributeGroup name="data">
+        <xs:annotation>
+            <xs:documentation>
+                HTML5 data-* attributes
+            </xs:documentation>
+        </xs:annotation>
+        <xs:anyAttribute processContents="lax" />
     </xs:attributeGroup>
 
     <xs:attribute name="id" type="beanAttribute" />

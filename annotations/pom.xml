@@ -5,13 +5,20 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>org.richfaces.cdk</groupId>
-        <version>4.2.2.Final</version>
+        <version>4.3.0.Final</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <artifactId>annotations</artifactId>
     <description>That project contains annotations for JSF classes</description>
     <name>RichFaces CDK Annotations</name>
+
     <dependencies>
+        <!-- Java EE -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.faces</groupId>
+            <artifactId>jboss-jsf-api_2.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>

@@ -40,6 +40,8 @@ import org.richfaces.cdk.CdkTestBase;
 import org.richfaces.cdk.CdkTestRunner;
 import org.richfaces.cdk.templatecompiler.el.types.ELPropertyDescriptor;
 import org.richfaces.cdk.templatecompiler.el.types.ELType;
+import org.richfaces.cdk.templatecompiler.el.types.TypeParserFactory;
+import org.richfaces.cdk.templatecompiler.el.types.TypesFactory;
 import org.richfaces.cdk.templatecompiler.el.types.TypesFactoryImpl;
 
 import com.google.inject.Binder;
@@ -52,12 +54,14 @@ import com.google.inject.Inject;
 @RunWith(CdkTestRunner.class)
 public class TypesFactoryTest extends CdkTestBase {
     @Inject
-    TypesFactoryImpl typesFactory;
+    TypesFactory typesFactory;
 
     @Override
     public void configure(Binder binder) {
         super.configure(binder);
         binder.bind(CdkClassLoader.class).toInstance(createClassLoader());
+        binder.bind(TypeParserFactory.class);
+        binder.bind(TypesFactory.class).to(TypesFactoryImpl.class);
     }
 
     private static final class ParameterizedTypesHolder {

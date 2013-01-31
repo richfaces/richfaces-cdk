@@ -37,6 +37,7 @@ import org.richfaces.cdk.ResourceTaskFactory;
 import org.richfaces.cdk.ResourceWriter;
 import org.richfaces.cdk.faces.CurrentResourceContext;
 import org.richfaces.cdk.resource.util.ResourceConstants;
+import org.richfaces.cdk.resource.util.ResourceUtil;
 import org.richfaces.resource.ResourceSkinUtils;
 import org.richfaces.resource.ResourceKey;
 
@@ -47,10 +48,10 @@ import com.google.common.io.Closeables;
 
 /**
  * @author Nick Belaevski
- *
+ * 
  */
 public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
-    
+
     private class ResourcesRendererCallable implements Callable<Object> {
         private ResourceKey resourceKey;
         private boolean skinDependent;
@@ -58,7 +59,7 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
 
         ResourcesRendererCallable(ResourceKey resourceKey) {
             this.resourceKey = resourceKey;
-            
+
             // when packaging JSF's JavaScript implementation, use uncompressed version
             // as double compression may lead in inability to use it
             if (pack && ResourceConstants.JSF_COMPRESSED.equals(resourceKey)) {
@@ -79,7 +80,7 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
                 if (skin != null) {
                     faces.setSkin(skin);
                 }
-                
+
                 Resource resource = createResource(facesContext, resourceKey);
                 CurrentResourceContext.getInstance(facesContext).setResource(resource);
                 // TODO check content type
@@ -88,7 +89,7 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
                     log.info(MessageFormat.format("Skipping {0} because it contains EL-expressions", resourceKey));
                     return;
                 }
-                
+
                 if (pack) {
                     resourceWriter.writePackedResource(skin, resource);
                 } else {
@@ -119,11 +120,14 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
                 Resource resource = createResource(facesContext, resourceKey);
                 if (resource == null) {
                     // TODO log null resource
+                    log.warn("null resource for resource key " + resourceKey + " (resource rendering will be skipped)");
                     skipped = true;
                     return;
                 }
 
                 if (!filter.apply(resource)) {
+                    log.debug("filtered out resource: " + resourceKey + " (resource rendering will be skipped)");
+                    log.debug(" - content-type: " + resource.getContentType() + ", qualifier: " + ResourceUtil.getResourceQualifier(resource));
                     skipped = true;
                     return;
                 }
@@ -131,6 +135,7 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
                 String contentType = resource.getContentType();
                 if (contentType == null) {
                     // TODO log null content type
+                    log.warn("null content type for resource key " + resourceKey + " (resource rendering will be skipped)");
                     skipped = true;
                     return;
                 }

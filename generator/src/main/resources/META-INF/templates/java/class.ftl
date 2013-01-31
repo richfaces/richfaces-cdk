@@ -1,7 +1,7 @@
 package ${package.name};
 
 <#list imports as import><#if !import.default >
-import<#if import.static> static</#if> ${import.name};
+import<#if import.static> static</#if> ${import.className};
 </#if></#list>
 
 <@renderCommonJavaElementStuff element=.data_model />class ${simpleName} <#if superClass.name != 'java.lang.Object'>extends ${superClass.simpleName} </#if>{

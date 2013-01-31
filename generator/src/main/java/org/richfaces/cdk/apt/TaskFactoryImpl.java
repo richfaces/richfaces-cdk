@@ -22,6 +22,8 @@
  */
 package org.richfaces.cdk.apt;
 
+import static org.richfaces.cdk.apt.CacheType.JAVA_SOURCES;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -39,6 +41,7 @@ import javax.tools.StandardJavaFileManager;
 import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
 
+import org.richfaces.cdk.Cache;
 import org.richfaces.cdk.CdkClassLoader;
 import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.FileManager;
@@ -77,6 +80,14 @@ public class TaskFactoryImpl implements CompilationTaskFactory {
     private FileManager sourceFolders;
     @Inject
     private CdkProcessor cdkProcessor;
+
+    @Inject
+    @Cache(JAVA_SOURCES)
+    private LibraryCache javaCache;
+
+    @Inject
+    private JavaSourceTracker sourceCache;
+
     private JavaCompiler javaCompiler;
     private StandardJavaFileManager fileManager;
 
@@ -91,35 +102,43 @@ public class TaskFactoryImpl implements CompilationTaskFactory {
             Iterable<? extends JavaFileObject> sourceObjects = getFileManager().getJavaFileObjectsFromFiles(
                     sourceFolders.getFiles());
 
-            if (log.isDebugEnabled()) {
-                compilerOptions.add("-verbose");
+            for (JavaFileObject sourceObject : sourceObjects) {
+                if (javaCache.storedBefore(sourceObject.getLastModified())) {
+                    sourceCache.putChanged(sourceObject);
+                }
             }
 
-            CompilationTask task = getJavaCompiler().getTask(null, getFileManager(),
-                    new DiagnosticListenerImplementation(log, locale), compilerOptions, null, sourceObjects);
-            task.setLocale(locale);
-            task.setProcessors(Collections.singleton(cdkProcessor));
-            return task;
-        } else {
-            // no Java sources, try to build from xml files
-            return new CompilationTask() {
-                @Override
-                public void setProcessors(Iterable<? extends Processor> processors) {
-                    // do nothing
+            if (sourceObjects.iterator().hasNext()) {
+                if (log.isDebugEnabled()) {
+                    compilerOptions.add("-verbose");
                 }
 
-                @Override
-                public void setLocale(Locale locale) {
-
-                }
-
-                @Override
-                public Boolean call() {
-                    cdkProcessor.processNonJavaSources();
-                    return 0 == log.getErrorCount();
-                }
-            };
+                CompilationTask task = getJavaCompiler().getTask(null, getFileManager(),
+                        new DiagnosticListenerImplementation(log, locale), compilerOptions, null, sourceObjects);
+                task.setLocale(locale);
+                task.setProcessors(Collections.singleton(cdkProcessor));
+                return task;
+            }
         }
+
+        // no Java sources, try to build from xml files
+        return new CompilationTask() {
+            @Override
+            public void setProcessors(Iterable<? extends Processor> processors) {
+                // do nothing
+            }
+
+            @Override
+            public void setLocale(Locale locale) {
+
+            }
+
+            @Override
+            public Boolean call() {
+                cdkProcessor.continueAfterJavaSourceProcessing();
+                return 0 == log.getErrorCount();
+            }
+        };
     }
 
     private StandardJavaFileManager getFileManager() {

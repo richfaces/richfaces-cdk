@@ -21,6 +21,7 @@
  */
 package org.richfaces.cdk.model;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -31,7 +32,9 @@ import java.util.Comparator;
  *
  */
 public class BeanModelBase extends DescriptionGroupBase {
-    private final ModelCollection<PropertyBase> attributes = ModelSet.<PropertyBase>create(new Comparator<PropertyBase>() {
+    private final ModelCollection<PropertyBase> attributes = ModelSet.<PropertyBase>create(new PropertyBaseComparator());
+
+    private static class PropertyBaseComparator implements Comparator<PropertyBase>, Serializable {
         @Override
         public int compare(PropertyBase o1, PropertyBase o2) {
             if (o1 != null && o2 != null && null != o1.getName() && null != o2.getName()) {
@@ -40,7 +43,7 @@ public class BeanModelBase extends DescriptionGroupBase {
                 return 0;
             }
         }
-    });
+    }
 
     /**
      * <p class="changed_added_4_0">

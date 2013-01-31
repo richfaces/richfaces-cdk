@@ -3,12 +3,15 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>org.richfaces.cdk</groupId>
-        <version>4.2.2.Final</version>
+        <version>4.3.0.Final</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>maven-cdk-plugin</artifactId>
     <packaging>maven-plugin</packaging>
+
+    <name>RichFaces CDK: Generator Maven Plugin</name>
+    <description>Maven plugin for JSF components code generation</description>
     
     <dependencies>
         <!-- Compile dependencies -->
@@ -19,10 +22,16 @@
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>sisu-guice</artifactId>
+                    <groupId>org.sonatype.sisu</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
-            <artifactId>maven-project</artifactId>
+            <artifactId>maven-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
@@ -43,6 +52,13 @@
         <dependency>
             <groupId>org.richfaces.cdk</groupId>
             <artifactId>generator</artifactId>
+            <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>sisu-guice</artifactId>
+                    <groupId>org.sonatype.sisu</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         
         <!-- Test dependencies -->
@@ -120,7 +136,4 @@
             </build>
         </profile>
     </profiles>
-
-    <description>Maven plugin for JSF components code generation</description>
-    <name>RichFaces CDK Generator Maven Plugin</name>
 </project>

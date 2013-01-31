@@ -34,5 +34,9 @@ import javax.annotation.processing.Processor;
  *
  */
 public interface CdkProcessor extends Processor {
-    void processNonJavaSources();
+
+    /**
+     * This method will be called once all the Java sources are processed
+     */
+    void continueAfterJavaSourceProcessing();
 }

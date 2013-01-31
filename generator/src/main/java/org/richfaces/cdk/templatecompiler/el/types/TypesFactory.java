@@ -25,6 +25,7 @@ import org.richfaces.cdk.templatecompiler.el.ParsingException;
 
 /**
  * @author Nick Belaevski
+ * @author Lukas Fryc
  *
  */
 public interface TypesFactory {
@@ -53,6 +54,8 @@ public interface TypesFactory {
      * @return
      */
     ELType getType(java.lang.reflect.Type reflectionType);
+
+    ELType getGeneratedType(String typeString, ELType superType);
 
     /**
      * <p>

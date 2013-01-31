@@ -28,11 +28,11 @@ import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.expectLastCall;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
@@ -54,6 +54,8 @@ import org.richfaces.cdk.Output;
 import org.richfaces.cdk.Outputs;
 import org.richfaces.cdk.Stub;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 
@@ -84,7 +86,7 @@ public class TaskFactoryTest extends AnnotationProcessorTestBase {
      * @throws AptException
      */
     @Test
-    public void testGetTask() throws AptException, Exception {
+    public void testGetTask() throws Exception {
         expect(output.getFolders()).andReturn(null);
         replay(processor, output);
 
@@ -95,7 +97,7 @@ public class TaskFactoryTest extends AnnotationProcessorTestBase {
     }
 
     @Test
-    public void testTask() throws AptException, Exception {
+    public void testTask() throws Exception {
         expect(output.getFolders()).andReturn(null);
         processor.init((ProcessingEnvironment) anyObject());
         expectLastCall();
@@ -112,7 +114,16 @@ public class TaskFactoryTest extends AnnotationProcessorTestBase {
         Set<? extends TypeElement> elements = capturedTypes.getValue();
 
         assertFalse(elements.isEmpty());
-        assertEquals("TestAnnotation2", elements.iterator().next().getSimpleName().toString());
+
+        Collection<String> typeNames = Collections2.transform(elements, new Function<TypeElement, String>() {
+            @Override
+            public String apply(TypeElement e) {
+                return e.getSimpleName().toString();
+            }
+        });
+        assertTrue(typeNames.contains("TestAnnotation2"));
+        assertTrue(typeNames.contains("TestMethodAnnotation"));
+
         verify(processor, output);
     }
 

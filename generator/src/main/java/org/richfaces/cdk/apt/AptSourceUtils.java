@@ -2,6 +2,7 @@ package org.richfaces.cdk.apt;
 
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
+import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeKind;
@@ -53,6 +55,9 @@ public class AptSourceUtils implements SourceUtils {
     private static final ImmutableSet<String> HIDDEN_PROPERTIES = ImmutableSet.of("eventNames", "defaultEventName",
             "clientBehaviors", "family", "class");
     private final ProcessingEnvironment processingEnv;
+
+    private Map<Name, Map<String, AptBeanProperty>> beanPropertyCache = Maps.newHashMap();
+
     @Inject
     private Logger log;
 
@@ -121,17 +126,26 @@ public class AptSourceUtils implements SourceUtils {
      * @return
      */
     Map<String, AptBeanProperty> getBeanProperties(TypeElement type) {
-        Map<String, AptBeanProperty> result = Maps.newHashMap();
-        if (null != type) {
-            List<? extends Element> members = this.processingEnv.getElementUtils().getAllMembers(type);
-            // extract all getters/setters.
-            for (Element element : members) {
-                if (ElementKind.METHOD.equals(element.getKind())) {
-                    ExecutableElement method = (ExecutableElement) element;
-                    processMethod(type, result, method);
-                }
+        if (null == type) {
+            return Collections.emptyMap();
+        }
+
+        Name qName = type.getQualifiedName();
+        Map<String, AptBeanProperty> result = beanPropertyCache.get(qName);
+        if (result != null) {
+            return result;
+        }
+
+        result = Maps.newHashMap();
+        List<? extends Element> members = this.processingEnv.getElementUtils().getAllMembers(type);
+        // extract all getters/setters.
+        for (Element element : members) {
+            if (ElementKind.METHOD.equals(element.getKind())) {
+                ExecutableElement method = (ExecutableElement) element;
+                processMethod(type, result, method);
             }
         }
+        beanPropertyCache.put(qName, result);
         return result;
     }
 

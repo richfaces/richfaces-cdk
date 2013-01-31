@@ -36,7 +36,7 @@ mvn clean richfaces-resources:process -Dskins=blueSky -DstaticResourceMappingFil
 <plugin>
     <groupId>org.richfaces.cdk</groupId>
     <artifactId>maven-richfaces-resources-plugin</artifactId>
-    <version>4.2.2.Final</version>
+    <version>4.3.0.Final</version>
     <configuration>
         <skins>
             <skin>blueSky</skin>
@@ -83,14 +83,14 @@ mvn clean richfaces-resources:process -Dskins=blueSky -DstaticResourceMappingFil
                      depending on packaging of this project -->
                 <resourcesOutputDir>${project.build.outputDirectory}/META-INF/resources/com.acme.staticResources/</resourcesOutputDir>
                 
-                <!-- resources will be located under JSF_RESOURCE_ROOT/com.acme.staticResources (e.g. JAR/META-INF/com.acme.staticResources)
+                <!-- resources will be located under JSF_RESOURCE_ROOT/com.acme.staticResources (e.g. JAR/META-INF/com.acme.staticResources) -->
                 <staticResourcePrefix>com.acme.staticResources/</staticResourcePrefix>
             	
             	<!-- resources will be packaged, refer to RichFaces Developer Guide -->
             	<pack>true</pack>
             	
             	<!-- resources will be compressed, refer to RichFaces Developer Guide -->
-            	<compress>true</pack>
+            	<compress>true</compress>
             	
             </configuration>
         </execution>

@@ -38,10 +38,11 @@ import org.richfaces.cdk.xmlconfig.model.FacesIdAdapter;
 import com.google.common.collect.Lists;
 
 /**
- * <p class="changed_added_4_0">
+ * <p class="changed_added_4_3">
  * </p>
  *
  * @author asmirnov@exadel.com
+ * @author <a href="http://community.jboss.org/people/bleathem">Brian Leathem</a>
  */
 @XmlRootElement(name = "interface", namespace = Template.COMPOSITE_NAMESPACE)
 public class CompositeInterface implements Serializable {
@@ -53,6 +54,7 @@ public class CompositeInterface implements Serializable {
     private String renderKitId = RenderKitFactory.HTML_BASIC_RENDER_KIT;
     private ClassName javaClass;
     private ClassName baseClass;
+    private ClassName componentBaseClass;
     private FacesId rendererType;
     private Boolean rendersChildren = null;
     private List<ClassImport> classImports = Lists.newArrayList();
@@ -208,6 +210,28 @@ public class CompositeInterface implements Serializable {
      */
     public void setBaseClass(ClassName baseClass) {
         this.baseClass = baseClass;
+    }
+
+    /**
+     * <p class="changed_added_4_3">
+     * </p>
+     *
+     * @return the componentBaseClass
+     */
+    @XmlJavaTypeAdapter(ClassAdapter.class)
+    @XmlElement(name = "component-base-class", namespace = Template.CDK_NAMESPACE)
+    public ClassName getComponentBaseClass() {
+        return this.componentBaseClass;
+    }
+
+    /**
+     * <p class="changed_added_4_3">
+     * </p>
+     *
+     * @param componentBaseClass the componentBaseClass to set
+     */
+    public void setComponentBaseClass(ClassName componentBaseClass) {
+        this.componentBaseClass = componentBaseClass;
     }
 
     /**

@@ -77,6 +77,7 @@ public class HelperMethodFactoryImpl implements HelperMethodFactory {
         buildHelperMethod(HelperMethod.EMPTINESS_CHECK, false, "emptiness-check-method", "object");
         buildHelperMethod(HelperMethod.EQUALS_CHECK, false, "equals-check-method", "o1", "o2");
         buildHelperMethod(HelperMethod.TO_BOOLEAN_CONVERSION, false, "conversion-to-boolean-method", "object");
+        buildHelperMethod(HelperMethod.TO_INTEGER_CONVERSION, false, "conversion-to-integer-method", "object");
         buildHelperMethod(HelperMethod.TO_STRING_CONVERSION, false, "conversion-to-string-method", "object");
         buildHelperMethod(HelperMethod.SHOULD_RENDER_ATTRIBUTE, true, "should-render-attribute", "attributeValue");
         buildHelperMethod(HelperMethod.RENDER_ATTRIBUTE, true, "render-attribute", "attributeValue").getExceptions().add(
@@ -92,6 +93,7 @@ public class HelperMethodFactoryImpl implements HelperMethodFactory {
         buildHelperMethod(HelperMethod.ADD_TO_SCRIPT_HASH_ATTRIBUTES, true, null);
         buildHelperMethod(HelperMethod.TO_SCRIPT_ARGS, true, null);
         buildHelperMethod(HelperMethod.CONCAT, true, null);
+        buildHelperMethod(HelperMethod.HAS_FACET, true, null);
     }
 
     private JavaMethod buildHelperMethod(HelperMethod helperMethod, boolean utilsMethod, String templateName,

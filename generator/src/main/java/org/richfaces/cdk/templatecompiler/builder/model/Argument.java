@@ -31,6 +31,9 @@ public class Argument implements RequireImports {
     private String name;
     private ELType type;
 
+    private boolean required;
+    private String defaultValue;
+
     public Argument(String name, ELType type) {
         super();
         this.name = name;
@@ -47,6 +50,25 @@ public class Argument implements RequireImports {
 
     public String getName() {
         return name;
+    }
+
+    public void setDefault(String defaultValue) {
+        this.defaultValue = defaultValue;
+    }
+
+    public String getDefault() {
+        return defaultValue;
+    }
+
+    public void setRequired(Boolean required) {
+        if (required == null) {
+            required = false;
+        }
+        this.required = required;
+    }
+
+    public boolean isRequired() {
+        return required;
     }
 
     @Override

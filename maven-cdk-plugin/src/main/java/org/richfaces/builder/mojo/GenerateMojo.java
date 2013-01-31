@@ -46,6 +46,11 @@ import org.richfaces.cdk.Generator;
 import org.richfaces.cdk.Logger;
 import org.richfaces.cdk.Outputs;
 import org.richfaces.cdk.Sources;
+import org.richfaces.cdk.apt.CdkProcessorImpl;
+import org.richfaces.cdk.apt.LibraryCache;
+import org.richfaces.cdk.model.Cacheable;
+
+import com.google.common.collect.Maps;
 
 /**
  * <p class="changed_added_4_0">
@@ -88,7 +93,7 @@ public class GenerateMojo extends AbstractMojo {
     /**
      * @parameter
      */
-    protected Map<String, String> options;
+    protected Map<String, String> options = Maps.newHashMap();
     /**
      * @parameter
      */
@@ -123,6 +128,26 @@ public class GenerateMojo extends AbstractMojo {
      * @parameter expression="${project.build.directory}/generated-sources/test/resources"
      */
     protected File outputTestResourcesDirectory;
+    /**
+     * Directory where serialized library will be cached
+     *
+     * @parameter expression="${project.build.directory}/library-cache"
+     */
+    protected File outputLibraryCache;
+    /**
+     * Forces compiler to do not use cache and re-compile all sources from scratch
+     *
+     * @parameter expression="${cdk.recompile}" default-value="false"
+     */
+    protected boolean forceRecompile;
+    /**
+     * Turns off library generation and verification in case when no change was detected in sources which supports
+     * {@link Cacheable} (it does not have to mean no change was done). Warning: when getting undesired results, try to turn off
+     * this option.
+     *
+     * @parameter expression="${cdk.cache.eagerly}" default-value="false"
+     */
+    protected boolean cacheEagerly;
     /**
      * Top maven project.
      *
@@ -195,15 +220,14 @@ public class GenerateMojo extends AbstractMojo {
         setOutput(generator, outputResourcesDirectory, Outputs.RESOURCES);
         setOutput(generator, outputTestDirectory, Outputs.TEST_JAVA_CLASSES);
         setOutput(generator, outputTestResourcesDirectory, Outputs.TEST_RESOURCES);
+        setOutput(generator, outputLibraryCache, Outputs.LIBRARY_CACHE);
 
         // configure CDK workers.
         setupPlugins(generator);
 
-        if (null != options) {
-
-            // TODO make it type safe.
-            generator.setOptions(options);
-        }
+        options.put(LibraryCache.CACHE_ENABLED_OPTION, Boolean.toString(!forceRecompile));
+        options.put(CdkProcessorImpl.CACHE_EAGERLY_OPTION, Boolean.toString(cacheEagerly));
+        generator.setOptions(options);
 
         try {
             if (this.library != null && this.library.getTaglib() != null && this.library.getTaglib().getShortName() != null) {

@@ -1,10 +1,12 @@
 package org.richfaces.cdk.generate.java;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Map.Entry;
 
 import javax.el.ELContext;
 import javax.el.ValueExpression;
@@ -14,6 +16,8 @@ import javax.faces.component.UIInput;
 import javax.faces.component.html.HtmlCommandLink;
 
 import org.junit.Test;
+
+import com.google.common.collect.Lists;
 
 /**
  * <p class="changed_added_4_0">
@@ -26,9 +30,8 @@ import org.junit.Test;
 public class TestAttributesThatAreSet {
     private static final String RENDERED = "rendered";
     private static final String ID = "id";
-    private static final String ATTRIBUTES_THAT_ARE_SET_KEY = UIComponentBase.class.getName() + ".attributesThatAreSet";
-    private static final @SuppressWarnings("serial")
-    ValueExpression DUMMY_EXPRESSION = new ValueExpression() {
+    @SuppressWarnings("serial")
+    private static final ValueExpression DUMMY_EXPRESSION = new ValueExpression() {
         @Override
         public boolean isLiteralText() {
             // TODO Auto-generated method stub
@@ -121,7 +124,7 @@ public class TestAttributesThatAreSet {
         UIComponentBase component = createComponentBase();
         assertAttributeNotSet(component, RENDERED);
         component.setValueExpression(RENDERED, DUMMY_EXPRESSION);
-        assertAttributeSet(component, RENDERED);
+        assertNotNull(component.getValueExpression(RENDERED));
     }
 
     @Test
@@ -142,7 +145,7 @@ public class TestAttributesThatAreSet {
     public void testHtmlAttribute() throws Exception {
         HtmlCommandLink link = new HtmlCommandLink();
         link.setDir("lefttoright");
-        assertAttributeSet(link, "dir");
+        assertEquals("lefttoright", link.getDir());
     }
 
     private UIComponentBase createComponentBase() {
@@ -167,13 +170,12 @@ public class TestAttributesThatAreSet {
     }
 
     private List<String> getAttributesList(UIComponent component) {
-        Object attributesList = component.getAttributes().get(ATTRIBUTES_THAT_ARE_SET_KEY);
-        if (null != attributesList) {
-            assertTrue(attributesList instanceof List<?>);
-            List<String> list = (List<String>) attributesList;
-            return list;
-        } else {
-            return Collections.emptyList();
+        List<String> attributeList = Lists.newLinkedList();
+        for (Entry<String, Object> entry : component.getAttributes().entrySet()) {
+            if (entry.getValue() != null) {
+                attributeList.add(entry.getKey());
+            }
         }
+        return attributeList;
     }
 }

@@ -34,6 +34,9 @@ import java.util.Map;
 import java.util.logging.Level;
 
 import org.richfaces.cdk.apt.AptModule;
+import org.richfaces.cdk.apt.CacheType;
+import org.richfaces.cdk.apt.LibraryCache;
+import org.richfaces.cdk.apt.LibraryCacheImpl;
 import org.richfaces.cdk.generate.java.ClassGeneratorModule;
 import org.richfaces.cdk.generate.taglib.TaglibModule;
 import org.richfaces.cdk.model.ModelModule;
@@ -119,8 +122,10 @@ public class Generator {
     }
 
     public void init() {
-        injector = Guice.createInjector(Stage.PRODUCTION, new CdkConfigurationModule(), new AptModule(), new ModelModule(),
+        TimeMeasure time = new TimeMeasure("module instantiation", log).info(true).start();
+        injector = Guice.createInjector(Stage.DEVELOPMENT, new CdkConfigurationModule(), new AptModule(), new ModelModule(),
                 new ClassGeneratorModule(), new TemplateModule(), new XmlModule(), new TaglibModule());
+        time.stop();
 
         if (!log.isDebugEnabled()) {
             try {
@@ -137,8 +142,6 @@ public class Generator {
     public void execute() {
         checkNotNull(libraryBuilder, "initialized");
         libraryBuilder.build();
-
-        // libraryBuilder.generate(); // TODO ?
     }
 
     public static final class EmptyFileManager implements FileManager {
@@ -176,6 +179,11 @@ public class Generator {
             }
             for (Map.Entry<Sources, FileManager> entry : sources.entrySet()) {
                 bind(FileManager.class).annotatedWith(new SourceImpl(entry.getKey())).toInstance(entry.getValue());
+            }
+            for (CacheType cacheType : CacheType.values()) {
+                LibraryCache cache = new LibraryCacheImpl(cacheType);
+                requestInjection(cache);
+                bind(LibraryCache.class).annotatedWith(new CacheImpl(cacheType)).toInstance(cache);
             }
             bind(NamingConventions.class).to(RichFacesConventions.class);
             bind(ModelValidator.class).to(ValidatorImpl.class);

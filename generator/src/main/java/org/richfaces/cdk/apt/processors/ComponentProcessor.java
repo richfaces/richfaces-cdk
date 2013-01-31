@@ -79,6 +79,7 @@ public class ComponentProcessor extends ProcessorBase implements CdkAnnotationPr
                     subcomponentModel.setGenerate(true);
                 }
                 setComponentProperties(null, subcomponentModel, subcomponent);
+                setDescription(subcomponentModel, annotation, getDocComment(componentElement));
                 library.getComponents().add(subcomponentModel);
             }
         }

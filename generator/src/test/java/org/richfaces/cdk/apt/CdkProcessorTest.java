@@ -22,7 +22,6 @@
  */
 package org.richfaces.cdk.apt;
 
-import static org.easymock.EasyMock.anyObject;
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.createNiceMock;
 import static org.easymock.EasyMock.expect;
@@ -74,12 +73,13 @@ public class CdkProcessorTest extends AnnotationProcessorTestBase {
     private static final String INTERFACE_JAVA = "org/richfaces/cdk/apt/TestInterface.java";
     private static final ImmutableSet<String> PROCESS_ANNOTATIONS = ImmutableSet.of(TestAnnotation.class.getName());
     private static final String SUB_CLASS_JAVA = "org/richfaces/cdk/apt/TestSubClass.java";
+
     @Inject
-    ComponentLibrary library;
+    private ComponentLibrary library;
     @Mock
     private LibraryBuilder builder;
     @Inject
-    private CdkAnnotationProcessor cdkProcessor;
+    private CdkAnnotationProcessor annotationProcessor;
     @Mock
     private TypeElement element;
     @Stub
@@ -93,77 +93,82 @@ public class CdkProcessorTest extends AnnotationProcessorTestBase {
     private RoundEnvironment roundEnv;
     @Mock
     private ModelValidator validator;
+    @Mock
+    private LibraryGenerator generator;
 
     @Override
     public void configure(Binder binder) {
         super.configure(binder);
         binder.bind(CdkProcessor.class).to(CdkProcessorImpl.class).in(Singleton.class);
-        CdkAnnotationProcessor cdkProcessor = createMock(CdkAnnotationProcessor.class);
-        binder.bind(CdkAnnotationProcessor.class).toInstance(cdkProcessor);
+
+        CdkAnnotationProcessor annotationProcessor = createMock(CdkAnnotationProcessor.class);
+        binder.bind(CdkAnnotationProcessor.class).toInstance(annotationProcessor);
         binder.bind(new TypeLiteral<Set<CdkAnnotationProcessor>>() {
-        }).toInstance(ImmutableSet.of(cdkProcessor));
+        }).toInstance(ImmutableSet.of(annotationProcessor));
+
         binder.bind(new TypeLiteral<Set<ModelBuilder>>() {
         }).toInstance(Collections.<ModelBuilder>emptySet());
+
+        binder.bind(LibraryCompiler.class).to(DefaultLibraryCompiler.class);
+        binder.bind(JavaSourceProcessor.class).in(Singleton.class);
     }
 
     @Test
     public void testProcess() throws Exception {
         expect(roundEnv.processingOver()).andReturn(false);
-        expect((Class<TestAnnotation2>) cdkProcessor.getProcessedAnnotation()).andStubReturn(TestAnnotation2.class);
+        expect((Class<TestAnnotation2>) annotationProcessor.getProcessedAnnotation()).andStubReturn(TestAnnotation2.class);
         expect((Set<TypeElement>) roundEnv.getRootElements()).andReturn(Collections.singleton(element));
         expect(element.getKind()).andReturn(ElementKind.CLASS);
         TestAnnotation2 testAnnotation2 = createNiceMock(TestAnnotation2.class);
         expect(element.getAnnotation(TestAnnotation2.class)).andReturn(testAnnotation2);
         expect(element.getSimpleName()).andStubReturn(new TestName("foo"));
-        cdkProcessor.process(element, library);
+        annotationProcessor.process(element, library);
         expectLastCall();
         // validator.verify(library);
         // expectLastCall();
-        replay(element, roundEnv, builder, validator, cdkProcessor);
+        replay(element, roundEnv, builder, validator, annotationProcessor);
         processor.process(Collections.singleton(element), roundEnv);
-        verify(element, roundEnv, builder, validator, cdkProcessor);
+        verify(element, roundEnv, builder, validator, annotationProcessor);
     }
 
     @Test
     public void testProcess3() throws Exception {
         expect(roundEnv.processingOver()).andReturn(false);
-        expect((Class<TestAnnotation>) cdkProcessor.getProcessedAnnotation()).andStubReturn(TestAnnotation.class);
+        expect((Class<TestAnnotation>) annotationProcessor.getProcessedAnnotation()).andStubReturn(TestAnnotation.class);
         expect((Set<TypeElement>) roundEnv.getRootElements()).andReturn(Collections.singleton(element));
         expect(element.getKind()).andReturn(ElementKind.CLASS);
         expect(element.getAnnotation(TestAnnotation.class)).andReturn(null);
         // validator.verify(library);
         // expectLastCall();
-        replay(element, roundEnv, builder, validator, cdkProcessor);
+        replay(element, roundEnv, builder, validator, annotationProcessor);
         processor.process(Collections.singleton(element), roundEnv);
-        verify(element, roundEnv, builder, validator, cdkProcessor);
+        verify(element, roundEnv, builder, validator, annotationProcessor);
     }
 
     @Test
-    public void testProcessOver() throws Exception {
+    public void when_validator_hasnt_found_any_error_then_generator_is_called() throws Exception {
         expect(roundEnv.processingOver()).andReturn(true);
         validator.verify(library);
-        expectLastCall();
         expect(log.getErrorCount()).andReturn(0);
-        log.debug((CharSequence) anyObject());
-        expectLastCall().asStub();
-        builder.generate(library);
         expectLastCall();
-        replay(log, element, roundEnv, builder, validator, cdkProcessor);
+        generator.generate();
+        expectLastCall();
+        replay(log, element, roundEnv, builder, validator, annotationProcessor, generator);
 
         processor.process(Collections.singleton(element), roundEnv);
 
-        verify(log, element, roundEnv, builder, validator, cdkProcessor);
+        verify(log, element, roundEnv, builder, validator, annotationProcessor, generator);
     }
 
     @Test
-    public void testProcessOver2() throws Exception {
+    public void when_validator_found_errors_then_generator_is_not_called() throws Exception {
         expect(roundEnv.processingOver()).andReturn(true);
         validator.verify(library);
         expectLastCall();
         expect(log.getErrorCount()).andReturn(1);
-        replay(log, element, roundEnv, builder, validator, cdkProcessor);
+        replay(log, element, roundEnv, builder, validator, annotationProcessor, generator);
         processor.process(Collections.singleton(element), roundEnv);
-        verify(log, element, roundEnv, builder, validator, cdkProcessor);
+        verify(log, element, roundEnv, builder, validator, annotationProcessor, generator);
     }
 
     @Override

@@ -41,10 +41,15 @@ import java.lang.annotation.Target;
 public @interface Merge {
     /**
      * <p class="changed_added_4_0">
-     * If true, target value should be overwritten, otherwise only null values will bw replaced.
+     * If true, target value should be overwritten, otherwise only null values will be replaced.
      * </p>
      *
      * @return
      */
-    boolean value() default true;
+    boolean overwrite() default true;
+
+    /**
+     * If true and attribute is type of boolean, then result of merging will be true if one of merged values is true.
+     */
+    boolean preferTrue() default false;
 }

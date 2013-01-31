@@ -25,7 +25,6 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.richfaces.cdk.annotations.TagType;
-import org.richfaces.cdk.model.AttributeModel;
 import org.richfaces.cdk.model.BeanModelBase;
 import org.richfaces.cdk.model.BehaviorModel;
 import org.richfaces.cdk.model.ComponentLibrary;
@@ -108,6 +107,7 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
                 // TODO - investigate proper usage of the <handler-class> element.
                 // Most libraries use <handler-class> INSTEAD of <component>
                 Element component = tag.addElement(COMPONENT);
+                addDescription(tag, model);
                 addDescription(component, model);
                 component.addElement(COMPONENT_TYPE).addText(model.getId().getType());
                 FacesId rendererType = model.getRendererType();
@@ -145,6 +145,7 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
             if (isFaceletsTag(tagModel)) {
                 Element tag = createTag(tagModel.getName());
                 Element converter = tag.addElement("converter");
+                addDescription(tag, model);
                 addDescription(converter, model);
                 converter.addElement("converter-id").addText(model.getId().toString());
                 addTagHandler(converter, tagModel);
@@ -178,6 +179,7 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
             if (isFaceletsTag(tagModel)) {
                 Element tag = createTag(tagModel.getName());
                 Element validator = tag.addElement("validator");
+                addDescription(tag, model);
                 addDescription(validator, model);
                 validator.addElement("validator-id").addText(model.getId().toString());
                 addTagHandler(validator, tagModel);
@@ -229,6 +231,7 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
             if (isFaceletsTag(tagModel)) {
                 Element tag = createTag(tagModel.getName());
                 Element behavior = tag.addElement("behavior");
+                addDescription(tag, model);
                 addDescription(behavior, model);
                 behavior.addElement("behavior-id").addText(model.getId().toString());
                 addTagHandler(behavior, tagModel);
@@ -256,11 +259,18 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
         for (TagModel tagModel : model.getTags()) {
             if (isFaceletsTag(tagModel)) {
                 Element tag = createTag(tagModel.getName());
+                addDescriptionForListener(tag, model);
                 addTagHandler(tag, tagModel);
                 appendAttributesForListener(tag, model);
             }
         }
         return null;
+    }
+
+    private void addDescriptionForListener(Element tag, EventModel model) {
+        Element desc = tag.addElement("description");
+        String description = model.getDescription() == null ? "" : model.getDescription();
+        desc.setText(description);
     }
 
     private void appendAttributesForListener(Element tag, EventModel model) {

@@ -33,7 +33,7 @@ public class CdkClassLoaderTest extends CdkTestBase {
         File libraryFile = getLibraryFile("javax/faces/component/UIComponent.class");
         assertNotNull(libraryFile);
         assertFalse(libraryFile.isDirectory());
-        assertTrue(libraryFile.getName().contains("jsf-api"));
+        assertTrue(libraryFile.getName().contains("jsf-api") || libraryFile.getName().contains("myfaces-api"));
     }
 
     @Test

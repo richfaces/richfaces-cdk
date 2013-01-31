@@ -25,12 +25,15 @@ package org.richfaces.cdk.xmlconfig;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import org.richfaces.cdk.Cache;
 import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.FileManager;
 import org.richfaces.cdk.Logger;
 import org.richfaces.cdk.ModelBuilder;
 import org.richfaces.cdk.Source;
 import org.richfaces.cdk.Sources;
+import org.richfaces.cdk.apt.CacheType;
+import org.richfaces.cdk.apt.LibraryCache;
 import org.richfaces.cdk.model.ComponentLibrary;
 import org.richfaces.cdk.util.JavaUtils;
 import org.richfaces.cdk.xmlconfig.model.FacesConfigAdapter;
@@ -57,6 +60,10 @@ public class FacesConfigParser implements ModelBuilder {
     @Source(Sources.FACES_CONFIGS)
     private FileManager configFiles;
 
+    @Inject
+    @Cache(CacheType.NON_JAVA_SOURCES)
+    private LibraryCache nonJavaCache;
+
     /*
      * (non-Javadoc)
      *
@@ -65,34 +72,36 @@ public class FacesConfigParser implements ModelBuilder {
     @Override
     public void build() throws CdkException {
         for (File file : configFiles.getFiles()) {
-            try {
-                FacesConfigBean unmarshal = unmarshalFacesConfig(file);
-                if (null != unmarshal) {
-                    ComponentLibrary facesConfig = ADAPTER.unmarshal(unmarshal);
-                    library.getComponents().addAll(facesConfig.getComponents());
-                    library.getRenderKits().addAll(facesConfig.getRenderKits());
-                    library.getConverters().addAll(facesConfig.getConverters());
-                    library.getValidators().addAll(facesConfig.getValidators());
-                    library.getBehaviors().addAll(facesConfig.getBehaviors());
-                    library.getFunctions().addAll(facesConfig.getFunctions());
-                    library.getEvents().addAll(facesConfig.getEvents());
-                    if (null != unmarshal.getMetadataComplete()) {
-                        library.setMetadataComplete(unmarshal.getMetadataComplete());
-                    }
-                    library.getExtension().getExtensions().addAll(facesConfig.getExtension().getExtensions());
-                    if (null != facesConfig.getTaglib()) {
-                        if (null == library.getTaglib()) {
-                            library.setTaglib(facesConfig.getTaglib());
-                        } else {
-                            JavaUtils.copyProperties(facesConfig.getTaglib(), library.getTaglib());
+            if (nonJavaCache.storedBefore(file.lastModified())) {
+                try {
+                    FacesConfigBean unmarshal = unmarshalFacesConfig(file);
+                    if (null != unmarshal) {
+                        ComponentLibrary facesConfig = ADAPTER.unmarshal(unmarshal);
+                        library.getComponents().addAll(facesConfig.getComponents());
+                        library.getRenderKits().addAll(facesConfig.getRenderKits());
+                        library.getConverters().addAll(facesConfig.getConverters());
+                        library.getValidators().addAll(facesConfig.getValidators());
+                        library.getBehaviors().addAll(facesConfig.getBehaviors());
+                        library.getFunctions().addAll(facesConfig.getFunctions());
+                        library.getEvents().addAll(facesConfig.getEvents());
+                        if (null != unmarshal.getMetadataComplete()) {
+                            library.setMetadataComplete(unmarshal.getMetadataComplete());
+                        }
+                        library.getExtension().getExtensions().addAll(facesConfig.getExtension().getExtensions());
+                        if (null != facesConfig.getTaglib()) {
+                            if (null == library.getTaglib()) {
+                                library.setTaglib(facesConfig.getTaglib());
+                            } else {
+                                JavaUtils.copyProperties(facesConfig.getTaglib(), library.getTaglib());
+                            }
+                        }
+                        if (null != facesConfig.getPrefix()) {
+                            library.setPrefix(facesConfig.getPrefix());
                         }
                     }
-                    if (null != facesConfig.getPrefix()) {
-                        library.setPrefix(facesConfig.getPrefix());
-                    }
+                } catch (FileNotFoundException e) {
+                    log.error("faces-config not found", e);
                 }
-            } catch (FileNotFoundException e) {
-                log.error("faces-config not found", e);
             }
         }
     }

@@ -40,8 +40,6 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.faces.application.Application;
 import javax.faces.component.UIComponent;
@@ -70,6 +68,7 @@ import com.google.inject.Inject;
 
 /**
  * @author Nick Belaevski
+ * @author Lukas Fryc
  *
  */
 public final class TypesFactoryImpl implements TypesFactory {
@@ -89,14 +88,6 @@ public final class TypesFactoryImpl implements TypesFactory {
         PRIMITIVE_CLASSES_MAP = builder.build();
     }
 
-    private static final Pattern CLASS_SIGNATURE_PATTERN = Pattern.compile("^" + "\\s*([^\\[<]+)\\s*" + // class name
-            "(?:<\\s*(.*)\\s*>)?\\s*" + // generic signature
-            "((?:\\[\\s*\\]\\s*)+)?\\s*" + // array signature
-            "$");
-    private static final int CLASS_NAME_GROUP_IDX = 1;
-    private static final int TYPE_ARGUMENTS_GROUP_IDX = 2;
-    private static final int ARRAY_SIGNATURE_GROUP_IDX = 3;
-    private static final int ARRAY_SIGNATURE_LENGTH = "[]".length();
     private static final Function<Class<?>, String> PACKAGE_NAME_FUNCTION = new Function<Class<?>, String>() {
         @Override
         public String apply(Class<?> from) {
@@ -112,11 +103,13 @@ public final class TypesFactoryImpl implements TypesFactory {
     private final Map<java.lang.reflect.Type, ELType> reflectionTypesCache = new ConcurrentHashMap<java.lang.reflect.Type, ELType>();
     private final Map<String, ELType> refferencedTypesCache = new ConcurrentHashMap<String, ELType>();
     private final Map<Class<?>, ClassDataHolder> classDataCache = Maps.newHashMap();
+    private final TypeParserFactory typeParserFactory;
 
     @Inject
-    public TypesFactoryImpl(Logger log, CdkClassLoader classLoader) {
+    public TypesFactoryImpl(Logger log, CdkClassLoader classLoader, TypeParserFactory typeParserFactory) {
         this.log = log;
         this.classLoader = classLoader;
+        this.typeParserFactory = typeParserFactory;
     }
 
     private ELType getPlainClassType(Class<?> plainClass) {
@@ -180,21 +173,6 @@ public final class TypesFactoryImpl implements TypesFactory {
         return result;
     }
 
-    ELType[] parseTypeArgumentsString(String typeArguments) {
-        if (typeArguments == null) {
-            return PlainClassType.NO_TYPES;
-        }
-
-        String[] typeArgumentsSplit = typeArguments.trim().split(",");
-
-        ELType[] types = new ELType[typeArgumentsSplit.length];
-        for (int i = 0; i < typeArgumentsSplit.length; i++) {
-            types[i] = getType(typeArgumentsSplit[i]);
-        }
-
-        return types;
-    }
-
     /*
      * (non-Javadoc)
      *
@@ -202,19 +180,10 @@ public final class TypesFactoryImpl implements TypesFactory {
      */
     @Override
     public ELType getType(String typeString) {
-        Matcher matcher = CLASS_SIGNATURE_PATTERN.matcher(typeString);
-        boolean matchResult = matcher.matches();
-        if (matchResult) {
-            String className = matcher.group(CLASS_NAME_GROUP_IDX).trim();
+        TypeParser typeParser = typeParserFactory.getInstance(typeString);
 
-            String typeArgumentsString = matcher.group(TYPE_ARGUMENTS_GROUP_IDX);
-            ELType[] typeArguments = parseTypeArgumentsString(typeArgumentsString);
-
-            String arraySignature = matcher.group(ARRAY_SIGNATURE_GROUP_IDX);
-            int arrayDepth = 0;
-            if (arraySignature != null) {
-                arrayDepth = arraySignature.replaceAll("\\s+", "").length() / ARRAY_SIGNATURE_LENGTH;
-            }
+        if (typeParser.isParseable()) {
+            final String className = typeParser.getClassName();
 
             ELType baseType;
             try {
@@ -226,10 +195,32 @@ public final class TypesFactoryImpl implements TypesFactory {
                 baseType = getReferencedType(className);
             }
 
-            if (arrayDepth != 0 || !ArrayUtils.isEmpty(typeArguments)) {
-                return new ComplexType(baseType, typeArguments, arrayDepth);
+            if (typeParser.isArray()) {
+                return new ComplexType(baseType, typeParser.getTypeArguments(), typeParser.getArrayDepth());
             } else {
                 return baseType;
+            }
+        } else {
+            if (log.isWarnEnabled()) {
+                log.warn(MessageFormat.format("Cannot parse type signature: ''{0}''", typeString));
+            }
+            return getReferencedType(typeString);
+        }
+    }
+
+    @Override
+    public ELType getGeneratedType(String typeString, ELType superType) {
+        TypeParser typeParser = typeParserFactory.getInstance(typeString);
+
+        if (typeParser.isParseable()) {
+            final String className = typeParser.getClassName();
+
+            ELType generatedType = new GeneratedType(className, superType);
+
+            if (typeParser.isArray()) {
+                return new ComplexType(generatedType, typeParser.getTypeArguments(), typeParser.getArrayDepth());
+            } else {
+                return generatedType;
             }
         } else {
             if (log.isWarnEnabled()) {
@@ -597,6 +588,11 @@ public final class TypesFactoryImpl implements TypesFactory {
      */
     public ELType getMatchingVisibleMethodReturnType(ELType elType, final String methodName, ELType... parameterTypes)
             throws ParsingException {
+
+        if (elType instanceof GeneratedType) {
+            // use the super type to resolve properties and methods
+            elType = ((GeneratedType) elType).getSuperType();
+        }
 
         ClassDataHolder classDataHolder = resolveClassPropertiesAndMethods(getClassFromType(elType));
         List<Method> resolvedMethods = classDataHolder.getResolvedMethods();

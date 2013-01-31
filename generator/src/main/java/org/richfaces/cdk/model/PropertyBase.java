@@ -197,6 +197,7 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
      *
      * @return the hidden
      */
+    @Merge(preferTrue = true)
     public boolean isHidden() {
         return hidden;
     }
@@ -297,7 +298,7 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
      *
      * @return the signature
      */
-    @Merge(true)
+    @Merge(overwrite = true)
     public MethodSignature getSignature() {
         return signature;
     }

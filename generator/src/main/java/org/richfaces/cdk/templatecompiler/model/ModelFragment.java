@@ -19,7 +19,8 @@ import com.google.common.collect.Lists;
  */
 @XmlSeeAlso({ CdkCallElement.class, CdkBodyElement.class, CdkIfElement.class, CdkObjectElement.class, CdkChooseElement.class,
         CdkWhenElement.class, CdkOtherwiseElement.class, CdkForEachElement.class, CdkSwitchElement.class, CdkCaseElement.class,
-        CdkDefaultElement.class, CdkScriptObjectElement.class, CdkScriptOptionElement.class })
+        CdkDefaultElement.class, CdkScriptObjectElement.class, CdkScriptOptionElement.class, CompositeRenderFacet.class,
+        CdkRenderFragmentElement.class })
 public class ModelFragment implements LeafModelElement {
     private List<Object> children = Lists.newArrayList();
 
@@ -42,6 +43,11 @@ public class ModelFragment implements LeafModelElement {
     @Override
     public void visit(TemplateVisitor visitor) throws CdkException {
         beforeVisit(visitor);
+        visitChildren(visitor);
+        afterVisit(visitor);
+    }
+
+    public void visitChildren(TemplateVisitor visitor) {
         List<Object> childrenList = getChildren();
         for (Object child : childrenList) {
             if (child instanceof String) {
@@ -52,7 +58,6 @@ public class ModelFragment implements LeafModelElement {
                 throw new CdkException("Unknown type of element in renderer template " + child.getClass());
             }
         }
-        afterVisit(visitor);
     }
 
     public void afterVisit(TemplateVisitor visitor) throws CdkException {

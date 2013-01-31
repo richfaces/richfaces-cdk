@@ -20,6 +20,8 @@ import org.richfaces.cdk.model.ModelElementBase;
 import org.richfaces.cdk.model.TagModel;
 import org.richfaces.cdk.model.ViewElement;
 
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
@@ -100,16 +102,53 @@ public abstract class ProcessorBase {
 
     protected void processAttributes(Element element, ModelElementBase component, AnnotationMirror annotation) {
         AttributesProcessor attributesProcessor = getAttributeProcessor();
-        SourceUtils sourceUtils = getSourceUtils();
-        for (String atributesFragment : sourceUtils.getAnnotationValues(annotation, "attributes", String.class)) {
+
+        final Iterable<String> attributesFragments = getAttributesFragment(annotation);
+        final Iterable<? extends TypeMirror> interfaces = getAllInterfaces(element, annotation);
+
+        for (String atributesFragment : attributesFragments) {
             attributesProcessor.processXmlFragment(component, atributesFragment);
         }
+        for (TypeMirror atributesInterface : interfaces) {
+            processInterface(component, attributesProcessor, atributesInterface);
+        }
+
         if (element != null && ElementKind.CLASS.equals(element.getKind())) {
             attributesProcessor.processType(component, (TypeElement) element);
         }
-        for (TypeMirror atributesInterface : sourceUtils.getAnnotationValues(annotation, "interfaces", TypeMirror.class)) {
-            processInterface(component, attributesProcessor, atributesInterface);
+    }
+
+    /**
+     * Get fragments from 'attributes' attribute of annotation
+     */
+    private Iterable<String> getAttributesFragment(AnnotationMirror annotation) {
+        final SourceUtils sourceUtils = getSourceUtils();
+        return sourceUtils.getAnnotationValues(annotation, "attributes", String.class);
+    }
+
+    /**
+     * Get interfaces from 'interfaces' attribute of annotation
+     */
+    private Iterable<? extends TypeMirror> getAttributeInterfaces(AnnotationMirror annotation) {
+        final SourceUtils sourceUtils = getSourceUtils();
+        return sourceUtils.getAnnotationValues(annotation, "interfaces", TypeMirror.class);
+    }
+
+    /**
+     * Get interfaces list from the given class element
+     */
+    private Iterable<? extends TypeMirror> getImplementedInterfaces(Element element) {
+        final SourceUtils sourceUtils = getSourceUtils();
+
+        if (element == null) {
+            return Lists.newLinkedList();
         }
+
+        return sourceUtils.asTypeElement(element.asType()).getInterfaces();
+    }
+
+    private Iterable<? extends TypeMirror> getAllInterfaces(Element element, AnnotationMirror annotation) {
+        return Iterables.concat(getImplementedInterfaces(element), getAttributeInterfaces(annotation));
     }
 
     private void processInterface(ModelElementBase component, AttributesProcessor attributesProcessor, TypeMirror mirror) {

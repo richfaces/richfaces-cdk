@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
     <parent>
-        <artifactId>parent</artifactId>
         <groupId>org.richfaces.cdk</groupId>
-        <version>4.2.2.Final</version>
+        <artifactId>parent</artifactId>
+        <version>4.3.0.Final</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
+
     <artifactId>generator</artifactId>
     <name>RichFaces CDK Generator</name>
 
@@ -74,13 +77,45 @@
                 </directory>
             </resource>
         </resources>
+        <pluginManagement>
+            <plugins>
+                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.codehaus.groovy.maven</groupId>
+                                        <artifactId>gmaven-plugin</artifactId>
+                                        <versionRange>[1.0,)</versionRange>
+                                        <goals>
+                                            <goal>execute</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore></ignore>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
+
     <dependencies>
-        <!-- Compile dependencies -->
+        <!-- Java EE -->
         <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
+            <groupId>org.jboss.spec.javax.faces</groupId>
+            <artifactId>jboss-jsf-api_2.1_spec</artifactId>
         </dependency>
+        
+        <!-- CDK -->
         <dependency>
             <groupId>org.richfaces.cdk</groupId>
             <artifactId>commons</artifactId>
@@ -97,6 +132,12 @@
             <groupId>org.richfaces.cdk</groupId>
             <artifactId>xinclude</artifactId>
         </dependency>
+
+        <!-- Compile dependencies -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
@@ -104,14 +145,6 @@
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-impl</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>jsp-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.el</groupId>
-            <artifactId>el-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jboss.el</groupId>

@@ -22,9 +22,6 @@
  */
 package org.richfaces.cdk.apt;
 
-import java.lang.annotation.Annotation;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Target;
 import java.util.Collections;
 import java.util.Set;
 
@@ -32,20 +29,16 @@ import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 
 import org.richfaces.cdk.CdkException;
-import org.richfaces.cdk.CdkProcessingException;
-import org.richfaces.cdk.LibraryBuilder;
 import org.richfaces.cdk.Logger;
-import org.richfaces.cdk.ModelBuilder;
 import org.richfaces.cdk.ModelValidator;
-import org.richfaces.cdk.apt.processors.CdkAnnotationProcessor;
+import org.richfaces.cdk.TimeMeasure;
 import org.richfaces.cdk.model.ComponentLibrary;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
 /**
  * <p class="changed_added_4_0">
@@ -58,21 +51,33 @@ import com.google.inject.Inject;
  */
 public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor {
     private static final Set<String> PROCESSED_ANNOTATION = Collections.singleton("*");
-    @Inject
-    private Logger log;
-    @Inject
-    private Set<CdkAnnotationProcessor> processors;
-    // TODO - set library as parameter.
-    @Inject
-    private ComponentLibrary library;
-    @Inject
-    private Set<ModelBuilder> builders;
+    public static final String CACHE_EAGERLY_OPTION = "libraryCachingEagerly";
+
     @Inject
     private SourceUtilsProvider sourceUtilsProducer;
+
+    @Inject
+    private LibraryCompiler compiler;
+
+    @Inject
+    private LibraryGenerator generator;
+
     @Inject
     private ModelValidator validator;
+
     @Inject
-    private LibraryBuilder builder;
+    private ComponentLibrary library;
+
+    @Inject(optional = true)
+    @Named(CACHE_EAGERLY_OPTION)
+    private boolean cachingEagerly = false;
+
+    @Inject
+    private Logger log;
+
+    private boolean firstRound = true;
+
+    private TimeMeasure time;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -82,120 +87,75 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+        if (time == null) {
+            time = new TimeMeasure("java source processing", log).info(true);
+        }
+
         if (!roundEnv.processingOver()) {
-            // Process annotations.
-            for (CdkAnnotationProcessor process : processors) {
-                processAnnotation(process, roundEnv);
+            if (firstRound) {
+                firstRound = false;
+                compiler.beforeJavaSourceProcessing();
+
+                time.start();
             }
+            compiler.processJavaSource(processingEnv, roundEnv);
         } else {
-            // parse non-java sources
-            processNonJavaSources();
-            verify();
-            if (0 == log.getErrorCount()) {
-                generate();
-            }
+            time.stop();
+
+            compiler.afterJavaSourceProcessing();
+            continueAfterJavaSourceProcessing();
         }
         return false;
     }
 
-    private void generate() {
-        log.debug("Generate output files");
-        builder.generate(library);
-    }
+    @Override
+    public void continueAfterJavaSourceProcessing() {
 
-    private void verify() {
         try {
-            log.debug("Validate model");
-            validator.verify(library);
+            processNonJavaSources();
+            completeLibrary();
         } catch (CdkException e) {
             sendError(e);
         }
-    }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.richfaces.cdk.apt.CdkProcessor#processNonJavaSources()
-     */
-    public void processNonJavaSources() {
-        for (ModelBuilder builder : builders) {
-            log.debug("Run builder " + builder.getClass().getName());
-            try {
-                builder.build();
-            } catch (CdkException e) {
-                sendError(e);
-            }
+        if (!library.hasChanged() && cachingEagerly) {
+            log.info("[caching eagerly - not continuing to verification and generation phase]");
+            return;
+        }
+
+        try {
+            verify();
+        } catch (CdkException e) {
+            sendError(e);
+        }
+
+        if (0 == log.getErrorCount()) {
+            generate();
         }
     }
 
-    protected void processAnnotation(CdkAnnotationProcessor processor, RoundEnvironment environment) {
-        Class<? extends Annotation> processedAnnotation = processor.getProcessedAnnotation();
-        log.debug("Process all elements annotated with " + processedAnnotation.getName());
-        Target target = processedAnnotation.getAnnotation(Target.class);
-        Set<? extends Element> rootElements = environment.getRootElements();
-        for (Element element : rootElements) {
-            if (isAppropriateTarget(element, target)) {
-                processElement(processor, processedAnnotation, element);
-            } else {
-                for (Element enclosedElement : element.getEnclosedElements()) {
-                    if (isAppropriateTarget(enclosedElement, target)) {
-                        processElement(processor, processedAnnotation, enclosedElement);
-                    }
-                }
-            }
-        }
+    private void processNonJavaSources() {
+        time = new TimeMeasure("non-java source processing", log).info(true).start();
+        compiler.processNonJavaSources();
+        time.stop();
     }
 
-    private void processElement(CdkAnnotationProcessor processor, Class<? extends Annotation> processedAnnotation,
-            Element element) {
-        if (null != element.getAnnotation(processedAnnotation)) {
-            try {
-                log.debug("Process " + element.getSimpleName() + " annotated with " + processedAnnotation.getName());
-                processor.process(element, library);
-            } catch (CdkProcessingException e) {
-                sendError(element, e);
-            }
-        }
+    private void completeLibrary() {
+        time = new TimeMeasure("library completion", log).info(true).start();
+        compiler.completeLibrary();
+        time.stop();
     }
 
-    private boolean isAppropriateTarget(Element element, Target target) {
-        boolean match = false;
-        ElementKind kind = element.getKind();
-        if (null != target) {
-            for (ElementType targetType : target.value()) {
-                switch (targetType) {
-                    case TYPE:
-                        match |= ElementKind.CLASS.equals(kind) || ElementKind.INTERFACE.equals(kind)
-                                || ElementKind.ENUM.equals(kind);
-                        break;
-                    case PACKAGE:
-                        match |= ElementKind.PACKAGE.equals(kind);
-                        break;
-                    case METHOD:
-                        match |= ElementKind.METHOD.equals(kind);
-                        break;
-                    case FIELD:
-                        match |= ElementKind.FIELD.equals(kind);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        } else {
-            // Annotation without @Target match any element.
-            match = ElementKind.CLASS.equals(kind) || ElementKind.INTERFACE.equals(kind) || ElementKind.ENUM.equals(kind)
-                    || ElementKind.PACKAGE.equals(kind) || ElementKind.METHOD.equals(kind) || ElementKind.FIELD.equals(kind);
-        }
-        return match;
+    private void verify() {
+        time = new TimeMeasure("library verification", log).info(true).start();
+        validator.verify(library);
+        time.stop();
     }
 
-    protected void sendError(Element componentElement, Exception e) {
-        // rise error and continue.
-        processingEnv.getMessager().printMessage(javax.tools.Diagnostic.Kind.ERROR, e.getMessage(), componentElement);
-    }
-
-    protected void sendError(CdkException e) {
-        processingEnv.getMessager().printMessage(javax.tools.Diagnostic.Kind.ERROR, e.getMessage());
+    private void generate() {
+        time = new TimeMeasure("library generation", log).info(true).start();
+        generator.generate();
+        time.stop();
     }
 
     @Override
@@ -208,5 +168,9 @@ public class CdkProcessorImpl extends AbstractProcessor implements CdkProcessor 
 
         // CDK supports Java 5 or 6 source code.
         return SourceVersion.RELEASE_6;
+    }
+
+    private void sendError(CdkException e) {
+        processingEnv.getMessager().printMessage(javax.tools.Diagnostic.Kind.ERROR, e.getMessage());
     }
 }

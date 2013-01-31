@@ -135,6 +135,10 @@ public class ClassName implements Serializable, Comparable<ClassName> {
         return new ClassName(name);
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
     /**
      * <p class="changed_added_4_0">
      * </p>
@@ -237,7 +241,7 @@ public class ClassName implements Serializable, Comparable<ClassName> {
     }
 
     public String getGetterPrefix() {
-        return Boolean.class.getName().equals(boxingClassName) ? "is" : "get";
+        return primitive && Boolean.class.getName().equals(boxingClassName) ? "is" : "get";
     }
 
     @Override

@@ -105,6 +105,12 @@ public class FreeMarkerTemplateStatementBase extends StatementsContainer {
         }
     }
 
+    protected void addRequiredMethods(Iterable<HelperMethod> methods) {
+        for (HelperMethod helperMethod : methods) {
+            requiredMethods.add(helperMethod);
+        }
+    }
+
     public void setTemplateName(String templateName) {
         this.templateName = templateName + ".ftl";
     }

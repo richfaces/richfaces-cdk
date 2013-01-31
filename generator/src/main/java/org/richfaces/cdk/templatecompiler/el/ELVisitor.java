@@ -69,6 +69,8 @@ import org.richfaces.cdk.templatecompiler.builder.model.JavaImport;
 import org.richfaces.cdk.templatecompiler.builder.model.Variables;
 import org.richfaces.cdk.templatecompiler.el.node.AstBracketSuffixTreeNode;
 import org.richfaces.cdk.templatecompiler.el.node.AstChoiceTreeNode;
+import org.richfaces.cdk.templatecompiler.el.node.AstCompositeComponentAttributesTreeNode;
+import org.richfaces.cdk.templatecompiler.el.node.AstCompositeComponentTreeNode;
 import org.richfaces.cdk.templatecompiler.el.node.AstDeferredOrDynamicExpressionTreeNode;
 import org.richfaces.cdk.templatecompiler.el.node.AstEmptyTreeNode;
 import org.richfaces.cdk.templatecompiler.el.node.AstFloatingPointTreeNode;
@@ -280,7 +282,11 @@ public final class ELVisitor implements TypedTemplateStatement {
         ITreeNode treeNode = null;
 
         if (child instanceof AstIdentifier) {
-            treeNode = new AstIdentifierTreeNode(child);
+            if (isCompositeComponent(child)) {
+                treeNode = new AstCompositeComponentTreeNode(child);
+            } else {
+                treeNode = new AstIdentifierTreeNode(child);
+            }
         } else if (child instanceof AstValue) {
             treeNode = new AstValueTreeNode(child);
         } else if (child instanceof AstInteger) {
@@ -340,13 +346,32 @@ public final class ELVisitor implements TypedTemplateStatement {
         } else if (child instanceof AstMethodSuffix) {
             treeNode = new AstMethodSuffixTreeNode(child);
         } else if (child instanceof AstPropertySuffix) {
-            treeNode = new AstPropertySuffixTreeNode(child);
+            if (isCompositeComponentAttributesMap(child)) {
+                treeNode = new AstCompositeComponentAttributesTreeNode(child);
+            } else if (isCompositeComponentAttribute(child)) {
+                treeNode = new AstIdentifierTreeNode(child);
+            } else {
+                treeNode = new AstPropertySuffixTreeNode(child);
+            }
         } else {
             throw new ParsingException("Node " + child.getClass().getSimpleName() + "[" + child.getImage()
                     + "] is not recognized;");
         }
 
         return treeNode;
+    }
+
+    private boolean isCompositeComponent(Node node) {
+        return "cc".equals(node.getImage());
+    }
+
+    private boolean isCompositeComponentAttributesMap(Node node) {
+        return "attrs".equals(node.getImage()) && isCompositeComponent(node.jjtGetParent().jjtGetChild(0));
+    }
+
+    private boolean isCompositeComponentAttribute(Node node) {
+        return isCompositeComponentAttributesMap(node.jjtGetParent().jjtGetChild(1))
+                && node == node.jjtGetParent().jjtGetChild(2);
     }
 
     @Override

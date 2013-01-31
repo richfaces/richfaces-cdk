@@ -53,7 +53,6 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.ext.EntityResolver2;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-import com.google.common.collect.ImmutableSet;
 import com.google.inject.Inject;
 
 /**
@@ -64,7 +63,6 @@ import com.google.inject.Inject;
  *
  */
 public class JAXBBinding implements JAXB {
-    public static final ImmutableSet<String> IGNORE_PROPERTIES = ImmutableSet.of("class", "extension");
     private static final FacesConfigNamespacePreffixMapper PREFFIX_MAPPER = new FacesConfigNamespacePreffixMapper();
     @Inject
     private EntityResolver2 resolver;
@@ -155,13 +153,13 @@ public class JAXBBinding implements JAXB {
             // u.setValidating(false);
             unmarshal = (T) unmarshallerHandler.getResult();
         } catch (JAXBException e) {
-            throw new CdkException("JAXB Unmarshaller error", e);
+            throw new CdkException("JAXB Unmarshaller error: " + e.getMessage(), e);
         } catch (URISyntaxException e) {
-            throw new CdkException("Invalid XML source URI", e);
+            throw new CdkException("Invalid XML source URI: " + e.getMessage(), e);
         } catch (IOException e) {
-            throw new CdkException("JAXB Unmarshaller input error", e);
+            throw new CdkException("JAXB Unmarshaller input error: " + e.getMessage(), e);
         } catch (SAXException e) {
-            throw new CdkException("XML error", e);
+            throw new CdkException("XML error: " + e.getMessage(), e);
         } finally {
 
             // TODO Refactoring

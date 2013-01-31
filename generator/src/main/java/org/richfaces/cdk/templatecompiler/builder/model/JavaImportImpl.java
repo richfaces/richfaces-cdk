@@ -54,6 +54,10 @@ public class JavaImportImpl implements JavaImport {
         return name;
     }
 
+    public String getClassName() {
+        return name.replace('$', '.');
+    }
+
     public boolean isStatic() {
         return staticImport;
     }

@@ -1,0 +1,1 @@
+${methodName}(<#if extendingRendererBase>responseWriter, </#if>facesContext, component<#list arguments as argument>, ${argument}</#list>);

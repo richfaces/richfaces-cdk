@@ -33,10 +33,10 @@ import com.google.inject.name.Named;
  * </p>
  *
  * @author asmirnov@exadel.com
- *
  */
 public class AttributesStatement extends StatementsContainer {
     private static final Splitter PASS_THGOUGH_SPLITTER = Splitter.on(Pattern.compile("\\s+,?\\s*"));
+    private static final String WILDCARD_SUFFIX = "*";
     private final Schema attributesSchema;
     private final Provider<WriteAttributeStatement> statementProvider;
     private final Provider<WriteAttributesSetStatement> passThroughStatementProvider;
@@ -87,7 +87,23 @@ public class AttributesStatement extends StatementsContainer {
             if (Template.isDefaultNamespace(elementName) && elements.containsKey(elementLocalName)) {
                 Element schemaElement = elements.get(elementLocalName);
                 Iterable<String> exclusions = PASS_THGOUGH_SPLITTER.split(passThroughWithExclusions);
+
+                // mark all passThrough exclusions as processed - they won't be passed through
+                for (String exclusion : exclusions) {
+                    if (exclusion.endsWith(WILDCARD_SUFFIX)) {
+                        String attributePrefix = exclusion.substring(0, exclusion.length() - WILDCARD_SUFFIX.length());
+                        for (Attribute schemaAttribute : schemaElement.getAttributes().values()) {
+                            if (schemaAttribute.getName().startsWith(attributePrefix)) {
+                                processedAttributes.add(schemaAttribute.getName());
+                            }
+                        }
+                    } else {
+                        processedAttributes.add(exclusion);
+                    }
+                }
+
                 Iterables.addAll(processedAttributes, exclusions);
+
                 for (Attribute schemaAttribute : schemaElement.getAttributes().values()) {
                     if (!processedAttributes.contains(schemaAttribute.getName())) {
                         passThroughAttributes.add(createPassThrough(schemaAttribute.getName(),
@@ -104,12 +120,53 @@ public class AttributesStatement extends StatementsContainer {
             // cdk:passThrough="class:styleClass,style , id:clientId"
             Iterable<String> split = PASS_THGOUGH_SPLITTER.split(passThrough);
             for (String attribute : split) {
-                String[] split2 = attribute.split(":");
-                String attributeName = split2[0];
-                if (processedAttributes.add(attributeName)) {
-                    String componentAttributeName = split2.length > 1 ? split2[1] : null;
-                    passThroughAttributes.add(createPassThrough(attributeName, componentAttributeName));
+                String[] splitAttr = attribute.split(":");
+                String attributeName = splitAttr[0];
+                String componentAttributeName = splitAttr.length > 1 ? splitAttr[1] : attributeName;
+
+                if (attributeName.endsWith(WILDCARD_SUFFIX)) {
+                    processPassThroughWithWildcard(processedAttributes, passThroughAttributes, attributeName,
+                            componentAttributeName);
+                } else {
+                    addPassThroughAttribute(processedAttributes, passThroughAttributes, attributeName, componentAttributeName);
                 }
+            }
+        }
+    }
+
+    private void addPassThroughAttribute(Set<String> processedAttributes, TreeSet<PassThrough> passThroughAttributes,
+            String attributeName, String componentAttributeName) {
+
+        if (processedAttributes.add(attributeName)) {
+            passThroughAttributes.add(createPassThrough(attributeName, componentAttributeName));
+        }
+    }
+
+    private void processPassThroughWithWildcard(Set<String> processedAttributes, TreeSet<PassThrough> passThroughAttributes,
+            String wildcardAttributeName, String wildcardComponentAttributeName) {
+
+        // cdk:passThrough="on*:onlist*"
+
+        String attributePrefix = wildcardAttributeName.substring(0, wildcardAttributeName.length() - WILDCARD_SUFFIX.length());
+        String componentAttributePrefix = wildcardComponentAttributeName.substring(0, wildcardComponentAttributeName.length()
+                - WILDCARD_SUFFIX.length());
+
+        Map<String, Element> elements = attributesSchema.getElements();
+        String elementLocalName = elementName.getLocalPart();
+        if (Template.isDefaultNamespace(elementName) && elements.containsKey(elementLocalName)) {
+            Element schemaElement = elements.get(elementLocalName);
+            for (Attribute schemaAttribute : schemaElement.getAttributes().values()) {
+                String attributeName = schemaAttribute.getName();
+                if (attributeName.startsWith(attributePrefix)) {
+                    if (!processedAttributes.contains(schemaAttribute.getName())) {
+                        String componentAttributeName = componentAttributePrefix
+                                + attributeName.substring(attributePrefix.length());
+
+                        addPassThroughAttribute(processedAttributes, passThroughAttributes, attributeName,
+                                componentAttributeName);
+                    }
+                }
+
             }
         }
     }
