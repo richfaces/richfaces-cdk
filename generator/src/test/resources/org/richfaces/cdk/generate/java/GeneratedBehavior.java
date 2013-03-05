@@ -31,7 +31,7 @@ import javax.faces.el.ValueBinding;
 /**
  * 
  **/
-@Generated({"RichFaces CDK", "4.3.1.CR1"})
+@Generated({"RichFaces CDK", "4.3.1.Final"})
 public class GeneratedBehavior extends Object implements Behavior, PartialStateHolder {
 
     @Override

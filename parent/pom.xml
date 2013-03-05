@@ -13,7 +13,7 @@
 
     <groupId>org.richfaces.cdk</groupId>
     <artifactId>parent</artifactId>
-    <version>4.3.1.CR1</version>
+    <version>4.3.1.Final</version>
     <packaging>pom</packaging>
     <name>RichFaces CDK Parent</name>
 
@@ -23,7 +23,7 @@
 
         <version.cdk>${project.version}</version.cdk>
         <version.jboss-javaee>3.0.1.Final</version.jboss-javaee>
-        <version.richfaces>4.3.1.CR1</version.richfaces>
+        <version.richfaces>4.3.1.Final</version.richfaces>
 
         <!-- Compile deps -->
         <version.freemarker>2.3.9</version.freemarker>

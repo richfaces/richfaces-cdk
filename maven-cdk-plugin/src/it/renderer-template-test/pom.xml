@@ -4,11 +4,11 @@
     <groupId>org.richfaces.cdk</groupId>
     <artifactId>renderer-template-test</artifactId>
     <name>Test for renderer templates compilation</name>
-    <version>4.3.1.CR1</version>
+    <version>4.3.1.Final</version>
     <parent>
         <groupId>org.richfaces</groupId>
         <artifactId>richfaces-root-parent</artifactId>
-        <version>4.3.1.CR1</version>
+        <version>4.3.1.Final</version>
         <relativePath>../../../../build/parent/pom.xml</relativePath>
     </parent>
     <build>
@@ -16,7 +16,7 @@
             <plugin>
                 <groupId>org.richfaces.cdk</groupId>
                 <artifactId>maven-cdk-plugin</artifactId>
-                <version>4.3.1.CR1</version>
+                <version>4.3.1.Final</version>
                 <configuration>
                 </configuration>
                 <executions>
@@ -73,12 +73,12 @@
         <dependency>
             <groupId>org.richfaces.cdk</groupId>
             <artifactId>annotations</artifactId>
-            <version>4.3.1.CR1</version>
+            <version>4.3.1.Final</version>
         </dependency>
         <dependency>
             <groupId>org.richfaces.framework</groupId>
             <artifactId>richfaces-commons</artifactId>
-            <version>4.3.1.CR1</version>
+            <version>4.3.1.Final</version>
         </dependency>
         <dependency>
             <groupId>javax.el</groupId>
