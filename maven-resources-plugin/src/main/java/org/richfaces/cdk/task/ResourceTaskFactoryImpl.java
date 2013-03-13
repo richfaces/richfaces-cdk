@@ -190,7 +190,9 @@ public class ResourceTaskFactoryImpl implements ResourceTaskFactory {
             for (int i = 0; i < bs.length; i++) {
                 byte b = bs[i];
 
-                if (b == '#' && i + 1 < bs.length && bs[i + 1] == '{') {
+                if (b == '#' && i + 1 < bs.length && bs[i + 1] == '{'
+                        && !(i + 10 < bs.length && bs[i + 2] == 'r' && bs[i + 3] == 'e' && bs[i + 4] == 's' && bs[i + 5] == 'o'
+                        && bs[i + 6] == 'u' && bs[i + 7] == 'r' && bs[i + 8] == 'c' && bs[i + 9] == 'e' && bs[i + 10] == '[')) {
                     return true;
                 }
             }
