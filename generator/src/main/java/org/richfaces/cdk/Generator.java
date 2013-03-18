@@ -31,6 +31,7 @@ import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.logging.Level;
 
 import org.richfaces.cdk.apt.AptModule;
@@ -48,8 +49,10 @@ import com.google.common.collect.Maps;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Module;
 import com.google.inject.Stage;
 import com.google.inject.name.Names;
+import com.google.inject.util.Modules;
 
 /**
  * @author asmirnov
@@ -123,8 +126,16 @@ public class Generator {
 
     public void init() {
         TimeMeasure time = new TimeMeasure("module instantiation", log).info(true).start();
-        injector = Guice.createInjector(Stage.DEVELOPMENT, new CdkConfigurationModule(), new AptModule(), new ModelModule(),
-                new ClassGeneratorModule(), new TemplateModule(), new XmlModule(), new TaglibModule());
+
+        Module[] defaultModules = new Module[] { new CdkConfigurationModule(), new AptModule(), new ModelModule(),
+                new ClassGeneratorModule(), new TemplateModule(), new XmlModule(), new TaglibModule() };
+
+        ServiceLoader<CdkModule> overlayModules = ServiceLoader.load(CdkModule.class);
+
+        Module modules = Modules.override(defaultModules).with(overlayModules);
+
+        injector = Guice.createInjector(Stage.DEVELOPMENT, modules);
+
         time.stop();
 
         if (!log.isDebugEnabled()) {
@@ -185,8 +196,8 @@ public class Generator {
                 requestInjection(cache);
                 bind(LibraryCache.class).annotatedWith(new CacheImpl(cacheType)).toInstance(cache);
             }
-            bind(NamingConventions.class).to(RichFacesConventions.class);
             bind(ModelValidator.class).to(ValidatorImpl.class);
+            bind(NamingConventions.class).to(RichFacesConventions.class);
             Names.bindProperties(binder(), options);
         }
     }

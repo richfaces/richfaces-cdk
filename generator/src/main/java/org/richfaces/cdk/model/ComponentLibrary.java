@@ -150,6 +150,16 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
         return null;
     }
 
+    public ComponentModel getComponentByType(FacesId componentType) {
+
+        for (ComponentModel component : components) {
+            if (componentType.equals(component.getId())) {
+                return component;
+            }
+        }
+        return null;
+    }
+
     public ComponentModel getComponentByFamily(FacesId family) {
         if (family == null) {
             return null;
@@ -165,6 +175,17 @@ public class ComponentLibrary implements Serializable, Extensible<ConfigExtensio
 
     public ComponentModel getComponentByFamily(String componentFamily) {
         return getComponentByFamily(FacesId.parseId(componentFamily));
+    }
+
+    public RendererModel getRendererByType(FacesId rendererType) {
+        for (RenderKitModel renderKit : getRenderKits()) {
+            for (RendererModel renderer : renderKit.getRenderers()) {
+                if (rendererType.equals(renderer.getId())) {
+                    return renderer;
+                }
+            }
+        }
+        return null;
     }
 
     /**

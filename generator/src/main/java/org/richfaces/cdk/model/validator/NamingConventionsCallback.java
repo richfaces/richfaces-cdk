@@ -10,7 +10,7 @@ import org.richfaces.cdk.model.FacesId;
  * @author asmirnov@exadel.com
  *
  */
-interface NamingConventionsCallback {
+public interface NamingConventionsCallback {
     /**
      * <p class="changed_added_4_0">
      * Infer JSF type by Java class name
