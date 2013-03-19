@@ -23,10 +23,12 @@
 package org.richfaces.cdk.apt.processors;
 
 import java.lang.annotation.Annotation;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
@@ -56,16 +58,24 @@ public class ComponentProcessor extends ProcessorBase implements CdkAnnotationPr
     public static final String COMPONENT_FAMILY = "COMPONENT_FAMILY";
     public static final String COMPONENT_TYPE = "COMPONENT_TYPE";
 
-    public void process(Element componentElement, ComponentLibrary library) {
+    private Set<Name> processedNames = new HashSet<Name>();
+
+    public void process(Element element, ComponentLibrary library) {
         SourceUtils sourceUtils = getSourceUtils();
-        if (sourceUtils.isAnnotationPresent(componentElement, JsfComponent.class)) {
+        if (sourceUtils.isAnnotationPresent(element, JsfComponent.class)) {
+            TypeElement componentElement = (TypeElement) element;
             AnnotationMirror annotation = sourceUtils.getAnnotationMirror(componentElement, JsfComponent.class);
+
+            if (wasComponentProcessed(componentElement)) {
+                return;
+            }
+
             // Process class-level annotations.
             ComponentModel component = new ComponentModel();
 
             // Should that component be generated ?
-            setClassNames((TypeElement) componentElement, component, annotation);
-            setComponentProperties((TypeElement) componentElement, component, annotation);
+            setClassNames(componentElement, component, annotation);
+            setComponentProperties(componentElement, component, annotation);
 
             library.getComponents().add(component);
 
@@ -83,6 +93,12 @@ public class ComponentProcessor extends ProcessorBase implements CdkAnnotationPr
                 library.getComponents().add(subcomponentModel);
             }
         }
+    }
+
+    private boolean wasComponentProcessed(TypeElement componentElement) {
+        boolean wasProcessed = processedNames.contains(componentElement.getQualifiedName());
+        processedNames.add(componentElement.getQualifiedName());
+        return wasProcessed;
     }
 
     /**
