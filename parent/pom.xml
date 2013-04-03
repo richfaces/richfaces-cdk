@@ -67,14 +67,6 @@
                 <scope>import</scope>
             </dependency>
             
-            <dependency>
-                <groupId>org.richfaces</groupId>
-                <artifactId>richfaces-bom</artifactId>
-                <version>${version.richfaces}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        
             <!-- CDK -->
             <dependency>
                 <groupId>org.richfaces.cdk</groupId>

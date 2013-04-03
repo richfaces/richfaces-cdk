@@ -12,7 +12,7 @@
 
     <name>RichFaces CDK: Generator Maven Plugin</name>
     <description>Maven plugin for JSF components code generation</description>
-    
+
     <dependencies>
         <!-- Compile dependencies -->
         <dependency>
@@ -68,7 +68,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    
+
     <build>
         <plugins>
             <plugin>

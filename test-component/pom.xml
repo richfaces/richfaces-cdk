@@ -16,12 +16,6 @@
     <name>RichFaces CDK: Test Component</name>
 
     <dependencies>
-
-        <dependency>
-            <groupId>org.richfaces.ui.common</groupId>
-            <artifactId>richfaces-ui-common-ui</artifactId>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>org.richfaces.cdk</groupId>
             <artifactId>annotations</artifactId>
@@ -66,7 +60,6 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.5</version>
                 <executions>
                     <execution>
                         <id>add-source</id>
