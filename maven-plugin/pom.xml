@@ -7,7 +7,7 @@
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>maven-cdk-plugin</artifactId>
+    <artifactId>richfaces-cdk-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
 
     <name>RichFaces CDK: Generator Maven Plugin</name>
