@@ -243,7 +243,7 @@
             <plugins>
                 <plugin>
                     <groupId>org.richfaces.cdk</groupId>
-                    <artifactId>maven-cdk-plugin</artifactId>
+                    <artifactId>richfaces-cdk-maven-plugin</artifactId>
                     <version>${version.cdk}</version>
                 </plugin>
                 <plugin>

@@ -16,7 +16,7 @@
         <plugins>
             <plugin>
                 <groupId>org.richfaces.cdk</groupId>
-                <artifactId>maven-cdk-plugin</artifactId>
+                <artifactId>richfaces-cdk-maven-plugin</artifactId>
                 <version>4.5.0-SNAPSHOT</version>
                 <configuration>
                 </configuration>
