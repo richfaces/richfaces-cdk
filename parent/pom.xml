@@ -274,6 +274,14 @@
                     <artifactId>modello-maven-plugin</artifactId>
                     <version>${version.modello.plugin}</version>
                 </plugin>
+                <plugin>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <configuration>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+                        <pushChanges>false</pushChanges>
+                        <localCheckout>true</localCheckout>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
