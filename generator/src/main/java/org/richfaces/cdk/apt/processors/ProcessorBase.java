@@ -55,7 +55,10 @@ public abstract class ProcessorBase {
         SourceUtils sourceUtils = getSourceUtils();
         sourceUtils.setModelProperty(tagModel, tag, "name");
         tagModel.setType(sourceUtils.getAnnotationValue(tag, "type", TagType.class));
-        sourceUtils.setModelProperty(tagModel, tag, "targetClass", "handler");
+        sourceUtils.setModelProperty(tagModel, tag, "targetClass", "handlerClass");
+        if (tagModel.getTargetClass() == null || Object.class.equals(tagModel.getTargetClass().getName())) {
+            sourceUtils.setModelProperty(tagModel, tag, "targetClass", "handler");
+        }
         sourceUtils.setModelProperty(tagModel, tag, "baseClass");
         sourceUtils.setModelProperty(tagModel, tag, "generate");
         return tagModel;

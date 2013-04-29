@@ -58,14 +58,25 @@ public @interface Tag {
     TagType type() default TagType.Facelets;
 
     /**
+     * @deprecated replaced by {@link #handlerClass()}
+     *
      * <p class="changed_added_4_0">
+     * Tag handler class. Fully qualified class name of the generated or existing tag handler. For {@link TagType#Jsp} it's
+     * {@link JspTag} or, more likely, {@link UIComponentTagBase} instance. For facelets, it's {@link TagHandler} instance.
+     * </p>
+     */
+    @Deprecated
+    String handler() default "";
+
+    /**
+     * <p class="changed_added_4_5">
      * Tag handler class. Fully qualified class name of the generated or existing tag handler. For {@link TagType#Jsp} it's
      * {@link JspTag} or, more likely, {@link UIComponentTagBase} instance. For facelets, it's {@link TagHandler} instance.
      * </p>
      *
      * @return
      */
-    String handler() default "";
+    Class<?> handlerClass() default Object.class;
 
     /**
      * <p class="changed_added_4_0">
