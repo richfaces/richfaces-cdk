@@ -63,4 +63,6 @@ public interface Logger {
     void error(Throwable error);
 
     int getErrorCount();
+
+    Throwable getFirstError();
 }

@@ -240,7 +240,7 @@ public class GenerateMojo extends AbstractMojo {
             generator.init();
             generator.execute();
             if (logger.getErrorCount() > 0) {
-                throw new MojoFailureException("Errors occurred while JSF library was built");
+                throw new MojoFailureException("Error occurred while JSF library was built", logger.getFirstError());
             }
             // Tell project about generated files.
             if (outputJavaDirectory.exists()) {

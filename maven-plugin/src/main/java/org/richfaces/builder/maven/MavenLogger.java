@@ -21,6 +21,7 @@
 package org.richfaces.builder.maven;
 
 import org.apache.maven.plugin.logging.Log;
+import org.richfaces.cdk.CdkException;
 import org.richfaces.cdk.Logger;
 
 /**
@@ -30,6 +31,7 @@ import org.richfaces.cdk.Logger;
 public class MavenLogger implements Logger {
     private Log log;
     private int errorCount;
+    private Throwable firstError;
 
     /**
      * @param log
@@ -72,6 +74,7 @@ public class MavenLogger implements Logger {
     public void error(CharSequence content, Throwable error) {
         log.error(content, error);
         errorCount++;
+        firstError = error;
     }
 
     /**
@@ -81,6 +84,7 @@ public class MavenLogger implements Logger {
     public void error(CharSequence content) {
         log.error(content);
         errorCount++;
+        firstError = new CdkException(content.toString());
     }
 
     /**
@@ -90,6 +94,7 @@ public class MavenLogger implements Logger {
     public void error(Throwable error) {
         log.error(error);
         errorCount++;
+        firstError = error;
     }
 
     /**
@@ -177,5 +182,10 @@ public class MavenLogger implements Logger {
     @Override
     public int getErrorCount() {
         return errorCount;
+    }
+
+    @Override
+    public Throwable getFirstError() {
+        return firstError;
     }
 }

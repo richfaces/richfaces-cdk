@@ -10,6 +10,7 @@ public class CustomLogger implements Logger {
 
     private boolean debug = false;
     private int errorCount = 0;
+    private Throwable firstError;
 
     @Override
     public boolean isDebugEnabled() {
@@ -93,6 +94,7 @@ public class CustomLogger implements Logger {
     @Override
     public void error(CharSequence content, Throwable error) {
         errorCount += 1;
+        firstError = (error != null) ? error : new CdkException(content.toString());
         log("Error", content, error);
     }
 
@@ -106,7 +108,9 @@ public class CustomLogger implements Logger {
             return;
         }
         if (content != null) {
-            System.out.println(content);
+            System.out.println("[" + severity.toUpperCase() + "] " + content);
+        } else {
+            System.out.println("[" + severity.toUpperCase() + "] ");
         }
         if (error != null) {
             error.printStackTrace();
@@ -120,6 +124,11 @@ public class CustomLogger implements Logger {
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    @Override
+    public Throwable getFirstError() {
+        return firstError;
     }
 
 }

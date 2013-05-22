@@ -36,6 +36,7 @@ public class JavaLogger implements Logger {
     public static final String CDK_LOG = "org.richfaces.cdk";
     private static final String CLASS_NAME = JavaLogger.class.getName();
     private int errorCount = 0;
+    private Throwable firstError;
     private java.util.logging.Logger jdkLogger = java.util.logging.Logger.getLogger(CDK_LOG);
 
     private void fillCallerData(String fqn, LogRecord record) {
@@ -119,6 +120,7 @@ public class JavaLogger implements Logger {
     @Override
     public void error(CharSequence content) {
         errorCount++;
+        firstError = new CdkException(content.toString());
 
         if (jdkLogger.isLoggable(Level.SEVERE)) {
             jdkLogger.log(createRecord(Level.SEVERE, content, null));
@@ -133,6 +135,7 @@ public class JavaLogger implements Logger {
     @Override
     public void error(CharSequence content, Throwable error) {
         errorCount++;
+        firstError = error;
 
         if (jdkLogger.isLoggable(Level.SEVERE)) {
             jdkLogger.log(createRecord(Level.SEVERE, content, error));
@@ -147,6 +150,7 @@ public class JavaLogger implements Logger {
     @Override
     public void error(Throwable error) {
         errorCount++;
+        firstError = error;
 
         if (jdkLogger.isLoggable(Level.SEVERE)) {
             jdkLogger.log(createRecord(Level.SEVERE, "", error));
@@ -268,5 +272,10 @@ public class JavaLogger implements Logger {
         if (jdkLogger.isLoggable(Level.WARNING)) {
             jdkLogger.log(createRecord(Level.WARNING, "", error));
         }
+    }
+
+    @Override
+    public Throwable getFirstError() {
+        return firstError;
     }
 }
