@@ -209,4 +209,12 @@ public class Generator {
     public void setNamespace(String namespace) {
         this.namespace = namespace;
     }
+
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+
+    public void setCharset(Charset charset) {
+        this.charset = charset;
+    }
 }

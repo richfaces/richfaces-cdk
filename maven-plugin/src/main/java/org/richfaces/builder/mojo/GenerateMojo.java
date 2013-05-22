@@ -24,11 +24,13 @@ package org.richfaces.builder.mojo;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -180,6 +182,14 @@ public class GenerateMojo extends AbstractMojo {
      * @parameter
      */
     protected Map<String, String> workers;
+    /**
+     * @parameter
+     */
+    protected String locale = Locale.getDefault().toLanguageTag();
+    /**
+     * @parameter
+     */
+    protected String charset = Charset.defaultCharset().name();
 
     /*
      * (non-Javadoc)
@@ -234,6 +244,9 @@ public class GenerateMojo extends AbstractMojo {
 
                 generator.setNamespace(this.library.getTaglib().getShortName());
             }
+
+            generator.setLocale(Locale.forLanguageTag(locale));
+            generator.setCharset(Charset.forName(charset));
 
             // Build JSF library.
             // LibraryBuilder builder = LibraryBuilder.createInstance(context);
