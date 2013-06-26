@@ -264,17 +264,17 @@ public class RendererTemplateParserTest extends CdkTestBase {
     @Test
     // TODO - fix import-attributes.
     public void dummyComponentTest() throws Exception {
-        expect(resolver.getExternalSubset(EasyMock.<String>eq("cdk:root"), (String) anyObject())).andReturn(null);
+        expect(resolver.getExternalSubset(EasyMock.<String>eq("cdk:root"), (String) anyObject())).andStubReturn(null);
         expect(
                 resolver.resolveEntity((String) isNull(),
                         eq("urn:resource:org/richfaces/cdk/templatecompiler/dummy-attributes.xml")))
-                .andReturn(
+                .andStubReturn(
                         new InputSource(this.getClass().getResourceAsStream(
                                 "/org/richfaces/cdk/templatecompiler/dummy-attributes.xml")));
-        expect(resolver.getExternalSubset(EasyMock.<String>eq("cdk:properties"), (String) isNull())).andReturn(null);
-        expect(resolver.resolveEntity((String) isNull(), eq("urn:attributes:dummy-template-props.xml"))).andReturn(
+        expect(resolver.getExternalSubset(EasyMock.<String>eq("cdk:properties"), (String) isNull())).andStubReturn(null);
+        expect(resolver.resolveEntity((String) isNull(), eq("urn:attributes:dummy-template-props.xml"))).andStubReturn(
                 new InputSource(this.getClass().getResourceAsStream("/META-INF/cdk/attributes/dummy-template-props.xml")));
-        expect(resolver.getExternalSubset(EasyMock.<String>eq("cdk:properties"), (String) isNull())).andReturn(null);
+        expect(resolver.getExternalSubset(EasyMock.<String>eq("cdk:properties"), (String) isNull())).andStubReturn(null);
 
         replay(resolver, templatesSource);
         Template template = parser.parseTemplate(getJavaFile("org/richfaces/cdk/templatecompiler/dummy.template.xml"));
