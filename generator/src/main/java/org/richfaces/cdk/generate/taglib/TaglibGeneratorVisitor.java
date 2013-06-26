@@ -117,6 +117,7 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
                 }
                 addTagHandler(component, tagModel);
                 appendAttributes(tag, model);
+                empty = false;
             }
         }
         return null;
@@ -150,6 +151,7 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
                 converter.addElement("converter-id").addText(model.getId().toString());
                 addTagHandler(converter, tagModel);
                 appendAttributes(tag, model);
+                empty = false;
             }
         }
         return null;
@@ -184,6 +186,7 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
                 validator.addElement("validator-id").addText(model.getId().toString());
                 addTagHandler(validator, tagModel);
                 appendAttributes(tag, model);
+                empty = false;
             }
         }
         return null;
@@ -236,6 +239,7 @@ public class TaglibGeneratorVisitor extends SimpleVisitor<Boolean, ComponentLibr
                 behavior.addElement("behavior-id").addText(model.getId().toString());
                 addTagHandler(behavior, tagModel);
                 appendAttributes(tag, model);
+                empty = false;
             }
         }
         return null;
