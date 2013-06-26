@@ -22,4 +22,6 @@ if [ ! -d "$PROJECT/target/classes" -o ! -d "$PROJECT/target/dependency" ]; then
 fi
 
 TARGET=$(dirname $0)"/target"
-java -jar $TARGET/cdk-cmdline-generator.jar -t "src/main/templates/**/*.xml" -t "src/main/java/**/*.template.xml" $*
+CLASSPATH="$PROJECT/target/classes:$PROJECT/target/dependency:$TARGET/cdk-cmdline-generator.jar"
+echo $CLASSPATH
+java -classpath $CLASSPATH org.richfaces.cdk.GenerateMain -t "src/main/templates/**/*.xml" -t "src/main/java/**/*.template.xml" $*
