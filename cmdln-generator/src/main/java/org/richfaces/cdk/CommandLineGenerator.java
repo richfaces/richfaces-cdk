@@ -142,10 +142,12 @@ public class CommandLineGenerator {
             }
         }
 
+        TimeMeasure time = new TimeMeasure("file scanner", logger).info(true).start();
         generator.addSources(Sources.JAVA_SOURCES, findJavaFiles(), folders);
         // detect templates and configs directories.
         generator.addSources(Sources.RENDERER_TEMPLATES, findTemplateFiles(), null);
         generator.addSources(Sources.FACES_CONFIGS, findFacesConfigFiles(), null);
+        time.stop();
 
         // Setup output folders.
         setOutput(generator, outputJavaDirectory, Outputs.JAVA_CLASSES);

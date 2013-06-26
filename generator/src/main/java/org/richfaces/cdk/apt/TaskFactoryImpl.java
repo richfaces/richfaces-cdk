@@ -50,6 +50,7 @@ import org.richfaces.cdk.Output;
 import org.richfaces.cdk.Outputs;
 import org.richfaces.cdk.Source;
 import org.richfaces.cdk.Sources;
+import org.richfaces.cdk.TimeMeasure;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -102,11 +103,13 @@ public class TaskFactoryImpl implements CompilationTaskFactory {
             Iterable<? extends JavaFileObject> sourceObjects = getFileManager().getJavaFileObjectsFromFiles(
                     sourceFolders.getFiles());
 
+            TimeMeasure time = new TimeMeasure("loading cache", log).info(true).start("java");
             for (JavaFileObject sourceObject : sourceObjects) {
                 if (javaCache.storedBefore(sourceObject.getLastModified())) {
                     sourceCache.putChanged(sourceObject);
                 }
             }
+            time.stop();
 
             if (sourceObjects.iterator().hasNext()) {
                 if (log.isDebugEnabled()) {
