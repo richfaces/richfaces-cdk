@@ -43,7 +43,7 @@ import com.google.inject.Inject;
  */
 public class ForEachStatement extends FreeMarkerTemplateStatementBase {
 
-    private static final String FOR_EACH_LOOP_CLASS = "org.richfaces.renderkit.ForEachLoop";
+    private static final String FOR_EACH_LOOP_CLASS = "org.richfaces.ui.common.ForEachLoop";
     private static final String FOR_EACH_LOOP_STATUS_CLASS = FOR_EACH_LOOP_CLASS + ".Status";
     private static String LOOP_OBJECT_PREFIX = "forEach";
     private static volatile int LOOP_OBJECT_COUNTER = 1;
