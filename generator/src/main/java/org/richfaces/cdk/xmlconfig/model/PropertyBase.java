@@ -144,6 +144,7 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
      */
     public static class PropertyExtension extends ConfigExtension {
         private Boolean passThrough;
+        private Boolean defaultBehavior;
         private Set<EventName> eventNames = Sets.newLinkedHashSet();
         private MethodSignature signature;
         private String aliasFor;
@@ -277,6 +278,21 @@ public class PropertyBase extends ExtensibleBean<PropertyBase.PropertyExtension>
          */
         public void setPassThrough(Boolean passThrough) {
             this.passThrough = passThrough;
+        }
+
+        /**
+         * @return the defaultBehavior
+         */
+        @XmlElement(name = "default-behavior", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE)
+        public Boolean getDefaultBehavior() {
+            return defaultBehavior;
+        }
+
+        /**
+         * @param defaultBehavior the passThrough to set
+         */
+        public void setDefaultBehavior(Boolean defaultBehavior) {
+            this.defaultBehavior = defaultBehavior;
         }
 
         /**

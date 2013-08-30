@@ -10,6 +10,7 @@ import org.richfaces.cdk.model.ConfigExtension;
 public class ExtensionBeanBase extends ConfigExtension {
     private ClassName baseClass;
     private Boolean generate;
+    private Boolean defaultBehavior;
 
     public ExtensionBeanBase() {
         super();
@@ -57,4 +58,20 @@ public class ExtensionBeanBase extends ConfigExtension {
     public void setGenerate(Boolean generate) {
         this.generate = generate;
     }
+
+    /**
+     * @return the defaultBehavior
+     */
+    @XmlElement(name = "default-behavior", namespace = ComponentLibrary.FACES_CONFIG_NAMESPACE)
+    public Boolean getDefaultBehavior() {
+        return defaultBehavior;
+    }
+
+    /**
+     * @param defaultBehavior the defaultBehavior to set
+     */
+    public void setDefaultBehavior(Boolean defaultBehavior) {
+        this.defaultBehavior = defaultBehavior;
+    }
+
 }
