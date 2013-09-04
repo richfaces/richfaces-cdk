@@ -44,7 +44,6 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
     private boolean required = false;
     private boolean readOnly = false;
     private boolean passThrough = false;
-    private Boolean defaultBehavior;
     private Set<EventName> eventNames = Sets.newLinkedHashSet();
     private MethodSignature signature;
     private String defaultValue;
@@ -291,20 +290,6 @@ public abstract class PropertyBase extends DescriptionGroupBase implements Model
      */
     public void setPassThrough(boolean passThrough) {
         this.passThrough = passThrough;
-    }
-
-    /**
-     * @return the defaultBehavior
-     */
-    public Boolean getDefaultBehavior() {
-        return defaultBehavior;
-    }
-
-    /**
-     * @param defaultBehavior the defaultBehavior to set
-     */
-    public void setDefaultBehavior(Boolean defaultBehavior) {
-        this.defaultBehavior = defaultBehavior;
     }
 
     /**

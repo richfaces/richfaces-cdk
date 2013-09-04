@@ -146,13 +146,6 @@ public @interface Attribute {
     EventName[] events() default {};
 
     /**
-     * <p>
-     * Default behaviour
-     * </p>
-     */
-    boolean defaultBehavior() default false;
-
-    /**
      * <p class="changed_added_4_0">
      * Attribute aliases.
      * </p>

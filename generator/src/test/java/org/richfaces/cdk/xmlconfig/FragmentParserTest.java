@@ -40,7 +40,6 @@ import org.richfaces.cdk.Source;
 import org.richfaces.cdk.Sources;
 import org.richfaces.cdk.model.ClassName;
 import org.richfaces.cdk.model.PropertyBase;
-import org.richfaces.cdk.model.PropertyModel;
 import org.xml.sax.ext.EntityResolver2;
 
 import com.google.common.collect.Iterables;
@@ -116,7 +115,6 @@ public class FragmentParserTest extends CdkTestBase {
         assertTrue(property.isLiteral());
         assertTrue(property.isPassThrough());
         assertTrue(property.isRequired());
-        assertTrue(property.getDefaultBehavior());
 
         List<ClassName> signature = property.getSignature().getParameters();
 
