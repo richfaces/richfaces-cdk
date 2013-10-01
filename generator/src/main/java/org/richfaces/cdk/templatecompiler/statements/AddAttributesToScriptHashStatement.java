@@ -107,12 +107,15 @@ public class AddAttributesToScriptHashStatement extends FreeMarkerTemplateStatem
         this.componentAttributes = componentAttributes;
 
         for (String attributeName : attributeNames) {
+            String[] splitAttr = attributeName.split(":");
+            String htmlAttributeName = splitAttr[0];
+            String componentAttributeName = splitAttr.length > 1 ? splitAttr[1] : htmlAttributeName;
             PassThrough passThrough = new PassThrough();
-            passThrough.name = QName.valueOf(attributeName);
-            passThrough.componentAttribute = attributeName;
+            passThrough.name = QName.valueOf(htmlAttributeName);
+            passThrough.componentAttribute = componentAttributeName;
 
             try {
-                PropertyBase componentAttribute = findComponentAttribute(attributeName);
+                PropertyBase componentAttribute = findComponentAttribute(componentAttributeName);
                 for (EventName event : componentAttribute.getEventNames()) {
                     passThrough.behaviors.add(event.getName());
                 }
