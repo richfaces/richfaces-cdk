@@ -39,6 +39,9 @@ import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.richfaces.builder.maven.MavenLogger;
@@ -52,17 +55,14 @@ import org.richfaces.cdk.apt.CdkProcessorImpl;
 import org.richfaces.cdk.apt.LibraryCache;
 import org.richfaces.cdk.model.Cacheable;
 
+import org.apache.maven.plugins.annotations.Parameter;
+
 import com.google.common.collect.Maps;
 
 /**
- * <p class="changed_added_4_0">
- * </p>
- *
  * @author asmirnov@exadel.com
- * @goal generate
- * @requiresDependencyResolution compile
- * @phase generate-sources
  */
+@Mojo(name="generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution= ResolutionScope.COMPILE)
 public class GenerateMojo extends AbstractMojo {
     private static final String[] JAVA_INCLUDES = new String[] { "**/*.java" };
     private static final String MAIN_CONFIG = "src/main/config";
@@ -71,124 +71,91 @@ public class GenerateMojo extends AbstractMojo {
     private static final String XML_INCLUDES = "**/*.xml";
     /**
      * Project classpath.
-     *
-     * @parameter expression="${project.compileClasspathElements}"
-     * @required
-     * @readonly
      */
+    @Parameter(property="project.compileClasspathElements", readonly = true, required = true)
     protected List<String> classpathElements;
     /**
      * The source directories containing the sources to be compiled.
-     *
-     * @parameter expression="${project.compileSourceRoots}"
-     * @required
-     * @readonly
      */
+    @Parameter(property="project.compileSourceRoots", readonly = true, required = true)
     protected List<String> compileSourceRoots;
     /**
      * The list of JSF configuration files that will be processed by CDK. By default, CDK looks for all files in the
      * <code>src/main/config</code> folder with "xml" extension.
-     *
-     * @parameter
      */
+    @Parameter
     protected FileSet[] facesConfigs;
-    /**
-     * @parameter
-     */
+    @Parameter
     protected Map<String, String> options = Maps.newHashMap();
-    /**
-     * @parameter
-     */
+    @Parameter
     protected Library library;
     /**
      * The directory for compiled classes.
-     *
-     * @parameter expression="${project.build.outputDirectory}"
-     * @required
-     * @readonly
      */
+    @Parameter(property="project.build.outputDirectory", readonly = true, required = true)
     protected File outputDirectory;
     /**
      * Directory where the output Java Files will be located.
-     *
-     * @parameter expression="${project.build.directory}/generated-sources/main/java"
      */
+    @Parameter(defaultValue="${project.build.directory}/generated-sources/main/java")
     protected File outputJavaDirectory;
     /**
      * Directory where the output Java Files will be located.
-     *
-     * @parameter expression="${project.build.directory}/generated-sources/main/resources"
      */
+    @Parameter(defaultValue="${project.build.directory}/generated-sources/main/resources")
     protected File outputResourcesDirectory;
-    /**
-     * @parameter expression="${project.build.directory}/generated-sources/test/java"
-     */
+    @Parameter(defaultValue="${project.build.directory}/generated-sources/test/java")
     protected File outputTestDirectory;
     /**
      * Directory where the output Java Files will be located.
-     *
-     * @parameter expression="${project.build.directory}/generated-sources/test/resources"
      */
+    @Parameter( defaultValue="${project.build.directory}/generated-sources/test/resources")
     protected File outputTestResourcesDirectory;
     /**
      * Directory where serialized library will be cached
-     *
-     * @parameter expression="${project.build.directory}/library-cache"
      */
+    @Parameter(defaultValue="${project.build.directory}/library-cache")
     protected File outputLibraryCache;
     /**
      * Forces compiler to do not use cache and re-compile all sources from scratch
-     *
-     * @parameter expression="${cdk.recompile}" default-value="false"
      */
+    @Parameter(property="cdk.recompile", defaultValue="false")
     protected boolean forceRecompile;
     /**
      * Turns off library generation and verification in case when no change was detected in sources which supports
      * {@link Cacheable} (it does not have to mean no change was done). Warning: when getting undesired results, try to turn off
      * this option.
-     *
-     * @parameter expression="${cdk.cache.eagerly}" default-value="false"
      */
+    @Parameter(property="cdk.cache.eagerly", defaultValue="false")
     protected boolean cacheEagerly;
     /**
      * Top maven project.
-     *
-     * @parameter expression="${project}"
-     * @readonly
      */
+    @Parameter(defaultValue="${project}", readonly = true)
     protected MavenProject project;
     /**
      * List of filename patterns that will be excluded from process by annotations processor. By default, all *.java files will
      * be processed.
-     *
-     * @parameter
      */
+    @Parameter
     protected String[] sourceExcludes;
     /**
      * List of filename patterns that will be included to process by annotations processor. By default, all *.java files will be
      * processed.
-     *
-     * @parameter
      */
+    @Parameter
     protected String[] sourceIncludes;
     /**
      * The list of JsfRenderer template files that will be processed by CDK. By default, CDK looks for all files in the
      * <code>src/main/templates</code> folder with "xml" extension.
-     *
-     * @parameter
      */
+    @Parameter
     protected FileSet[] templates;
-    /**
-     * @parameter
-     */
+    @Parameter
     protected Map<String, String> workers;
-    /**
-     * @parameter
-     */
+    @Parameter
     protected String locale = Locale.getDefault().toLanguageTag();
-    /**
-     * @parameter
-     */
+    @Parameter
     protected String charset = Charset.defaultCharset().name();
 
     /*
@@ -307,14 +274,6 @@ public class GenerateMojo extends AbstractMojo {
 
         generator.addOutputFolder(type, directory);
     }
-
-    // /**
-    // * <p class="changed_added_4_0">This method checks library configuration and sets default values if necessary.</p>
-    // */
-    // protected void checkLibraryConfig() {
-    //
-    // // TODO Auto-generated method stub
-    // }
 
     private File resolveRelativePath(File file) {
         File result = file;

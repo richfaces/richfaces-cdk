@@ -34,6 +34,11 @@ import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.model.Parent;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Component;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectBuilder;
 import org.apache.maven.project.ProjectBuildingException;
@@ -49,12 +54,10 @@ import org.codehaus.plexus.personality.plexus.lifecycle.phase.Contextualizable;
  * Compile all xml templates, matched given pattern to Java classes. Sources will be created in
  * {@link AbstractCDKMojo#outputJavaDirectory}
  *
- * @goal compile
- * @requiresDependencyResolution compile
- * @phase generate-sources
  * @author shura
  *
  */
+@Mojo(name="compile", defaultPhase = LifecyclePhase.COMPILE, requiresDependencyResolution= ResolutionScope.COMPILE)
 public class CompileMojo extends AbstractCDKMojo implements Contextualizable {
     /**
      * To look up Archiver/UnArchiver implementations
@@ -63,9 +66,7 @@ public class CompileMojo extends AbstractCDKMojo implements Contextualizable {
      */
     private ArchiverManager archiverManager;
     private PlexusContainer container;
-    /**
-     * @parameter default-value=${project.groupId}
-     */
+    @Parameter(defaultValue="${project.groupId})")
     private String defaultPackage;
     /**
      * A list of exclusion filters for the compiler. None by default.
@@ -75,35 +76,28 @@ public class CompileMojo extends AbstractCDKMojo implements Contextualizable {
     private String[] excludes;
     /**
      * Project executed by first compile lifecycle.
-     *
-     * @parameter expression="${executedProject}"
-     * @readonly
      */
+    @Parameter(property="executedProject", readonly=true)
     private MavenProject executedProject;
     /**
      * A list of inclusion filters for the compiler. By default, include all files in templates directory.
-     *
-     * @parameter
      */
+    @Parameter
     private String[] includes;
     /**
      * The local repository.
-     *
-     * @parameter expression="${localRepository}"
      */
+    @Parameter(property="localRepository")
     private ArtifactRepository localRepository;
     /**
      * Project builder
-     *
-     * @component
      */
+    @Component
     private MavenProjectBuilder mavenProjectBuilder;
     /**
      * The reactor projects.
-     *
-     * @parameter expression="${project.parent}"
-     * @readonly
      */
+    @Parameter(property="project.parent", readonly=true)
     private MavenProject parentProject;
 
     /*

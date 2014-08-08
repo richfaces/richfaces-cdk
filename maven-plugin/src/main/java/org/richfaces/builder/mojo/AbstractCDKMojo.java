@@ -34,6 +34,7 @@ import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.DirectoryScanner;
 
@@ -44,103 +45,76 @@ import org.codehaus.plexus.util.DirectoryScanner;
 public abstract class AbstractCDKMojo extends AbstractMojo {
     /**
      * Project classpath.
-     *
-     * @parameter expression="${project.compileClasspathElements}"
-     * @required
-     * @readonly
      */
+    @Parameter(property="project.compileClasspathElements", readonly=true, required=true)
     protected List classpathElements;
     /**
      * The source directories containing the sources to be compiled.
-     *
-     * @parameter expression="${project.compileSourceRoots}"
-     * @required
-     * @readonly
      */
+    @Parameter(property="project.compileSourceRoots", required=true, readonly=true)
     protected List<String> compileSourceRoots;
     /**
      * Place for component configuration XML files. All '*.xml' files wil be parsed as components config. All '*.ent' files will
      * be processed as include configurations.
-     *
-     * @parameter expression="src/main/config/component"
      */
+    @Parameter(defaultValue="src/main/config/component")
     protected File componentConfigDirectory;
     /**
      * Place for converter configuration XML files. All '*.xml' files wil be parsed as components config. All '*.ent' files will
      * be processed as include configurations.
-     *
-     * @parameter expression="src/main/config/converter"
      */
+    @Parameter(defaultValue="src/main/config/converter")
     protected File converterConfigDirectory;
     /**
      * Place for faces configuration XML files
      *
-     * @parameter expression="src/main/config/faces"
+     * 
      */
+    @Parameter( defaultValue="src/main/config/faces")
     protected File facesConfigInclude;
-    /**
-     *
-     * @parameter
-     */
+    @Parameter
     protected String key;
-    /**
-     * @parameter
-     */
+    @Parameter
     protected Library library;
     /**
      * The directory for compiled classes.
-     *
-     * @parameter expression="${project.build.outputDirectory}"
-     * @required
-     * @readonly
      */
+    @Parameter(property="project.build.outputDirectory", required=true, readonly=true)
     protected File outputDirectory;
     /**
      * Directory where the output Java Files will be located.
-     *
-     * @parameter expression="${project.build.directory}/generated-component/java"
      */
+    @Parameter(defaultValue="${project.build.directory}/generated-component/java")
     protected File outputJavaDirectory;
     /**
      * Directory where the output Java Files will be located.
-     *
-     * @parameter expression="${project.build.directory}/generated-component/resources"
      */
+    @Parameter( defaultValue="${project.build.directory}/generated-component/resources")
     protected File outputResourcesDirectory;
-    /**
-     * @parameter expression="${project.build.directory}/generated-component/test"
-     */
+    @Parameter(defaultValue="${project.build.directory}/generated-component/test")
     protected File outputTestsDirectory;
     /**
      * Top maven project.
-     *
-     * @parameter expression="${project}"
-     * @readonly
      */
+    @Parameter(property="project", readonly=true)
     protected MavenProject project;
     /**
      * Place for component configuration XML files
-     *
-     * @parameter expression="src/main/config/resources"
      */
+    @Parameter(defaultValue="src/main/config/resources")
     protected File resourcesInclude;
     /**
      * Place for component configuration XML files
-     *
-     * @parameter expression="src/main/config/taglib"
      */
+    @Parameter(defaultValue="src/main/config/taglib")
     protected File taglibInclude;
-    /**
-     *
-     * @parameter expression="src/main/templates"
-     */
+    @Parameter(defaultValue="src/main/templates")
     protected File templatesDirectory;
     /**
      * Place for validator configuration XML files. All '*.xml' files wil be parsed as component config. All '*.ent' files will
      * be processed as include configurations.
-     *
-     * @parameter expression="src/main/config/validator"
      */
+    @Parameter(defaultValue="src/main/config/validator")
     protected File validatorConfigDirectory;
 
     /**
