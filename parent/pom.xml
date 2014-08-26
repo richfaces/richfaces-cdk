@@ -52,6 +52,11 @@
         <version.modello.plugin>1.0.2</version.modello.plugin>
         <version.guice.plugin>2.2.0</version.guice.plugin>
         <version.gmaven.plugin>1.0</version.gmaven.plugin>
+
+        <!-- maven-compiler-plugin -->
+        <!-- Overide jboss-parent default version-->
+        <maven.compiler.target>1.6</maven.compiler.target>
+        <maven.compiler.source>1.6</maven.compiler.source>
     </properties>
 
     <dependencyManagement>
