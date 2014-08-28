@@ -154,7 +154,7 @@ public class GenerateMojo extends AbstractMojo {
     @Parameter
     protected Map<String, String> workers;
     @Parameter
-    protected String locale = Locale.getDefault().toLanguageTag();
+    protected String locale = Locale.getDefault().toString();
     @Parameter
     protected String charset = Charset.defaultCharset().name();
 
@@ -212,7 +212,7 @@ public class GenerateMojo extends AbstractMojo {
                 generator.setNamespace(this.library.getTaglib().getShortName());
             }
 
-            generator.setLocale(Locale.forLanguageTag(locale));
+            generator.setLocale(localeFromString(locale));
             generator.setCharset(Charset.forName(charset));
 
             // Build JSF library.
@@ -245,6 +245,15 @@ public class GenerateMojo extends AbstractMojo {
         } catch (CdkException e) {
             throw new MojoExecutionException("CDK build error", e);
         }
+    }
+
+    private Locale localeFromString(String locale) {
+        String parts[] = locale.split("_", -1);
+        if (parts.length == 1) return new Locale(parts[0]);
+        else if (parts.length == 2
+                || (parts.length == 3 && parts[2].startsWith("#")))
+            return new Locale(parts[0], parts[1]);
+        else return new Locale(parts[0], parts[1], parts[2]);
     }
 
     /**
