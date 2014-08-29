@@ -66,7 +66,7 @@ public class CompileMojo extends AbstractCDKMojo implements Contextualizable {
      */
     private ArchiverManager archiverManager;
     private PlexusContainer container;
-    @Parameter(defaultValue="${project.groupId})")
+    @Parameter(defaultValue="${project.groupId}")
     private String defaultPackage;
     /**
      * A list of exclusion filters for the compiler. None by default.
