@@ -57,7 +57,7 @@ import org.codehaus.plexus.personality.plexus.lifecycle.phase.Contextualizable;
  * @author shura
  *
  */
-@Mojo(name="compile", defaultPhase = LifecyclePhase.COMPILE, requiresDependencyResolution= ResolutionScope.COMPILE)
+@Mojo(name="compile", defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution= ResolutionScope.COMPILE)
 public class CompileMojo extends AbstractCDKMojo implements Contextualizable {
     /**
      * To look up Archiver/UnArchiver implementations
