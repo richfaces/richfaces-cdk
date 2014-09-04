@@ -12,7 +12,7 @@
 
     <groupId>org.richfaces.cdk</groupId>
     <artifactId>parent</artifactId>
-    <version>4.5.0.Beta2</version>
+    <version>4.5.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>RichFaces CDK Parent</name>
 
@@ -20,7 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <version.cdk>4.5.0.Beta2</version.cdk>
+        <version.cdk>4.5.0-SNAPSHOT</version.cdk>
         <version.jboss-javaee>3.0.2.Final</version.jboss-javaee>
 
         <!-- Compile deps -->
@@ -294,6 +294,6 @@
         <connection>scm:git:git://github.com/richfaces/cdk.git</connection>
         <developerConnection>scm:git:git@github.com:richfaces/cdk.git</developerConnection>
         <url>https://github.com/richfaces/cdk</url>
-      <tag>4.5.0.Beta2</tag>
+      <tag>HEAD</tag>
   </scm>
 </project>
