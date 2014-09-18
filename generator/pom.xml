@@ -59,6 +59,20 @@
                     <useSystemClassLoader>true</useSystemClassLoader>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${version.site.plugin}</version>
+                <executions>
+                    <execution>
+                        <id>generate-site</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>site</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>jaxb2-maven-plugin</artifactId>
                    <executions> <execution> <goals> <goal>xjc</goal> </goals> </execution> </executions>
                    <configuration> <packageName>org.richfaces.cdk.model</packageName> </configuration>
@@ -113,7 +127,7 @@
             <groupId>org.jboss.spec.javax.faces</groupId>
             <artifactId>jboss-jsf-api_2.1_spec</artifactId>
         </dependency>
-        
+
         <!-- CDK -->
         <dependency>
             <groupId>org.richfaces.cdk</groupId>
@@ -177,7 +191,7 @@
             <groupId>com.google.inject.extensions</groupId>
             <artifactId>guice-multibindings</artifactId>
         </dependency>
-        
+
         <!-- Test dependencies -->
         <dependency>
             <groupId>junit</groupId>
