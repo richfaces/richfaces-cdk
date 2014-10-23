@@ -10,7 +10,7 @@
 
     <groupId>org.richfaces.cdk</groupId>
     <artifactId>aggregator</artifactId>
-    <version>4.5.0-SNAPSHOT</version>
+    <version>4.5.0.Final</version>
     <packaging>pom</packaging>
     <name>RichFaces CDK Aggregator</name>
 
@@ -41,7 +41,7 @@
         <connection>scm:git:git://github.com/richfaces/cdk.git</connection>
         <developerConnection>scm:git:git@github.com:richfaces/cdk.git</developerConnection>
         <url>https://github.com/richfaces/cdk</url>
-      <tag>HEAD</tag>
+      <tag>4.5.0.Final</tag>
   </scm>
 
     <!-- Minimal build configuration -->
