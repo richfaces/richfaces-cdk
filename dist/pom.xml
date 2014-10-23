@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.richfaces.cdk</groupId>
         <artifactId>parent</artifactId>
-        <version>4.5.0.Final</version>
+        <version>4.5.1-SNAPSHOT</version>
         <relativePath>../parent</relativePath>
     </parent>
 
@@ -17,7 +17,7 @@
         <connection>scm:git:git://github.com/richfaces/cdk.git</connection>
         <developerConnection>scm:git:git@github.com:richfaces/cdk.git</developerConnection>
         <url>https://github.com/richfaces/cdk</url>
-      <tag>4.5.0.Final</tag>
+      <tag>HEAD</tag>
   </scm>
     <build>
         <finalName>cdk</finalName>
