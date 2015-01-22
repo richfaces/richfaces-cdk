@@ -1,6 +1,7 @@
 target
 test-output
 .classpath
+.factorypath
 .settings
 .project
 .clover
