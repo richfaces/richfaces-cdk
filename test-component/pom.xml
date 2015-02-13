@@ -96,7 +96,7 @@
                                     <pluginExecutionFilter>
                                         <groupId>org.richfaces.cdk</groupId>
                                         <artifactId>richfaces-cdk-maven-plugin</artifactId>
-                                        <versionRange>[4.5.0-SNAPSHOT,)</versionRange>
+                                        <versionRange>[4.5.1-SNAPSHOT,)</versionRange>
                                         <goals>
                                             <goal>generate</goal>
                                         </goals>
